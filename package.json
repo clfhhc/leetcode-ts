@@ -20,5 +20,22 @@
     "eslint": "8.12.0",
     "eslint-config-next": "12.1.2",
     "typescript": "4.6.3"
-  }
+  },
+  "description": "solving leetcode problems using typescript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clfhhc/leetcode-ts.git"
+  },
+  "keywords": [
+    "nextjs",
+    "leetcode",
+    "github-pages",
+    "typescript"
+  ],
+  "author": "David Chen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/clfhhc/leetcode-ts/issues"
+  },
+  "homepage": "https://github.com/clfhhc/leetcode-ts#readme"
 }
