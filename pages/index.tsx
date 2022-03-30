@@ -6,6 +6,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Title isItalics={true} title="Homepage" />
+      <p>{process.env.NEXT_PUBLIC_ENV}</p>
     </div>
   );
 };
