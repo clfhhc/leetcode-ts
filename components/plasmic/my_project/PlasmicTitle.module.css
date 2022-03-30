@@ -1,0 +1,16 @@
+.root {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+  width: auto;
+  height: auto;
+}
+.slotTargetTitle {
+  font-family: var(--token-ye9-YHF5f);
+  font-size: var(--token-EpaOxPdp5);
+  font-weight: 600;
+  text-align: center;
+}
+.slotTargetTitleisItalics {
+  font-style: italic;
+}

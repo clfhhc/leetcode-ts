@@ -1,0 +1,29 @@
+{
+  "props": [
+    {
+      "name": "PrimaryFont",
+      "type": "fontfamily",
+      "value": "Futura",
+      "category": "fontfamily",
+      "meta": {
+        "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+        "id": "ye9-YHF5f"
+      }
+    },
+    {
+      "name": "TitleSize",
+      "type": "fontsize",
+      "value": "64px",
+      "category": "fontsize",
+      "meta": {
+        "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+        "id": "EpaOxPdp5"
+      }
+    }
+  ],
+  "global": {
+    "meta": {
+      "source": "plasmic.app"
+    }
+  }
+}
