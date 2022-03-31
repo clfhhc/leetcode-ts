@@ -1,16 +1,34 @@
-import type { NextPage } from 'next';
-import Title from '../components/Title';
-import twoSum from '../leetcode/two-sum';
-import styles from '../styles/Home.module.css';
+import type { GetStaticProps, NextPage } from 'next';
+import Link from 'next/link';
+import Title from 'components/Title';
+import styles from 'styles/Home.module.css';
+import importedLeetcodeArray from 'lib/leetcode/requireContextForLeetcode';
 
-const Home: NextPage = () => {
+export interface PageProps {
+  leetcodeSlugs?: string[];
+}
+
+export interface StaticProps extends PageProps {}
+
+export const getStaticProps: GetStaticProps<StaticProps> = async () => {
+  const leetcodeSlugs = Object.keys(importedLeetcodeArray);
+  return {
+    props: {
+      leetcodeSlugs,
+    },
+  };
+};
+
+const Home: NextPage<StaticProps> = ({ leetcodeSlugs }) => {
   return (
     <div className={styles.container}>
-      <Title isItalics={true} title="Homepage" />
+      <Title title="Leetcode Typescript Solutions" />
       <p>{process.env.NEXT_PUBLIC_ENV}</p>
-      <pre>
-        <code>{twoSum.toString()}</code>
-      </pre>
+      {leetcodeSlugs?.map((slug) => (
+        <Link key={slug} href={`/leetcode/${slug}`}>
+          {slug}
+        </Link>
+      ))}
     </div>
   );
 };
