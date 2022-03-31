@@ -1,0 +1,21 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="preload" href="/leetcode-ts/_next/static/css/27d177a30947857b.css" as="style"/><link rel="stylesheet" href="/leetcode-ts/_next/static/css/27d177a30947857b.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/leetcode-ts/_next/static/chunks/polyfills-5cd94c89d3acac5f.js"></script><script src="/leetcode-ts/_next/static/chunks/webpack-a3cedc00292a2615.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/framework-b6391de17066ee52.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/main-e6ed6429881e58f6.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/pages/_app-a2d84039be157e59.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/pages/leetcode/%5B...slug%5D-ca2064a745e9a63b.js" defer=""></script><script src="/leetcode-ts/_next/static/gXqiIwGh5LWQvLRQRzZZC/_buildManifest.js" defer=""></script><script src="/leetcode-ts/_next/static/gXqiIwGh5LWQvLRQRzZZC/_ssgManifest.js" defer=""></script><script src="/leetcode-ts/_next/static/gXqiIwGh5LWQvLRQRzZZC/_middlewareManifest.js" defer=""></script></head><body><div id="__next"><div><h1>two-sum</h1><pre><code>function twoSum(nums, target) {
+    const numsObj = {};
+    // iterate all the elements in the array
+    for(let i = 0; i &lt; nums.length; i++){
+        let current = nums[i];
+        // calculate the match
+        let match = target - current;
+        // find match in the previously scanned items
+        if (match in numsObj) {
+            // return if there is a match in the previously scanned items
+            return [
+                numsObj[match],
+                i
+            ];
+        } else {
+            // store this item in the hash table if there is not a match
+            numsObj[current] = i;
+        }
+    }
+    return [];
+}</code></pre></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"slug":"two-sum","solutionContent":"function twoSum(nums, target) {\n    const numsObj = {};\n    // iterate all the elements in the array\n    for(let i = 0; i \u003c nums.length; i++){\n        let current = nums[i];\n        // calculate the match\n        let match = target - current;\n        // find match in the previously scanned items\n        if (match in numsObj) {\n            // return if there is a match in the previously scanned items\n            return [\n                numsObj[match],\n                i\n            ];\n        } else {\n            // store this item in the hash table if there is not a match\n            numsObj[current] = i;\n        }\n    }\n    return [];\n}"},"__N_SSG":true},"page":"/leetcode/[...slug]","query":{"slug":["two-sum"]},"buildId":"gXqiIwGh5LWQvLRQRzZZC","assetPrefix":"/leetcode-ts","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
