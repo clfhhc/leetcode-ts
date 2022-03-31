@@ -16,6 +16,12 @@
     "incremental": true,
     "baseUrl": "."
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "__tests__/__mocks__/fs/promises.ts",
+    "__tests__/__mocks__/fs.ts"
+  ],
   "exclude": ["node_modules"]
 }
