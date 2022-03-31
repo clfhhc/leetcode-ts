@@ -1,3 +1,4 @@
+import TypescriptCode from 'components/code/TypescriptCode';
 import importedLeetcodeArray from 'lib/leetcode/requireContextForLeetcode';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
@@ -46,9 +47,7 @@ export const getStaticProps: GetStaticProps<StaticProps> = async ({
 const LeetcodePage: NextPage<StaticProps> = ({ slug, solutionContent }) => (
   <div>
     <h1>{slug}</h1>
-    <pre>
-      <code>{solutionContent}</code>
-    </pre>
+    <TypescriptCode>{solutionContent}</TypescriptCode>
   </div>
 );
 
