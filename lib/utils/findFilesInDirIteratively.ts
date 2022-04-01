@@ -3,7 +3,7 @@ import path from 'path';
 
 const { readdir, stat } = promises;
 
-const findFilesInDirIteratively = (...dirList: string[]) => {
+export const findFilesInDirIteratively = (...dirList: string[]) => {
   const files: string[] = [];
   const dirInRead: string[] = [...dirList];
 
@@ -32,8 +32,6 @@ const findFilesInDirIteratively = (...dirList: string[]) => {
 
   return files;
 };
-
-export default findFilesInDirIteratively;
 
 export const findFilesInDirIterativelyAsync = async (...dirList: string[]) => {
   const files: string[] = [];

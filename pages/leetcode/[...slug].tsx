@@ -1,6 +1,6 @@
 import TypescriptCode from 'components/code/TypescriptCode';
 import { getLocalLeetcodeSlugs } from 'lib/leetcode/importLocalLeetcodeFiles';
-import extractDefaultFunctionDeclaration from 'lib/typescript/extractDefaultFunctionDeclaration';
+import { extractDefaultFunctionDeclaration } from 'lib/typescript/extract';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 

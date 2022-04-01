@@ -1,4 +1,4 @@
-import importLocalLeetcodeFiles from 'lib/leetcode/importLocalLeetcodeFiles';
+import { importLocalLeetcodeFiles } from 'lib/leetcode/importLocalLeetcodeFiles';
 
 describe('LeetCode Tests', () => {
   Object.values(importLocalLeetcodeFiles()).forEach(
