@@ -8,24 +8,42 @@ export interface ImportedObj {
   filePath: string;
 }
 
-export interface IndexedImportedObj {
-  [slug: string]: ImportedObj;
+export interface SlugIndexed<T> {
+  [slug: string]: T;
 }
 
-const folderPath = path.resolve(process.cwd(), 'leetcode');
-const filePaths = findFilesInDirIteratively(folderPath);
+export const findLocalLeetcodeFiles = () => {
+  const folderPath = path.resolve(process.cwd(), 'leetcode');
+  return findFilesInDirIteratively(folderPath);
+};
+
+export const getLocalLeetcodeSlugs = () =>
+  findLocalLeetcodeFiles().reduce<SlugIndexed<{ filePath: string }>>(
+    (obj, absolutePath) => {
+      const filePath = path.relative(process.cwd(), absolutePath);
+      const slug = path.parse(filePath).name;
+      return {
+        ...obj,
+        [slug]: { filePath },
+      };
+    },
+    {}
+  );
 
 const importLocalLeetcodeFiles = () =>
-  filePaths.reduce<IndexedImportedObj>((obj, absolutePath) => {
-    const filePath = path.relative(process.cwd(), absolutePath);
-    const slug = path.parse(filePath).name;
-    return {
-      ...obj,
-      [slug]: {
-        ...require(filePath),
-        filePath,
-      },
-    };
-  }, {});
+  findLocalLeetcodeFiles().reduce<SlugIndexed<ImportedObj>>(
+    (obj, absolutePath) => {
+      const filePath = path.relative(process.cwd(), absolutePath);
+      const slug = path.parse(filePath).name;
+      return {
+        ...obj,
+        [slug]: {
+          ...require(filePath),
+          filePath,
+        },
+      };
+    },
+    {}
+  );
 
 export default importLocalLeetcodeFiles;

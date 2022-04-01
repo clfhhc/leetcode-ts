@@ -1,4 +1,6 @@
-import importedLeetcodeArray from 'lib/leetcode/requireContextForLeetcode';
+import TypescriptCode from 'components/code/TypescriptCode';
+import { getLocalLeetcodeSlugs } from 'lib/leetcode/importLocalLeetcodeFiles';
+import extractDefaultFunctionDeclaration from 'lib/typescript/extractDefaultFunctionDeclaration';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -14,7 +16,7 @@ export interface PageProps {
 export interface StaticProps extends PageProps {}
 
 export const getStaticPaths: GetStaticPaths<SlugParsedUrlQuery> = async () => {
-  const paths = Object.keys(importedLeetcodeArray).map((slug) => ({
+  const paths = Object.keys(getLocalLeetcodeSlugs()).map((slug) => ({
     params: { slug: [slug] },
   }));
   return {
@@ -33,7 +35,9 @@ export const getStaticProps: GetStaticProps<StaticProps> = async ({
       ? (params?.slug as string[]).join('/')
       : 'index';
 
-  const solutionContent = importedLeetcodeArray[slug].default.toString();
+  const solutionContent = extractDefaultFunctionDeclaration(
+    getLocalLeetcodeSlugs()[slug].filePath
+  );
 
   return {
     props: {
@@ -46,9 +50,7 @@ export const getStaticProps: GetStaticProps<StaticProps> = async ({
 const LeetcodePage: NextPage<StaticProps> = ({ slug, solutionContent }) => (
   <div>
     <h1>{slug}</h1>
-    <pre>
-      <code>{solutionContent}</code>
-    </pre>
+    <TypescriptCode>{solutionContent}</TypescriptCode>
   </div>
 );
 
