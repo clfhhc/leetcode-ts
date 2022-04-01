@@ -2,7 +2,7 @@ import type { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import Title from 'components/Title';
 import styles from 'styles/Home.module.css';
-import importedLeetcodeArray from 'lib/leetcode/requireContextForLeetcode';
+import { getLocalLeetcodeSlugs } from 'lib/leetcode/importLocalLeetcodeFiles';
 
 export interface PageProps {
   leetcodeSlugs?: string[];
@@ -11,7 +11,7 @@ export interface PageProps {
 export interface StaticProps extends PageProps {}
 
 export const getStaticProps: GetStaticProps<StaticProps> = async () => {
-  const leetcodeSlugs = Object.keys(importedLeetcodeArray);
+  const leetcodeSlugs = Object.keys(getLocalLeetcodeSlugs());
   return {
     props: {
       leetcodeSlugs,
