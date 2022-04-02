@@ -1,5 +1,6 @@
 import { vol } from 'memfs';
-import findFilesInDirIteratively, {
+import {
+  findFilesInDirIteratively,
   findFilesInDirIterativelyAsync,
 } from 'lib/utils/findFilesInDirIteratively';
 

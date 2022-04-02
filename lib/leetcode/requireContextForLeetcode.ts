@@ -22,8 +22,6 @@ export function importAllLeetcodeFiles(r: ReturnType<typeof require.context>) {
   return result;
 }
 
-const importedLeetcodeArray = importAllLeetcodeFiles(
+export const importedLeetcodeObj = importAllLeetcodeFiles(
   require.context('leetcode/', true, /^leetcode.*.ts$/)
 );
-
-export default importedLeetcodeArray;

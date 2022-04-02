@@ -1,6 +1,6 @@
 import path from 'path';
 import { FunctionTestCases } from 'lib/utils/types';
-import findFilesInDirIteratively from 'lib/utils/findFilesInDirIteratively';
+import { findFilesInDirIteratively } from 'lib/utils/findFilesInDirIteratively';
 
 export interface ImportedObj {
   default: (...args: any) => any;
@@ -30,7 +30,7 @@ export const getLocalLeetcodeSlugs = () =>
     {}
   );
 
-const importLocalLeetcodeFiles = () =>
+export const importLocalLeetcodeFiles = () =>
   findLocalLeetcodeFiles().reduce<SlugIndexed<ImportedObj>>(
     (obj, absolutePath) => {
       const filePath = path.relative(process.cwd(), absolutePath);
@@ -45,5 +45,3 @@ const importLocalLeetcodeFiles = () =>
     },
     {}
   );
-
-export default importLocalLeetcodeFiles;

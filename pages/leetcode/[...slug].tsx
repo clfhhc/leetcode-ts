@@ -1,19 +1,26 @@
 import TypescriptCode from 'components/code/TypescriptCode';
+import {
+  QuestionDataDocument,
+  QuestionDataQuery,
+} from 'graphql/leetcode/questionData.query';
 import { getLocalLeetcodeSlugs } from 'lib/leetcode/importLocalLeetcodeFiles';
-import extractDefaultFunctionDeclaration from 'lib/typescript/extractDefaultFunctionDeclaration';
+import { extractDefaultFunctionDeclaration } from 'lib/typescript/extract';
+import { getUrqlClientOptions } from 'lib/urql/getUrqlClientOptions';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { initUrqlClient, withUrqlClient, WithUrqlState } from 'next-urql';
 import { ParsedUrlQuery } from 'querystring';
+import { ssrExchange } from 'urql';
 
 export interface SlugParsedUrlQuery extends ParsedUrlQuery {
   slug: string | string[];
 }
 
 export interface PageProps {
-  slug: string;
   solutionContent: string;
+  questionData: QuestionDataQuery['question'];
 }
 
-export interface StaticProps extends PageProps {}
+export interface StaticProps extends PageProps, WithUrqlState {}
 
 export const getStaticPaths: GetStaticPaths<SlugParsedUrlQuery> = async () => {
   const paths = Object.keys(getLocalLeetcodeSlugs()).map((slug) => ({
@@ -35,23 +42,41 @@ export const getStaticProps: GetStaticProps<StaticProps> = async ({
       ? (params?.slug as string[]).join('/')
       : 'index';
 
+  const ssrCache = ssrExchange({ isClient: false });
+  const urqlClientOptions = getUrqlClientOptions(ssrCache);
+  const client = initUrqlClient(urqlClientOptions, false);
+
+  const result = await client
+    ?.query(QuestionDataDocument, { titleSlug: slug })
+    .toPromise();
+
+  const questionData = result?.data?.question;
+
   const solutionContent = extractDefaultFunctionDeclaration(
     getLocalLeetcodeSlugs()[slug].filePath
   );
 
   return {
     props: {
-      slug,
       solutionContent,
+      questionData,
+      urqlState: ssrCache.extractData(),
     },
   };
 };
 
-const LeetcodePage: NextPage<StaticProps> = ({ slug, solutionContent }) => (
+const LeetcodePage: NextPage<StaticProps> = ({
+  questionData,
+  solutionContent,
+}) => (
   <div>
-    <h1>{slug}</h1>
+    <h1>{questionData?.title}</h1>
+    <p>{`Difficulty: ${questionData?.difficulty}`}</p>
+    <div
+      dangerouslySetInnerHTML={{ __html: questionData?.content ?? '' }}
+    ></div>
     <TypescriptCode>{solutionContent}</TypescriptCode>
   </div>
 );
 
-export default LeetcodePage;
+export default withUrqlClient(getUrqlClientOptions)(LeetcodePage);
