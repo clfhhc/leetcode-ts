@@ -3,7 +3,7 @@ import {
   QuestionDataDocument,
   QuestionDataQuery,
 } from 'graphql/leetcode/questionData.query';
-import { getLocalLeetcodeSlugs } from 'lib/leetcode/importLocalLeetcodeFiles';
+import { getLocalLeetcodeSlugs } from 'lib/leetcode/getLeetcodeFiles';
 import { extractDefaultFunctionDeclaration } from 'lib/typescript/extract';
 import { getUrqlClientOptions } from 'lib/urql/getUrqlClientOptions';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
