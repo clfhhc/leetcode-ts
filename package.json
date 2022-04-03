@@ -28,7 +28,8 @@
     "react-is": "^18.0.0",
     "react-syntax-highlighter": "^15.5.0",
     "typescript": "4.6.3",
-    "urql": "^2.2.0"
+    "urql": "^2.2.0",
+    "wonka": "^4.0.15"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.6.2",
