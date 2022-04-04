@@ -4,8 +4,8 @@ import {
   QuestionDataQuery,
 } from 'graphql/leetcode/questionData.query';
 import { getLocalLeetcodeSlugs } from 'lib/leetcode/getLeetcodeFiles';
-import { extractDefaultFunctionDeclaration } from 'lib/typescript/extract';
 import { getUrqlClientOptions } from 'lib/urql/getUrqlClientOptions';
+import { extractFileSection } from 'lib/utils/extractFileSection';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { initUrqlClient, withUrqlClient, WithUrqlState } from 'next-urql';
 import { ParsedUrlQuery } from 'querystring';
@@ -46,15 +46,18 @@ export const getStaticProps: GetStaticProps<StaticProps> = async ({
   const urqlClientOptions = getUrqlClientOptions(ssrCache);
   const client = initUrqlClient(urqlClientOptions, false);
 
-  const result = await client
+  const questionRequest = client
     ?.query(QuestionDataDocument, { titleSlug: slug })
     .toPromise();
 
-  const questionData = result?.data?.question;
+  const solutionContentRequest = extractFileSection({
+    filePath: getLocalLeetcodeSlugs()[slug].filePath,
+    startPredicate: (line) => line === '/* solution start */',
+    endPradicate: (line) => line === '/* solution end */',
+  });
 
-  const solutionContent = extractDefaultFunctionDeclaration(
-    getLocalLeetcodeSlugs()[slug].filePath
-  );
+  const solutionContent = await solutionContentRequest;
+  const questionData = (await questionRequest)?.data?.question;
 
   return {
     props: {
