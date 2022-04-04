@@ -5,7 +5,7 @@
  * https://gist.github.com/yvele/447555b1c5060952a279
  */
 
-import { read, openSync, statSync } from 'fs';
+import { read, openSync } from 'fs';
 import {
   make,
   pipe,
@@ -52,36 +52,38 @@ export function readBytes({
     }
   );
 }
-const createReadLineSource = (filePath: string, bufferSize = 10000000) => {
+export const createReadLineSource = (filePath: string, bufferSize = 1000) => {
   const sharedBuffer = Buffer.alloc(bufferSize);
-  const stats = statSync(filePath);
   const fd = openSync(filePath, 'r');
   let data = '';
+  let i = 0;
 
   const readLineSource = make<string>(({ next, complete }) => {
     let cancelled = false;
 
-    const resolve: ReadBytesResolve = ({ buffer, bytesRead }) => {
-      if (!cancelled) {
-        data += buffer.toString('utf-8', 0, bytesRead);
-        const parts = data.split('\n');
-        data = parts.pop() || '';
-        parts.forEach(next);
-        if (bytesRead === 0) {
-          complete();
-        }
-      } else {
-        complete();
-      }
-    };
     const reject: ReadBytesReject = (err) => {
       console.error(err);
       complete();
     };
 
-    for (let i = 0; i < Math.ceil(stats.size / bufferSize); i++) {
-      readBytes({ fd, sharedBuffer, resolve, reject });
-    }
+    const resolve: ReadBytesResolve = ({ buffer, bytesRead }) => {
+      if (!cancelled) {
+        if (bytesRead === 0) {
+          if (data) {
+            next(data);
+            data = '';
+          }
+          return complete();
+        }
+        data += buffer.toString('utf-8', 0, bytesRead);
+        const parts = data.split('\n');
+        data = parts.pop() || '';
+        parts.forEach(next);
+        readBytes({ fd, sharedBuffer, resolve, reject });
+      }
+    };
+
+    readBytes({ fd, sharedBuffer, resolve, reject });
 
     return () => {
       cancelled = true;
@@ -123,7 +125,9 @@ export const extractFileSection = ({
 
   return pipe(
     source,
-    scan((accu, line) => (accu ? `${accu}\n${line}` : line || ''), ''),
+    scan((accu, line) => {
+      return accu ? `${accu}\n${line}` : line || '';
+    }, ''),
     takeLast(1),
     toPromise
   );

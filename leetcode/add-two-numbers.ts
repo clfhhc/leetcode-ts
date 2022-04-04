@@ -2,6 +2,9 @@ import { FunctionTestCases } from 'lib/utils/types';
 
 /* solution start */
 
+/**
+ * Definition for singly-linked list.
+ */
 class ListNode {
   val: number;
   next: ListNode | null;
@@ -10,18 +13,6 @@ class ListNode {
     this.next = next === undefined ? null : next;
   }
 }
-
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     val: number
- *     next: ListNode | null
- *     constructor(val?: number, next?: ListNode | null) {
- *         this.val = (val===undefined ? 0 : val)
- *         this.next = (next===undefined ? null : next)
- *     }
- * }
- */
 
 function addTwoNumbers(
   l1: ListNode | null,
@@ -88,7 +79,6 @@ const createListNodeFromArray = (array: number[]): ListNode | null => {
   }
   const [result] = array.reduce<Array<ListNode | null>>(
     (result, val) => {
-      // console.log(val);
       const newNode = new ListNode(val);
       result[0] = result[0] || newNode;
       if (!result[1]) {
@@ -97,7 +87,6 @@ const createListNodeFromArray = (array: number[]): ListNode | null => {
         result[1].next = newNode;
         result[1] = newNode;
       }
-      // console.log(result);
       return result;
     },
     [null, null]
