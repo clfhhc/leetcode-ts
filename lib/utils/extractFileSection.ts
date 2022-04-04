@@ -6,7 +6,27 @@
  */
 
 import { read, openSync, statSync } from 'fs';
-import { make, pipe, subscribe } from 'wonka';
+import {
+  make,
+  pipe,
+  subscribe,
+  skipWhile,
+  takeWhile,
+  skip,
+  skipUntil,
+  map,
+  scan,
+  takeLast,
+  share,
+  take,
+  publish,
+  filter,
+  merge,
+  concatMap,
+  concat,
+  fromValue,
+} from 'wonka';
+import { sourceT } from 'wonka/dist/types/src/Wonka_types.gen';
 
 export type ReadBytesResolve = (result: {
   bytesRead: number;
@@ -79,9 +99,42 @@ const createReadLineSource = (filePath: string, bufferSize = 10000000) => {
   return readLineSource;
 };
 
-export const extractFileSection = ({ filePath }: { filePath: string }) => {
+export const extractFileSection = ({
+  filePath,
+  startPredicate,
+  endPradicate,
+  callback,
+}: {
+  filePath: string;
+  startPredicate?: (line: string) => boolean;
+  endPradicate?: (line: string) => boolean;
+  callback: (content: string) => void;
+}) => {
+  const readLineSource = createReadLineSource(filePath);
+  let source: sourceT<string | null> = startPredicate
+    ? pipe(
+        readLineSource,
+        skipWhile((line) => !startPredicate(line))
+      )
+    : readLineSource;
+
+  if (endPradicate) {
+    source = pipe(
+      source,
+      concatMap((line) => {
+        if (endPradicate(line || '')) {
+          return concat([fromValue(line), fromValue(null)]);
+        }
+        return fromValue(line);
+      }),
+      takeWhile((line) => line !== null)
+    );
+  }
+
   pipe(
-    createReadLineSource(filePath),
-    subscribe((line) => console.log('line: ', line))
+    source,
+    scan((accu, line) => (accu ? `${accu}\n${line}` : line || ''), ''),
+    takeLast(1),
+    subscribe(callback)
   );
 };

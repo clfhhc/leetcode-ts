@@ -14,7 +14,12 @@ export interface StaticProps extends PageProps {}
 export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   const slugs = getLocalLeetcodeSlugs();
   const { filePath } = slugs['add-two-numbers'];
-  extractFileSection({ filePath });
+  extractFileSection({
+    filePath,
+    startPredicate: (line) => line === '/* solution start */',
+    endPradicate: (line) => line === '/* solution end */',
+    callback: (file) => console.log(file),
+  });
   const leetcodeSlugs = Object.keys(slugs);
   return {
     props: {

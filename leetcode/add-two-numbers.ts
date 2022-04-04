@@ -1,6 +1,6 @@
 import { FunctionTestCases } from 'lib/utils/types';
 
-// solution start
+/* solution start */
 
 class ListNode {
   val: number;
@@ -150,7 +150,7 @@ function addTwoNumbers(
   return result;
 }
 
-// solution end
+/* solution end */
 
 export default addTwoNumbers;
 
