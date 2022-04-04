@@ -33,84 +33,9 @@ function addTwoNumbers(
 
   let lNode1: ListNode | null = l1,
     lNode2: ListNode | null = l2;
-
-  let overflow = 0;
-  // let sum = 0;
-  // let result: ListNode | null = null;
-  // let pointer: ListNode | null = null;
-  // while (lNode1 && lNode2) {
-  //   sum = lNode1.val + lNode2.val + overflow;
-  //   if (sum >= 10) {
-  //     overflow = 1;
-  //     sum = sum - 10;
-  //   } else {
-  //     overflow = 0;
-  //   }
-  //   const newNode = new ListNode(sum);
-  //   if (pointer) {
-  //     pointer.next = newNode;
-  //     pointer = newNode;
-  //   } else {
-  //     pointer = newNode;
-  //   }
-  //   result = result || newNode;
-  //   lNode1 = lNode1.next;
-  //   lNode2 = lNode2.next;
-  // }
-
-  // let lNode: ListNode | null = lNode1 || lNode2;
-  // while (lNode) {
-  //   sum = lNode.val + overflow;
-  //   if (sum >= 10) {
-  //     overflow = 1;
-  //     sum = sum - 10;
-  //   } else {
-  //     overflow = 0;
-  //   }
-  //   const newNode = new ListNode(sum);
-  //   if (pointer) {
-  //     pointer.next = newNode;
-  //     pointer = newNode;
-  //   } else {
-  //     pointer = newNode;
-  //   }
-  //   result = result || newNode;
-  //   lNode = lNode.next;
-  // }
-
-  // if (overflow === 1 && pointer) {
-  //   pointer.next = new ListNode(1);
-  // }
-
-  // return result;
-
   let result = new ListNode(0);
   let pointer: ListNode | null = result;
-  // while (lNode1 || lNode2 || overflow) {
-  //   sum = overflow;
 
-  //   if (lNode1) {
-  //     sum += lNode1.val;
-  //     lNode1 = lNode1.next;
-  //   }
-
-  //   if (lNode2) {
-  //     sum += lNode2.val;
-  //     lNode2 = lNode2.next;
-  //   }
-
-  //   if (sum >= 10) {
-  //     overflow = 1;
-  //     sum = sum - 10;
-  //   } else {
-  //     overflow = 0;
-  //   }
-
-  //   pointer.next = new ListNode(sum);
-  //   pointer = pointer.next;
-  // }
-
-  // return result.next;
   while (lNode1 !== null && pointer !== null) {
     pointer.val += lNode1.val;
     if (lNode1.next && pointer.next === null) {
@@ -130,6 +55,7 @@ function addTwoNumbers(
     lNode2 = lNode2.next;
   }
 
+  let overflow = 0;
   pointer = result;
   while (pointer !== null) {
     pointer.val += overflow;
