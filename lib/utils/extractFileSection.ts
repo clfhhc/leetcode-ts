@@ -9,22 +9,14 @@ import { read, openSync, statSync } from 'fs';
 import {
   make,
   pipe,
-  subscribe,
   skipWhile,
   takeWhile,
-  skip,
-  skipUntil,
-  map,
   scan,
   takeLast,
-  share,
-  take,
-  publish,
-  filter,
-  merge,
   concatMap,
   concat,
   fromValue,
+  toPromise,
 } from 'wonka';
 import { sourceT } from 'wonka/dist/types/src/Wonka_types.gen';
 
@@ -103,12 +95,10 @@ export const extractFileSection = ({
   filePath,
   startPredicate,
   endPradicate,
-  callback,
 }: {
   filePath: string;
   startPredicate?: (line: string) => boolean;
   endPradicate?: (line: string) => boolean;
-  callback: (content: string) => void;
 }) => {
   const readLineSource = createReadLineSource(filePath);
   let source: sourceT<string | null> = startPredicate
@@ -131,10 +121,10 @@ export const extractFileSection = ({
     );
   }
 
-  pipe(
+  return pipe(
     source,
     scan((accu, line) => (accu ? `${accu}\n${line}` : line || ''), ''),
     takeLast(1),
-    subscribe(callback)
+    toPromise
   );
 };
