@@ -27,6 +27,7 @@ function addTwoNumbers(
   let result = new ListNode(0);
   let pointer: ListNode | null = result;
 
+  // copy l1's value
   while (lNode1 !== null && pointer !== null) {
     pointer.val += lNode1.val;
     if (lNode1.next && pointer.next === null) {
@@ -36,6 +37,7 @@ function addTwoNumbers(
     lNode1 = lNode1.next;
   }
 
+  // add l2's value
   pointer = result;
   while (lNode2 !== null && pointer !== null) {
     pointer.val += lNode2.val;
@@ -46,6 +48,7 @@ function addTwoNumbers(
     lNode2 = lNode2.next;
   }
 
+  // process overflow
   let overflow = 0;
   pointer = result;
   while (pointer !== null) {
