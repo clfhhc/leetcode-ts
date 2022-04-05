@@ -1,5 +1,4 @@
 import {
-  createReadBytesSource,
   createReadLineSource,
   createReadLineSourceFromBytes,
   createReadLineSourceFromReadStream,
@@ -11,7 +10,7 @@ import {
   timesFunctionTime,
   timesFunctionTimeWithCallback,
 } from 'lib/utils/functionTime';
-import { map, pipe, subscribe } from 'wonka';
+import { pipe, subscribe } from 'wonka';
 import flattenDeep from 'lodash/flattenDeep';
 
 const defaultFilePath = 'leetcode/add-two-numbers.ts';
@@ -20,19 +19,6 @@ let recordedString = '';
 const copyStringCallback = (file: string) => {
   recordedString = file;
 };
-
-// const readWholeFileWithReadBytes1000 = (filePath: string = defaultFilePath) => {
-//   const bufferSize = 1000;
-//   const createLineSource = createReadLineSourceFromBytes;
-//   pipe(
-//     extractFileSectionSource({
-//       filePath,
-//       bufferSize,
-//       createLineSource,
-//     }),
-//     subscribe(copyStringCallback)
-//   );
-// };
 
 const readFileWithCallback = ({
   callback,
@@ -119,8 +105,6 @@ const main = async () => {
       description: `${description}|promise`,
     });
   }
-
-  // console.log(recordedString);
 };
 
 main();
