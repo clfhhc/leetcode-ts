@@ -22,7 +22,7 @@ import {
 } from 'wonka';
 import { sourceT } from 'wonka/dist/types/src/Wonka_types.gen';
 
-const defaultBufferSize = 1e7;
+const defaultBufferSize = 1e5;
 
 export type ReadBytesResolve = (result: {
   bytesRead: number;
