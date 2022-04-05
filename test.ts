@@ -44,7 +44,7 @@ const readFileWithCallback = ({
 const readFileWithPromise = (args: ExtractFileSectionSourceProps) =>
   extractFileSection(args).then(copyStringCallback);
 
-const bufferSizes = [1e3, 1e4, 1e5, 1e6];
+const bufferSizes = [1e4, 1e5];
 const createLineSources = [
   createReadLineSource,
   createReadLineSourceFromBytes,
@@ -53,15 +53,28 @@ const createLineSources = [
 const startPredicate = (line: string) => line === '/* solution start */';
 const endPradicate = (line: string) => line === '/* solution end */';
 
+const startPredicates = [startPredicate, undefined];
+const endPradicates = [endPradicate, undefined];
+
 const testCases = flattenDeep(
-  bufferSizes.map((bufferSize) =>
-    createLineSources.map<
-      Omit<ExtractFileSectionSourceProps, 'filePath'> & { description: string }
-    >((createLineSource) => ({
-      bufferSize,
-      createLineSource,
-      description: `${bufferSize}|${createLineSource.name}`,
-    }))
+  startPredicates.map((startPredicate) =>
+    endPradicates.map((endPradicate) =>
+      bufferSizes.map((bufferSize) =>
+        createLineSources.map<
+          Omit<ExtractFileSectionSourceProps, 'filePath'> & {
+            description: string;
+          }
+        >((createLineSource) => ({
+          bufferSize,
+          createLineSource,
+          description: `${bufferSize}|${createLineSource.name}|${
+            startPredicate ? 'start' : 'noStart'
+          }|${endPradicate ? 'end' : 'noEnd'}`,
+          startPredicate,
+          endPradicate,
+        }))
+      )
+    )
   )
 );
 
@@ -69,7 +82,7 @@ const main = async () => {
   // readWholeFileWithReadBytes1000(defaultFilePath);
   const functionToTest = readFileWithCallback;
   const promiseToTest = readFileWithPromise;
-  const times = 10000;
+  const times = 1000;
   const filePath = defaultFilePath;
   for (let i = 0; i < testCases.length; i++) {
     const { bufferSize, createLineSource, description } = testCases[i];
