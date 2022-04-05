@@ -1,5 +1,7 @@
 import { FunctionTestCases } from '../lib/utils/types';
 
+/* solution start */
+
 function twoSum(nums: number[], target: number): number[] {
   const numsObj: { [k: number]: number } = {};
   // iterate all the elements in the array
@@ -18,6 +20,8 @@ function twoSum(nums: number[], target: number): number[] {
   }
   return [];
 }
+
+/* solution end */
 
 export default twoSum;
 
