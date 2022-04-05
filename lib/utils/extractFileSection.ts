@@ -5,7 +5,7 @@
  * https://gist.github.com/yvele/447555b1c5060952a279
  */
 
-import { read, openSync } from 'fs';
+import { read, openSync, createReadStream, readFile } from 'fs';
 import {
   make,
   pipe,
@@ -17,8 +17,12 @@ import {
   concat,
   fromValue,
   toPromise,
+  map,
+  fromArray,
 } from 'wonka';
 import { sourceT } from 'wonka/dist/types/src/Wonka_types.gen';
+
+const defaultBufferSize = 1e7;
 
 export type ReadBytesResolve = (result: {
   bytesRead: number;
@@ -26,6 +30,11 @@ export type ReadBytesResolve = (result: {
 }) => void;
 
 export type ReadBytesReject = (err: NodeJS.ErrnoException) => void;
+
+export type CreateReadLineSource = (
+  filePath: string,
+  bufferSize: number
+) => sourceT<string>;
 
 export function readBytes({
   fd,
@@ -52,11 +61,66 @@ export function readBytes({
     }
   );
 }
-export const createReadLineSource = (filePath: string, bufferSize = 1000) => {
+
+export const createReadBytesSource = (
+  filePath: string,
+  bufferSize = defaultBufferSize
+) => {
+  const sharedBuffer = Buffer.alloc(bufferSize);
+  const fd = openSync(filePath, 'r');
+
+  const createReadBytesSource = make<Buffer>(({ next, complete }) => {
+    let cancelled = false;
+
+    const reject: ReadBytesReject = (err) => {
+      console.error(err);
+      complete();
+    };
+
+    const resolve: ReadBytesResolve = ({ buffer, bytesRead }) => {
+      if (!cancelled) {
+        if (bytesRead === 0) {
+          return complete();
+        }
+        next(buffer.slice(0, bytesRead));
+        readBytes({ fd, sharedBuffer, resolve, reject });
+      }
+    };
+
+    readBytes({ fd, sharedBuffer, resolve, reject });
+
+    return () => {
+      cancelled = true;
+    };
+  });
+
+  return createReadBytesSource;
+};
+
+export const createReadLineSourceFromBytes: CreateReadLineSource = (
+  filePath,
+  bufferSize = defaultBufferSize
+) => {
+  let data = '';
+  return pipe(
+    createReadBytesSource(filePath, bufferSize),
+    map((buffer) => buffer.toString('utf-8')),
+    concatMap((chars) => {
+      data += chars;
+      const parts = data.split('\n');
+      data = parts.pop() || '';
+      return fromArray(parts);
+    })
+  );
+};
+
+export const createReadLineSource: CreateReadLineSource = (
+  filePath,
+  bufferSize = defaultBufferSize
+) => {
   const sharedBuffer = Buffer.alloc(bufferSize);
   const fd = openSync(filePath, 'r');
   let data = '';
-  let i = 0;
 
   const readLineSource = make<string>(({ next, complete }) => {
     let cancelled = false;
@@ -69,10 +133,6 @@ export const createReadLineSource = (filePath: string, bufferSize = 1000) => {
     const resolve: ReadBytesResolve = ({ buffer, bytesRead }) => {
       if (!cancelled) {
         if (bytesRead === 0) {
-          if (data) {
-            next(data);
-            data = '';
-          }
           return complete();
         }
         data += buffer.toString('utf-8', 0, bytesRead);
@@ -93,16 +153,51 @@ export const createReadLineSource = (filePath: string, bufferSize = 1000) => {
   return readLineSource;
 };
 
-export const extractFileSection = ({
+export const createReadLineSourceFromReadStream: CreateReadLineSource = (
   filePath,
-  startPredicate,
-  endPradicate,
-}: {
+  bufferSize = defaultBufferSize
+) => {
+  let data = '';
+  const readStream = createReadStream(filePath, {
+    highWaterMark: bufferSize,
+    encoding: 'utf-8',
+  });
+
+  const readStreamSource = make<string>(({ next, complete }) => {
+    readStream.on('data', (chars) => {
+      data += chars;
+      const parts = data.split('\n');
+      data = parts.pop() || '';
+      parts.forEach(next);
+    });
+    readStream.on('close', () => {
+      complete();
+    });
+
+    return () => {
+      complete();
+    };
+  });
+
+  return readStreamSource;
+};
+
+export interface ExtractFileSectionSourceProps {
   filePath: string;
+  bufferSize?: number;
   startPredicate?: (line: string) => boolean;
   endPradicate?: (line: string) => boolean;
-}) => {
-  const readLineSource = createReadLineSource(filePath);
+  createLineSource?: CreateReadLineSource;
+}
+
+export const extractFileSectionSource = ({
+  filePath,
+  bufferSize = defaultBufferSize,
+  startPredicate,
+  endPradicate,
+  createLineSource = createReadLineSource,
+}: ExtractFileSectionSourceProps) => {
+  const readLineSource = createLineSource(filePath, bufferSize);
   let source: sourceT<string | null> = startPredicate
     ? pipe(
         readLineSource,
@@ -128,7 +223,9 @@ export const extractFileSection = ({
     scan((accu, line) => {
       return accu ? `${accu}\n${line}` : line || '';
     }, ''),
-    takeLast(1),
-    toPromise
+    takeLast(1)
   );
 };
+
+export const extractFileSection = (arg: ExtractFileSectionSourceProps) =>
+  pipe(extractFileSectionSource(arg), toPromise);
