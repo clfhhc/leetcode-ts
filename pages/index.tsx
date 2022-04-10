@@ -1,7 +1,6 @@
 import type { GetStaticProps, NextPage } from 'next';
 import Link from 'next/link';
 import Title from 'components/Title';
-import styles from 'styles/Home.module.css';
 import { getLocalLeetcodeSlugs } from 'lib/leetcode/getLeetcodeFiles';
 
 export interface PageProps {
@@ -22,7 +21,7 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
 
 const Home: NextPage<StaticProps> = ({ leetcodeSlugs }) => {
   return (
-    <div className={styles.container}>
+    <div>
       <Title title="Leetcode Typescript Solutions" />
       {leetcodeSlugs?.map((slug) => (
         <Link key={slug} href={`/leetcode/${slug}`}>
