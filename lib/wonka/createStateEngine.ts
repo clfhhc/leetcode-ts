@@ -39,7 +39,7 @@ export function createStateEngine<
 
   return {
     subjects,
-    output,
+    output: output ?? ({} as O),
     state: { output: stateSubject.source },
   };
 }
