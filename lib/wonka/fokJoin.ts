@@ -1,11 +1,4 @@
-import {
-  fromValue,
-  make,
-  onPush,
-  pipe,
-  publish,
-  Source,
-} from 'wonka';
+import { fromValue, make, onPush, pipe, publish, Source } from 'wonka';
 
 export function forkJoin(sources: []): Source<never>;
 export function forkJoin<T extends readonly (Source<unknown> | undefined)[]>(
