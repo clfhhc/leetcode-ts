@@ -1,4 +1,4 @@
-import { FC, createContext } from 'react';
+import { FC, createContext, useContext } from 'react';
 import { Source, Subject } from 'wonka';
 import { createStateEngine } from './createStateEngine';
 
@@ -8,16 +8,19 @@ export function createStateContext<
 >(engineArgs: { subjects: S; output?: O }) {
   const engine = createStateEngine(engineArgs);
 
-  const EngineContext = createContext(engine);
+  const StateContext = createContext(engine);
 
-  const EngineProvider: FC = ({ children }) => {
+  const useStateContext = () => useContext(StateContext);
+
+  const StateProvider: FC = ({ children }) => {
     return (
-      <EngineContext.Provider value={engine}>{children}</EngineContext.Provider>
+      <StateContext.Provider value={engine}>{children}</StateContext.Provider>
     );
   };
   return {
     engine,
-    EngineContext,
-    EngineProvider,
+    StateContext,
+    StateProvider,
+    useStateContext,
   };
 }
