@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Source, subscribe } from 'wonka';
 
-export function useWonkaOutput<T>(source: Source<T>, initial: T) {
-  const [val, setVal] = useState<T>(initial);
+export function useWonkaOutput<T>(source: Source<T>, initial?: T) {
+  const [val, setVal] = useState<T | undefined>(initial);
   const unsubscribe = useRef<() => void>();
 
   useEffect(() => {

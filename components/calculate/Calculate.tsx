@@ -1,5 +1,5 @@
 import { EngineContext } from 'lib/state/initStateEngineContext';
-import { inputWonkaFactory } from 'lib/wonka/inputWonkaFactory';
+import { useWonkaInput } from 'lib/wonka/useWonkaInput';
 import { useWonkaOutput } from 'lib/wonka/useWonkaOutput';
 import { FC, useContext } from 'react';
 
@@ -9,11 +9,11 @@ const Calculate: FC = () => {
     output: { solution },
     state: { output },
   } = useContext(EngineContext);
-  const addNumber = inputWonkaFactory(numbersToSum);
-  const calculateNow = inputWonkaFactory(calculate);
+  const addNumber = useWonkaInput(numbersToSum);
+  const calculateNow = useWonkaInput(calculate);
   const solutions = useWonkaOutput(solution, []);
-  const state = useWonkaOutput(output, {});
-  console.log(state);
+  const state = useWonkaOutput(output);
+  console.log('state: ', state);
 
   return (
     <div>
