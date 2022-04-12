@@ -1,3 +1,4 @@
+import 'lib/utils/serverLoadEnvConfig';
 import {
   createReadLineSource,
   createReadLineSourceFromBytes,
@@ -10,8 +11,11 @@ import {
   timesFunctionTime,
   timesFunctionTimeWithCallback,
 } from 'lib/utils/functionTime';
-import { pipe, subscribe } from 'wonka';
+import { fromPromise, fromValue, map, pipe, subscribe, toPromise } from 'wonka';
 import flattenDeep from 'lodash/flattenDeep';
+import { forkJoin } from 'lib/wonka/fokJoin';
+import fetch from 'cross-fetch';
+global.fetch = fetch;
 
 const defaultFilePath = 'leetcode/add-two-numbers.ts';
 
@@ -64,47 +68,82 @@ const testCases = flattenDeep(
   )
 );
 
-const main = async () => {
-  // readWholeFileWithReadBytes1000(defaultFilePath);
-  const functionToTest = readFileWithCallback;
-  const promiseToTest = readFileWithPromise;
-  const times = 1000;
-  const filePath = defaultFilePath;
-  for (let i = 0; i < testCases.length; i++) {
-    const { bufferSize, createLineSource, description } = testCases[i];
-    await timesFunctionTimeWithCallback({
-      functionToTest,
-      functionArgs: ({ resolve }): Parameters<typeof functionToTest> => {
-        const callback = (text: string) => {
-          copyStringCallback(text);
-          return resolve();
-        };
-        return [
-          {
-            callback,
-            filePath,
-            bufferSize,
-            createLineSource,
-          },
-        ];
-      },
-      description: `${description}|callback`,
-      times,
-    });
+// const main = async () => {
+//   const functionToTest = readFileWithCallback;
+//   const promiseToTest = readFileWithPromise;
+//   const times = 1000;
+//   const filePath = defaultFilePath;
+//   for (let i = 0; i < testCases.length; i++) {
+//     const { bufferSize, createLineSource, description } = testCases[i];
+//     await timesFunctionTimeWithCallback({
+//       functionToTest,
+//       functionArgs: ({ resolve }): Parameters<typeof functionToTest> => {
+//         const callback = (text: string) => {
+//           copyStringCallback(text);
+//           return resolve();
+//         };
+//         return [
+//           {
+//             callback,
+//             filePath,
+//             bufferSize,
+//             createLineSource,
+//           },
+//         ];
+//       },
+//       description: `${description}|callback`,
+//       times,
+//     });
 
-    await timesFunctionTime({
-      functionToTest: promiseToTest,
-      functionArgs: [
-        {
-          filePath,
-          bufferSize,
-          createLineSource,
-        },
-      ],
-      times,
-      description: `${description}|promise`,
-    });
+//     await timesFunctionTime({
+//       functionToTest: promiseToTest,
+//       functionArgs: [
+//         {
+//           filePath,
+//           bufferSize,
+//           createLineSource,
+//         },
+//       ],
+//       times,
+//       description: `${description}|promise`,
+//     });
+//   }
+// };
+const solutionContentSource = (filePath: string) => extractFileSectionSource({
+  filePath,
+  startPredicate: (line) => line === '/* solution start */',
+  endPradicate: (line) => line === '/* solution end */',
+});
+
+// const testFetch = async () => {
+//   const result = await fetch('https://google.com', {method: 'GET'});
+//   return result.text();
+// }
+
+const testFetch = () => Promise.resolve(3);
+
+const functionToTest1 = async () => {
+  return pipe(forkJoin([solutionContentSource('leetcode/add-two-numbers.ts'), solutionContentSource('leetcode/two-sum.ts'), fromPromise(testFetch())]), map(([content1, content2, content3]) => ({content1, content2, content3})), toPromise);
+}
+
+const functionToTest2 = async () => {
+  const request1 = pipe(solutionContentSource('leetcode/add-two-numbers.ts'), toPromise);
+  const request2 = pipe(solutionContentSource('leetcode/two-sum.ts'), toPromise);
+  const request3 = testFetch();
+
+  return {
+    content1: await request1,
+    content2: await request2,
+    content3: await request3,
   }
+}
+const main = async () => {
+  [functionToTest1, functionToTest2].forEach((functionToTest, index) => timesFunctionTime({
+    functionToTest,
+    times: 10000,
+    functionArgs: [],
+    description: `func${index}`
+  }))
 };
 
 main();

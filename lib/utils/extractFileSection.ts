@@ -5,7 +5,7 @@
  * https://gist.github.com/yvele/447555b1c5060952a279
  */
 
-import { read, openSync, createReadStream, readFile } from 'fs';
+import { read, openSync, createReadStream } from 'fs';
 import {
   make,
   pipe,
@@ -19,8 +19,8 @@ import {
   toPromise,
   map,
   fromArray,
+  Source,
 } from 'wonka';
-import { sourceT } from 'wonka/dist/types/src/Wonka_types.gen';
 
 const defaultBufferSize = 1e5;
 
@@ -34,7 +34,7 @@ export type ReadBytesReject = (err: NodeJS.ErrnoException) => void;
 export type CreateReadLineSource = (
   filePath: string,
   bufferSize: number
-) => sourceT<string>;
+) => Source<string>;
 
 export function readBytes({
   fd,
@@ -198,7 +198,7 @@ export const extractFileSectionSource = ({
   createLineSource = createReadLineSource,
 }: ExtractFileSectionSourceProps) => {
   const readLineSource = createLineSource(filePath, bufferSize);
-  let source: sourceT<string | null> = startPredicate
+  let source: Source<string | null> = startPredicate
     ? pipe(
         readLineSource,
         skipWhile((line) => !startPredicate(line))

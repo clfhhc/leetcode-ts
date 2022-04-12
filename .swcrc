@@ -19,7 +19,9 @@
     "keepClassNames": true,
     "baseUrl": "./",
     "paths": {
-      "^lib/*": ["./lib/*"]
+      "lib/*": ["./lib/*"],
+      "pages/*": ["./pages/*"],
+      "graphql/*": ["./graphql/*"]
     }
   }
 }
