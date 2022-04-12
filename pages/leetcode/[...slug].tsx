@@ -1,3 +1,4 @@
+import Calculate from 'components/calculate/Calculate';
 import TypescriptCode from 'components/code/TypescriptCode';
 import {
   QuestionDataDocument,
@@ -81,6 +82,7 @@ const LeetcodePage: NextPage<StaticProps> = ({
 }) => (
   <div>
     <h1>{questionData?.title}</h1>
+    <Calculate />
     <p>{`Difficulty: ${questionData?.difficulty}`}</p>
     <div
       dangerouslySetInnerHTML={{ __html: questionData?.content ?? '' }}
