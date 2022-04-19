@@ -4,7 +4,7 @@ import * as React from 'react';
 import {
   PlasmicTitle,
   DefaultTitleProps,
-} from './plasmic/my_project/PlasmicTitle';
+} from './plasmic/leetcode_ts/PlasmicTitle';
 import { HTMLElementRefOf } from '@plasmicapp/react-web';
 
 // Your component props start with props for variants and slots you defined

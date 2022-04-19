@@ -7,7 +7,7 @@
   },
   "style": {
     "scheme": "css-modules",
-    "defaultStyleCssFilePath": "plasmic/plasmic__default_style.css"
+    "defaultStyleCssFilePath": "plasmic/plasmic__default_style.module.css"
   },
   "images": {
     "scheme": "public-files",
@@ -24,46 +24,163 @@
     {
       "projectId": "7WsMcki2ZLTk8QRowXDdYK",
       "projectApiToken": "4fn3yXETT5cQf5nWQ1mgyRBIaLYcRynR7dpPBHRFTxx7SXcMCFgzIgaXFlJM5wQ9Pf9opizzod2DZZ9TRvGrw",
-      "projectName": "My Project",
+      "projectName": "Leetcode-ts",
       "version": "latest",
       "cssFilePath": "plasmic/my_project/plasmic_my_project.module.css",
       "components": [
         {
-          "id": "isoTvdI380",
+          "id": "3b_qeIJoA0",
+          "name": "Table",
+          "type": "managed",
+          "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+          "renderModuleFilePath": "plasmic/leetcode_ts/PlasmicTable.tsx",
+          "importSpec": {
+            "modulePath": "../pages/index.tsx"
+          },
+          "cssFilePath": "plasmic/leetcode_ts/PlasmicTable.module.css",
+          "scheme": "blackbox",
+          "componentType": "page"
+        },
+        {
+          "id": "Ix9vuo16AZ",
           "name": "Title",
           "type": "managed",
           "projectId": "7WsMcki2ZLTk8QRowXDdYK",
-          "renderModuleFilePath": "plasmic/my_project/PlasmicTitle.tsx",
+          "renderModuleFilePath": "plasmic/leetcode_ts/PlasmicTitle.tsx",
           "importSpec": {
             "modulePath": "Title.tsx"
           },
-          "cssFilePath": "plasmic/my_project/PlasmicTitle.module.css",
+          "cssFilePath": "plasmic/leetcode_ts/PlasmicTitle.module.css",
           "scheme": "blackbox",
           "componentType": "component"
+        },
+        {
+          "id": "gSDoiytAgu",
+          "name": "Solution",
+          "type": "managed",
+          "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+          "renderModuleFilePath": "plasmic/leetcode_ts/PlasmicSolution.tsx",
+          "importSpec": {
+            "modulePath": "../pages/solution.tsx"
+          },
+          "cssFilePath": "plasmic/leetcode_ts/PlasmicSolution.module.css",
+          "scheme": "blackbox",
+          "componentType": "page"
         }
       ],
       "icons": [
         {
           "id": "4U58eb0u7z9V2",
           "name": "IconIcon",
-          "moduleFilePath": "plasmic/my_project/icons/PlasmicIcon__Icon.tsx"
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__Icon.tsx"
         },
         {
           "id": "KbDn-DXG5xxeJ",
           "name": "Icon2Icon",
-          "moduleFilePath": "plasmic/my_project/icons/PlasmicIcon__Icon2.tsx"
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__Icon2.tsx"
+        },
+        {
+          "id": "xjGTmFMt8B1F",
+          "name": "BarsIcon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__Bars.tsx"
+        },
+        {
+          "id": "Gg4D5jHS0Zqb",
+          "name": "TimesIcon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__Times.tsx"
+        },
+        {
+          "id": "e4mpsc3MQ",
+          "name": "Icon3Icon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__Icon3.tsx"
+        },
+        {
+          "id": "-hNpKp5g0c",
+          "name": "ShoppingCartIcon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__ShoppingCart.tsx"
+        },
+        {
+          "id": "AUDyUyAC_7",
+          "name": "HeartOIcon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__HeartO.tsx"
+        },
+        {
+          "id": "KWCL_hQ8Dy",
+          "name": "ExpandIcon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__Expand.tsx"
+        },
+        {
+          "id": "OceLYH5enu",
+          "name": "StarIcon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__Star.tsx"
+        },
+        {
+          "id": "HMHAIohMuOB",
+          "name": "ButtonArrowIcon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__ButtonArrow.tsx"
+        },
+        {
+          "id": "s1ER2_iP6CQ",
+          "name": "LogoWhitesvgIcon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__LogoWhitesvg.tsx"
+        },
+        {
+          "id": "8w1NtuPdbrG",
+          "name": "Icon4Icon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__Icon4.tsx"
+        },
+        {
+          "id": "8U0u8hekC5g",
+          "name": "DotSvgrepoCom1SvgIcon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__DotSvgrepoCom1Svg.tsx"
+        },
+        {
+          "id": "EYfEbzA71Xi",
+          "name": "LocationSvgrepoCom1SvgIcon",
+          "moduleFilePath": "plasmic/leetcode_ts/icons/PlasmicIcon__LocationSvgrepoCom1Svg.tsx"
         }
       ],
       "images": [
         {
-          "id": "ThWjWEZA-V1t6",
-          "name": "image.png",
-          "filePath": "../public/plasmic/my_project/images/imagepng.jpeg"
+          "id": "6aUeFFdf9",
+          "name": "leetcode-logo",
+          "filePath": "../public/plasmic/leetcode_ts/images/leetcodeLogo.png"
+        },
+        {
+          "id": "qdNDMCQ1L",
+          "name": "typescript-logo",
+          "filePath": "../public/plasmic/leetcode_ts/images/typescriptLogo.png"
         }
       ],
       "indirect": false,
       "globalContextsFilePath": "",
-      "codeComponents": []
+      "codeComponents": [
+        {
+          "id": "x5Efe1NdBz",
+          "name": "Compx5Efe1NdBz",
+          "componentImportPath": ""
+        }
+      ]
+    },
+    {
+      "projectId": "58GpZjZCWTaJ8AUhpCwt2K",
+      "projectApiToken": "DIkcfhBwjMCJSjcxfBkMuy4NImyytq5EWylxVcpS9t9EpdhnPQuBgBGxmk00AB1itMFa1KXTxOKnrjN2PN9nlA",
+      "projectName": "react-awesome-reveal",
+      "version": "2.1.2",
+      "cssFilePath": "plasmic/react_awesome_reveal/plasmic_react_awesome_reveal.module.css",
+      "components": [],
+      "icons": [],
+      "images": [],
+      "indirect": true,
+      "globalContextsFilePath": "",
+      "codeComponents": [
+        {
+          "id": "R6s1FdhksG",
+          "name": "Reveal",
+          "componentImportPath": "@plasmicpkgs/react-awesome-reveal"
+        }
+      ],
+      "jsBundleThemes": []
     }
   ],
   "globalVariants": {
@@ -72,7 +189,7 @@
         "id": "qNtJgJXrY5orn",
         "name": "Screen",
         "projectId": "7WsMcki2ZLTk8QRowXDdYK",
-        "contextFilePath": "plasmic/my_project/PlasmicGlobalVariant__Screen.tsx"
+        "contextFilePath": "plasmic/leetcode_ts/PlasmicGlobalVariant__Screen.tsx"
       }
     ]
   },

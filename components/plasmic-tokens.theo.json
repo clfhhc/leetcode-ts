@@ -1,6 +1,56 @@
 {
   "props": [
     {
+      "name": "Banner Height",
+      "type": "spacing",
+      "value": "100px",
+      "category": "spacing",
+      "meta": {
+        "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+        "id": "JkGO6QUDB"
+      }
+    },
+    {
+      "name": "MaxCodeWidth",
+      "type": "spacing",
+      "value": "1200px",
+      "category": "spacing",
+      "meta": {
+        "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+        "id": "EqURR90Ls"
+      }
+    },
+    {
+      "name": "MinWidth",
+      "type": "spacing",
+      "value": "400px",
+      "category": "spacing",
+      "meta": {
+        "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+        "id": "JxdAff5Lk"
+      }
+    },
+    {
+      "name": "Mobile Banner Height",
+      "type": "spacing",
+      "value": "1px",
+      "category": "spacing",
+      "meta": {
+        "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+        "id": "cnkioM7T4"
+      }
+    },
+    {
+      "name": "Mobile Title Size",
+      "type": "fontsize",
+      "value": "48px",
+      "category": "fontsize",
+      "meta": {
+        "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+        "id": "atxZi1U-C"
+      }
+    },
+    {
       "name": "PrimaryFont",
       "type": "fontfamily",
       "value": "Futura",
@@ -8,6 +58,26 @@
       "meta": {
         "projectId": "7WsMcki2ZLTk8QRowXDdYK",
         "id": "ye9-YHF5f"
+      }
+    },
+    {
+      "name": "QuestionMinWidth",
+      "type": "spacing",
+      "value": "500px",
+      "category": "spacing",
+      "meta": {
+        "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+        "id": "z-t_-Zi7I"
+      }
+    },
+    {
+      "name": "Title Column Gap",
+      "type": "spacing",
+      "value": "20px",
+      "category": "spacing",
+      "meta": {
+        "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+        "id": "iFl30z79X"
       }
     },
     {

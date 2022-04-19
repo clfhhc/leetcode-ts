@@ -1,5 +1,7 @@
 import Calculate from 'components/calculate/Calculate';
 import TypescriptCode from 'components/code/TypescriptCode';
+import PlasmicSolution from 'components/plasmic/leetcode_ts/PlasmicSolution';
+import LeetcodeQuestion from 'components/question/LeetcodeQuestion';
 import {
   QuestionDataDocument,
   QuestionDataQuery,
@@ -80,15 +82,20 @@ const LeetcodePage: NextPage<StaticProps> = ({
   questionData,
   solutionContent,
 }) => (
-  <div>
-    <h1>{questionData?.title}</h1>
-    <Calculate />
-    <p>{`Difficulty: ${questionData?.difficulty}`}</p>
-    <div
-      dangerouslySetInnerHTML={{ __html: questionData?.content ?? '' }}
-    ></div>
-    <TypescriptCode>{solutionContent}</TypescriptCode>
-  </div>
+  // <div>
+  //   <h1>{questionData?.title}</h1>
+  //   <Calculate />
+  //   <p>{`Difficulty: ${questionData?.difficulty}`}</p>
+  //   <div
+  //     dangerouslySetInnerHTML={{ __html: questionData?.content ?? '' }}
+  //   ></div>
+  //   <TypescriptCode>{solutionContent}</TypescriptCode>
+  // </div>
+  <PlasmicSolution
+    titleText={questionData?.title}
+    question={<LeetcodeQuestion content={questionData?.content} />}
+    solution={<TypescriptCode>{solutionContent}</TypescriptCode>}
+  ></PlasmicSolution>
 );
 
 export default withUrqlClient(getUrqlClientOptions)(LeetcodePage);

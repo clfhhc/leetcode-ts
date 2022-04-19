@@ -1,0 +1,41 @@
+.question {
+  font-size: medium;
+  color: #263238;
+}
+
+.question * {
+  margin: -5px 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.question img {
+  margin: 0;
+  margin-bottom: 10px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.question code,
+.question pre {
+  background-color: #f7f9fa;
+}
+
+.question code {
+  font-family: monospace;
+}
+
+.question pre {
+  font-family: SFMono-Regular, monospace;
+  font-size: 13px;
+  line-height: 200%;
+  margin: 0 10px;
+}
+
+.question ul {
+  padding: 0;
+}
+
+.question ul li {
+  margin: -20px 30px;
+}

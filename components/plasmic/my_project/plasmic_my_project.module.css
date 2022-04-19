@@ -5,6 +5,18 @@
   --plasmic-token-primary-font: var(--token-ye9-YHF5f);
   --token-EpaOxPdp5: 64px;
   --plasmic-token-title-size: var(--token-EpaOxPdp5);
+  --token-atxZi1U-C: 48px;
+  --plasmic-token-mobile-title-size: var(--token-atxZi1U-C);
+  --token-iFl30z79X: 20px;
+  --plasmic-token-title-column-gap: var(--token-iFl30z79X);
+  --token-JkGO6QUDB: 100px;
+  --plasmic-token-banner-height: var(--token-JkGO6QUDB);
+  --token-JxdAff5Lk: 400px;
+  --plasmic-token-min-width: var(--token-JxdAff5Lk);
+  --token-EqURR90Ls: 1200px;
+  --plasmic-token-max-code-width: var(--token-EqURR90Ls);
+  --token-z-t_-Zi7I: 500px;
+  --plasmic-token-question-min-width: var(--token-z-t_-Zi7I);
 }
 
 .plasmic_default_styles {
