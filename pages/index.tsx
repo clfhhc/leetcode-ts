@@ -1,5 +1,4 @@
 import type { GetStaticProps, NextPage } from 'next';
-import Link from 'next/link';
 import { getLocalLeetcodeSlugs } from 'lib/leetcode/getLeetcodeFiles';
 import { PlasmicTable } from '../components/plasmic/leetcode_ts/PlasmicTable';
 import { ssrExchange } from 'urql';
@@ -10,6 +9,7 @@ import {
   QuestionListQuery,
 } from 'graphql/leetcode/questionList.query';
 import { map, pipe, take, toPromise } from 'wonka';
+import QuestionList from 'components/question-list/QuestionList';
 
 export interface PageProps {
   leetcodeSlugs?: string[];
@@ -68,11 +68,12 @@ const Table: NextPage<StaticProps> = ({ leetcodeSlugs, leetcodeQuestions }) => {
         // 4. Props to set on the root node.
       }
       <PlasmicTable
-        table={leetcodeSlugs?.map((slug) => (
-          <Link key={slug} href={`/leetcode/${slug}`}>
-            {slug}
-          </Link>
-        ))}
+        table={
+          <QuestionList
+            leetcodeQuestions={leetcodeQuestions}
+            leetcodeSlugs={leetcodeSlugs}
+          />
+        }
       />
     </>
   );

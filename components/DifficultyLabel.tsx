@@ -20,10 +20,13 @@ import { HTMLElementRefOf } from '@plasmicapp/react-web';
 //
 // You can also stop extending from DefaultDifficultyLabelProps altogether and have
 // total control over the props for your component.
-export interface DifficultyLabelProps extends DefaultDifficultyLabelProps {}
+export interface DifficultyLabelProps
+  extends Omit<DefaultDifficultyLabelProps, 'difficulty'> {
+  difficulty?: string | undefined | null;
+}
 
 function DifficultyLabel_(
-  props: DifficultyLabelProps,
+  { difficulty, ...props }: DifficultyLabelProps,
   ref: HTMLElementRefOf<'div'>
 ) {
   // Use PlasmicDifficultyLabel to render this component as it was
@@ -40,8 +43,15 @@ function DifficultyLabel_(
   //
   // By default, we are just piping all DifficultyLabelProps here, but feel free
   // to do whatever works for you.
-
-  return <PlasmicDifficultyLabel root={{ ref }} {...props} />;
+  const newProps: DefaultDifficultyLabelProps = { ...props };
+  if (
+    difficulty &&
+    ['easy', 'medium', 'hard'].includes(difficulty?.toLowerCase())
+  ) {
+    newProps.difficulty =
+      difficulty.toLowerCase() as DefaultDifficultyLabelProps['difficulty'];
+  }
+  return <PlasmicDifficultyLabel root={{ ref }} {...newProps} />;
 }
 
 const DifficultyLabel = React.forwardRef(DifficultyLabel_);

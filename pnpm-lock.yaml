@@ -20,6 +20,7 @@ specifiers:
   '@types/react': 17.0.43
   '@types/react-dom': 17.0.14
   '@types/react-syntax-highlighter': ^13.5.2
+  '@types/react-table': ^7.7.10
   '@types/webpack-env': ^1.16.3
   '@urql/core': ^2.4.3
   '@urql/exchange-graphcache': ^4.3.6
@@ -40,6 +41,7 @@ specifiers:
   react-dom: 18.0.0
   react-is: ^18.0.0
   react-syntax-highlighter: ^15.5.0
+  react-table: ^7.7.0
   typescript: 4.6.3
   urql: ^2.2.0
   wonka: ^4.0.15
@@ -63,6 +65,7 @@ dependencies:
   react-dom: 18.0.0_react@18.0.0
   react-is: 18.0.0
   react-syntax-highlighter: 15.5.0_react@18.0.0
+  react-table: 7.7.0_react@18.0.0
   typescript: 4.6.3
   urql: 2.2.0_graphql@16.3.0+react@18.0.0
   wonka: 4.0.15
@@ -81,6 +84,7 @@ devDependencies:
   '@types/react': 17.0.43
   '@types/react-dom': 17.0.14
   '@types/react-syntax-highlighter': 13.5.2
+  '@types/react-table': 7.7.10
   '@types/webpack-env': 1.16.3
   eslint: 8.12.0
   eslint-config-next: 12.1.2_5e85b80960a65557fe90fabec69fb820
@@ -3335,6 +3339,12 @@ packages:
 
   /@types/react-syntax-highlighter/13.5.2:
     resolution: {integrity: sha512-sRZoKZBGKaE7CzMvTTgz+0x/aVR58ZYUTfB7HN76vC+yQnvo1FWtzNARBt0fGqcLGEVakEzMu/CtPzssmanu8Q==}
+    dependencies:
+      '@types/react': 17.0.43
+    dev: true
+
+  /@types/react-table/7.7.10:
+    resolution: {integrity: sha512-yt7FHv/2cFsucStSWLBOB3OmsRZF08DvVHzz8Zg41B4tzRL6pQ+5VYvmhaR1dKS//tDG4UOJ1RQJPEINHYoRtg==}
     dependencies:
       '@types/react': 17.0.43
     dev: true
@@ -7543,6 +7553,14 @@ packages:
       prismjs: 1.27.0
       react: 18.0.0
       refractor: 3.6.0
+    dev: false
+
+  /react-table/7.7.0_react@18.0.0:
+    resolution: {integrity: sha512-jBlj70iBwOTvvImsU9t01LjFjy4sXEtclBovl3mTiqjz23Reu0DKnRza4zlLtOPACx6j2/7MrQIthIK1Wi+LIA==}
+    peerDependencies:
+      react: ^16.8.3 || ^17.0.0-0
+    dependencies:
+      react: 18.0.0
     dev: false
 
   /react/18.0.0:

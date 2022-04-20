@@ -9,8 +9,6 @@ import 'lib/utils/serverLoadEnvConfig';
 import { urls } from 'lib/graphql/urls';
 
 const schemaLoader = async (schemaString: string, config: any) => {
-  console.log('schemaString: ', schemaString);
-  console.log('config: ', config);
   const introspectionQuery = getIntrospectionQuery({ descriptions: false });
 
   const url =
