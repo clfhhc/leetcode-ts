@@ -18,9 +18,7 @@ const solution = pipe(
   )
 );
 
-const stateEngine = createStateContext({
+export const { StateProvider, useStateContext } = createStateContext({
   subjects: { numbersToSum, calculate },
   output: { solution },
 });
-
-export const { engine, EngineContext, EngineProvider } = stateEngine;

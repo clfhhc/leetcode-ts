@@ -1,14 +1,14 @@
-import { EngineContext } from 'lib/state/initStateEngineContext';
+import { useStateContext } from 'lib/state/initStateEngineContext';
 import { useWonkaInput } from 'lib/wonka/useWonkaInput';
 import { useWonkaOutput } from 'lib/wonka/useWonkaOutput';
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 
 const Calculate: FC = () => {
   const {
     subjects: { numbersToSum, calculate },
     output: { solution },
     state: { output },
-  } = useContext(EngineContext);
+  } = useStateContext();
   const addNumber = useWonkaInput(numbersToSum);
   const calculateNow = useWonkaInput(calculate);
   const solutions = useWonkaOutput(solution, []);
@@ -27,7 +27,7 @@ const Calculate: FC = () => {
         calculate
       </button>
       <ul>
-        {solutions.map((solution, idx) => (
+        {solutions?.map((solution, idx) => (
           <li key={`${idx}:${solution}`}>{solution}</li>
         ))}
       </ul>

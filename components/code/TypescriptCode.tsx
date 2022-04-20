@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react';
+import { forwardRef, ReactElement } from 'react';
 import {
   PrismAsyncLight as SyntaxHighligher,
   SyntaxHighlighterProps,
@@ -15,25 +15,34 @@ interface Props extends Omit<SyntaxHighlighterProps, 'style' | 'language'> {
   renderer?: any;
   PreTag?: ReactElement | HTMLElement | undefined;
   CodeTag?: ReactElement | HTMLElement | undefined;
+  className?: string;
 }
 
-const TypescriptCode: FC<Props> = ({
-  children,
-  wrapLines = true,
-  wrapLongLines = false,
-  showLineNumbers = true,
-  ...props
-}) => (
-  <SyntaxHighligher
-    style={atomDark}
-    language="ts"
-    wrapLines={wrapLines}
-    wrapLongLines={wrapLongLines}
-    showLineNumbers={showLineNumbers}
-    {...props}
-  >
-    {children}
-  </SyntaxHighligher>
-);
+const Wrapped = forwardRef<HTMLDivElement, Props>(function TypescriptCode(
+  {
+    children,
+    wrapLines = true,
+    wrapLongLines = false,
+    showLineNumbers = true,
+    className,
+    ...props
+  },
+  ref
+) {
+  return (
+    <div className={className} ref={ref}>
+      <SyntaxHighligher
+        style={atomDark}
+        language="ts"
+        wrapLines={wrapLines}
+        wrapLongLines={wrapLongLines}
+        showLineNumbers={showLineNumbers}
+        {...props}
+      >
+        {children}
+      </SyntaxHighligher>
+    </div>
+  );
+});
 
-export default TypescriptCode;
+export default Wrapped;
