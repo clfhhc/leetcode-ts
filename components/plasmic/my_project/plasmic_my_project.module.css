@@ -17,6 +17,10 @@
   --plasmic-token-max-code-width: var(--token-EqURR90Ls);
   --token-z-t_-Zi7I: 500px;
   --plasmic-token-question-min-width: var(--token-z-t_-Zi7I);
+  --token-p3PjSFjis: 60px;
+  --plasmic-token-difficulty-label-width: var(--token-p3PjSFjis);
+  --token-CaFO59BB9: 13px;
+  --plasmic-token-difficulty-font-size: var(--token-CaFO59BB9);
 }
 
 .plasmic_default_styles {

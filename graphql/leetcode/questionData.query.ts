@@ -1,28 +1,6 @@
+import { Scalars } from 'lib/graphql/types';
+import { Exact, InputMaybe } from 'lib/utils/types';
 import { gql } from 'urql';
-
-export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
-/** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  DateTime: any;
-  Dimension: any;
-  HexColor: any;
-  Quality: any;
-};
 
 export type QuestionDataQuery = {
   __typename?: 'Query';
@@ -32,7 +10,7 @@ export type QuestionDataQuery = {
     title?: string | null;
     titleSlug?: string | null;
     content?: string | null;
-    difficulty?: string | null;
+    difficulty?: 'Easy' | 'Medium' | 'Hard' | null;
     similarQuestions?: string | null;
     exampleTestcases?: string | null;
     categoryTitle?: string | null;

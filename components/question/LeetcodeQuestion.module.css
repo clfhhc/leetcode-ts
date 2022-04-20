@@ -1,5 +1,5 @@
 .question {
-  font-size: medium;
+  font-size: 14px;
   color: #263238;
 }
 
@@ -12,8 +12,8 @@
 .question img {
   margin: 0;
   margin-bottom: 10px;
-  object-fit: contain;
-  width: 100%;
+  object-fit: contain !important;
+  width: 100% !important;
 }
 
 .question code,
@@ -30,6 +30,13 @@
   font-size: 13px;
   line-height: 200%;
   margin: 0 10px;
+
+  overflow-x: auto;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
 }
 
 .question ul {
@@ -38,4 +45,11 @@
 
 .question ul li {
   margin: -20px 30px;
+}
+
+.difficulty-label {
+  display: inline-block;
+  width: 100%;
+  margin: 10px auto;
+  text-align: center;
 }

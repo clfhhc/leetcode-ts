@@ -11,6 +11,26 @@
       }
     },
     {
+      "name": "DifficultyFontSize",
+      "type": "fontsize",
+      "value": "13px",
+      "category": "fontsize",
+      "meta": {
+        "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+        "id": "CaFO59BB9"
+      }
+    },
+    {
+      "name": "DifficultyLabelWidth",
+      "type": "spacing",
+      "value": "60px",
+      "category": "spacing",
+      "meta": {
+        "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+        "id": "p3PjSFjis"
+      }
+    },
+    {
       "name": "MaxCodeWidth",
       "type": "spacing",
       "value": "1200px",

@@ -66,6 +66,19 @@
           "cssFilePath": "plasmic/leetcode_ts/PlasmicSolution.module.css",
           "scheme": "blackbox",
           "componentType": "page"
+        },
+        {
+          "id": "RLfjfL5lSL",
+          "name": "DifficultyLabel",
+          "type": "managed",
+          "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+          "renderModuleFilePath": "plasmic/leetcode_ts/PlasmicDifficultyLabel.tsx",
+          "importSpec": {
+            "modulePath": "DifficultyLabel.tsx"
+          },
+          "cssFilePath": "plasmic/leetcode_ts/PlasmicDifficultyLabel.module.css",
+          "scheme": "blackbox",
+          "componentType": "component"
         }
       ],
       "icons": [
@@ -154,13 +167,7 @@
       ],
       "indirect": false,
       "globalContextsFilePath": "",
-      "codeComponents": [
-        {
-          "id": "x5Efe1NdBz",
-          "name": "Compx5Efe1NdBz",
-          "componentImportPath": ""
-        }
-      ]
+      "codeComponents": []
     },
     {
       "projectId": "58GpZjZCWTaJ8AUhpCwt2K",

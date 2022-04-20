@@ -26,7 +26,7 @@
   bottom: 0;
   padding: 100px 32px;
 }
-.freeBox___9XOn {
+.titleBlock {
   flex-direction: row;
   display: flex;
   position: relative;
@@ -36,7 +36,7 @@
   min-width: 0;
   padding: 8px;
 }
-.freeBox___9XOn > :global(.__wab_flex-container) {
+.titleBlock > :global(.__wab_flex-container) {
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -44,10 +44,10 @@
   margin-left: calc(0px - var(--token-iFl30z79X));
   width: calc(100% + var(--token-iFl30z79X));
 }
-.freeBox___9XOn > :global(.__wab_flex-container) > *,
-.freeBox___9XOn > :global(.__wab_flex-container) > :global(.__wab_slot) > *,
-.freeBox___9XOn > :global(.__wab_flex-container) > picture > img,
-.freeBox___9XOn
+.titleBlock > :global(.__wab_flex-container) > *,
+.titleBlock > :global(.__wab_flex-container) > :global(.__wab_slot) > *,
+.titleBlock > :global(.__wab_flex-container) > picture > img,
+.titleBlock
   > :global(.__wab_flex-container)
   > :global(.__wab_slot)
   > picture
@@ -55,14 +55,14 @@
   margin-left: var(--token-iFl30z79X);
 }
 @media (min-width: 0px) and (max-width: 768px) {
-  .freeBox___9XOn {
+  .titleBlock {
     display: flex;
     flex-direction: column;
     padding: 0px;
   }
 }
 @media (min-width: 0px) and (max-width: 768px) {
-  .freeBox___9XOn > :global(.__wab_flex-container) {
+  .titleBlock > :global(.__wab_flex-container) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -71,10 +71,10 @@
   }
 }
 @media (min-width: 0px) and (max-width: 768px) {
-  .freeBox___9XOn > :global(.__wab_flex-container) > *,
-  .freeBox___9XOn > :global(.__wab_flex-container) > :global(.__wab_slot) > *,
-  .freeBox___9XOn > :global(.__wab_flex-container) > picture > img,
-  .freeBox___9XOn
+  .titleBlock > :global(.__wab_flex-container) > *,
+  .titleBlock > :global(.__wab_flex-container) > :global(.__wab_slot) > *,
+  .titleBlock > :global(.__wab_flex-container) > picture > img,
+  .titleBlock
     > :global(.__wab_flex-container)
     > :global(.__wab_slot)
     > picture
@@ -114,11 +114,11 @@
     object-fit: contain;
   }
 }
-.title:global(.__wab_instance) {
+.andTitle:global(.__wab_instance) {
   max-width: 100%;
 }
 @media (min-width: 0px) and (max-width: 768px) {
-  .title:global(.__wab_instance) {
+  .andTitle:global(.__wab_instance) {
     display: none;
   }
 }
@@ -137,4 +137,13 @@
 }
 .typescriptLogo > .__wab_img-spacer > img {
   object-fit: contain;
+}
+.freeBox__o4C8Q {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  min-width: 0;
+  padding: 8px;
 }

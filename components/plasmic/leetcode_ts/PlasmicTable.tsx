@@ -49,14 +49,18 @@ export type PlasmicTable__VariantsArgs = {};
 type VariantPropType = keyof PlasmicTable__VariantsArgs;
 export const PlasmicTable__VariantProps = new Array<VariantPropType>();
 
-export type PlasmicTable__ArgsType = {};
+export type PlasmicTable__ArgsType = {
+  table?: React.ReactNode;
+};
+
 type ArgPropType = keyof PlasmicTable__ArgsType;
-export const PlasmicTable__ArgProps = new Array<ArgPropType>();
+export const PlasmicTable__ArgProps = new Array<ArgPropType>('table');
 
 export type PlasmicTable__OverridesType = {
   root?: p.Flex<'div'>;
+  titleBlock?: p.Flex<'div'>;
   leetcodeLogo?: p.Flex<typeof p.PlasmicImg>;
-  title?: p.Flex<typeof Title>;
+  andTitle?: p.Flex<typeof Title>;
   text?: p.Flex<'div'>;
   typescriptLogo?: p.Flex<typeof p.PlasmicImg>;
 };
@@ -127,8 +131,10 @@ function PlasmicTable__RenderFunc(props: {
             {true ? (
               <p.Stack
                 as={'div'}
+                data-plasmic-name={'titleBlock'}
+                data-plasmic-override={overrides.titleBlock}
                 hasGap={true}
-                className={classNames(projectcss.all, sty.freeBox___9XOn)}
+                className={classNames(projectcss.all, sty.titleBlock)}
               >
                 <p.PlasmicImg
                   data-plasmic-name={'leetcodeLogo'}
@@ -158,9 +164,9 @@ function PlasmicTable__RenderFunc(props: {
                     : true
                 ) ? (
                   <Title
-                    data-plasmic-name={'title'}
-                    data-plasmic-override={overrides.title}
-                    className={classNames('__wab_instance', sty.title)}
+                    data-plasmic-name={'andTitle'}
+                    data-plasmic-override={overrides.andTitle}
+                    className={classNames('__wab_instance', sty.andTitle)}
                     italic={'isItalic' as const}
                     title={
                       <div
@@ -199,6 +205,13 @@ function PlasmicTable__RenderFunc(props: {
                 />
               </p.Stack>
             ) : null}
+
+            <div className={classNames(projectcss.all, sty.freeBox__o4C8Q)}>
+              {p.renderPlasmicSlot({
+                defaultContents: null,
+                value: args.table,
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -207,9 +220,23 @@ function PlasmicTable__RenderFunc(props: {
 }
 
 const PlasmicDescendants = {
-  root: ['root', 'leetcodeLogo', 'title', 'text', 'typescriptLogo'],
+  root: [
+    'root',
+    'titleBlock',
+    'leetcodeLogo',
+    'andTitle',
+    'text',
+    'typescriptLogo',
+  ],
+  titleBlock: [
+    'titleBlock',
+    'leetcodeLogo',
+    'andTitle',
+    'text',
+    'typescriptLogo',
+  ],
   leetcodeLogo: ['leetcodeLogo'],
-  title: ['title', 'text'],
+  andTitle: ['andTitle', 'text'],
   text: ['text'],
   typescriptLogo: ['typescriptLogo'],
 } as const;
@@ -218,8 +245,9 @@ type DescendantsType<T extends NodeNameType> =
   typeof PlasmicDescendants[T][number];
 type NodeDefaultElementType = {
   root: 'div';
+  titleBlock: 'div';
   leetcodeLogo: typeof p.PlasmicImg;
-  title: typeof Title;
+  andTitle: typeof Title;
   text: 'div';
   typescriptLogo: typeof p.PlasmicImg;
 };
@@ -281,8 +309,9 @@ export const PlasmicTable = Object.assign(
   makeNodeComponent('root'),
   {
     // Helper components rendering sub-elements
+    titleBlock: makeNodeComponent('titleBlock'),
     leetcodeLogo: makeNodeComponent('leetcodeLogo'),
-    title: makeNodeComponent('title'),
+    andTitle: makeNodeComponent('andTitle'),
     text: makeNodeComponent('text'),
     typescriptLogo: makeNodeComponent('typescriptLogo'),
 

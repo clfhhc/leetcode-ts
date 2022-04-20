@@ -82,18 +82,14 @@ const LeetcodePage: NextPage<StaticProps> = ({
   questionData,
   solutionContent,
 }) => (
-  // <div>
-  //   <h1>{questionData?.title}</h1>
-  //   <Calculate />
-  //   <p>{`Difficulty: ${questionData?.difficulty}`}</p>
-  //   <div
-  //     dangerouslySetInnerHTML={{ __html: questionData?.content ?? '' }}
-  //   ></div>
-  //   <TypescriptCode>{solutionContent}</TypescriptCode>
-  // </div>
   <PlasmicSolution
-    titleText={questionData?.title}
-    question={<LeetcodeQuestion content={questionData?.content} />}
+    titleText={`${questionData?.questionId}. ${questionData?.title}`}
+    question={
+      <LeetcodeQuestion
+        content={questionData?.content}
+        difficulty={questionData?.difficulty}
+      />
+    }
     solution={<TypescriptCode>{solutionContent}</TypescriptCode>}
   ></PlasmicSolution>
 );
