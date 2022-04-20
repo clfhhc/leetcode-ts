@@ -74,6 +74,16 @@ const Table: NextPage<StaticProps> = ({ leetcodeSlugs, leetcodeQuestions }) => {
             leetcodeSlugs={leetcodeSlugs}
           />
         }
+        titleBlock={{
+          style: {
+            ['UserDrag' as any]: 'none',
+            ['WebkitUserDrag' as any]: 'none',
+            userSelect: 'none',
+            MozUserSelect: 'none',
+            WebkitUserSelect: 'none',
+            msUserSelect: 'none',
+          },
+        }}
       />
     </>
   );
