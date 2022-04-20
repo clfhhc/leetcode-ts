@@ -3,7 +3,7 @@ import { debugExchange, dedupExchange, fetchExchange } from 'urql';
 import { cacheExchange, Data } from '@urql/exchange-graphcache';
 import { getIsClient, getIsProduction } from 'lib/utils/getEnv';
 import { urls } from 'lib/graphql/urls';
-import { Exact, QuestionDataQuery } from 'graphql/leetcode/questionData.query';
+import { QuestionDataQuery } from 'graphql/leetcode/questionData.query';
 
 export const getUrqlClientOptions: NextUrqlClientConfig = (ssrCache) => {
   const isCLient = getIsClient();
@@ -16,13 +16,14 @@ export const getUrqlClientOptions: NextUrqlClientConfig = (ssrCache) => {
       cacheExchange({
         keys: {
           QuestionNode: (data: Data & QuestionDataQuery['question']) =>
-            data?.questionId ?? null,
+            data?.titleSlug ?? null,
           TopicTagNode: (
             data: Data &
               NonNullable<
                 NonNullable<QuestionDataQuery['question']>['topicTags']
               >[number]
-          ) => data.slug ?? null,
+          ) => data.id ?? null,
+          PagifiedQuestionNode: () => null,
         },
       }),
       ...(isCLient && !isProduction ? [debugExchange] : []),

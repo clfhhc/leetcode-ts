@@ -15,12 +15,11 @@ export type QuestionDataQuery = {
     exampleTestcases?: string | null;
     categoryTitle?: string | null;
     topicTags?: Array<{
+      id?: string | null;
       name?: string | null;
       slug?: string | null;
-      translatedName?: string | null;
       __typename?: 'TopicTagNode';
     } | null>;
-    companyTagStats?: string | null;
     stats?: string | null;
     hints?: string[] | null;
   };
@@ -48,12 +47,11 @@ export const QuestionDataDocument = gql<
       exampleTestcases
       categoryTitle
       topicTags {
+        ids
         name
         slug
-        translatedName
         __typename
       }
-      companyTagStats
       stats
       hints
       __typename
