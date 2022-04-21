@@ -1,10 +1,11 @@
-import DifficultyLabel from 'components/DifficultyLabel';
-import { DefaultDifficultyLabelProps } from 'components/plasmic/leetcode_ts/PlasmicDifficultyLabel';
+import DifficultyLabel, {
+  DifficultyLabelProps,
+} from 'components/DifficultyLabel';
 import { FC } from 'react';
 import styles from './LeetcodeQuestion.module.css';
 
 export interface Props {
-  difficulty: string | null | undefined;
+  difficulty: DifficultyLabelProps['difficulty'];
   content: string | null | undefined;
   className?: string;
 }
@@ -14,9 +15,7 @@ const LeetcodeQuestion: FC<Props> = ({ content, className, difficulty }) => {
       {difficulty && (
         <DifficultyLabel
           className={styles['difficulty-label']}
-          difficulty={
-            difficulty.toLowerCase() as DefaultDifficultyLabelProps['difficulty']
-          }
+          difficulty={difficulty}
         />
       )}
       <div

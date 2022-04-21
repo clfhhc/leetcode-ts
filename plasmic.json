@@ -55,19 +55,6 @@
           "componentType": "component"
         },
         {
-          "id": "gSDoiytAgu",
-          "name": "Solution",
-          "type": "managed",
-          "projectId": "7WsMcki2ZLTk8QRowXDdYK",
-          "renderModuleFilePath": "plasmic/leetcode_ts/PlasmicSolution.tsx",
-          "importSpec": {
-            "modulePath": "../pages/solution.tsx"
-          },
-          "cssFilePath": "plasmic/leetcode_ts/PlasmicSolution.module.css",
-          "scheme": "blackbox",
-          "componentType": "page"
-        },
-        {
           "id": "RLfjfL5lSL",
           "name": "DifficultyLabel",
           "type": "managed",
@@ -79,6 +66,19 @@
           "cssFilePath": "plasmic/leetcode_ts/PlasmicDifficultyLabel.module.css",
           "scheme": "blackbox",
           "componentType": "component"
+        },
+        {
+          "id": "gSDoiytAgu",
+          "name": "Solution",
+          "type": "managed",
+          "projectId": "7WsMcki2ZLTk8QRowXDdYK",
+          "renderModuleFilePath": "plasmic/leetcode_ts/PlasmicSolution.tsx",
+          "importSpec": {
+            "modulePath": "../pages/solution.tsx"
+          },
+          "cssFilePath": "plasmic/leetcode_ts/PlasmicSolution.module.css",
+          "scheme": "blackbox",
+          "componentType": "page"
         }
       ],
       "icons": [

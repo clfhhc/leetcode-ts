@@ -47,7 +47,7 @@ export const QuestionDataDocument = gql<
       exampleTestcases
       categoryTitle
       topicTags {
-        ids
+        id
         name
         slug
         __typename

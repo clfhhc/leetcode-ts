@@ -149,6 +149,7 @@ function PlasmicTable__RenderFunc(props: {
                   displayMinHeight={'0' as const}
                   displayMinWidth={'0' as const}
                   displayWidth={'auto' as const}
+                  draggable={'false' as const}
                   loading={'lazy' as const}
                   src={{
                     src: '/plasmic/leetcode_ts/images/leetcodeLogo.png',
@@ -156,11 +157,12 @@ function PlasmicTable__RenderFunc(props: {
                     fullHeight: 512,
                     aspectRatio: undefined,
                   }}
+                  unselectable={'true' as const}
                 />
 
                 {(
                   hasVariant(globalVariants, 'screen', 'mobileOnly')
-                    ? true
+                    ? false
                     : true
                 ) ? (
                   <Title
@@ -195,6 +197,7 @@ function PlasmicTable__RenderFunc(props: {
                   displayMinHeight={'0' as const}
                   displayMinWidth={'0' as const}
                   displayWidth={'auto' as const}
+                  draggable={'false' as const}
                   loading={'lazy' as const}
                   src={{
                     src: '/plasmic/leetcode_ts/images/typescriptLogo.png',
@@ -202,6 +205,7 @@ function PlasmicTable__RenderFunc(props: {
                     fullHeight: 193,
                     aspectRatio: undefined,
                   }}
+                  unselectable={'true' as const}
                 />
               </p.Stack>
             ) : null}

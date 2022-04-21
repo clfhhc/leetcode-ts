@@ -117,11 +117,6 @@
 .andTitle:global(.__wab_instance) {
   max-width: 100%;
 }
-@media (min-width: 0px) and (max-width: 768px) {
-  .andTitle:global(.__wab_instance) {
-    display: none;
-  }
-}
 .text {
   padding-left: 0px;
   color: #535353;
