@@ -1,5 +1,6 @@
 import Calculate from 'components/calculate/Calculate';
 import TypescriptCode from 'components/code/TypescriptCode';
+import DifficultyLabel from 'components/DifficultyLabel';
 import PlasmicSolution from 'components/plasmic/leetcode_ts/PlasmicSolution';
 import LeetcodeQuestion from 'components/question/LeetcodeQuestion';
 import {
@@ -84,12 +85,8 @@ const LeetcodePage: NextPage<StaticProps> = ({
 }) => (
   <PlasmicSolution
     titleText={`${questionData?.questionId}. ${questionData?.title}`}
-    question={
-      <LeetcodeQuestion
-        content={questionData?.content}
-        difficulty={questionData?.difficulty}
-      />
-    }
+    question={<LeetcodeQuestion content={questionData?.content} />}
+    difficultyLabel={<DifficultyLabel difficulty={questionData?.difficulty} />}
     solution={<TypescriptCode>{solutionContent}</TypescriptCode>}
   ></PlasmicSolution>
 );

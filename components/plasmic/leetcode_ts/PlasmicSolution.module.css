@@ -29,6 +29,10 @@
   max-width: 100%;
   position: relative;
 }
+.difficultyLabel__sDfvN:global(.__wab_instance) {
+  max-width: 100%;
+  position: relative;
+}
 .freeBox__xGvnV {
   display: flex;
   position: relative;

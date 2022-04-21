@@ -35,6 +35,7 @@ import {
   ensureGlobalVariants,
 } from '@plasmicapp/react-web';
 import Title from '../../Title'; // plasmic-import: Ix9vuo16AZ/component
+import DifficultyLabel from '../../DifficultyLabel'; // plasmic-import: RLfjfL5lSL/component
 
 import { useScreenVariants as useScreenVariantsqNtJgJXrY5Orn } from './PlasmicGlobalVariant__Screen'; // plasmic-import: qNtJgJXrY5orn/globalVariant
 
@@ -53,13 +54,15 @@ export type PlasmicSolution__ArgsType = {
   question?: React.ReactNode;
   solution?: React.ReactNode;
   titleText?: React.ReactNode;
+  difficultyLabel?: React.ReactNode;
 };
 
 type ArgPropType = keyof PlasmicSolution__ArgsType;
 export const PlasmicSolution__ArgProps = new Array<ArgPropType>(
   'question',
   'solution',
-  'titleText'
+  'titleText',
+  'difficultyLabel'
 );
 
 export type PlasmicSolution__OverridesType = {
@@ -127,6 +130,19 @@ function PlasmicSolution__RenderFunc(props: {
                   value: args.titleText,
                 })}
               />
+
+              {p.renderPlasmicSlot({
+                defaultContents: (
+                  <DifficultyLabel
+                    className={classNames(
+                      '__wab_instance',
+                      sty.difficultyLabel__sDfvN
+                    )}
+                  />
+                ),
+
+                value: args.difficultyLabel,
+              })}
 
               <div className={classNames(projectcss.all, sty.freeBox__xGvnV)}>
                 <div className={classNames(projectcss.all, sty.freeBox__tCdW1)}>

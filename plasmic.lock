@@ -131,12 +131,12 @@
         {
           "type": "renderModule",
           "assetId": "gSDoiytAgu",
-          "checksum": "2c1de18f520793623e0c4096238b563f"
+          "checksum": "0079bc8aaae743251371878d8c5d55e2"
         },
         {
           "type": "cssRules",
           "assetId": "gSDoiytAgu",
-          "checksum": "2c1de18f520793623e0c4096238b563f"
+          "checksum": "0079bc8aaae743251371878d8c5d55e2"
         }
       ],
       "codegenVersion": "0.0.1"
