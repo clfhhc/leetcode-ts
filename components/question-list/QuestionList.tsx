@@ -58,7 +58,6 @@ const QuestionList: FC<Props> = ({ leetcodeSlugs, leetcodeQuestions }) => {
       {
         Header: 'Slug',
         accessor: 'titleSlug',
-        isVisible: false,
         filter: (
           rows: Row<QuestionDatum>[],
           id: string,
@@ -68,6 +67,11 @@ const QuestionList: FC<Props> = ({ leetcodeSlugs, leetcodeQuestions }) => {
             return filterValue.includes(row.values[id]);
           });
         },
+      },
+      {
+        Header: 'Id',
+        accessor: 'questionId',
+        filter: 'equals',
       },
     ],
     []
@@ -80,6 +84,7 @@ const QuestionList: FC<Props> = ({ leetcodeSlugs, leetcodeQuestions }) => {
 
   useEffect(() => {
     toggleHideColumn('titleSlug', true);
+    toggleHideColumn('questionId', true);
     setAllFilters([{ id: 'titleSlug', value: leetcodeSlugs ?? [] }]);
     setReady(true);
   }, [setAllFilters, leetcodeSlugs, toggleHideColumn]);
@@ -88,17 +93,13 @@ const QuestionList: FC<Props> = ({ leetcodeSlugs, leetcodeQuestions }) => {
     <div className={styles['question-list']}>
       {filteredRows.map((row) => {
         prepareRow(row);
-        return (
-          <div className={styles['question-item']} key={row.id}>
-            {row.cells.map((cell) => {
-              return (
-                <div {...cell.getCellProps()} key={cell.column.id}>
-                  {cell.render('Cell')}
-                </div>
-              );
-            })}
-          </div>
-        );
+        return row.cells.map((cell) => {
+          return (
+            <div {...cell.getCellProps()} key={cell.column.id}>
+              {cell.render('Cell')}
+            </div>
+          );
+        });
       })}
     </div>
   ) : null;

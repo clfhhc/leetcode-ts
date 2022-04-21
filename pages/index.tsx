@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   const questionListSource = client?.query(QuestionListDocument, {
     categorySlug: '',
     skip: 0,
-    limit: 50,
+    limit: -1,
     filters: {},
   });
 
