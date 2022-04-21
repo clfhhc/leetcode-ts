@@ -10,6 +10,8 @@ import {
 } from 'graphql/leetcode/questionList.query';
 import { map, pipe, take, toPromise } from 'wonka';
 import QuestionList from 'components/question-list/QuestionList';
+import { useRouter } from 'next/router';
+import { getIsProduction } from 'lib/utils/getEnv';
 
 export interface PageProps {
   leetcodeSlugs?: string[];
@@ -29,7 +31,7 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   const questionListSource = client?.query(QuestionListDocument, {
     categorySlug: '',
     skip: 0,
-    limit: -1,
+    limit: getIsProduction() ? -1 : 50,
     filters: {},
   });
 
@@ -58,6 +60,7 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
 };
 
 const Table: NextPage<StaticProps> = ({ leetcodeSlugs, leetcodeQuestions }) => {
+  const { basePath } = useRouter();
   return (
     <>
       {
@@ -83,6 +86,12 @@ const Table: NextPage<StaticProps> = ({ leetcodeSlugs, leetcodeQuestions }) => {
             WebkitUserSelect: 'none',
             msUserSelect: 'none',
           },
+        }}
+        leetcodeLogo={{
+          src: `${basePath}/plasmic/leetcode_ts/images/leetcodeLogo.png`,
+        }}
+        typescriptLogo={{
+          src: `${basePath}/plasmic/leetcode_ts/images/typescriptLogo.png`,
         }}
       />
     </>
