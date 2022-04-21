@@ -61,6 +61,7 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
 
 const Table: NextPage<StaticProps> = ({ leetcodeSlugs, leetcodeQuestions }) => {
   const { basePath } = useRouter();
+  console.log(basePath);
   return (
     <>
       {
