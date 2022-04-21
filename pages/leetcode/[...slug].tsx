@@ -34,7 +34,7 @@ export const getStaticPaths: GetStaticPaths<SlugParsedUrlQuery> = async () => {
   }));
   return {
     paths,
-    fallback: 'blocking',
+    fallback: false,
   };
 };
 
