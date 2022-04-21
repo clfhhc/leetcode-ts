@@ -43,6 +43,7 @@
     "@graphql-codegen/typescript": "^2.4.8",
     "@graphql-codegen/typescript-operations": "^2.3.5",
     "@jest/types": "^27.5.1",
+    "@next/bundle-analyzer": "^12.1.5",
     "@swc/core": "^1.2.162",
     "@swc/register": "^0.1.10",
     "@testing-library/jest-dom": "^5.16.3",
