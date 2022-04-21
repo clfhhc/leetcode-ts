@@ -24,6 +24,24 @@
   background-color: #f7f9fa;
 }
 
+.question-list > *:nth-child(2n + 1) {
+  border-left: 2px solid greenyellow;
+}
+
+.question-list > *:nth-child(2n + 2) {
+  border-right: 2px solid greenyellow;
+}
+
+.question-list > *:nth-child(1),
+.question-list > *:nth-child(2) {
+  border-top: 2px solid greenyellow;
+}
+
+.question-list > *:nth-last-child(1),
+.question-list > *:nth-last-child(2) {
+  border-bottom: 2px solid greenyellow;
+}
+
 .question-difficulty-cell {
   display: flex;
   flex-direction: column;
