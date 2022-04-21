@@ -13,7 +13,7 @@ import {
 } from 'lib/utils/functionTime';
 import { fromPromise, fromValue, map, pipe, subscribe, toPromise } from 'wonka';
 import flattenDeep from 'lodash/flattenDeep';
-import { forkJoin } from 'lib/wonka/fokJoin';
+import { forkJoin } from 'lib/wonka/forkJoin';
 import fetch from 'cross-fetch';
 global.fetch = fetch;
 
@@ -109,11 +109,12 @@ const testCases = flattenDeep(
 //     });
 //   }
 // };
-const solutionContentSource = (filePath: string) => extractFileSectionSource({
-  filePath,
-  startPredicate: (line) => line === '/* solution start */',
-  endPradicate: (line) => line === '/* solution end */',
-});
+const solutionContentSource = (filePath: string) =>
+  extractFileSectionSource({
+    filePath,
+    startPredicate: (line) => line === '/* solution start */',
+    endPradicate: (line) => line === '/* solution end */',
+  });
 
 // const testFetch = async () => {
 //   const result = await fetch('https://google.com', {method: 'GET'});
@@ -123,27 +124,43 @@ const solutionContentSource = (filePath: string) => extractFileSectionSource({
 const testFetch = () => Promise.resolve(3);
 
 const functionToTest1 = async () => {
-  return pipe(forkJoin([solutionContentSource('leetcode/add-two-numbers.ts'), solutionContentSource('leetcode/two-sum.ts'), fromPromise(testFetch())]), map(([content1, content2, content3]) => ({content1, content2, content3})), toPromise);
-}
+  return pipe(
+    forkJoin([
+      solutionContentSource('leetcode/add-two-numbers.ts'),
+      solutionContentSource('leetcode/two-sum.ts'),
+      fromPromise(testFetch()),
+    ]),
+    map(([content1, content2, content3]) => ({ content1, content2, content3 })),
+    toPromise
+  );
+};
 
 const functionToTest2 = async () => {
-  const request1 = pipe(solutionContentSource('leetcode/add-two-numbers.ts'), toPromise);
-  const request2 = pipe(solutionContentSource('leetcode/two-sum.ts'), toPromise);
+  const request1 = pipe(
+    solutionContentSource('leetcode/add-two-numbers.ts'),
+    toPromise
+  );
+  const request2 = pipe(
+    solutionContentSource('leetcode/two-sum.ts'),
+    toPromise
+  );
   const request3 = testFetch();
 
   return {
     content1: await request1,
     content2: await request2,
     content3: await request3,
-  }
-}
+  };
+};
 const main = async () => {
-  [functionToTest1, functionToTest2].forEach((functionToTest, index) => timesFunctionTime({
-    functionToTest,
-    times: 10000,
-    functionArgs: [],
-    description: `func${index}`
-  }))
+  [functionToTest1, functionToTest2].forEach((functionToTest, index) =>
+    timesFunctionTime({
+      functionToTest,
+      times: 10000,
+      functionArgs: [],
+      description: `func${index}`,
+    })
+  );
 };
 
 main();
