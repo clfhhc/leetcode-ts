@@ -14,4 +14,11 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+if (isProduction) {
+  module.exports = nextConfig;
+} else {
+  const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+  });
+  module.exports = withBundleAnalyzer(nextConfig);
+}
