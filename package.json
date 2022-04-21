@@ -19,7 +19,6 @@
     "@next/env": "^12.1.4",
     "@plasmicapp/loader-nextjs": "^1.0.95",
     "@plasmicapp/react-web": "^0.2.95",
-    "@plasmicpkgs/react-awesome-reveal": "^3.8.40",
     "@types/lodash": "^4.14.181",
     "@urql/core": "^2.4.3",
     "@urql/exchange-graphcache": "^4.3.6",
