@@ -14,6 +14,7 @@ export type QuestionDataQuery = {
     similarQuestions?: string | null;
     exampleTestcases?: string | null;
     categoryTitle?: string | null;
+    questionDetailUrl?: string| null;
     topicTags?: Array<{
       id?: string | null;
       name?: string | null;
@@ -46,6 +47,7 @@ export const QuestionDataDocument = gql<
       similarQuestions
       exampleTestcases
       categoryTitle
+      questionDetailUrl
       topicTags {
         id
         name

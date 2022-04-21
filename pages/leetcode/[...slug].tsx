@@ -85,7 +85,12 @@ const LeetcodePage: NextPage<StaticProps> = ({
 }) => (
   <PlasmicSolution
     titleText={`${questionData?.questionId}. ${questionData?.title}`}
-    question={<LeetcodeQuestion content={questionData?.content} />}
+    question={
+      <LeetcodeQuestion
+        content={questionData?.content}
+        originalQuestionUrl={`https://leetcode.com${questionData?.questionDetailUrl}`}
+      />
+    }
     difficultyLabel={<DifficultyLabel difficulty={questionData?.difficulty} />}
     solution={<TypescriptCode>{solutionContent}</TypescriptCode>}
   ></PlasmicSolution>
