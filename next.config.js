@@ -9,6 +9,9 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: isProduction,
   basePath: isProduction ? `/${projectName}` : '',
+  images: {
+    domains: ['github.io'],
+  },
 };
 
 module.exports = nextConfig;
