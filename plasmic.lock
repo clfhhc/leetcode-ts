@@ -3,9 +3,7 @@
     {
       "projectId": "7WsMcki2ZLTk8QRowXDdYK",
       "version": "latest",
-      "dependencies": {
-        "58GpZjZCWTaJ8AUhpCwt2K": "2.1.2"
-      },
+      "dependencies": {},
       "lang": "ts",
       "fileLocks": [
         {
