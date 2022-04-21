@@ -9,14 +9,15 @@ function lengthOfLongestSubstring(s: string): number {
   let i = 0;
   while (i < s.length) {
     if (unique.has(s[i])) {
+      maxSubstringLength = Math.max(unique.size, maxSubstringLength);
       unique.delete(s[nonRepeatedStart]);
       nonRepeatedStart++;
     } else {
       unique.add(s[i]);
-      maxSubstringLength = Math.max(unique.size, maxSubstringLength);
       i++;
     }
   }
+  maxSubstringLength = Math.max(unique.size, maxSubstringLength);
   return maxSubstringLength;
 }
 
