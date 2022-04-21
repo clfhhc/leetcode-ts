@@ -1,16 +1,17 @@
 .question {
-  font-size: 14px;
+  font-size: 1em;
   color: #263238;
+  white-space: normal !important;
 }
 
 .question * {
-  margin: -5px 0;
+  margin: 0 0 1em;
   padding: 0;
 }
 
 .question-link {
   margin: 10px 0;
-  font-size: 16px;
+  font-size: 1em;
   cursor: pointer;
 }
 
@@ -34,25 +35,28 @@
 
 .question img {
   margin: 0;
-  margin-bottom: 10px;
+  margin-bottom: 1em;
   object-fit: contain !important;
   width: 100% !important;
 }
 
 .question code,
 .question pre {
+  font-size: 0.9em;
   background-color: #f7f9fa;
 }
 
 .question code {
   font-family: monospace;
+  padding: 0.15em 0.3em;
+  color: #546e7a;
 }
 
 .question pre {
   font-family: SFMono-Regular, monospace;
-  font-size: 13px;
-  line-height: 200%;
-  margin: 0 10px;
+  line-height: 150%;
+  margin: 0 0 0.9em;
+  padding: 0.7em 1em;
 
   overflow-x: auto;
   white-space: pre-wrap;
@@ -67,7 +71,7 @@
 }
 
 .question ul li {
-  margin: -20px 30px;
+  margin: 0 30px 5px;
 }
 
 @media screen and (max-width: 768px) {
