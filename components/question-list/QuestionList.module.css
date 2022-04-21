@@ -1,6 +1,6 @@
 .question-list {
   display: grid;
-  grid: auto-flow / minmax(320px, max-content) 80px;
+  grid: auto-flow / minmax(320px, 500px) 80px;
   margin: 30px auto;
   justify-content: center;
 }
@@ -10,8 +10,12 @@
 }
 
 .question-link-cell a {
+  display: block;
   cursor: pointer;
   text-decoration: underline;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .question-link-cell a:hover,
@@ -52,6 +56,6 @@
 
 @media screen and (max-width: 768px) {
   .question-list {
-    grid: auto-flow / minmax(min-content, max-content) 80px;
+    grid-template-columns: minmax(120px, 360px) 80px;
   }
 }
