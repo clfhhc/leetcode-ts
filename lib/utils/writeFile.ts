@@ -1,5 +1,5 @@
-import { openSync, write } from 'fs';
-import { make, pipe, publish, takeLast, toPromise } from 'wonka';
+import { closeSync, openSync, write } from 'fs';
+import { make, pipe, scan, toPromise } from 'wonka';
 
 const defaultBufferSize = 1e5;
 
@@ -79,18 +79,30 @@ export const createWriteBytesSource = ({
             reject,
           });
         }
+        closeSync(fd);
         return complete();
       }
     };
 
-    writeBytes({
-      fd,
-      sharedBuffer,
-      end: bytesToWrite,
-      position,
-      resolve,
-      reject,
-    });
+    if (bytesToWrite > 0) {
+      sharedBuffer.fill(
+        text.substring(position, position + bytesToWrite),
+        0,
+        bytesToWrite,
+        'utf-8'
+      );
+      writeBytes({
+        fd,
+        sharedBuffer,
+        end: bytesToWrite,
+        position,
+        resolve,
+        reject,
+      });
+    } else {
+      next(sharedBuffer.slice(0, bytesToWrite));
+      complete();
+    }
 
     return () => {
       cancelled = true;
@@ -100,7 +112,7 @@ export const createWriteBytesSource = ({
   return createWriteBytesSource;
 };
 
-export const writeWholeFile = ({
+export const writeWholeFileAndOutputBuffer = ({
   text,
   filePath,
   bufferSize = defaultBufferSize,
@@ -111,6 +123,6 @@ export const writeWholeFile = ({
 }) =>
   pipe(
     createWriteBytesSource({ text, filePath, bufferSize }),
-    takeLast(1),
+    scan((accu, buffer) => Buffer.concat([accu, buffer]), Buffer.from('')),
     toPromise
   );

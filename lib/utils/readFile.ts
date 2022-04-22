@@ -5,7 +5,7 @@
  * https://gist.github.com/yvele/447555b1c5060952a279
  */
 
-import { read, openSync, createReadStream } from 'fs';
+import { read, openSync, createReadStream, closeSync } from 'fs';
 import {
   make,
   pipe,
@@ -74,6 +74,7 @@ export const createReadBytesSource = (
 
     const reject: ReadBytesReject = (err) => {
       console.error(err);
+      closeSync(fd);
       complete();
     };
 
@@ -81,6 +82,7 @@ export const createReadBytesSource = (
       if (!cancelled) {
         next(buffer.slice(0, bytesRead));
         if (bytesRead === 0) {
+          closeSync(fd);
           return complete();
         }
         readBytes({ fd, sharedBuffer, resolve, reject });

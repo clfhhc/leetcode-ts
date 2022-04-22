@@ -1,6 +1,6 @@
 import { SerializedEntries, StorageAdapter } from '@urql/exchange-graphcache';
 import { readWholeFileSource } from 'lib/utils/readFile';
-import { writeWholeFile } from 'lib/utils/writeFile';
+import { createWriteBytesSource } from 'lib/utils/writeFile';
 import path from 'path';
 import { map, pipe, toPromise } from 'wonka';
 
@@ -14,10 +14,13 @@ export const makeLocalStorage = ({
   return {
     async writeData(delta) {
       Object.assign(cache, delta);
-      return writeWholeFile({
-        text: JSON.stringify(cache),
-        filePath: dataPath,
-      });
+      return pipe(
+        createWriteBytesSource({
+          text: JSON.stringify(cache),
+          filePath: dataPath,
+        }),
+        toPromise
+      );
     },
     async readData() {
       return pipe(
