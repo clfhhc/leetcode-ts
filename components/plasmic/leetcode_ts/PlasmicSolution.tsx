@@ -55,6 +55,7 @@ export type PlasmicSolution__ArgsType = {
   solution?: React.ReactNode;
   titleText?: React.ReactNode;
   difficultyLabel?: React.ReactNode;
+  originialQuestionLink?: React.ReactNode;
 };
 
 type ArgPropType = keyof PlasmicSolution__ArgsType;
@@ -62,7 +63,8 @@ export const PlasmicSolution__ArgProps = new Array<ArgPropType>(
   'question',
   'solution',
   'titleText',
-  'difficultyLabel'
+  'difficultyLabel',
+  'originialQuestionLink'
 );
 
 export type PlasmicSolution__OverridesType = {
@@ -145,20 +147,32 @@ function PlasmicSolution__RenderFunc(props: {
               })}
 
               <div className={classNames(projectcss.all, sty.freeBox__xGvnV)}>
-                <div className={classNames(projectcss.all, sty.freeBox__tCdW1)}>
-                  {p.renderPlasmicSlot({
-                    defaultContents: null,
-                    value: args.question,
-                  })}
-                </div>
-
-                <div className={classNames(projectcss.all, sty.freeBox__ppLi1)}>
-                  {p.renderPlasmicSlot({
-                    defaultContents: null,
-                    value: args.solution,
-                  })}
-                </div>
+                {true ? (
+                  <div
+                    className={classNames(projectcss.all, sty.freeBox__cnPUg)}
+                  >
+                    {p.renderPlasmicSlot({
+                      defaultContents: null,
+                      value: args.question,
+                    })}
+                  </div>
+                ) : null}
+                {true ? (
+                  <div
+                    className={classNames(projectcss.all, sty.freeBox__lbNcx)}
+                  >
+                    {p.renderPlasmicSlot({
+                      defaultContents: null,
+                      value: args.solution,
+                    })}
+                  </div>
+                ) : null}
               </div>
+
+              {p.renderPlasmicSlot({
+                defaultContents: null,
+                value: args.originialQuestionLink,
+              })}
             </div>
           </div>
         ) : null}

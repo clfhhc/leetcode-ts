@@ -10,9 +10,10 @@
 }
 
 .question-link {
-  margin: 10px 0;
+  margin: 10px 20px;
   font-size: 1em;
   cursor: pointer;
+  align-self: flex-start;
 }
 
 .question-link a {

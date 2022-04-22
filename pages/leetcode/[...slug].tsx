@@ -3,6 +3,7 @@ import TypescriptCode from 'components/code/TypescriptCode';
 import DifficultyLabel from 'components/DifficultyLabel';
 import PlasmicSolution from 'components/plasmic/leetcode_ts/PlasmicSolution';
 import LeetcodeQuestion from 'components/question/LeetcodeQuestion';
+import QuestionLink from 'components/question/QuestionLink';
 import {
   QuestionDataDocument,
   QuestionDataQuery,
@@ -85,14 +86,14 @@ const LeetcodePage: NextPage<StaticProps> = ({
 }) => (
   <PlasmicSolution
     titleText={`${questionData?.questionId}. ${questionData?.title}`}
-    question={
-      <LeetcodeQuestion
-        content={questionData?.content}
+    question={<LeetcodeQuestion content={questionData?.content} />}
+    difficultyLabel={<DifficultyLabel difficulty={questionData?.difficulty} />}
+    solution={<TypescriptCode>{solutionContent}</TypescriptCode>}
+    originialQuestionLink={
+      <QuestionLink
         originalQuestionUrl={`https://leetcode.com${questionData?.questionDetailUrl}`}
       />
     }
-    difficultyLabel={<DifficultyLabel difficulty={questionData?.difficulty} />}
-    solution={<TypescriptCode>{solutionContent}</TypescriptCode>}
   ></PlasmicSolution>
 );
 

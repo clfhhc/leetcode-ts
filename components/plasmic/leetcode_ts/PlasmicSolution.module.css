@@ -52,34 +52,27 @@
     flex-column-gap: 0px;
   }
 }
-.freeBox__tCdW1 {
+.freeBox__cnPUg {
   display: block;
   position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
   height: auto;
   max-width: 100%;
   min-width: var(--token-z-t_-Zi7I);
   padding: 8px;
 }
-@media (min-width: 0px) and (max-width: 768px) {
-  .freeBox__tCdW1 {
-    min-width: auto;
-  }
-}
-.freeBox__ppLi1 {
+.freeBox__lbNcx {
   display: block;
   position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
   height: auto;
   max-width: 100%;
-  left: auto;
-  top: auto;
   min-width: 0;
   padding: 8px;
-}
-@media (min-width: 0px) and (max-width: 768px) {
-  .freeBox__ppLi1 {
-    left: auto;
-    top: auto;
-  }
 }
