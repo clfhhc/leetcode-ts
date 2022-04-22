@@ -32,7 +32,10 @@ export const makeLocalStorage = ({
           return cache;
         }),
         toPromise
-      );
+      ).catch((err) => {
+        console.error('error reading cache file: ', err.message);
+        return {};
+      });
     },
   };
 };
