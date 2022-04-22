@@ -79,10 +79,10 @@ export const createReadBytesSource = (
 
     const resolve: ReadBytesResolve = ({ buffer, bytesRead }) => {
       if (!cancelled) {
+        next(buffer.slice(0, bytesRead));
         if (bytesRead === 0) {
           return complete();
         }
-        next(buffer.slice(0, bytesRead));
         readBytes({ fd, sharedBuffer, resolve, reject });
       }
     };
@@ -236,7 +236,7 @@ export const readWholeFileSource: CreateReadSource = (
 ) => {
   return pipe(
     createReadBytesSource(filePath, bufferSize),
-    map((buffer) => buffer.toString('utf-8')),
+    scan((accu, buffer) => accu + buffer.toString('utf-8'), ''),
     takeLast(1)
   );
 };

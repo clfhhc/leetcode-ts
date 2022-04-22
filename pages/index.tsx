@@ -12,6 +12,7 @@ import { map, pipe, take, toPromise } from 'wonka';
 import QuestionList from 'components/question-list/QuestionList';
 import { useRouter } from 'next/router';
 import { getIsProduction } from 'lib/utils/getEnv';
+import { makeLocalStorage } from 'lib/urql/makeLocalStorage';
 
 export interface PageProps {
   leetcodeSlugs?: string[];
@@ -25,7 +26,8 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   const leetcodeSlugs = Object.keys(slugs);
 
   const ssrCache = ssrExchange({ isClient: false });
-  const urqlClientOptions = getUrqlClientOptions(ssrCache);
+  const storage = makeLocalStorage();
+  const urqlClientOptions = getUrqlClientOptions(storage)(ssrCache);
   const client = initUrqlClient(urqlClientOptions, false);
 
   const questionListSource = client?.query(QuestionListDocument, {
@@ -98,4 +100,4 @@ const Table: NextPage<StaticProps> = ({ leetcodeSlugs, leetcodeQuestions }) => {
   );
 };
 
-export default withUrqlClient(getUrqlClientOptions)(Table);
+export default withUrqlClient(getUrqlClientOptions())(Table);

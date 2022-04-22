@@ -68,4 +68,4 @@ const CatchallPage: NextPage<PageProps> = ({ plasmicData }) => {
   );
 };
 
-export default withUrqlClient(getUrqlClientOptions)(CatchallPage);
+export default withUrqlClient(getUrqlClientOptions())(CatchallPage);
