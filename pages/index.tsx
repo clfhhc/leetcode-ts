@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   const questionListSource = client?.query(QuestionListDocument, {
     categorySlug: '',
     skip: 0,
-    limit: getIsProduction() ? -1 : 50,
+    limit: -1,
     filters: {},
   });
 
@@ -49,10 +49,14 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
     questionListSource,
     take(1),
     map((data) => {
+      const leetcodeQuestions = data.data?.questionList.data?.filter(
+        (question) =>
+          question.titleSlug && leetcodeSlugs.includes(question.titleSlug)
+      );
       return {
         props: {
           leetcodeSlugs,
-          leetcodeQuestions: data.data?.questionList.data,
+          leetcodeQuestions,
         },
       };
     }),
