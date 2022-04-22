@@ -10,7 +10,7 @@ import {
 } from 'graphql/leetcode/questionData.query';
 import { getLocalLeetcodeSlugs } from 'lib/leetcode/getLeetcodeFiles';
 import { getUrqlClientOptions } from 'lib/urql/getUrqlClientOptions';
-import { extractFileSectionSource } from 'lib/utils/extractFileSection';
+import { extractFileSectionSource } from 'lib/utils/readFile';
 import { forkJoin } from 'lib/wonka/forkJoin';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { initUrqlClient, withUrqlClient, WithUrqlState } from 'next-urql';

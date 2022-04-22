@@ -6,7 +6,7 @@ import {
   extractFileSection,
   extractFileSectionSource,
   ExtractFileSectionSourceProps,
-} from 'lib/utils/extractFileSection';
+} from 'lib/utils/readFile';
 import {
   timesFunctionTime,
   timesFunctionTimeWithCallback,
