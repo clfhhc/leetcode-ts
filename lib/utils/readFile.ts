@@ -22,7 +22,7 @@ import {
   Source,
 } from 'wonka';
 
-const defaultBufferSize = 1e5;
+const defaultBufferSize = 1e2;
 
 export type ReadBytesResolve = (result: {
   bytesRead: number;
@@ -129,12 +129,15 @@ export const createReadLineSource: CreateReadSource = (
 
     const reject: ReadBytesReject = (err) => {
       console.error(err);
+      closeSync(fd);
       complete();
     };
 
     const resolve: ReadBytesResolve = ({ buffer, bytesRead }) => {
       if (!cancelled) {
         if (bytesRead === 0) {
+          next('');
+          closeSync(fd);
           return complete();
         }
         data += buffer.toString('utf-8', 0, bytesRead);
