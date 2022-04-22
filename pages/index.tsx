@@ -68,39 +68,30 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
 const Table: NextPage<StaticProps> = ({ leetcodeSlugs, leetcodeQuestions }) => {
   const { basePath } = useRouter();
   return (
-    <>
-      {
-        // Props you can pass into PlasmicTable are:
-        // 1. Variants you want to activate,
-        // 2. Contents for slots you want to fill,
-        // 3. Overrides for any named node in the component to attach behavior and data,
-        // 4. Props to set on the root node.
+    <PlasmicTable
+      table={
+        <QuestionList
+          leetcodeQuestions={leetcodeQuestions}
+          leetcodeSlugs={leetcodeSlugs}
+        />
       }
-      <PlasmicTable
-        table={
-          <QuestionList
-            leetcodeQuestions={leetcodeQuestions}
-            leetcodeSlugs={leetcodeSlugs}
-          />
-        }
-        titleBlock={{
-          style: {
-            ['UserDrag' as any]: 'none',
-            ['WebkitUserDrag' as any]: 'none',
-            userSelect: 'none',
-            MozUserSelect: 'none',
-            WebkitUserSelect: 'none',
-            msUserSelect: 'none',
-          },
-        }}
-        leetcodeLogo={{
-          src: `${basePath}/plasmic/leetcode_ts/images/leetcodeLogo.png`,
-        }}
-        typescriptLogo={{
-          src: `${basePath}/plasmic/leetcode_ts/images/typescriptLogo.png`,
-        }}
-      />
-    </>
+      titleBlock={{
+        style: {
+          ['UserDrag' as any]: 'none',
+          ['WebkitUserDrag' as any]: 'none',
+          userSelect: 'none',
+          MozUserSelect: 'none',
+          WebkitUserSelect: 'none',
+          msUserSelect: 'none',
+        },
+      }}
+      leetcodeLogo={{
+        src: `${basePath}/plasmic/leetcode_ts/images/leetcodeLogo.png`,
+      }}
+      typescriptLogo={{
+        src: `${basePath}/plasmic/leetcode_ts/images/typescriptLogo.png`,
+      }}
+    />
   );
 };
 
