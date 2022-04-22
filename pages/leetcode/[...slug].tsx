@@ -1,4 +1,3 @@
-import Calculate from 'components/calculate/Calculate';
 import TypescriptCode from 'components/code/TypescriptCode';
 import DifficultyLabel from 'components/DifficultyLabel';
 import PlasmicSolution from 'components/plasmic/leetcode_ts/PlasmicSolution';

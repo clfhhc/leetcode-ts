@@ -11,7 +11,6 @@ import {
 import { map, pipe, take, toPromise } from 'wonka';
 import QuestionList from 'components/question-list/QuestionList';
 import { useRouter } from 'next/router';
-import { getIsProduction } from 'lib/utils/getEnv';
 import { makeLocalStorage } from 'lib/urql/makeLocalStorage';
 
 export interface PageProps {
