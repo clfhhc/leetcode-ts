@@ -1,4 +1,3 @@
-import Calculate from 'components/calculate/Calculate';
 import TypescriptCode from 'components/code/TypescriptCode';
 import DifficultyLabel from 'components/DifficultyLabel';
 import PlasmicSolution from 'components/plasmic/leetcode_ts/PlasmicSolution';
@@ -10,7 +9,8 @@ import {
 } from 'graphql/leetcode/questionData.query';
 import { getLocalLeetcodeSlugs } from 'lib/leetcode/getLeetcodeFiles';
 import { getUrqlClientOptions } from 'lib/urql/getUrqlClientOptions';
-import { extractFileSectionSource } from 'lib/utils/extractFileSection';
+import { makeLocalStorage } from 'lib/urql/makeLocalStorage';
+import { extractFileSectionSource } from 'lib/utils/readFile';
 import { forkJoin } from 'lib/wonka/forkJoin';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { initUrqlClient, withUrqlClient, WithUrqlState } from 'next-urql';
@@ -50,7 +50,8 @@ export const getStaticProps: GetStaticProps<StaticProps> = async ({
       : 'index';
 
   const ssrCache = ssrExchange({ isClient: false });
-  const urqlClientOptions = getUrqlClientOptions(ssrCache);
+  const storage = makeLocalStorage();
+  const urqlClientOptions = getUrqlClientOptions(storage)(ssrCache);
   const client = initUrqlClient(urqlClientOptions, false);
 
   const questionSource = client?.query(QuestionDataDocument, {
@@ -97,4 +98,4 @@ const LeetcodePage: NextPage<StaticProps> = ({
   ></PlasmicSolution>
 );
 
-export default withUrqlClient(getUrqlClientOptions)(LeetcodePage);
+export default withUrqlClient(getUrqlClientOptions())(LeetcodePage);

@@ -5,7 +5,7 @@
  * https://gist.github.com/yvele/447555b1c5060952a279
  */
 
-import { read, openSync, createReadStream } from 'fs';
+import { read, openSync, createReadStream, closeSync } from 'fs';
 import {
   make,
   pipe,
@@ -31,9 +31,9 @@ export type ReadBytesResolve = (result: {
 
 export type ReadBytesReject = (err: NodeJS.ErrnoException) => void;
 
-export type CreateReadLineSource = (
+export type CreateReadSource = (
   filePath: string,
-  bufferSize: number
+  bufferSize?: number
 ) => Source<string>;
 
 export function readBytes({
@@ -74,15 +74,17 @@ export const createReadBytesSource = (
 
     const reject: ReadBytesReject = (err) => {
       console.error(err);
+      closeSync(fd);
       complete();
     };
 
     const resolve: ReadBytesResolve = ({ buffer, bytesRead }) => {
       if (!cancelled) {
+        next(buffer.slice(0, bytesRead));
         if (bytesRead === 0) {
+          closeSync(fd);
           return complete();
         }
-        next(buffer.slice(0, bytesRead));
         readBytes({ fd, sharedBuffer, resolve, reject });
       }
     };
@@ -97,7 +99,7 @@ export const createReadBytesSource = (
   return createReadBytesSource;
 };
 
-export const createReadLineSourceFromBytes: CreateReadLineSource = (
+export const createReadLineSourceFromBytes: CreateReadSource = (
   filePath,
   bufferSize = defaultBufferSize
 ) => {
@@ -114,7 +116,7 @@ export const createReadLineSourceFromBytes: CreateReadLineSource = (
   );
 };
 
-export const createReadLineSource: CreateReadLineSource = (
+export const createReadLineSource: CreateReadSource = (
   filePath,
   bufferSize = defaultBufferSize
 ) => {
@@ -153,7 +155,7 @@ export const createReadLineSource: CreateReadLineSource = (
   return readLineSource;
 };
 
-export const createReadLineSourceFromReadStream: CreateReadLineSource = (
+export const createReadLineSourceFromReadStream: CreateReadSource = (
   filePath,
   bufferSize = defaultBufferSize
 ) => {
@@ -187,7 +189,7 @@ export interface ExtractFileSectionSourceProps {
   bufferSize?: number;
   startPredicate?: (line: string) => boolean;
   endPradicate?: (line: string) => boolean;
-  createLineSource?: CreateReadLineSource;
+  createLineSource?: CreateReadSource;
 }
 
 export const extractFileSectionSource = ({
@@ -229,3 +231,14 @@ export const extractFileSectionSource = ({
 
 export const extractFileSection = (arg: ExtractFileSectionSourceProps) =>
   pipe(extractFileSectionSource(arg), toPromise);
+
+export const readWholeFileSource: CreateReadSource = (
+  filePath,
+  bufferSize = defaultBufferSize
+) => {
+  return pipe(
+    createReadBytesSource(filePath, bufferSize),
+    scan((accu, buffer) => accu + buffer.toString('utf-8'), ''),
+    takeLast(1)
+  );
+};
