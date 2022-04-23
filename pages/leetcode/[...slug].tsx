@@ -10,6 +10,7 @@ import {
 import { getLocalLeetcodeSlugs } from 'lib/leetcode/getLeetcodeFiles';
 import { getUrqlClientOptions } from 'lib/urql/getUrqlClientOptions';
 import { makeLocalStorage } from 'lib/urql/makeLocalStorage';
+import { getIsBuildOrExport } from 'lib/utils/getEnv';
 import { extractFileSectionSource } from 'lib/utils/readFile';
 import { forkJoin } from 'lib/wonka/forkJoin';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
@@ -50,7 +51,7 @@ export const getStaticProps: GetStaticProps<StaticProps> = async ({
       : 'index';
 
   const ssrCache = ssrExchange({ isClient: false });
-  const storage = makeLocalStorage();
+  const storage = makeLocalStorage({ shouldWrite: !getIsBuildOrExport() });
   const urqlClientOptions = getUrqlClientOptions(storage)(ssrCache);
   const client = initUrqlClient(urqlClientOptions, false);
 

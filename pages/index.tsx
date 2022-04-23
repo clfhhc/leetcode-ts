@@ -12,6 +12,7 @@ import { map, pipe, take, toPromise } from 'wonka';
 import QuestionList from 'components/question-list/QuestionList';
 import { useRouter } from 'next/router';
 import { makeLocalStorage } from 'lib/urql/makeLocalStorage';
+import { getIsBuildOrExport } from 'lib/utils/getEnv';
 
 export interface PageProps {
   leetcodeSlugs?: string[];
@@ -25,7 +26,7 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   const leetcodeSlugs = Object.keys(slugs);
 
   const ssrCache = ssrExchange({ isClient: false });
-  const storage = makeLocalStorage();
+  const storage = makeLocalStorage({ shouldWrite: !getIsBuildOrExport() });
   const urqlClientOptions = getUrqlClientOptions(storage)(ssrCache);
   const client = initUrqlClient(urqlClientOptions, false);
 
