@@ -1,4 +1,4 @@
-import { FunctionTestCases } from 'lib/utils/types';
+import { FunctionTestCases, TestCaseWithFunction } from 'lib/utils/types';
 
 /* solution start */
 
@@ -52,9 +52,12 @@ function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
 
 /* solution end */
 
-export default isSameTree;
-
-export const testCases: FunctionTestCases<typeof isSameTree> = [];
+export const testCases: [TestCaseWithFunction<typeof isSameTree>] = [
+  {
+    f: isSameTree,
+    cases: [],
+  },
+];
 
 const createTreeNodeFromValue = (
   value: number | null | undefined
@@ -104,9 +107,9 @@ const createTreeNodeFromArray = (array: (number | null)[]): TreeNode | null => {
     [[1, 2, 1], [1, 1, 2], false],
   ] as [(number | null)[], (number | null)[], boolean][]
 ).forEach((array) => {
-  const [p, q, output] = [...array];
-  testCases.push([
-    [createTreeNodeFromArray(p), createTreeNodeFromArray(q)],
-    output,
-  ]);
+  const [p, q, o] = [...array];
+  testCases[0].cases.push({
+    i: [createTreeNodeFromArray(p), createTreeNodeFromArray(q)],
+    o,
+  });
 });

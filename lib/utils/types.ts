@@ -1,4 +1,4 @@
-export type TestCase<I, O> = [I, O];
+export type TestCase<I, O> = { i: I; o: O };
 
 export type TestCases<I, O> = TestCase<I, O>[];
 
@@ -9,6 +9,13 @@ export interface FunctionTestCase<
 export type FunctionTestCases<
   F extends (...args: any) => any = (...args: any) => any
 > = FunctionTestCase<F>[];
+
+export interface TestCaseWithFunction<
+  F extends (...args: any) => any = (...args: any) => any
+> {
+  f: F;
+  cases: FunctionTestCases<F>;
+}
 
 export type Maybe<T> = T | null;
 

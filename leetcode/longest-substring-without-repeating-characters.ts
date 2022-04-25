@@ -1,4 +1,4 @@
-import { FunctionTestCases } from 'lib/utils/types';
+import { TestCaseWithFunction } from 'lib/utils/types';
 
 /* solution start */
 
@@ -23,9 +23,14 @@ function lengthOfLongestSubstring(s: string): number {
 
 /* solution end */
 
-export default lengthOfLongestSubstring;
-
-export const testCases: FunctionTestCases<typeof lengthOfLongestSubstring> = [];
+export const testCases: [
+  TestCaseWithFunction<typeof lengthOfLongestSubstring>
+] = [
+  {
+    f: lengthOfLongestSubstring,
+    cases: [],
+  },
+];
 
 (
   [
@@ -37,6 +42,6 @@ export const testCases: FunctionTestCases<typeof lengthOfLongestSubstring> = [];
     ['abba', 2],
   ] as [string, number][]
 ).forEach((array) => {
-  const [input, output] = [...array];
-  testCases.push([[input], output]);
+  const [input, o] = [...array];
+  testCases[0].cases.push({ i: [input], o });
 });

@@ -1,4 +1,4 @@
-import { FunctionTestCases } from 'lib/utils/types';
+import { TestCaseWithFunction } from 'lib/utils/types';
 
 /* solution start */
 
@@ -72,9 +72,12 @@ function addTwoNumbers(
 
 /* solution end */
 
-export default addTwoNumbers;
-
-export const testCases: FunctionTestCases<typeof addTwoNumbers> = [];
+export const testCases: [TestCaseWithFunction<typeof addTwoNumbers>] = [
+  {
+    f: addTwoNumbers,
+    cases: [],
+  },
+];
 
 const createListNodeFromArray = (array: number[]): ListNode | null => {
   if (!Array.isArray(array)) {
@@ -112,5 +115,5 @@ const createListNodeFromArray = (array: number[]): ListNode | null => {
   ],
 ].forEach((array) => {
   const [l1, l2, sum] = array.map(createListNodeFromArray);
-  testCases.push([[l1, l2], sum]);
+  testCases[0].cases.push({ i: [l1, l2], o: sum });
 });

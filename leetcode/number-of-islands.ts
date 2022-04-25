@@ -1,4 +1,4 @@
-import { FunctionTestCases } from 'lib/utils/types';
+import { FunctionTestCases, TestCaseWithFunction } from 'lib/utils/types';
 
 /* solution start */
 
@@ -31,9 +31,12 @@ function numIslands(grid: string[][]): number {
 
 /* solution end */
 
-export default numIslands;
-
-export const testCases: FunctionTestCases<typeof numIslands> = [];
+export const testCases: [TestCaseWithFunction<typeof numIslands>] = [
+  {
+    f: numIslands,
+    cases: [],
+  },
+];
 
 (
   [
@@ -57,6 +60,6 @@ export const testCases: FunctionTestCases<typeof numIslands> = [];
     ],
   ] as [string[][], number][]
 ).forEach((array) => {
-  const [input, output] = [...array];
-  testCases.push([[input], output]);
+  const [input, o] = [...array];
+  testCases[0].cases.push({ i: [input], o });
 });

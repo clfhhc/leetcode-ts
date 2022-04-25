@@ -1,4 +1,4 @@
-import { FunctionTestCases } from '../lib/utils/types';
+import { TestCaseWithFunction } from '../lib/utils/types';
 
 /* solution start */
 
@@ -23,18 +23,28 @@ function twoSum(nums: number[], target: number): number[] {
 
 /* solution end */
 
-export default twoSum;
+export const testCases: [TestCaseWithFunction<typeof twoSum>] = [
+  {
+    f: twoSum,
+    cases: [],
+  },
+];
 
-export const testCases: FunctionTestCases<typeof twoSum> = [];
-testCases.push([
-  [[2, 7, 11, 15], 9],
-  [0, 1],
-]);
-testCases.push([
-  [[3, 2, 4], 6],
-  [1, 2],
-]);
-testCases.push([
-  [[3, 3], 6],
-  [0, 1],
-]);
+(
+  [
+    [
+      [[2, 7, 11, 15], 9],
+      [0, 1],
+    ],
+    [
+      [[3, 2, 4], 6],
+      [1, 2],
+    ],
+    [
+      [[3, 3], 6],
+      [0, 1],
+    ],
+  ] as [[number[], number], number[]][]
+).forEach(([i, o]) => {
+  testCases[0].cases.push({ i, o });
+});

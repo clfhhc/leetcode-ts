@@ -1,4 +1,4 @@
-import { FunctionTestCases } from 'lib/utils/types';
+import { TestCaseWithFunction } from 'lib/utils/types';
 
 /* solution start */
 
@@ -32,9 +32,12 @@ function pruneTree(root: TreeNode | null): TreeNode | null {
 
 /* solution end */
 
-export default pruneTree;
-
-export const testCases: FunctionTestCases<typeof pruneTree> = [];
+export const testCases: [TestCaseWithFunction<typeof pruneTree>] = [
+  {
+    f: pruneTree,
+    cases: [],
+  },
+];
 
 const createTreeNodeFromValue = (
   value: number | null | undefined
@@ -94,8 +97,8 @@ const createTreeNodeFromArray = (array: (number | null)[]): TreeNode | null => {
   ] as [(number | null)[], (number | null)[]][]
 ).forEach((array) => {
   const [input, output] = [...array];
-  testCases.push([
-    [createTreeNodeFromArray(input)],
-    createTreeNodeFromArray(output),
-  ]);
+  testCases[0].cases.push({
+    i: [createTreeNodeFromArray(input)],
+    o: createTreeNodeFromArray(output),
+  });
 });
