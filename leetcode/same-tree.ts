@@ -16,28 +16,45 @@ class TreeNode {
   }
 }
 
-function inorderTraversal(root: TreeNode | null): number[] {
-  const result: number[] = [];
-  const stack: TreeNode[] = [];
-  let pointer = root;
-  while (pointer || stack.length) {
-    while (pointer) {
-      stack.push(pointer);
-      pointer = pointer.left;
-    }
-    pointer = stack.pop() as TreeNode;
-    result.push(pointer.val);
-    pointer = pointer.right;
+function isSameValue(p: TreeNode | null, q: TreeNode | null): boolean {
+  if (!p && !q) {
+    return true;
   }
+  if (!p || !q) {
+    return false;
+  }
+  if (p.val !== q.val) {
+    return false;
+  }
+  return true;
+}
 
-  return result;
+function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
+  const queueP = [p];
+  const queueQ = [q];
+
+  let pointerP: TreeNode | null;
+  let pointerQ: TreeNode | null;
+  while (queueP.length) {
+    pointerP = queueP.shift() as TreeNode | null;
+    pointerQ = queueQ.shift() as TreeNode | null;
+
+    if (!isSameValue(pointerP, pointerQ)) {
+      return false;
+    }
+    if (pointerP !== null) {
+      queueP.push((pointerP as TreeNode).left, (pointerP as TreeNode).right);
+      queueQ.push((pointerQ as TreeNode).left, (pointerQ as TreeNode).right);
+    }
+  }
+  return true;
 }
 
 /* solution end */
 
-export default inorderTraversal;
+export default isSameTree;
 
-export const testCases: FunctionTestCases<typeof inorderTraversal> = [];
+export const testCases: FunctionTestCases<typeof isSameTree> = [];
 
 const createTreeNodeFromValue = (
   value: number | null | undefined
@@ -82,18 +99,14 @@ const createTreeNodeFromArray = (array: (number | null)[]): TreeNode | null => {
 
 (
   [
-    [
-      [1, null, 2, 3],
-      [1, 3, 2],
-    ],
-    [[], []],
-    [[1], [1]],
-    [
-      [1, 2, 3, 4, 5],
-      [4, 2, 5, 1, 3],
-    ],
-  ] as [(number | null)[], number[]][]
+    [[1, 2, 3], [1, 2, 3], true],
+    [[1, 2], [1, null, 2], false],
+    [[1, 2, 1], [1, 1, 2], false],
+  ] as [(number | null)[], (number | null)[], boolean][]
 ).forEach((array) => {
-  const [input, output] = [...array];
-  testCases.push([[createTreeNodeFromArray(input)], output]);
+  const [p, q, output] = [...array];
+  testCases.push([
+    [createTreeNodeFromArray(p), createTreeNodeFromArray(q)],
+    output,
+  ]);
 });
