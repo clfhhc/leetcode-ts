@@ -11,6 +11,7 @@
     "lint": "next lint",
     "test": "jest --config ./__tests__/jest.config.js",
     "test:watch": "jest --config ./__tests__/jest.config.js --watch",
+    "test:leetcode": "jest --config ./__tests__/jest.config.js -t",
     "codegen": "graphql-codegen --config lib/graphql-codegen/codegen.yml",
     "tsnode": "node -r @swc/register"
   },
