@@ -20,8 +20,8 @@ function inorderTraversal(root: TreeNode | null): number[] {
   const result: number[] = [];
   const stack: TreeNode[] = [];
   let pointer = root;
-  while (pointer !== null || stack.length) {
-    while (pointer !== null) {
+  while (pointer || stack.length) {
+    while (pointer) {
       stack.push(pointer);
       pointer = pointer.left;
     }
