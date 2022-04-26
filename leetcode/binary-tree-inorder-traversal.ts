@@ -35,13 +35,6 @@ function inorderTraversal(root: TreeNode | null): number[] {
 
 /* solution end */
 
-export const testCases: [TestCaseWithFunction<typeof inorderTraversal>] = [
-  {
-    f: inorderTraversal,
-    cases: [],
-  },
-];
-
 const createTreeNodeFromValue = (
   value: number | null | undefined
 ): TreeNode | null => {
@@ -83,6 +76,25 @@ const createTreeNodeFromArray = (array: (number | null)[]): TreeNode | null => {
   return root;
 };
 
+export const testCases: [
+  TestCaseWithFunction<typeof inorderTraversal>,
+  TestCaseWithFunction<typeof createTreeNodeFromValue>,
+  TestCaseWithFunction<typeof createTreeNodeFromArray>
+] = [
+  {
+    f: inorderTraversal,
+    cases: [],
+  },
+  {
+    f: createTreeNodeFromValue,
+    cases: [],
+  },
+  {
+    f: createTreeNodeFromArray,
+    cases: [],
+  },
+];
+
 (
   [
     [
@@ -99,4 +111,26 @@ const createTreeNodeFromArray = (array: (number | null)[]): TreeNode | null => {
 ).forEach((array) => {
   const [input, o] = [...array];
   testCases[0].cases.push({ i: [createTreeNodeFromArray(input)], o });
+});
+
+(
+  [
+    [null, null],
+    [1, new TreeNode(1)],
+    [2, new TreeNode(2)],
+  ] as [number | null, TreeNode | null][]
+).forEach((array) => {
+  const [input, o] = [...array];
+  testCases[1].cases.push({ i: [input], o });
+});
+
+(
+  [
+    [[], null],
+    [[1, null, 2, 3], new TreeNode(1, null, new TreeNode(2, new TreeNode(3)))],
+    [[1], new TreeNode(1)],
+  ] as [(number | null)[], TreeNode | null][]
+).forEach((array) => {
+  const [input, o] = [...array];
+  testCases[2].cases.push({ i: [input], o });
 });
