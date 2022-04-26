@@ -1,0 +1,117 @@
+<!DOCTYPE html><html><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><link rel="preload" href="/leetcode-ts/_next/static/css/065910b4c31020f4.css" as="style"/><link rel="stylesheet" href="/leetcode-ts/_next/static/css/065910b4c31020f4.css" data-n-g=""/><link rel="preload" href="/leetcode-ts/_next/static/css/7dfb8be6352da14d.css" as="style"/><link rel="stylesheet" href="/leetcode-ts/_next/static/css/7dfb8be6352da14d.css" data-n-p=""/><link rel="preload" href="/leetcode-ts/_next/static/css/f1a5cd78ee932743.css" as="style"/><link rel="stylesheet" href="/leetcode-ts/_next/static/css/f1a5cd78ee932743.css" data-n-p=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/leetcode-ts/_next/static/chunks/polyfills-5cd94c89d3acac5f.js"></script><script src="/leetcode-ts/_next/static/chunks/webpack-5377291ae4378bdf.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/framework-824eb1dc7e6b0e84.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/main-acf79f246cbd3e55.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/pages/_app-61da80cf1d11a9b8.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/3360-0e4f96ff5db4df95.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/9317-47721121a9821ef1.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/3348-6101008f5aa8c84e.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/3505-4e9620c0dd9af3b2.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/7124-f479bcbfbe806310.js" defer=""></script><script src="/leetcode-ts/_next/static/chunks/pages/leetcode/%5B...slug%5D-238d3fc71804751c.js" defer=""></script><script src="/leetcode-ts/_next/static/vZ9fNqTz-ER0QMwvN_t7w/_buildManifest.js" defer=""></script><script src="/leetcode-ts/_next/static/vZ9fNqTz-ER0QMwvN_t7w/_ssgManifest.js" defer=""></script><script src="/leetcode-ts/_next/static/vZ9fNqTz-ER0QMwvN_t7w/_middlewareManifest.js" defer=""></script></head><body><div id="__next"><style>
+        body {
+          margin: 0;
+        }
+      </style><div class="plasmic_my_project_plasmic_page_wrapper__NmusE"><div class="plasmic_my_project_all__HxK7z plasmic_my_project_root_reset__eAG_J plasmic_my_project_plasmic_default_styles__zX_AD plasmic_my_project_plasmic_tokens__1Kejp PlasmicSolution_root__Q_prf"><div class="plasmic_my_project_all__HxK7z PlasmicSolution_freeBox__wt9Kr__8dBFi"><div class="plasmic_my_project_all__HxK7z plasmic_my_project_root_reset__eAG_J plasmic_my_project_plasmic_default_styles__zX_AD plasmic_my_project_plasmic_tokens__1Kejp PlasmicTitle_root__dRf5f __wab_instance PlasmicSolution_title__lG067"><div class="plasmic_my_project_all__HxK7z PlasmicTitle_title__uXR_v"><div class="__wab_slot PlasmicTitle_slotTargetTitle__AHSXN"><div class="__wab_slot-string-wrapper">102. Binary Tree Level Order Traversal</div></div></div></div><div class="plasmic_my_project_all__HxK7z plasmic_my_project_root_reset__eAG_J plasmic_my_project_plasmic_default_styles__zX_AD plasmic_my_project_plasmic_tokens__1Kejp PlasmicDifficultyLabel_root__g8WN9"><span class="plasmic_my_project_all__HxK7z plasmic_my_project_span__4lA7Z PlasmicDifficultyLabel_span__P4OtD PlasmicDifficultyLabel_spandifficulty_medium__exmRb">Medium</span></div><div class="plasmic_my_project_all__HxK7z PlasmicSolution_freeBox__xGvnV__Vb7R7"><div class="plasmic_my_project_all__HxK7z PlasmicSolution_freeBox__cnPUg__KZSTH"><div class="LeetcodeQuestion_question__BPz88"><div><p>Given the <code>root</code> of a binary tree, return <em>the level order traversal of its nodes&#39; values</em>. (i.e., from left to right, level by level).</p>
+
+<p>&nbsp;</p>
+<p><strong>Example 1:</strong></p>
+<img alt="" src="https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg" style="width: 277px; height: 302px;" />
+<pre>
+<strong>Input:</strong> root = [3,9,20,null,null,15,7]
+<strong>Output:</strong> [[3],[9,20],[15,7]]
+</pre>
+
+<p><strong>Example 2:</strong></p>
+
+<pre>
+<strong>Input:</strong> root = [1]
+<strong>Output:</strong> [[1]]
+</pre>
+
+<p><strong>Example 3:</strong></p>
+
+<pre>
+<strong>Input:</strong> root = []
+<strong>Output:</strong> []
+</pre>
+
+<p>&nbsp;</p>
+<p><strong>Constraints:</strong></p>
+
+<ul>
+	<li>The number of nodes in the tree is in the range <code>[0, 2000]</code>.</li>
+	<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+</ul>
+</div></div></div><div class="plasmic_my_project_all__HxK7z PlasmicSolution_freeBox__lbNcx___A9Fa"><div><pre style="color:#c5c8c6;text-shadow:0 1px rgba(0, 0, 0, 0.3);font-family:Inconsolata, Monaco, Consolas, &#x27;Courier New&#x27;, Courier, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:.5em 0;overflow:auto;border-radius:0.3em;background:#1d1f21"><code style="color:#c5c8c6;text-shadow:0 1px rgba(0, 0, 0, 0.3);font-family:Inconsolata, Monaco, Consolas, &#x27;Courier New&#x27;, Courier, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;float:left;padding-right:10px"><span class="react-syntax-highlighter-line-number">1
+</span><span class="react-syntax-highlighter-line-number">2
+</span><span class="react-syntax-highlighter-line-number">3
+</span><span class="react-syntax-highlighter-line-number">4
+</span><span class="react-syntax-highlighter-line-number">5
+</span><span class="react-syntax-highlighter-line-number">6
+</span><span class="react-syntax-highlighter-line-number">7
+</span><span class="react-syntax-highlighter-line-number">8
+</span><span class="react-syntax-highlighter-line-number">9
+</span><span class="react-syntax-highlighter-line-number">10
+</span><span class="react-syntax-highlighter-line-number">11
+</span><span class="react-syntax-highlighter-line-number">12
+</span><span class="react-syntax-highlighter-line-number">13
+</span><span class="react-syntax-highlighter-line-number">14
+</span><span class="react-syntax-highlighter-line-number">15
+</span><span class="react-syntax-highlighter-line-number">16
+</span><span class="react-syntax-highlighter-line-number">17
+</span><span class="react-syntax-highlighter-line-number">18
+</span><span class="react-syntax-highlighter-line-number">19
+</span><span class="react-syntax-highlighter-line-number">20
+</span><span class="react-syntax-highlighter-line-number">21
+</span><span class="react-syntax-highlighter-line-number">22
+</span><span class="react-syntax-highlighter-line-number">23
+</span><span class="react-syntax-highlighter-line-number">24
+</span><span class="react-syntax-highlighter-line-number">25
+</span><span class="react-syntax-highlighter-line-number">26
+</span><span class="react-syntax-highlighter-line-number">27
+</span><span class="react-syntax-highlighter-line-number">28
+</span><span class="react-syntax-highlighter-line-number">29
+</span><span class="react-syntax-highlighter-line-number">30
+</span><span class="react-syntax-highlighter-line-number">31
+</span><span class="react-syntax-highlighter-line-number">32
+</span><span class="react-syntax-highlighter-line-number">33
+</span><span class="react-syntax-highlighter-line-number">34
+</span><span class="react-syntax-highlighter-line-number">35
+</span><span class="react-syntax-highlighter-line-number">36
+</span><span class="react-syntax-highlighter-line-number">37
+</span><span class="react-syntax-highlighter-line-number">38
+</span><span class="react-syntax-highlighter-line-number">39
+</span><span class="react-syntax-highlighter-line-number">40
+</span><span class="react-syntax-highlighter-line-number">41
+</span></code><code class="language-ts" style="color:#c5c8c6;text-shadow:0 1px rgba(0, 0, 0, 0.3);font-family:Inconsolata, Monaco, Consolas, &#x27;Courier New&#x27;, Courier, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">/* solution start */
+
+/**
+ * Definition for a binary tree node.
+ */
+class TreeNode {
+  val: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+    this.val = val === undefined ? 0 : val;
+    this.left = left === undefined ? null : left;
+    this.right = right === undefined ? null : right;
+  }
+}
+
+function levelOrder(root: TreeNode | null): number[][] {
+  if (!root) {
+    return [];
+  }
+  let pointer = root;
+  const result: number[][] = [[]];
+  const traverse: TreeNode[][] = [[pointer], []];
+  while (traverse[0].length) {
+    pointer = traverse[0].shift() as TreeNode;
+    result[result.length - 1].push(pointer.val);
+    pointer.left &amp;&amp; traverse[1].push(pointer.left);
+    pointer.right &amp;&amp; traverse[1].push(pointer.right);
+    if (traverse[0].length === 0) {
+      traverse.push(traverse.shift() as TreeNode[]);
+      result.push([]);
+      continue;
+    }
+  }
+  if (result.length &amp;&amp; result[result.length - 1].length === 0) {
+    result.pop();
+  }
+  return result;
+}
+
+/* solution end */</code></pre></div></div></div><div class="LeetcodeQuestion_question-link__p97a9"><a href="https://leetcode.com/problems/binary-tree-level-order-traversal/">Original Question ➤</a></div></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"solutionContent":"/* solution start */\n\n/**\n * Definition for a binary tree node.\n */\nclass TreeNode {\n  val: number;\n  left: TreeNode | null;\n  right: TreeNode | null;\n  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {\n    this.val = val === undefined ? 0 : val;\n    this.left = left === undefined ? null : left;\n    this.right = right === undefined ? null : right;\n  }\n}\n\nfunction levelOrder(root: TreeNode | null): number[][] {\n  if (!root) {\n    return [];\n  }\n  let pointer = root;\n  const result: number[][] = [[]];\n  const traverse: TreeNode[][] = [[pointer], []];\n  while (traverse[0].length) {\n    pointer = traverse[0].shift() as TreeNode;\n    result[result.length - 1].push(pointer.val);\n    pointer.left \u0026\u0026 traverse[1].push(pointer.left);\n    pointer.right \u0026\u0026 traverse[1].push(pointer.right);\n    if (traverse[0].length === 0) {\n      traverse.push(traverse.shift() as TreeNode[]);\n      result.push([]);\n      continue;\n    }\n  }\n  if (result.length \u0026\u0026 result[result.length - 1].length === 0) {\n    result.pop();\n  }\n  return result;\n}\n\n/* solution end */","questionData":{"questionId":"102","title":"Binary Tree Level Order Traversal","titleSlug":"binary-tree-level-order-traversal","content":"\u003cp\u003eGiven the \u003ccode\u003eroot\u003c/code\u003e of a binary tree, return \u003cem\u003ethe level order traversal of its nodes\u0026#39; values\u003c/em\u003e. (i.e., from left to right, level by level).\u003c/p\u003e\n\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eExample 1:\u003c/strong\u003e\u003c/p\u003e\n\u003cimg alt=\"\" src=\"https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg\" style=\"width: 277px; height: 302px;\" /\u003e\n\u003cpre\u003e\n\u003cstrong\u003eInput:\u003c/strong\u003e root = [3,9,20,null,null,15,7]\n\u003cstrong\u003eOutput:\u003c/strong\u003e [[3],[9,20],[15,7]]\n\u003c/pre\u003e\n\n\u003cp\u003e\u003cstrong\u003eExample 2:\u003c/strong\u003e\u003c/p\u003e\n\n\u003cpre\u003e\n\u003cstrong\u003eInput:\u003c/strong\u003e root = [1]\n\u003cstrong\u003eOutput:\u003c/strong\u003e [[1]]\n\u003c/pre\u003e\n\n\u003cp\u003e\u003cstrong\u003eExample 3:\u003c/strong\u003e\u003c/p\u003e\n\n\u003cpre\u003e\n\u003cstrong\u003eInput:\u003c/strong\u003e root = []\n\u003cstrong\u003eOutput:\u003c/strong\u003e []\n\u003c/pre\u003e\n\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eConstraints:\u003c/strong\u003e\u003c/p\u003e\n\n\u003cul\u003e\n\t\u003cli\u003eThe number of nodes in the tree is in the range \u003ccode\u003e[0, 2000]\u003c/code\u003e.\u003c/li\u003e\n\t\u003cli\u003e\u003ccode\u003e-1000 \u0026lt;= Node.val \u0026lt;= 1000\u003c/code\u003e\u003c/li\u003e\n\u003c/ul\u003e\n","translatedTitle":null,"translatedContent":null,"isPaidOnly":false,"difficulty":"Medium","similarQuestions":"[{\"title\": \"Binary Tree Zigzag Level Order Traversal\", \"titleSlug\": \"binary-tree-zigzag-level-order-traversal\", \"difficulty\": \"Medium\", \"translatedTitle\": null}, {\"title\": \"Binary Tree Level Order Traversal II\", \"titleSlug\": \"binary-tree-level-order-traversal-ii\", \"difficulty\": \"Medium\", \"translatedTitle\": null}, {\"title\": \"Minimum Depth of Binary Tree\", \"titleSlug\": \"minimum-depth-of-binary-tree\", \"difficulty\": \"Easy\", \"translatedTitle\": null}, {\"title\": \"Binary Tree Vertical Order Traversal\", \"titleSlug\": \"binary-tree-vertical-order-traversal\", \"difficulty\": \"Medium\", \"translatedTitle\": null}, {\"title\": \"Average of Levels in Binary Tree\", \"titleSlug\": \"average-of-levels-in-binary-tree\", \"difficulty\": \"Easy\", \"translatedTitle\": null}, {\"title\": \"N-ary Tree Level Order Traversal\", \"titleSlug\": \"n-ary-tree-level-order-traversal\", \"difficulty\": \"Medium\", \"translatedTitle\": null}, {\"title\": \"Cousins in Binary Tree\", \"titleSlug\": \"cousins-in-binary-tree\", \"difficulty\": \"Easy\", \"translatedTitle\": null}]","exampleTestcases":"[3,9,20,null,null,15,7]\n[1]\n[]","categoryTitle":"Algorithms","questionDetailUrl":"/problems/binary-tree-level-order-traversal/","topicTags":[{"id":"VG9waWNUYWdOb2RlOjIw","name":"Tree","slug":"tree","__typename":"TopicTagNode"},{"id":"VG9waWNUYWdOb2RlOjIy","name":"Breadth-First Search","slug":"breadth-first-search","__typename":"TopicTagNode"},{"id":"VG9waWNUYWdOb2RlOjYxMDU3","name":"Binary Tree","slug":"binary-tree","__typename":"TopicTagNode"}],"stats":"{\"totalAccepted\": \"1.2M\", \"totalSubmission\": \"2M\", \"totalAcceptedRaw\": 1214282, \"totalSubmissionRaw\": 1995237, \"acRate\": \"60.9%\"}","hints":[],"__typename":"QuestionNode"},"urqlState":{"3467872531":{"data":"{\"question\":{\"questionId\":\"102\",\"title\":\"Binary Tree Level Order Traversal\",\"titleSlug\":\"binary-tree-level-order-traversal\",\"content\":\"\u003cp\u003eGiven the \u003ccode\u003eroot\u003c/code\u003e of a binary tree, return \u003cem\u003ethe level order traversal of its nodes\u0026#39; values\u003c/em\u003e. (i.e., from left to right, level by level).\u003c/p\u003e\\n\\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\\n\u003cp\u003e\u003cstrong\u003eExample 1:\u003c/strong\u003e\u003c/p\u003e\\n\u003cimg alt=\\\"\\\" src=\\\"https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg\\\" style=\\\"width: 277px; height: 302px;\\\" /\u003e\\n\u003cpre\u003e\\n\u003cstrong\u003eInput:\u003c/strong\u003e root = [3,9,20,null,null,15,7]\\n\u003cstrong\u003eOutput:\u003c/strong\u003e [[3],[9,20],[15,7]]\\n\u003c/pre\u003e\\n\\n\u003cp\u003e\u003cstrong\u003eExample 2:\u003c/strong\u003e\u003c/p\u003e\\n\\n\u003cpre\u003e\\n\u003cstrong\u003eInput:\u003c/strong\u003e root = [1]\\n\u003cstrong\u003eOutput:\u003c/strong\u003e [[1]]\\n\u003c/pre\u003e\\n\\n\u003cp\u003e\u003cstrong\u003eExample 3:\u003c/strong\u003e\u003c/p\u003e\\n\\n\u003cpre\u003e\\n\u003cstrong\u003eInput:\u003c/strong\u003e root = []\\n\u003cstrong\u003eOutput:\u003c/strong\u003e []\\n\u003c/pre\u003e\\n\\n\u003cp\u003e\u0026nbsp;\u003c/p\u003e\\n\u003cp\u003e\u003cstrong\u003eConstraints:\u003c/strong\u003e\u003c/p\u003e\\n\\n\u003cul\u003e\\n\\t\u003cli\u003eThe number of nodes in the tree is in the range \u003ccode\u003e[0, 2000]\u003c/code\u003e.\u003c/li\u003e\\n\\t\u003cli\u003e\u003ccode\u003e-1000 \u0026lt;= Node.val \u0026lt;= 1000\u003c/code\u003e\u003c/li\u003e\\n\u003c/ul\u003e\\n\",\"translatedTitle\":null,\"translatedContent\":null,\"isPaidOnly\":false,\"difficulty\":\"Medium\",\"similarQuestions\":\"[{\\\"title\\\": \\\"Binary Tree Zigzag Level Order Traversal\\\", \\\"titleSlug\\\": \\\"binary-tree-zigzag-level-order-traversal\\\", \\\"difficulty\\\": \\\"Medium\\\", \\\"translatedTitle\\\": null}, {\\\"title\\\": \\\"Binary Tree Level Order Traversal II\\\", \\\"titleSlug\\\": \\\"binary-tree-level-order-traversal-ii\\\", \\\"difficulty\\\": \\\"Medium\\\", \\\"translatedTitle\\\": null}, {\\\"title\\\": \\\"Minimum Depth of Binary Tree\\\", \\\"titleSlug\\\": \\\"minimum-depth-of-binary-tree\\\", \\\"difficulty\\\": \\\"Easy\\\", \\\"translatedTitle\\\": null}, {\\\"title\\\": \\\"Binary Tree Vertical Order Traversal\\\", \\\"titleSlug\\\": \\\"binary-tree-vertical-order-traversal\\\", \\\"difficulty\\\": \\\"Medium\\\", \\\"translatedTitle\\\": null}, {\\\"title\\\": \\\"Average of Levels in Binary Tree\\\", \\\"titleSlug\\\": \\\"average-of-levels-in-binary-tree\\\", \\\"difficulty\\\": \\\"Easy\\\", \\\"translatedTitle\\\": null}, {\\\"title\\\": \\\"N-ary Tree Level Order Traversal\\\", \\\"titleSlug\\\": \\\"n-ary-tree-level-order-traversal\\\", \\\"difficulty\\\": \\\"Medium\\\", \\\"translatedTitle\\\": null}, {\\\"title\\\": \\\"Cousins in Binary Tree\\\", \\\"titleSlug\\\": \\\"cousins-in-binary-tree\\\", \\\"difficulty\\\": \\\"Easy\\\", \\\"translatedTitle\\\": null}]\",\"exampleTestcases\":\"[3,9,20,null,null,15,7]\\n[1]\\n[]\",\"categoryTitle\":\"Algorithms\",\"questionDetailUrl\":\"/problems/binary-tree-level-order-traversal/\",\"topicTags\":[{\"id\":\"VG9waWNUYWdOb2RlOjIw\",\"name\":\"Tree\",\"slug\":\"tree\",\"__typename\":\"TopicTagNode\"},{\"id\":\"VG9waWNUYWdOb2RlOjIy\",\"name\":\"Breadth-First Search\",\"slug\":\"breadth-first-search\",\"__typename\":\"TopicTagNode\"},{\"id\":\"VG9waWNUYWdOb2RlOjYxMDU3\",\"name\":\"Binary Tree\",\"slug\":\"binary-tree\",\"__typename\":\"TopicTagNode\"}],\"stats\":\"{\\\"totalAccepted\\\": \\\"1.2M\\\", \\\"totalSubmission\\\": \\\"2M\\\", \\\"totalAcceptedRaw\\\": 1214282, \\\"totalSubmissionRaw\\\": 1995237, \\\"acRate\\\": \\\"60.9%\\\"}\",\"hints\":[],\"__typename\":\"QuestionNode\"}}"}}},"__N_SSG":true},"page":"/leetcode/[...slug]","query":{"slug":["binary-tree-level-order-traversal"]},"buildId":"vZ9fNqTz-ER0QMwvN_t7w","assetPrefix":"/leetcode-ts","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
