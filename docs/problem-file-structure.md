@@ -16,7 +16,7 @@ Each problem file follows this structure:
  * - Use a hashmap to store complement -> index
  * - O(n) time, O(n) space
  */
-import { z } from 'zod';
+import { z } from 'zod/v4';
 import type { ProblemMeta, TestCase } from '../packages/src/types.js';
 
 export const meta: ProblemMeta = {

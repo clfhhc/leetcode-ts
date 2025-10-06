@@ -99,7 +99,7 @@ export default function ProblemList(props: ProblemListProps) {
                 
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                   <a
-                    href={`/problem/${problem.slug}`}
+                    href={`/leetcode-ts/problem/${problem.slug}`}
                     class="hover:text-blue-600 dark:hover:text-blue-400"
                   >
                     {problem.title}
@@ -119,7 +119,7 @@ export default function ProblemList(props: ProblemListProps) {
               
               <div class="ml-4">
                 <a
-                  href={`/problem/${problem.slug}`}
+                  href={`/leetcode-ts/problem/${problem.slug}`}
                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
                 >
                   View Solution

@@ -1,6 +1,6 @@
 import { writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
-import { prompt } from 'inquirer';
+import inquirer from 'inquirer';
 import chalk from 'chalk';
 
 export interface NewProblemOptions {
@@ -62,7 +62,7 @@ export async function newProblem(options: NewProblemOptions) {
 
   // Prompt for missing required fields
   if (!id) {
-    const { inputId } = await prompt([{
+    const { inputId } = await inquirer.prompt([{
       type: 'input',
       name: 'inputId',
       message: 'Problem ID:',
@@ -75,7 +75,7 @@ export async function newProblem(options: NewProblemOptions) {
   }
 
   if (!slug) {
-    const { inputSlug } = await prompt([{
+    const { inputSlug } = await inquirer.prompt([{
       type: 'input',
       name: 'inputSlug',
       message: 'Problem slug (kebab-case):',
@@ -87,7 +87,7 @@ export async function newProblem(options: NewProblemOptions) {
   }
 
   if (!title) {
-    const { inputTitle } = await prompt([{
+    const { inputTitle } = await inquirer.prompt([{
       type: 'input',
       name: 'inputTitle',
       message: 'Problem title:',
@@ -96,7 +96,7 @@ export async function newProblem(options: NewProblemOptions) {
   }
 
   if (!difficulty) {
-    const { inputDifficulty } = await prompt([{
+    const { inputDifficulty } = await inquirer.prompt([{
       type: 'list',
       name: 'inputDifficulty',
       message: 'Difficulty:',
@@ -106,7 +106,7 @@ export async function newProblem(options: NewProblemOptions) {
   }
 
   if (!tags) {
-    const { inputTags } = await prompt([{
+    const { inputTags } = await inquirer.prompt([{
       type: 'input',
       name: 'inputTags',
       message: 'Tags (comma-separated):',

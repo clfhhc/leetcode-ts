@@ -1,7 +1,8 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from 'fs';
 import { join, dirname } from 'path';
 import { getHighlighter } from 'shiki';
-import type { ProblemData, IndexData, ProblemMeta, TestResult } from './types.js';
+import { marked } from 'marked';
+import type { ProblemData, IndexData, TestResult } from './types.js';
 import { problemMetaSchema, testCaseSchema } from './types.js';
 
 export interface BuildDataOptions {
@@ -104,7 +105,7 @@ export async function buildData(options: BuildDataOptions) {
       
       // Import the module
       const module = await import(fullPath);
-      const { meta, solve, cases } = module;
+      const { meta, cases } = module;
 
       // Validate meta
       const validatedMeta = problemMetaSchema.parse(meta);
@@ -196,7 +197,10 @@ export async function buildData(options: BuildDataOptions) {
 function extractCodeAndNotes(content: string): { code: string; notes: string } {
   // Extract TSDoc comment (between /** and */)
   const tsdocMatch = content.match(/\/\*\*([\s\S]*?)\*\//);
-  const notes = tsdocMatch ? tsdocMatch[1].trim() : '';
+  const rawNotes = tsdocMatch ? tsdocMatch[1].trim() : '';
+  
+  // Process markdown to HTML
+  const notes = rawNotes ? marked(rawNotes) : '';
 
   // Extract code (everything after the first */)
   const codeStart = content.indexOf('*/') + 2;
