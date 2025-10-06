@@ -1,7 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ProblemList from '../components/ProblemList';
-import type { IndexData } from '../data/index.json';
+
+interface IndexData {
+  problems: Array<{
+    id: number;
+    slug: string;
+    title: string;
+    tags: string[];
+    difficulty: string;
+  }>;
+  totalProblems: number;
+  difficultyCounts: {
+    easy: number;
+    medium: number;
+    hard: number;
+  };
+  tagCounts: Record<string, number>;
+}
 
 // Load index data
 const indexData: IndexData = await import('../data/index.json').then(m => m.default);

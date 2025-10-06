@@ -1,5 +1,26 @@
 import { createSignal } from 'solid-js';
-import type { ProblemData } from '../../../../dist/data/problems/[slug].json';
+
+interface ProblemData {
+  id: number;
+  slug: string;
+  title: string;
+  tags: string[];
+  difficulty: string;
+  code: string;
+  notes: string;
+  testResults: Array<{
+    input: any;
+    expected: any;
+    name: string;
+    actual?: any;
+    passed: boolean;
+    duration: number;
+    error?: string;
+  }>;
+  totalTests: number;
+  passedTests: number;
+  failedTests: number;
+}
 
 interface ProblemDetailProps {
   problem: ProblemData;
@@ -130,7 +151,7 @@ export default function ProblemDetail(props: ProblemDetailProps) {
                   </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                  {props.problem.testResults.map((test, index) => (
+                  {props.problem.testResults.map((test) => (
                     <tr>
                       <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900 dark:text-white">
                         {JSON.stringify(test.input)}

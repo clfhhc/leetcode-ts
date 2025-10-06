@@ -1,5 +1,12 @@
 import { createSignal } from 'solid-js';
-import type { ProblemMeta } from '../../../../dist/data/index.json';
+
+interface ProblemMeta {
+  id: number;
+  slug: string;
+  title: string;
+  tags: string[];
+  difficulty: string;
+}
 
 interface ProblemListProps {
   problems: ProblemMeta[];
