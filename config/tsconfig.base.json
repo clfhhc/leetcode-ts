@@ -17,12 +17,7 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "baseUrl": ".",
-    "paths": {
-      "@types/*": ["packages/types/src/*"],
-      "@runner/*": ["packages/runner/src/*"],
-      "@cli/*": ["packages/cli/src/*"]
-    }
+    "baseUrl": "."
   },
   "exclude": ["node_modules", "dist", "build"]
 }

@@ -1,21 +1,16 @@
 {
   "name": "leetcode-ts",
   "private": true,
-  "packageManager": "pnpm@9",
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "problems"
-  ],
+  "packageManager": "pnpm@9.0.0",
   "scripts": {
-    "new": "tsx packages/cli/src/new-problem.ts",
+    "new": "tsx packages/src/new-problem.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "build:data": "tsx packages/cli/src/build-data.ts",
+    "build:data": "tsx packages/src/build-data.ts",
     "build:site": "pnpm -C apps/site build",
     "build": "pnpm build:data && pnpm build:site",
     "dev": "run-p dev:*",
-    "dev:data": "tsx packages/cli/src/build-data.ts --watch",
+    "dev:data": "tsx packages/src/build-data.ts --watch",
     "dev:site": "pnpm -C apps/site dev --open",
     "lint": "eslint .",
     "format": "prettier -w .",
@@ -24,7 +19,7 @@
   "devDependencies": {
     "@types/node": "^20.0.0",
     "concurrently": "^8.2.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.0.0",
     "prettier": "^3.0.0",
     "run-p": "^0.0.0",
     "tsx": "^4.0.0",

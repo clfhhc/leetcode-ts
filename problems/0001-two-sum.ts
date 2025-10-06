@@ -18,7 +18,7 @@
  * Space Complexity: O(n)
  */
 import { z } from 'zod';
-import type { ProblemMeta, TestCase } from '@types';
+import type { ProblemMeta, TestCase } from '../packages/src/types.js';
 
 export const meta: ProblemMeta = {
   id: 1,

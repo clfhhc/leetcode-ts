@@ -2,9 +2,9 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { glob } from 'glob';
 import { createHighlighter } from 'shiki';
-import { runProblemTests } from '@runner';
-import type { ProblemData, IndexData, ProblemMeta } from '@types';
-import { problemMetaSchema, testCaseSchema } from '@types';
+import { runProblemTests } from './runner.js';
+import type { ProblemData, IndexData, ProblemMeta } from './types.js';
+import { problemMetaSchema, testCaseSchema } from './types.js';
 
 export interface BuildDataOptions {
   watch?: boolean;

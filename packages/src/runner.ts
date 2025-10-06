@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { TestCase, TestResult } from '@types';
+import type { TestCase, TestResult } from './types.js';
 
 export interface ProblemModule {
   meta: any;

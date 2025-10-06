@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createTestSuite } from './index.js';
+import { createTestSuite } from './runner.js';
 
 // Eager-import all problem modules from /problems
 const modules = import.meta.glob<{

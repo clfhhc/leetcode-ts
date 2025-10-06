@@ -8,9 +8,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@types': resolve(__dirname, '../packages/types/src'),
-      '@runner': resolve(__dirname, '../packages/runner/src'),
-      '@cli': resolve(__dirname, '../packages/cli/src'),
+      '@packages': resolve(__dirname, '../packages/src'),
     },
   },
 });
