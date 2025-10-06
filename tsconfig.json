@@ -1,0 +1,10 @@
+{
+  "extends": "./config/tsconfig.base.json",
+  "references": [
+    { "path": "./packages/types" },
+    { "path": "./packages/runner" },
+    { "path": "./packages/cli" },
+    { "path": "./apps/site" }
+  ],
+  "files": []
+}

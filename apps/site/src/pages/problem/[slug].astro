@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProblemDetail from '../../components/ProblemDetail';
+import type { ProblemData } from '../../../../dist/data/problems/[slug].json';
+
+export async function getStaticPaths() {
+  // Load index data to get all problem slugs
+  const indexData = await import('../../../../dist/data/index.json').then(m => m.default);
+  
+  return indexData.problems.map((problem) => ({
+    params: { slug: problem.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const problemData: ProblemData = await import(`../../../../dist/data/problems/${slug}.json`).then(m => m.default);
+---
+
+<Layout title={`${problemData.id}. ${problemData.title}`}>
+  <main class="container mx-auto px-4 py-8">
+    <ProblemDetail problem={problemData} />
+  </main>
+</Layout>

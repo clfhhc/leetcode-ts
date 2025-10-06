@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProblemList from '../components/ProblemList';
+import type { IndexData } from '../../../dist/data/index.json';
+
+// Load index data
+const indexData: IndexData = await import('../../../dist/data/index.json').then(m => m.default);
+---
+
+<Layout title="LeetCode TypeScript Solutions">
+  <main class="container mx-auto px-4 py-8">
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        LeetCode TypeScript Solutions
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        My progress and solutions to LeetCode problems in TypeScript
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Total Problems</h3>
+        <p class="text-3xl font-bold text-blue-600">{indexData.totalProblems}</p>
+      </div>
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Easy</h3>
+        <p class="text-3xl font-bold text-green-600">{indexData.difficultyCounts.easy}</p>
+      </div>
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Medium</h3>
+        <p class="text-3xl font-bold text-yellow-600">{indexData.difficultyCounts.medium}</p>
+      </div>
+    </div>
+
+    <ProblemList problems={indexData.problems} />
+  </main>
+</Layout>
