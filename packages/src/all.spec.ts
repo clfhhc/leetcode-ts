@@ -1,13 +1,12 @@
-import { describe, it, expect } from 'vitest';
-import { createTestSuite } from './runner.js';
+import { createTestSuite, type ProblemModule } from './runner.js';
 
 // Eager-import all problem modules from /problems
 const modules = import.meta.glob<{
   meta: any;
   solve: Function;
   cases: any[];
-}>('/Users/davidchenallio/src/leetcode-ts/problems/**/*.ts', { eager: true });
+}>('../../problems/**/*.ts', { eager: true });
 
-for (const [path, module] of Object.entries(modules)) {
+for (const [path, module] of Object.entries(modules) as [string, ProblemModule][]) {
   createTestSuite(path, module);
 }
