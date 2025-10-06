@@ -1,24 +1,28 @@
-import { useState } from 'react';
+import { createSignal } from 'solid-js';
 import type { ProblemMeta } from '../../../../dist/data/index.json';
 
 interface ProblemListProps {
   problems: ProblemMeta[];
 }
 
-export default function ProblemList({ problems }: ProblemListProps) {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [difficultyFilter, setDifficultyFilter] = useState<string>('all');
-  const [tagFilter, setTagFilter] = useState<string>('all');
+export default function ProblemList(props: ProblemListProps) {
+  const [searchTerm, setSearchTerm] = createSignal('');
+  const [difficultyFilter, setDifficultyFilter] = createSignal<string>('all');
+  const [tagFilter, setTagFilter] = createSignal<string>('all');
 
   // Get unique tags
-  const allTags = Array.from(new Set(problems.flatMap(p => p.tags))).sort();
+  const allTags = () => Array.from(new Set(props.problems.flatMap(p => p.tags))).sort();
 
   // Filter problems
-  const filteredProblems = problems.filter(problem => {
-    const matchesSearch = problem.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         problem.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesDifficulty = difficultyFilter === 'all' || problem.difficulty === difficultyFilter;
-    const matchesTag = tagFilter === 'all' || problem.tags.includes(tagFilter);
+  const filteredProblems = () => props.problems.filter(problem => {
+    const search = searchTerm().toLowerCase();
+    const difficulty = difficultyFilter();
+    const tag = tagFilter();
+    
+    const matchesSearch = problem.title.toLowerCase().includes(search) ||
+                         problem.tags.some(tag => tag.toLowerCase().includes(search));
+    const matchesDifficulty = difficulty === 'all' || problem.difficulty === difficulty;
+    const matchesTag = tag === 'all' || problem.tags.includes(tag);
     
     return matchesSearch && matchesDifficulty && matchesTag;
   });
@@ -35,20 +39,20 @@ export default function ProblemList({ problems }: ProblemListProps) {
   return (
     <div>
       {/* Filters */}
-      <div className="mb-6 space-y-4">
-        <div className="flex flex-wrap gap-4">
+      <div class="mb-6 space-y-4">
+        <div class="flex flex-wrap gap-4">
           <input
             type="text"
             placeholder="Search problems..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1 min-w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            value={searchTerm()}
+            onInput={(e) => setSearchTerm(e.currentTarget.value)}
+            class="flex-1 min-w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           
           <select
-            value={difficultyFilter}
-            onChange={(e) => setDifficultyFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            value={difficultyFilter()}
+            onChange={(e) => setDifficultyFilter(e.currentTarget.value)}
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="all">All Difficulties</option>
             <option value="easy">Easy</option>
@@ -57,50 +61,48 @@ export default function ProblemList({ problems }: ProblemListProps) {
           </select>
           
           <select
-            value={tagFilter}
-            onChange={(e) => setTagFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            value={tagFilter()}
+            onChange={(e) => setTagFilter(e.currentTarget.value)}
+            class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="all">All Tags</option>
-            {allTags.map(tag => (
-              <option key={tag} value={tag}>{tag}</option>
+            {allTags().map(tag => (
+              <option value={tag}>{tag}</option>
             ))}
           </select>
         </div>
       </div>
 
       {/* Problem List */}
-      <div className="space-y-4">
-        {filteredProblems.map((problem) => (
+      <div class="space-y-4">
+        {filteredProblems().map((problem) => (
           <div
-            key={problem.id}
-            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-md transition-shadow"
+            class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-md transition-shadow"
           >
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center space-x-3 mb-2">
-                  <span className="text-sm font-mono text-gray-500">
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <div class="flex items-center space-x-3 mb-2">
+                  <span class="text-sm font-mono text-gray-500">
                     {problem.id.toString().padStart(4, '0')}
                   </span>
-                  <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getDifficultyColor(problem.difficulty)}`}>
+                  <span class={`px-2 py-1 text-xs font-semibold rounded-full ${getDifficultyColor(problem.difficulty)}`}>
                     {problem.difficulty}
                   </span>
                 </div>
                 
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                   <a
                     href={`/problem/${problem.slug}`}
-                    className="hover:text-blue-600 dark:hover:text-blue-400"
+                    class="hover:text-blue-600 dark:hover:text-blue-400"
                   >
                     {problem.title}
                   </a>
                 </h3>
                 
-                <div className="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-2">
                   {problem.tags.map((tag) => (
                     <span
-                      key={tag}
-                      className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded"
+                      class="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded"
                     >
                       {tag}
                     </span>
@@ -108,10 +110,10 @@ export default function ProblemList({ problems }: ProblemListProps) {
                 </div>
               </div>
               
-              <div className="ml-4">
+              <div class="ml-4">
                 <a
                   href={`/problem/${problem.slug}`}
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+                  class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
                 >
                   View Solution
                 </a>
@@ -121,9 +123,9 @@ export default function ProblemList({ problems }: ProblemListProps) {
         ))}
       </div>
 
-      {filteredProblems.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-gray-500 dark:text-gray-400">No problems found matching your criteria.</p>
+      {filteredProblems().length === 0 && (
+        <div class="text-center py-12">
+          <p class="text-gray-500 dark:text-gray-400">No problems found matching your criteria.</p>
         </div>
       )}
     </div>

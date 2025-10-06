@@ -1,10 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ProblemList from '../components/ProblemList';
-import type { IndexData } from '../../../dist/data/index.json';
+import type { IndexData } from '../data/index.json';
 
 // Load index data
-const indexData: IndexData = await import('../../../dist/data/index.json').then(m => m.default);
+const indexData: IndexData = await import('../data/index.json').then(m => m.default);
 ---
 
 <Layout title="LeetCode TypeScript Solutions">
@@ -33,6 +33,6 @@ const indexData: IndexData = await import('../../../dist/data/index.json').then(
       </div>
     </div>
 
-    <ProblemList problems={indexData.problems} />
+    <ProblemList problems={indexData.problems} client:load />
   </main>
 </Layout>
