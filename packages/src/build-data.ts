@@ -31,10 +31,8 @@ function findProblemFiles(dir: string): string[] {
   return files;
 }
 
-async function runProblemTests(problemPath: string): Promise<TestResult<any, any>[]> {
-  const module = await import(problemPath) as any;
-  const { solve, cases } = module;
-  const results: TestResult<any, any>[] = [];
+async function runSolutionTests(solveFunction: Function, cases: any[]): Promise<TestResult<any>[]> {
+  const results: TestResult<any>[] = [];
 
   for (const testCase of cases) {
     const start = performance.now();
@@ -43,7 +41,12 @@ async function runProblemTests(problemPath: string): Promise<TestResult<any, any
     let passed = false;
 
     try {
-      actual = solve(testCase.input);
+      // Handle both array and individual parameter formats
+      if (Array.isArray(testCase.input)) {
+        actual = solveFunction(...testCase.input);
+      } else {
+        actual = solveFunction(testCase.input);
+      }
       passed = JSON.stringify(actual) === JSON.stringify(testCase.expected);
     } catch (err) {
       error = err instanceof Error ? err.message : String(err);
@@ -62,6 +65,122 @@ async function runProblemTests(problemPath: string): Promise<TestResult<any, any
   }
 
   return results;
+}
+
+async function runProblemTests(problemPath: string): Promise<{ solutions: any[], totalTests: number, passedTests: number, failedTests: number }> {
+  const module = await import(problemPath) as any;
+  const { cases, solutions: solutionExports } = module;
+  
+  // Check if this is the new Zod function format
+  if (solutionExports && Array.isArray(solutionExports)) {
+    const solutions = [];
+    
+    for (const solution of solutionExports) {
+      // Extract solution info from the function
+      const solutionInfo = extractSolutionInfo(solution);
+      
+      // Run tests with the solution function
+      const testResults = await runSolutionTests(solution, cases);
+      
+      const totalTests = testResults.length;
+      const passedTests = testResults.filter(r => r.passed).length;
+      const failedTests = totalTests - passedTests;
+      
+      solutions.push({
+        ...solutionInfo,
+        testResults,
+        totalTests,
+        passedTests,
+        failedTests,
+      });
+    }
+    
+    const totalTests = solutions.reduce((sum, s) => sum + s.totalTests, 0);
+    const passedTests = solutions.reduce((sum, s) => sum + s.passedTests, 0);
+    const failedTests = totalTests - passedTests;
+    
+    return { solutions, totalTests, passedTests, failedTests };
+  } else {
+    // Legacy format - check for old solution format
+    const solutionKeys = Object.keys(module).filter(key => key.startsWith('solution'));
+    
+    if (solutionKeys.length > 0) {
+      // Old solution format
+      const solutions = [];
+      
+      for (const solutionKey of solutionKeys) {
+        const solution = module[solutionKey];
+        
+        // Create a temporary solve function from the solution's code
+        const solveFunction = new Function('input', solution.code);
+        
+        const testResults = await runSolutionTests(solveFunction, cases);
+        
+        const totalTests = testResults.length;
+        const passedTests = testResults.filter(r => r.passed).length;
+        const failedTests = totalTests - passedTests;
+        
+        solutions.push({
+          ...solution,
+          testResults,
+          totalTests,
+          passedTests,
+          failedTests,
+        });
+      }
+      
+      const totalTests = solutions.reduce((sum, s) => sum + s.totalTests, 0);
+      const passedTests = solutions.reduce((sum, s) => sum + s.passedTests, 0);
+      const failedTests = totalTests - passedTests;
+      
+      return { solutions, totalTests, passedTests, failedTests };
+    } else {
+      // Legacy format with single solve function
+      const { solve } = module;
+      const testResults = await runSolutionTests(solve, cases);
+      
+      const totalTests = testResults.length;
+      const passedTests = testResults.filter(r => r.passed).length;
+      const failedTests = totalTests - passedTests;
+      
+      // Create a single solution from the legacy format
+      const solutions = [{
+        name: 'Solution',
+        description: 'Main solution',
+        approach: 'Add your approach here',
+        timeComplexity: 'O()',
+        spaceComplexity: 'O()',
+        code: solve.toString(),
+        testResults,
+        totalTests,
+        passedTests,
+        failedTests,
+      }];
+      
+      return { solutions, totalTests, passedTests, failedTests };
+    }
+  }
+}
+
+function extractSolutionInfo(solutionFunction: Function): { name: string; description: string; approach: string; timeComplexity: string; spaceComplexity: string; code: string } {
+  const functionString = solutionFunction.toString();
+  
+  // Try to extract info from JSDoc comments above the function
+  // This is a simplified extraction - in practice, you might want more sophisticated parsing
+  const name = 'Solution'; // Default name
+  const description = 'Solution implementation';
+  const approach = 'Add your approach here';
+  const timeComplexity = 'O()';
+  const spaceComplexity = 'O()';
+  
+  return {
+    name,
+    description,
+    approach,
+    timeComplexity,
+    spaceComplexity,
+    code: functionString,
+  };
 }
 
 export async function buildData(options: BuildDataOptions) {
@@ -107,8 +226,14 @@ export async function buildData(options: BuildDataOptions) {
       const module = await import(fullPath);
       const { meta, cases } = module;
 
-      // Validate meta
-      const validatedMeta = problemMetaSchema.parse(meta);
+      // Handle new format without meta export
+      let validatedMeta;
+      if (meta) {
+        validatedMeta = problemMetaSchema.parse(meta);
+      } else {
+        // Extract meta from TSDoc comment for new format
+        validatedMeta = extractMetaFromTSDoc(content);
+      }
       
       // Validate test cases
       cases.forEach((testCase: any) => {
@@ -116,19 +241,19 @@ export async function buildData(options: BuildDataOptions) {
       });
 
       // Run tests
-      const testResults = await runProblemTests(fullPath);
+      const { solutions, totalTests, passedTests, failedTests } = await runProblemTests(fullPath);
       
-      // Calculate stats
-      const totalTests = testResults.length;
-      const passedTests = testResults.filter(r => r.passed).length;
-      const failedTests = totalTests - passedTests;
+      // Highlight code for each solution
+      const highlightedSolutions = solutions.map(solution => ({
+        ...solution,
+        code: highlighter.codeToHtml(solution.code, { lang: 'typescript' }),
+      }));
 
       // Create problem data
       const problemData: ProblemData = {
         ...validatedMeta,
-        code: highlighter.codeToHtml(code, { lang: 'typescript' }),
+        solutions: highlightedSolutions,
         notes,
-        testResults,
         totalTests,
         passedTests,
         failedTests,
@@ -207,6 +332,44 @@ function extractCodeAndNotes(content: string): { code: string; notes: string } {
   const code = content.slice(codeStart).trim();
 
   return { code, notes };
+}
+
+function extractMetaFromTSDoc(content: string): any {
+  // Extract TSDoc comment (between /** and */)
+  const tsdocMatch = content.match(/\/\*\*([\s\S]*?)\*\//);
+  if (!tsdocMatch) {
+    throw new Error('No TSDoc comment found');
+  }
+  
+  const tsdoc = tsdocMatch[1];
+  
+  // Extract problem number and title
+  const titleMatch = tsdoc.match(/\*\s*(\d+)\.\s*(.+)/);
+  if (!titleMatch) {
+    throw new Error('Could not extract problem number and title');
+  }
+  
+  const id = parseInt(titleMatch[1]);
+  const title = titleMatch[2].trim();
+  
+  // Extract difficulty
+  const difficultyMatch = tsdoc.match(/\*\s*Difficulty:\s*(\w+)/);
+  const difficulty = difficultyMatch ? difficultyMatch[1] : 'easy';
+  
+  // Extract tags
+  const tagsMatch = tsdoc.match(/\*\s*Tags:\s*(.+)/);
+  const tags = tagsMatch ? tagsMatch[1].split(',').map(tag => tag.trim()) : [];
+  
+  // Generate slug from title
+  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  
+  return {
+    id,
+    slug,
+    title,
+    tags,
+    difficulty,
+  };
 }
 
 // Run the build if this file is executed directly

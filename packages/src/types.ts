@@ -12,25 +12,37 @@ export interface ProblemMeta {
   constraints?: string[];
 }
 
-export interface TestCase<I, O> {
+export interface TestCase<T extends (...args: any[]) => any> {
   name?: string;
-  input: I;
-  expected: O;
+  input: Parameters<T>;
+  expected: ReturnType<T>;
   only?: boolean;
   skip?: boolean;
 }
 
-export interface TestResult<I, O> extends TestCase<I, O> {
-  actual: O;
+export interface TestResult<T extends (...args: any[]) => any> extends TestCase<T> {
+  actual: ReturnType<T>;
   passed: boolean;
   duration: number;
   error?: string;
 }
 
-export interface ProblemData extends ProblemMeta {
+export interface Solution {
+  name: string;
+  description: string;
+  approach: string;
+  timeComplexity: string;
+  spaceComplexity: string;
   code: string;
+  testResults: TestResult<(...args: any[]) => any>[];
+  totalTests: number;
+  passedTests: number;
+  failedTests: number;
+}
+
+export interface ProblemData extends ProblemMeta {
+  solutions: Solution[];
   notes: string;
-  testResults: TestResult<any, any>[];
   totalTests: number;
   passedTests: number;
   failedTests: number;

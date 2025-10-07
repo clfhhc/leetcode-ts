@@ -1,13 +1,12 @@
 import { createSignal } from 'solid-js';
 
-interface ProblemData {
-  id: number;
-  slug: string;
-  title: string;
-  tags: string[];
-  difficulty: string;
+interface Solution {
+  name: string;
+  description: string;
+  approach: string;
+  timeComplexity: string;
+  spaceComplexity: string;
   code: string;
-  notes: string;
   testResults: Array<{
     input: any;
     expected: any;
@@ -22,12 +21,26 @@ interface ProblemData {
   failedTests: number;
 }
 
+interface ProblemData {
+  id: number;
+  slug: string;
+  title: string;
+  tags: string[];
+  difficulty: string;
+  solutions: Solution[];
+  notes: string;
+  totalTests: number;
+  passedTests: number;
+  failedTests: number;
+}
+
 interface ProblemDetailProps {
   problem: ProblemData;
 }
 
 export default function ProblemDetail(props: ProblemDetailProps) {
-  const [activeTab, setActiveTab] = createSignal<'notes' | 'code' | 'tests'>('notes');
+  const [activeTab, setActiveTab] = createSignal<'notes' | 'solutions' | 'tests'>('notes');
+  const [activeSolution, setActiveSolution] = createSignal(0);
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -86,7 +99,7 @@ export default function ProblemDetail(props: ProblemDetailProps) {
         <nav class="-mb-px flex space-x-8">
           {[
             { id: 'notes', label: 'Notes' },
-            { id: 'code', label: 'Code' },
+            { id: 'solutions', label: 'Solutions' },
             { id: 'tests', label: 'Tests' },
           ].map((tab) => (
             <button
@@ -111,23 +124,97 @@ export default function ProblemDetail(props: ProblemDetailProps) {
           </div>
         )}
 
-        {activeTab() === 'code' && (
-          <div class="bg-gray-900 rounded-lg overflow-hidden">
-            <div class="px-4 py-2 bg-gray-800 text-gray-300 text-sm">
-              TypeScript
+        {activeTab() === 'solutions' && (
+          <div class="space-y-6">
+            {/* Solution Selector */}
+            <div class="flex space-x-2">
+              {props.problem.solutions.map((solution, index) => (
+                <button
+                  onClick={() => setActiveSolution(index)}
+                  class={`px-4 py-2 text-sm font-medium rounded-lg ${
+                    activeSolution() === index
+                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+                  }`}
+                >
+                  {solution.name}
+                </button>
+              ))}
             </div>
-            <div 
-              class="p-4 overflow-x-auto"
-              innerHTML={props.problem.code}
-            />
+
+            {/* Active Solution */}
+            {props.problem.solutions[activeSolution()] && (
+              <div class="space-y-4">
+                {/* Solution Info */}
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                    {props.problem.solutions[activeSolution()].name}
+                  </h3>
+                  <p class="text-gray-600 dark:text-gray-400 mb-3">
+                    {props.problem.solutions[activeSolution()].description}
+                  </p>
+                  
+                  {/* Approach */}
+                  <div class="mb-3">
+                    <h4 class="font-medium text-gray-900 dark:text-white mb-1">Approach:</h4>
+                    <div class="prose dark:prose-invert text-sm">
+                      <div innerHTML={props.problem.solutions[activeSolution()].approach.replace(/\n/g, '<br>')} />
+                    </div>
+                  </div>
+                  
+                  {/* Complexity */}
+                  <div class="flex space-x-4 text-sm">
+                    <div>
+                      <span class="font-medium text-gray-900 dark:text-white">Time:</span>
+                      <span class="text-gray-600 dark:text-gray-400 ml-1">
+                        {props.problem.solutions[activeSolution()].timeComplexity}
+                      </span>
+                    </div>
+                    <div>
+                      <span class="font-medium text-gray-900 dark:text-white">Space:</span>
+                      <span class="text-gray-600 dark:text-gray-400 ml-1">
+                        {props.problem.solutions[activeSolution()].spaceComplexity}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Code */}
+                <div class="bg-gray-900 rounded-lg overflow-hidden">
+                  <div class="px-4 py-2 bg-gray-800 text-gray-300 text-sm">
+                    TypeScript
+                  </div>
+                  <div 
+                    class="p-4 overflow-x-auto"
+                    innerHTML={props.problem.solutions[activeSolution()].code}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         )}
 
         {activeTab() === 'tests' && (
           <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              Test Cases ({props.problem.testResults.length})
-            </h3>
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                Test Cases
+              </h3>
+              <div class="flex space-x-2">
+                {props.problem.solutions.map((solution, index) => (
+                  <button
+                    onClick={() => setActiveSolution(index)}
+                    class={`px-3 py-1 text-sm rounded ${
+                      activeSolution() === index
+                        ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+                    }`}
+                  >
+                    {solution.name}
+                  </button>
+                ))}
+              </div>
+            </div>
             
             <div class="overflow-x-auto">
               <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -151,7 +238,7 @@ export default function ProblemDetail(props: ProblemDetailProps) {
                   </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                  {props.problem.testResults.map((test) => (
+                  {props.problem.solutions[activeSolution()]?.testResults.map((test) => (
                     <tr>
                       <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900 dark:text-white">
                         {JSON.stringify(test.input)}

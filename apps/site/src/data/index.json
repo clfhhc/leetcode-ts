@@ -11,28 +11,26 @@
       "difficulty": "easy"
     },
     {
-      "id": 2,
-      "slug": "add-two-numbers",
-      "title": "Add Two Numbers",
+      "id": 20,
+      "slug": "valid-parentheses",
+      "title": "Valid Parentheses",
       "tags": [
-        "linked-list",
-        "math",
-        "recursion"
+        "string",
+        "stack"
       ],
-      "difficulty": "medium"
+      "difficulty": "easy"
     }
   ],
   "totalProblems": 2,
   "difficultyCounts": {
-    "easy": 1,
-    "medium": 1,
+    "easy": 2,
+    "medium": 0,
     "hard": 0
   },
   "tagCounts": {
     "array": 1,
     "hash-table": 1,
-    "linked-list": 1,
-    "math": 1,
-    "recursion": 1
+    "string": 1,
+    "stack": 1
   }
 }

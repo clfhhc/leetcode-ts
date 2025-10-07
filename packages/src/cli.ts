@@ -18,6 +18,8 @@ program
   .option('-t, --title <string>', 'Problem title')
   .option('-d, --difficulty <string>', 'Problem difficulty', 'easy')
   .option('--tags <string>', 'Comma-separated tags')
+  .option('--from-leetcode', 'Fetch problem data from LeetCode website')
+  .option('--leetcode-slug <string>', 'LeetCode problem slug (e.g., two-sum)')
   .action(async (options) => {
     await newProblem(options);
   });
