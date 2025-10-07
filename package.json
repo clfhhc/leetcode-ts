@@ -1,9 +1,9 @@
 {
   "name": "leetcode-ts",
   "private": true,
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@10.18.1",
   "scripts": {
-    "new": "tsx packages/src/new-problem.ts",
+    "new": "tsx packages/src/cli.ts new",
     "test": "vitest run",
     "test:watch": "vitest",
     "build:data": "tsx packages/src/build-data.ts",
