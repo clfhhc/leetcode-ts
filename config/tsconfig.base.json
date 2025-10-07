@@ -17,7 +17,8 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "types": ["vitest/globals", "vite/client"]
   },
   "exclude": ["node_modules", "dist", "build"]
 }
