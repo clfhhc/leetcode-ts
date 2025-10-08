@@ -1,16 +1,16 @@
 import { describe, it, expect } from 'vitest';
 import type { TestCase, TestResult } from './types.js';
 
-export interface ProblemModule {
+export interface ProblemModule<T extends (...args: any[]) => any = (...args: any[]) => any> {
   meta: any;
-  solve: Function;
-  cases: TestCase<any, any>[];
+  solutions: T[];
+  cases: TestCase<T>[];
 }
 
-export async function runProblemTests(problemPath: string): Promise<TestResult<any, any>[]> {
+export async function runProblemTests(problemPath: string): Promise<TestResult[]> {
   const module = await import(problemPath) as ProblemModule;
   const { solve, cases } = module;
-  const results: TestResult<any, any>[] = [];
+  const results: TestResult[] = [];
 
   for (const testCase of cases) {
     const start = performance.now();

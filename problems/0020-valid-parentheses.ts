@@ -5,7 +5,7 @@
  * Tags: string, stack
  *
  * Description:
- *  * Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+ * Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
  * 
  * An input string is valid if:
  * 
@@ -71,64 +71,20 @@ export const SolutionSchema = z.function({
 export type Solution = z.infer<typeof SolutionSchema>;
 
 export const cases: TestCase<Solution>[] = [
-  {
-    input: "()",
-    expected: true,
-    name: 'Example 1'
-  },
-  {
-    input: "()[]{}",
-    expected: true,
-    name: 'Example 2'
-  },
-  {
-    input: "(]",
-    expected: false,
-    name: 'Example 3'
-  },
-  {
-    input: "([])",
-    expected: true,
-    name: 'Example 4'
-  },
-  {
-    input: "([)]",
-    expected: false,
-    name: 'Example 5'
-  }
+  // Add your test cases here
+  // { input: [/* your input values */], expected: /* expected output */, name: 'Example 1' },
 ];
 
 /**
- * Stack Solution
+ * Solution
  * Approach: 
- *   - Use a stack to keep track of opening brackets
- *   - For each character, if it's an opening bracket, push to stack
- *   - If it's a closing bracket, check if it matches the top of stack
- *   - If stack is empty at the end, all brackets are matched
- * Time Complexity: O(n)
- * Space Complexity: O(n)
+ *   - Add your approach here
+ * Time Complexity: O()
+ * Space Complexity: O()
  */
-export const stackSolution = SolutionSchema.implement((s) => {
-  const stack = [];
-  const pairs = {
-    ')': '(',
-    '}': '{',
-    ']': '['
-  };
-  
-  for (const char of s) {
-    if (char in pairs) {
-      // Closing bracket
-      if (stack.length === 0 || stack.pop() !== pairs[char]) {
-        return false;
-      }
-    } else {
-      // Opening bracket
-      stack.push(char);
-    }
-  }
-  
-  return stack.length === 0;
+export const solution = SolutionSchema.implement((s) => {
+  // Your solution here
+  throw new Error('Not implemented');
 });
 
-export const solutions = [stackSolution];
+export const solutions = [solution];

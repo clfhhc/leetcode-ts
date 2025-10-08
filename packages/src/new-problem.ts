@@ -23,39 +23,40 @@ const PROBLEM_TEMPLATE = `/**
  * Description:
  * {description}
  *
- * Approach:
- * - {approach}
+ * Constraints:
+ * - Add constraints here
  *
+ * Follow-up:
+ * - Add follow-up questions here (if any)
+ */
+import { z } from 'zod';
+import type { TestCase } from '../packages/src/types.js';
+
+export const SolutionSchema = z.function({
+  input: [z.any()], // Define your input types here
+  output: z.any()   // Define your output type here
+});
+
+export type Solution = z.infer<typeof SolutionSchema>;
+
+export const cases: TestCase<Solution>[] = [
+  // Add your test cases here
+  // { input: [/* your input values */], expected: /* expected output */, name: 'Example 1' },
+];
+
+/**
+ * Solution
+ * Approach: 
+ *   - Add your approach here
  * Time Complexity: O()
  * Space Complexity: O()
  */
-import { z } from 'zod';
-import type { ProblemMeta, TestCase } from '../packages/src/types.js';
-
-export const meta: ProblemMeta = {
-  id: {id},
-  slug: '{slug}',
-  title: '{title}',
-  tags: [{tags}],
-  difficulty: '{difficulty}',
-};
-
-export const inputSchema = z.object({
-  // Define your input schema here
-});
-
-export type Input = z.infer<typeof inputSchema>;
-export type Output = any; // Define your output type
-
-export function solve(input: Input): Output {
+export const solution = SolutionSchema.implement((/* your parameters */) => {
   // Your solution here
   throw new Error('Not implemented');
-}
+});
 
-export const cases: TestCase<Input, Output>[] = [
-  // Add your test cases here
-  // { input: { }, expected: , name: 'Example 1' },
-];
+export const solutions = [solution];
 `;
 
 export async function newProblem(options: NewProblemOptions) {
@@ -193,12 +194,10 @@ export async function newProblem(options: NewProblemOptions) {
   // Generate content
   const content = PROBLEM_TEMPLATE
     .replace(/{id}/g, id || '0')
-    .replace(/{slug}/g, slug || '')
     .replace(/{title}/g, title || '')
     .replace(/{difficulty}/g, difficulty || 'easy')
     .replace(/{tags}/g, tagList)
-    .replace(/{description}/g, 'Add problem description here')
-    .replace(/{approach}/g, 'Add your approach here');
+    .replace(/{description}/g, 'Add problem description here');
 
   // Write file
   writeFileSync(filepath, content);

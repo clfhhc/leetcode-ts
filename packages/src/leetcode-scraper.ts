@@ -396,56 +396,9 @@ ${schemaFields}
     // Generate output type (simplified - would need more sophisticated parsing)
     const outputType = this.inferOutputType(content.examples ?? []);
     
-    // Generate test cases from examples
-    const testCases = content.examples?.map((example, index) => {
-      try {
-        // Try to parse the input and output as JSON
-        const inputStr = JSON.stringify(JSON.parse(example.input));
-        const outputStr = JSON.stringify(JSON.parse(example.output));
-        return `  {
-    input: ${inputStr},
-    expected: ${outputStr},
-    name: 'Example ${index + 1}'
-  }`;
-      } catch (error) {
-        // If parsing fails, try to extract values from LeetCode format
-        const inputMatch = example.input.match(/(\w+)\s*=\s*(.+)/);
-        const outputMatch = example.output.match(/(.+)/);
-        
-        if (inputMatch && outputMatch) {
-          const inputValue = inputMatch[2];
-          const outputValue = outputMatch[1];
-          
-          // For multiple parameters, we need to create an array
-          const paramName = inputMatch[1];
-          if (paramName === 'nums' && example.input.includes('target')) {
-            // Extract both nums and target values
-            const numsMatch = example.input.match(/nums\s*=\s*(\[[^\]]+\])/);
-            const targetMatch = example.input.match(/target\s*=\s*(\d+)/);
-            if (numsMatch && targetMatch) {
-              return `  {
-    input: [${numsMatch[1]}, ${targetMatch[1]}],
-    expected: ${outputValue},
-    name: 'Example ${index + 1}'
-  }`;
-            }
-          }
-          
-          return `  {
-    input: ${inputValue},
-    expected: ${outputValue},
-    name: 'Example ${index + 1}'
-  }`;
-        }
-        
-        // Final fallback - use raw strings
-        return `  {
-    input: ${JSON.stringify(example.input)},
-    expected: ${JSON.stringify(example.output)},
-    name: 'Example ${index + 1}'
-  }`;
-      }
-    }).join(',\n');
+    // Generate empty test cases - user will add them manually
+    const testCases = `  // Add your test cases here
+  // { input: [/* your input values */], expected: /* expected output */, name: 'Example 1' },`;
 
     return `/**
  * ${id.toString().padStart(4, '0')}. ${title}
@@ -471,22 +424,22 @@ export const SolutionSchema = z.function({
 export type Solution = z.infer<typeof SolutionSchema>;
 
 export const cases: TestCase<Solution>[] = [
-${testCases ?? []}
+${testCases}
 ];
 
 /**
- * Brute Force
+ * Solution
  * Approach: 
  *   - Add your approach here
  * Time Complexity: O()
  * Space Complexity: O()
  */
-export const bruteForce = SolutionSchema.implement((${this.generateFunctionParams(problem.metaData)}) => {
+export const solution = SolutionSchema.implement((${this.generateFunctionParams(problem.metaData)}) => {
   // Your solution here
   throw new Error('Not implemented');
 });
 
-export const solutions = [bruteForce];
+export const solutions = [solution];
 `;
   }
 

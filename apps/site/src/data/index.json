@@ -11,6 +11,16 @@
       "difficulty": "easy"
     },
     {
+      "id": 3,
+      "slug": "test-problem",
+      "title": "Test Problem",
+      "tags": [
+        "'array'",
+        "'string'"
+      ],
+      "difficulty": "easy"
+    },
+    {
       "id": 20,
       "slug": "valid-parentheses",
       "title": "Valid Parentheses",
@@ -21,15 +31,17 @@
       "difficulty": "easy"
     }
   ],
-  "totalProblems": 2,
+  "totalProblems": 3,
   "difficultyCounts": {
-    "easy": 2,
+    "easy": 3,
     "medium": 0,
     "hard": 0
   },
   "tagCounts": {
     "array": 1,
     "hash-table": 1,
+    "'array'": 1,
+    "'string'": 1,
     "string": 1,
     "stack": 1
   }

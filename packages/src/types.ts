@@ -12,7 +12,7 @@ export interface ProblemMeta {
   constraints?: string[];
 }
 
-export interface TestCase<T extends (...args: any[]) => any> {
+export interface TestCase<T extends (...args: any[]) => any = (...args: any[]) => any> {
   name?: string;
   input: Parameters<T>;
   expected: ReturnType<T>;
@@ -20,7 +20,7 @@ export interface TestCase<T extends (...args: any[]) => any> {
   skip?: boolean;
 }
 
-export interface TestResult<T extends (...args: any[]) => any> extends TestCase<T> {
+export interface TestResult<T extends (...args: any[]) => any = (...args: any[]) => any> extends TestCase<T> {
   actual: ReturnType<T>;
   passed: boolean;
   duration: number;
@@ -34,7 +34,7 @@ export interface Solution {
   timeComplexity: string;
   spaceComplexity: string;
   code: string;
-  testResults: TestResult<(...args: any[]) => any>[];
+  testResults: TestResult[];
   totalTests: number;
   passedTests: number;
   failedTests: number;
