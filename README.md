@@ -77,6 +77,7 @@ pnpm build
 ## 🌐 Website
 
 The generated website includes:
+
 - Problem listing with search and filtering
 - Individual problem pages with code, tests, and documentation
 - Responsive design with dark mode support

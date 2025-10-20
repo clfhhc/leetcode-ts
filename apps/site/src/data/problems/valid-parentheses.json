@@ -2,10 +2,7 @@
   "id": 20,
   "slug": "valid-parentheses",
   "title": "Valid Parentheses",
-  "tags": [
-    "string",
-    "stack"
-  ],
+  "tags": ["string", "stack"],
   "difficulty": "easy",
   "solutions": [
     {

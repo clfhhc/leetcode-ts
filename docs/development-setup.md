@@ -8,6 +8,7 @@
 ## Installation
 
 1. **Clone and setup**:
+
    ```bash
    git clone <your-repo-url>
    cd leetcode-ts
@@ -16,12 +17,14 @@
    ```
 
 2. **Create your first problem**:
+
    ```bash
    pnpm new
    # Follow the prompts to create a new problem file
    ```
 
 3. **Run tests**:
+
    ```bash
    pnpm test        # Run all tests once
    pnpm test:watch  # Run tests in watch mode

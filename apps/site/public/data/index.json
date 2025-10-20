@@ -4,21 +4,14 @@
       "id": 1,
       "slug": "two-sum",
       "title": "Two Sum",
-      "tags": [
-        "array",
-        "hash-table"
-      ],
+      "tags": ["array", "hash-table"],
       "difficulty": "easy"
     },
     {
       "id": 2,
       "slug": "add-two-numbers",
       "title": "Add Two Numbers",
-      "tags": [
-        "linked-list",
-        "math",
-        "recursion"
-      ],
+      "tags": ["linked-list", "math", "recursion"],
       "difficulty": "medium"
     }
   ],

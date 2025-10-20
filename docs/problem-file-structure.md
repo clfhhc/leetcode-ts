@@ -43,7 +43,7 @@ export const cases: TestCase<Input, Output>[] = [
   {
     input: { nums: [2, 7, 11, 15], target: 9 },
     expected: [0, 1],
-    name: 'Example 1'
+    name: 'Example 1',
   },
   // More test cases...
 ];
@@ -52,7 +52,9 @@ export const cases: TestCase<Input, Output>[] = [
 ## Required Exports
 
 ### `meta: ProblemMeta`
+
 Contains metadata about the problem:
+
 - `id`: Unique problem identifier
 - `slug`: URL-friendly identifier
 - `title`: Problem title
@@ -60,17 +62,21 @@ Contains metadata about the problem:
 - `difficulty`: 'easy' | 'medium' | 'hard'
 
 ### `inputSchema: ZodSchema`
+
 Zod schema for input validation and type inference.
 
 ### `solve: Function`
+
 Your solution function that takes the input and returns the output.
 
 ### `cases: TestCase[]`
+
 Array of test cases with input, expected output, and optional metadata.
 
 ## Documentation Format
 
 Use TSDoc comments at the top of each file for:
+
 - Problem description
 - Approach explanation
 - Time and space complexity analysis

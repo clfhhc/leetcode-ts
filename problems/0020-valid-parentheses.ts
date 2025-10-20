@@ -65,42 +65,42 @@ import type { TestCase } from '../packages/src/types.js';
 
 export const SolutionSchema = z.function({
   input: [z.string()],
-  output: z.boolean()
+  output: z.boolean(),
 });
 
 export type Solution = z.infer<typeof SolutionSchema>;
 
 export const cases: TestCase<Solution>[] = [
   {
-    input: ["()"],
+    input: ['()'],
     expected: true,
-    name: "Example 1"
+    name: 'Example 1',
   },
   {
-    input: ["()[]{}"],
+    input: ['()[]{}'],
     expected: true,
-    name: "Example 2"
+    name: 'Example 2',
   },
   {
-    input: ["(]"],
+    input: ['(]'],
     expected: false,
-    name: "Example 3"
+    name: 'Example 3',
   },
   {
-    input: ["([])"],
+    input: ['([])'],
     expected: true,
-    name: "Example 4"
+    name: 'Example 4',
   },
   {
-    input: ["([)]"],
+    input: ['([)]'],
     expected: false,
-    name: "Example 5"
-  }
+    name: 'Example 5',
+  },
 ];
 
 /**
  * Stack Solution
- * Approach: 
+ * Approach:
  *   - Use a stack to store the opening parentheses
  *   - For each closing parenthesis, check if the stack is empty or the top of the stack is the corresponding opening parenthesis
  *   - If it is, pop the stack; otherwise, return false

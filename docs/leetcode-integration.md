@@ -47,6 +47,7 @@ When you fetch from LeetCode, the following information is automatically extract
 ## Example
 
 Running:
+
 ```bash
 npx tsx packages/src/cli.ts new --from-leetcode --leetcode-slug valid-parentheses
 ```

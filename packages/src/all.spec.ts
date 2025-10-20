@@ -7,6 +7,9 @@ const modules = import.meta.glob<{
   cases: any[];
 }>('../../problems/**/*.ts', { eager: true });
 
-for (const [path, module] of Object.entries(modules) as [string, ProblemModule][]) {
+for (const [path, module] of Object.entries(modules) as [
+  string,
+  ProblemModule,
+][]) {
   createTestSuite(path, module);
 }

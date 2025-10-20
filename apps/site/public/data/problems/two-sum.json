@@ -2,120 +2,63 @@
   "id": 1,
   "slug": "two-sum",
   "title": "Two Sum",
-  "tags": [
-    "array",
-    "hash-table"
-  ],
+  "tags": ["array", "hash-table"],
   "difficulty": "easy",
   "code": "<pre class=\"shiki github-light\" style=\"background-color: #fff\" tabindex=\"0\"><code><span class=\"line\"><span style=\"color: #D73A49\">import</span><span style=\"color: #24292E\"> { z } </span><span style=\"color: #D73A49\">from</span><span style=\"color: #24292E\"> </span><span style=\"color: #032F62\">&#39;zod&#39;</span><span style=\"color: #24292E\">;</span></span>\n<span class=\"line\"><span style=\"color: #D73A49\">import</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">type</span><span style=\"color: #24292E\"> { ProblemMeta, TestCase } </span><span style=\"color: #D73A49\">from</span><span style=\"color: #24292E\"> </span><span style=\"color: #032F62\">&#39;../packages/src/types.js&#39;</span><span style=\"color: #24292E\">;</span></span>\n<span class=\"line\"></span>\n<span class=\"line\"><span style=\"color: #D73A49\">export</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">meta</span><span style=\"color: #D73A49\">:</span><span style=\"color: #24292E\"> </span><span style=\"color: #6F42C1\">ProblemMeta</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  id: </span><span style=\"color: #005CC5\">1</span><span style=\"color: #24292E\">,</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  slug: </span><span style=\"color: #032F62\">&#39;two-sum&#39;</span><span style=\"color: #24292E\">,</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  title: </span><span style=\"color: #032F62\">&#39;Two Sum&#39;</span><span style=\"color: #24292E\">,</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  tags: [</span><span style=\"color: #032F62\">&#39;array&#39;</span><span style=\"color: #24292E\">, </span><span style=\"color: #032F62\">&#39;hash-table&#39;</span><span style=\"color: #24292E\">],</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  difficulty: </span><span style=\"color: #032F62\">&#39;easy&#39;</span><span style=\"color: #24292E\">,</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">};</span></span>\n<span class=\"line\"></span>\n<span class=\"line\"><span style=\"color: #D73A49\">export</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">inputSchema</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> z.</span><span style=\"color: #6F42C1\">object</span><span style=\"color: #24292E\">({</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  nums: z.</span><span style=\"color: #6F42C1\">array</span><span style=\"color: #24292E\">(z.</span><span style=\"color: #6F42C1\">number</span><span style=\"color: #24292E\">()),</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  target: z.</span><span style=\"color: #6F42C1\">number</span><span style=\"color: #24292E\">(),</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">});</span></span>\n<span class=\"line\"></span>\n<span class=\"line\"><span style=\"color: #D73A49\">export</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">type</span><span style=\"color: #24292E\"> </span><span style=\"color: #6F42C1\">Input</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> </span><span style=\"color: #6F42C1\">z</span><span style=\"color: #24292E\">.</span><span style=\"color: #6F42C1\">infer</span><span style=\"color: #24292E\">&lt;</span><span style=\"color: #D73A49\">typeof</span><span style=\"color: #24292E\"> inputSchema&gt;;</span></span>\n<span class=\"line\"><span style=\"color: #D73A49\">export</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">type</span><span style=\"color: #24292E\"> </span><span style=\"color: #6F42C1\">Output</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> [</span><span style=\"color: #005CC5\">number</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">number</span><span style=\"color: #24292E\">];</span></span>\n<span class=\"line\"></span>\n<span class=\"line\"><span style=\"color: #D73A49\">export</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">function</span><span style=\"color: #24292E\"> </span><span style=\"color: #6F42C1\">solve</span><span style=\"color: #24292E\">({ </span><span style=\"color: #E36209\">nums</span><span style=\"color: #24292E\">, </span><span style=\"color: #E36209\">target</span><span style=\"color: #24292E\"> }</span><span style=\"color: #D73A49\">:</span><span style=\"color: #24292E\"> </span><span style=\"color: #6F42C1\">Input</span><span style=\"color: #24292E\">)</span><span style=\"color: #D73A49\">:</span><span style=\"color: #24292E\"> </span><span style=\"color: #6F42C1\">Output</span><span style=\"color: #24292E\"> {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  </span><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">seen</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">new</span><span style=\"color: #24292E\"> </span><span style=\"color: #6F42C1\">Map</span><span style=\"color: #24292E\">&lt;</span><span style=\"color: #005CC5\">number</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">number</span><span style=\"color: #24292E\">&gt;();</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  </span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  </span><span style=\"color: #D73A49\">for</span><span style=\"color: #24292E\"> (</span><span style=\"color: #D73A49\">let</span><span style=\"color: #24292E\"> i </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">0</span><span style=\"color: #24292E\">; i </span><span style=\"color: #D73A49\">&lt;</span><span style=\"color: #24292E\"> nums.</span><span style=\"color: #005CC5\">length</span><span style=\"color: #24292E\">; i</span><span style=\"color: #D73A49\">++</span><span style=\"color: #24292E\">) {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    </span><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">num</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> nums[i];</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    </span><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">complement</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> target </span><span style=\"color: #D73A49\">-</span><span style=\"color: #24292E\"> num;</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    </span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    </span><span style=\"color: #D73A49\">if</span><span style=\"color: #24292E\"> (seen.</span><span style=\"color: #6F42C1\">has</span><span style=\"color: #24292E\">(complement)) {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">      </span><span style=\"color: #D73A49\">return</span><span style=\"color: #24292E\"> [seen.</span><span style=\"color: #6F42C1\">get</span><span style=\"color: #24292E\">(complement)</span><span style=\"color: #D73A49\">!</span><span style=\"color: #24292E\">, i];</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    }</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    </span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    seen.</span><span style=\"color: #6F42C1\">set</span><span style=\"color: #24292E\">(num, i);</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  }</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  </span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  </span><span style=\"color: #D73A49\">throw</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">new</span><span style=\"color: #24292E\"> </span><span style=\"color: #6F42C1\">Error</span><span style=\"color: #24292E\">(</span><span style=\"color: #032F62\">&#39;No solution found&#39;</span><span style=\"color: #24292E\">);</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">}</span></span>\n<span class=\"line\"></span>\n<span class=\"line\"><span style=\"color: #D73A49\">export</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">cases</span><span style=\"color: #D73A49\">:</span><span style=\"color: #24292E\"> </span><span style=\"color: #6F42C1\">TestCase</span><span style=\"color: #24292E\">&lt;</span><span style=\"color: #6F42C1\">Input</span><span style=\"color: #24292E\">, </span><span style=\"color: #6F42C1\">Output</span><span style=\"color: #24292E\">&gt;[] </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> [</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    input: { nums: [</span><span style=\"color: #005CC5\">2</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">7</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">11</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">15</span><span style=\"color: #24292E\">], target: </span><span style=\"color: #005CC5\">9</span><span style=\"color: #24292E\"> },</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    expected: [</span><span style=\"color: #005CC5\">0</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">1</span><span style=\"color: #24292E\">],</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    name: </span><span style=\"color: #032F62\">&#39;Example 1&#39;</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  },</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    input: { nums: [</span><span style=\"color: #005CC5\">3</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">2</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">4</span><span style=\"color: #24292E\">], target: </span><span style=\"color: #005CC5\">6</span><span style=\"color: #24292E\"> },</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    expected: [</span><span style=\"color: #005CC5\">1</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">2</span><span style=\"color: #24292E\">],</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    name: </span><span style=\"color: #032F62\">&#39;Example 2&#39;</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  },</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    input: { nums: [</span><span style=\"color: #005CC5\">3</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">3</span><span style=\"color: #24292E\">], target: </span><span style=\"color: #005CC5\">6</span><span style=\"color: #24292E\"> },</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    expected: [</span><span style=\"color: #005CC5\">0</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">1</span><span style=\"color: #24292E\">],</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    name: </span><span style=\"color: #032F62\">&#39;Example 3&#39;</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  },</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    input: { nums: [</span><span style=\"color: #005CC5\">1</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">2</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">3</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">4</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">5</span><span style=\"color: #24292E\">], target: </span><span style=\"color: #005CC5\">8</span><span style=\"color: #24292E\"> },</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    expected: [</span><span style=\"color: #005CC5\">2</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">4</span><span style=\"color: #24292E\">],</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    name: </span><span style=\"color: #032F62\">&#39;Custom test 1&#39;</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  },</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    input: { nums: [</span><span style=\"color: #D73A49\">-</span><span style=\"color: #005CC5\">1</span><span style=\"color: #24292E\">, </span><span style=\"color: #D73A49\">-</span><span style=\"color: #005CC5\">2</span><span style=\"color: #24292E\">, </span><span style=\"color: #D73A49\">-</span><span style=\"color: #005CC5\">3</span><span style=\"color: #24292E\">, </span><span style=\"color: #D73A49\">-</span><span style=\"color: #005CC5\">4</span><span style=\"color: #24292E\">, </span><span style=\"color: #D73A49\">-</span><span style=\"color: #005CC5\">5</span><span style=\"color: #24292E\">], target: </span><span style=\"color: #D73A49\">-</span><span style=\"color: #005CC5\">8</span><span style=\"color: #24292E\"> },</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    expected: [</span><span style=\"color: #005CC5\">2</span><span style=\"color: #24292E\">, </span><span style=\"color: #005CC5\">4</span><span style=\"color: #24292E\">],</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    name: </span><span style=\"color: #032F62\">&#39;Negative numbers&#39;</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  }</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">];</span></span></code></pre>",
   "notes": "* 0001. Two Sum\n *\n * Difficulty: easy\n * Tags: array, hash-table\n *\n * Description:\n * Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\n * You may assume that each input would have exactly one solution, and you may not use the same element twice.\n * You can return the answer in any order.\n *\n * Approach:\n * - Use a hashmap to store complement -> index\n * - For each number, check if its complement exists in the map\n * - If found, return the indices; otherwise, store current number and index\n *\n * Time Complexity: O(n)\n * Space Complexity: O(n)",
   "testResults": [
     {
       "input": {
-        "nums": [
-          2,
-          7,
-          11,
-          15
-        ],
+        "nums": [2, 7, 11, 15],
         "target": 9
       },
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "name": "Example 1",
-      "actual": [
-        0,
-        1
-      ],
+      "actual": [0, 1],
       "passed": true,
       "duration": 0.02862500000000523
     },
     {
       "input": {
-        "nums": [
-          3,
-          2,
-          4
-        ],
+        "nums": [3, 2, 4],
         "target": 6
       },
-      "expected": [
-        1,
-        2
-      ],
+      "expected": [1, 2],
       "name": "Example 2",
-      "actual": [
-        1,
-        2
-      ],
+      "actual": [1, 2],
       "passed": true,
       "duration": 0.0012909999999806132
     },
     {
       "input": {
-        "nums": [
-          3,
-          3
-        ],
+        "nums": [3, 3],
         "target": 6
       },
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "name": "Example 3",
-      "actual": [
-        0,
-        1
-      ],
+      "actual": [0, 1],
       "passed": true,
       "duration": 0.002292000000011285
     },
     {
       "input": {
-        "nums": [
-          1,
-          2,
-          3,
-          4,
-          5
-        ],
+        "nums": [1, 2, 3, 4, 5],
         "target": 8
       },
-      "expected": [
-        2,
-        4
-      ],
+      "expected": [2, 4],
       "name": "Custom test 1",
-      "actual": [
-        2,
-        4
-      ],
+      "actual": [2, 4],
       "passed": true,
       "duration": 0.0016249999999899956
     },
     {
       "input": {
-        "nums": [
-          -1,
-          -2,
-          -3,
-          -4,
-          -5
-        ],
+        "nums": [-1, -2, -3, -4, -5],
         "target": -8
       },
-      "expected": [
-        2,
-        4
-      ],
+      "expected": [2, 4],
       "name": "Negative numbers",
-      "actual": [
-        2,
-        4
-      ],
+      "actual": [2, 4],
       "passed": true,
       "duration": 0.008250000000003865
     }

@@ -50,6 +50,7 @@ If you prefer to create files manually, follow this structure:
 ### PR Description
 
 Include:
+
 - **Problem description** and approach
 - **Test cases** added
 - **Any breaking changes**
@@ -67,6 +68,7 @@ Include:
 ### Bug Reports
 
 Include:
+
 - **Problem description**
 - **Steps to reproduce**
 - **Expected vs actual behavior**
@@ -75,6 +77,7 @@ Include:
 ### Feature Requests
 
 Include:
+
 - **Use case description**
 - **Proposed solution**
 - **Alternative approaches considered**

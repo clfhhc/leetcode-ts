@@ -25,23 +25,23 @@ export const cases: TestCase<Input, Output>[] = [
   {
     input: { nums: [2, 7, 11, 15], target: 9 },
     expected: [0, 1],
-    name: 'Example 1: Basic case'
+    name: 'Example 1: Basic case',
   },
   {
     input: { nums: [3, 3], target: 6 },
     expected: [0, 1],
-    name: 'Example 2: Duplicate numbers'
+    name: 'Example 2: Duplicate numbers',
   },
   {
     input: { nums: [1, 2, 3, 4, 5], target: 8 },
     expected: [2, 4],
-    name: 'Custom: Multiple valid pairs'
+    name: 'Custom: Multiple valid pairs',
   },
   {
     input: { nums: [1, 2], target: 4 },
     expected: null,
-    name: 'Edge case: No solution'
-  }
+    name: 'Edge case: No solution',
+  },
 ];
 ```
 

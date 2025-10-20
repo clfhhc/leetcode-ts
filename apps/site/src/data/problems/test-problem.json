@@ -2,10 +2,7 @@
   "id": 3,
   "slug": "test-problem",
   "title": "Test Problem",
-  "tags": [
-    "'array'",
-    "'string'"
-  ],
+  "tags": ["'array'", "'string'"],
   "difficulty": "easy",
   "solutions": [
     {
@@ -17,9 +14,7 @@
       "code": "<pre class=\"shiki github-light\" style=\"background-color: #fff\" tabindex=\"0\"><code><span class=\"line\"><span style=\"color: #D73A49\">function</span><span style=\"color: #24292E\"> (</span><span style=\"color: #D73A49\">...</span><span style=\"color: #E36209\">args</span><span style=\"color: #24292E\">) {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">            </span><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">parsedArgs</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> inst._def.input </span><span style=\"color: #D73A49\">?</span><span style=\"color: #24292E\"> (</span><span style=\"color: #005CC5\">0</span><span style=\"color: #24292E\">, parse_js_1.parse)(inst._def.input, args) </span><span style=\"color: #D73A49\">:</span><span style=\"color: #24292E\"> args;</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">            </span><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">result</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> Reflect.</span><span style=\"color: #6F42C1\">apply</span><span style=\"color: #24292E\">(func, </span><span style=\"color: #005CC5\">this</span><span style=\"color: #24292E\">, parsedArgs);</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">            </span><span style=\"color: #D73A49\">if</span><span style=\"color: #24292E\"> (inst._def.output) {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">                </span><span style=\"color: #D73A49\">return</span><span style=\"color: #24292E\"> (</span><span style=\"color: #005CC5\">0</span><span style=\"color: #24292E\">, parse_js_1.parse)(inst._def.output, result);</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">            }</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">            </span><span style=\"color: #D73A49\">return</span><span style=\"color: #24292E\"> result;</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">        }</span></span></code></pre>",
       "testResults": [
         {
-          "input": [
-            "hello"
-          ],
+          "input": ["hello"],
           "expected": 5,
           "name": "Example 1",
           "actual": 5,
@@ -27,9 +22,7 @@
           "duration": 0.05566699999997127
         },
         {
-          "input": [
-            "world"
-          ],
+          "input": ["world"],
           "expected": 5,
           "name": "Example 2",
           "actual": 5,

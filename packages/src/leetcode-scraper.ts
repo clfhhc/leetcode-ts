@@ -170,7 +170,8 @@ export class LeetCodeScraper {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
       },
       body: JSON.stringify({
         query,
@@ -183,7 +184,7 @@ export class LeetCodeScraper {
     }
 
     const data = await response.json();
-    
+
     if (data.errors) {
       throw new Error(`GraphQL errors: ${JSON.stringify(data.errors)}`);
     }
@@ -192,16 +193,27 @@ export class LeetCodeScraper {
   }
 
   async getProblemBySlug(slug: string): Promise<LeetCodeProblem> {
-    const data = await this.makeRequest(PROBLEM_DETAILS_QUERY, { titleSlug: slug });
+    const data = await this.makeRequest(PROBLEM_DETAILS_QUERY, {
+      titleSlug: slug,
+    });
     return data.data.question;
   }
 
-  async getProblemContent(slug: string): Promise<{ content: string; mysqlSchemas: string[]; dataSchemas: string[] }> {
-    const data = await this.makeRequest(SINGLE_PROBLEM_QUERY, { titleSlug: slug });
+  async getProblemContent(slug: string): Promise<{
+    content: string;
+    mysqlSchemas: string[];
+    dataSchemas: string[];
+  }> {
+    const data = await this.makeRequest(SINGLE_PROBLEM_QUERY, {
+      titleSlug: slug,
+    });
     return data.data.question;
   }
 
-  async searchProblems(searchTerm: string, limit: number = 10): Promise<LeetCodeProblem[]> {
+  async searchProblems(
+    searchTerm: string,
+    limit: number = 10
+  ): Promise<LeetCodeProblem[]> {
     const data = await this.makeRequest(PROBLEM_QUERY, {
       categorySlug: '',
       skip: 0,
@@ -227,26 +239,35 @@ export class LeetCodeScraper {
       .trim();
 
     // Extract constraints
-    const constraintsMatch = cleanContent.match(/Constraints?:?\s*([\s\S]*?)(?=Follow-up|Example|$)/i);
-    const constraints = constraintsMatch 
+    const constraintsMatch = cleanContent.match(
+      /Constraints?:?\s*([\s\S]*?)(?=Follow-up|Example|$)/i
+    );
+    const constraints = constraintsMatch
       ? constraintsMatch[1]
           .split('\n')
-          .map(line => line.trim())
-          .filter(line => line.length > 0)
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0)
       : [];
 
     // Extract follow-up questions
-    const followUpMatch = cleanContent.match(/Follow-up:?\s*([\s\S]*?)(?=Example|$)/i);
-    const followUp = followUpMatch 
+    const followUpMatch = cleanContent.match(
+      /Follow-up:?\s*([\s\S]*?)(?=Example|$)/i
+    );
+    const followUp = followUpMatch
       ? followUpMatch[1]
           .split('\n')
-          .map(line => line.trim())
-          .filter(line => line.length > 0)
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0)
       : [];
 
     // Extract examples
-    const examples: Array<{ input: string; output: string; explanation?: string }> = [];
-    const exampleRegex = /Example \d+:\s*Input:\s*([^\n]+?)\s*Output:\s*([^\n]+?)(?:\s*Explanation:\s*([^\n]+?))?(?=Example|\n\n|$)/gis;
+    const examples: Array<{
+      input: string;
+      output: string;
+      explanation?: string;
+    }> = [];
+    const exampleRegex =
+      /Example \d+:\s*Input:\s*([^\n]+?)\s*Output:\s*([^\n]+?)(?:\s*Explanation:\s*([^\n]+?))?(?=Example|\n\n|$)/gis;
     let match;
     while ((match = exampleRegex.exec(cleanContent)) !== null) {
       examples.push({
@@ -258,7 +279,9 @@ export class LeetCodeScraper {
 
     // Extract main description (everything before constraints)
     const descriptionMatch = cleanContent.match(/([\s\S]*?)(?=Constraints?:)/i);
-    const description = descriptionMatch ? descriptionMatch[1].trim() : cleanContent;
+    const description = descriptionMatch
+      ? descriptionMatch[1].trim()
+      : cleanContent;
 
     return {
       description,
@@ -268,12 +291,15 @@ export class LeetCodeScraper {
     };
   }
 
-  generateInputSchema(metaData: string, examples: Array<{ input: string; output: string }>): string {
+  generateInputSchema(
+    metaData: string,
+    examples: Array<{ input: string; output: string }>
+  ): string {
     try {
       // Parse the metadata JSON
       const parsed = JSON.parse(metaData);
       const params = parsed.params || [];
-      
+
       if (params.length === 0) {
         // Fallback: try to infer from examples
         if (examples.length > 0) {
@@ -302,11 +328,13 @@ export class LeetCodeScraper {
 })`;
       } else {
         // Multiple parameters - create object with all parameters
-        const schemaFields = params.map((param: any) => {
-          const fieldName = param.name;
-          const fieldType = this.mapLeetCodeTypeToZod(param.type);
-          return `  ${fieldName}: ${fieldType},`;
-        }).join('\n');
+        const schemaFields = params
+          .map((param: any) => {
+            const fieldName = param.name;
+            const fieldType = this.mapLeetCodeTypeToZod(param.type);
+            return `  ${fieldName}: ${fieldType},`;
+          })
+          .join('\n');
 
         return `z.object({
 ${schemaFields}
@@ -324,13 +352,13 @@ ${schemaFields}
     const typeMap: Record<string, string> = {
       'integer[]': 'z.array(z.number())',
       'string[]': 'z.array(z.string())',
-      'integer': 'z.number()',
-      'string': 'z.string()',
-      'boolean': 'z.boolean()',
-      'character': 'z.string().length(1)',
+      integer: 'z.number()',
+      string: 'z.string()',
+      boolean: 'z.boolean()',
+      character: 'z.string().length(1)',
       'character[]': 'z.array(z.string().length(1))',
-      'ListNode': 'z.any()', // Custom type for linked lists
-      'TreeNode': 'z.any()', // Custom type for binary trees
+      ListNode: 'z.any()', // Custom type for linked lists
+      TreeNode: 'z.any()', // Custom type for binary trees
     };
 
     // Handle array types
@@ -358,17 +386,19 @@ ${schemaFields}
     }
 
     if (typeof obj === 'object' && obj !== null) {
-      const fields = Object.entries(obj).map(([key, value]) => {
-        const fieldType = this.generateSchemaFromObject(value);
-        return `  ${key}: ${fieldType},`;
-      }).join('\n');
+      const fields = Object.entries(obj)
+        .map(([key, value]) => {
+          const fieldType = this.generateSchemaFromObject(value);
+          return `  ${key}: ${fieldType},`;
+        })
+        .join('\n');
       return `z.object({\n${fields}\n})`;
     }
 
     const typeMap: Record<string, string> = {
-      'number': 'z.number()',
-      'string': 'z.string()',
-      'boolean': 'z.boolean()',
+      number: 'z.number()',
+      string: 'z.string()',
+      boolean: 'z.boolean()',
     };
 
     return typeMap[typeof obj] || 'z.any()';
@@ -376,26 +406,36 @@ ${schemaFields}
 
   mapDifficulty(leetcodeDifficulty: string): 'easy' | 'medium' | 'hard' {
     switch (leetcodeDifficulty.toLowerCase()) {
-      case 'easy': return 'easy';
-      case 'medium': return 'medium';
-      case 'hard': return 'hard';
-      default: return 'easy';
+      case 'easy':
+        return 'easy';
+      case 'medium':
+        return 'medium';
+      case 'hard':
+        return 'hard';
+      default:
+        return 'easy';
     }
   }
 
-  generateProblemFileContent(problem: LeetCodeProblem, content: ProblemContent): string {
+  generateProblemFileContent(
+    problem: LeetCodeProblem,
+    content: ProblemContent
+  ): string {
     const id = parseInt(problem.questionFrontendId);
     const slug = problem.titleSlug;
     const title = problem.title;
     const difficulty = this.mapDifficulty(problem.difficulty);
-    const tags = problem.topicTags.map(tag => `'${tag.slug}'`).join(', ');
-    
+    const tags = problem.topicTags.map((tag) => `'${tag.slug}'`).join(', ');
+
     // Generate input schema
-    const inputSchema = this.generateInputSchema(problem.metaData, content.examples ?? []);
-    
+    const inputSchema = this.generateInputSchema(
+      problem.metaData,
+      content.examples ?? []
+    );
+
     // Generate output type (simplified - would need more sophisticated parsing)
     const outputType = this.inferOutputType(content.examples ?? []);
-    
+
     // Generate empty test cases - user will add them manually
     const testCases = `  // Add your test cases here
   // { input: [/* your input values */], expected: /* expected output */, name: 'Example 1' },`;
@@ -404,14 +444,17 @@ ${schemaFields}
  * ${id.toString().padStart(4, '0')}. ${title}
  *
  * Difficulty: ${difficulty}
- * Tags: ${problem.topicTags.map(tag => tag.slug).join(', ')}
+ * Tags: ${problem.topicTags.map((tag) => tag.slug).join(', ')}
  *
  * Description:
-${content.description.split('\n').map(line => ` * ${line}`).join('\n')}
+${content.description
+  .split('\n')
+  .map((line) => ` * ${line}`)
+  .join('\n')}
  *
  * Constraints:
-${content.constraints?.map(constraint => ` * - ${constraint}`).join('\n')}
-${content.followUp?.length ?? 0 > 0 ? ` *\n * Follow-up:\n${content.followUp!.map(followUp => ` * - ${followUp}`).join('\n')}` : ''}
+${content.constraints?.map((constraint) => ` * - ${constraint}`).join('\n')}
+${(content.followUp?.length ?? 0 > 0) ? ` *\n * Follow-up:\n${content.followUp!.map((followUp) => ` * - ${followUp}`).join('\n')}` : ''}
  */
 import { z } from 'zod';
 import type { TestCase } from '../packages/src/types.js';
@@ -443,12 +486,14 @@ export const solutions = [solution];
 `;
   }
 
-  private inferOutputType(examples: Array<{ output: string }> | undefined): string {
+  private inferOutputType(
+    examples: Array<{ output: string }> | undefined
+  ): string {
     if (examples?.length === 0) return 'any';
-    
+
     try {
       const firstOutput = JSON.parse(examples![0].output);
-      
+
       if (Array.isArray(firstOutput)) {
         if (firstOutput.length === 0) return 'any[]';
         if (typeof firstOutput[0] === 'number') return 'number[]';
@@ -456,11 +501,11 @@ export const solutions = [solution];
         if (typeof firstOutput[0] === 'boolean') return 'boolean[]';
         return 'any[]';
       }
-      
+
       if (typeof firstOutput === 'number') return 'number';
       if (typeof firstOutput === 'string') return 'string';
       if (typeof firstOutput === 'boolean') return 'boolean';
-      
+
       return 'any';
     } catch {
       return 'any';
@@ -471,26 +516,30 @@ export const solutions = [solution];
     try {
       const parsed = JSON.parse(metaData);
       const params = parsed.params || [];
-      
+
       if (params.length === 0) {
         return 'z.any()';
       }
 
-      return params.map((param: any) => {
-        const fieldType = this.mapLeetCodeTypeToZod(param.type);
-        return fieldType;
-      }).join(', ');
+      return params
+        .map((param: any) => {
+          const fieldType = this.mapLeetCodeTypeToZod(param.type);
+          return fieldType;
+        })
+        .join(', ');
     } catch (error) {
       return 'z.any()';
     }
   }
 
-  private generateZodOutputType(examples: Array<{ output: string }> | undefined): string {
+  private generateZodOutputType(
+    examples: Array<{ output: string }> | undefined
+  ): string {
     if (examples?.length === 0) return 'z.any()';
-    
+
     try {
       const firstOutput = JSON.parse(examples![0].output);
-      
+
       if (Array.isArray(firstOutput)) {
         if (firstOutput.length === 0) return 'z.array(z.any())';
         if (typeof firstOutput[0] === 'number') return 'z.array(z.number())';
@@ -498,11 +547,11 @@ export const solutions = [solution];
         if (typeof firstOutput[0] === 'boolean') return 'z.array(z.boolean())';
         return 'z.array(z.any())';
       }
-      
+
       if (typeof firstOutput === 'number') return 'z.number()';
       if (typeof firstOutput === 'string') return 'z.string()';
       if (typeof firstOutput === 'boolean') return 'z.boolean()';
-      
+
       return 'z.any()';
     } catch {
       return 'z.any()';
@@ -513,7 +562,7 @@ export const solutions = [solution];
     try {
       const parsed = JSON.parse(metaData);
       const params = parsed.params || [];
-      
+
       if (params.length === 0) {
         return 'input';
       }
@@ -523,5 +572,4 @@ export const solutions = [solution];
       return 'input';
     }
   }
-
 }

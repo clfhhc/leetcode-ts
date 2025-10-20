@@ -21,15 +21,18 @@
 ## Configuration Files
 
 ### TypeScript
+
 - **Root config**: `tsconfig.json` (references all packages)
 - **Base config**: `config/tsconfig.base.json` (shared settings)
 - **Package configs**: Individual `tsconfig.json` in each package
 
 ### Linting & Formatting
+
 - **ESLint**: `config/eslint.config.js` (shared rules)
 - **Prettier**: `config/prettier.config.js` (code formatting)
 
 ### Testing
+
 - **Vitest**: `config/vitest.config.ts` (test configuration)
 
 ## Workspace Structure

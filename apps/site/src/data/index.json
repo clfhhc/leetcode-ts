@@ -4,30 +4,21 @@
       "id": 1,
       "slug": "two-sum",
       "title": "Two Sum",
-      "tags": [
-        "array",
-        "hash-table"
-      ],
+      "tags": ["array", "hash-table"],
       "difficulty": "easy"
     },
     {
       "id": 3,
       "slug": "test-problem",
       "title": "Test Problem",
-      "tags": [
-        "'array'",
-        "'string'"
-      ],
+      "tags": ["'array'", "'string'"],
       "difficulty": "easy"
     },
     {
       "id": 20,
       "slug": "valid-parentheses",
       "title": "Valid Parentheses",
-      "tags": [
-        "string",
-        "stack"
-      ],
+      "tags": ["string", "stack"],
       "difficulty": "easy"
     }
   ],
