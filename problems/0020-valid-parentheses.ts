@@ -71,20 +71,61 @@ export const SolutionSchema = z.function({
 export type Solution = z.infer<typeof SolutionSchema>;
 
 export const cases: TestCase<Solution>[] = [
-  // Add your test cases here
-  // { input: [/* your input values */], expected: /* expected output */, name: 'Example 1' },
+  {
+    input: ["()"],
+    expected: true,
+    name: "Example 1"
+  },
+  {
+    input: ["()[]{}"],
+    expected: true,
+    name: "Example 2"
+  },
+  {
+    input: ["(]"],
+    expected: false,
+    name: "Example 3"
+  },
+  {
+    input: ["([])"],
+    expected: true,
+    name: "Example 4"
+  },
+  {
+    input: ["([)]"],
+    expected: false,
+    name: "Example 5"
+  }
 ];
 
 /**
- * Solution
+ * Stack Solution
  * Approach: 
- *   - Add your approach here
- * Time Complexity: O()
- * Space Complexity: O()
+ *   - Use a stack to store the opening parentheses
+ *   - For each closing parenthesis, check if the stack is empty or the top of the stack is the corresponding opening parenthesis
+ *   - If it is, pop the stack; otherwise, return false
+ *   - If the stack is empty at the end, return true; otherwise, return false
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
  */
 export const solution = SolutionSchema.implement((s) => {
-  // Your solution here
-  throw new Error('Not implemented');
+  const matching = {
+    ')': '(',
+    ']': '[',
+    '}': '{',
+  };
+  const stack: ('(' | '[' | '{')[] = [];
+  for (let i = 0; i < s.length; i++) {
+    const char = s[i];
+    if (char === '(' || char === '[' || char === '{') {
+      stack.push(char);
+    } else {
+      if (stack.length === 0 || stack.pop() !== matching[char]) {
+        return false;
+      }
+    }
+  }
+  return stack.length === 0;
 });
 
 export const solutions = [solution];

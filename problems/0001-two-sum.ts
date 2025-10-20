@@ -5,7 +5,7 @@
  * Tags: array, hash-table
  *
  * Description:
- *  * Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+ * Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
  * 
  * You may assume that each input would have exactly one solution, and you may not use the same element twice.
  * 
@@ -93,7 +93,38 @@ export const hashMapSolution = SolutionSchema.implement((nums, target) => {
     seen.set(num, i);
   }
   
-  throw new Error('No solution found');
+  return [];
 });
 
-export const solutions = [hashMapSolution];
+/**
+ * Two Pointers Solution
+ * Approach: 
+ *   - Sort the array
+ *   - Use two pointers to find the two numbers
+ *   - If the sum of the two numbers is equal to the target, return the indices; otherwise, move the pointers
+ * Time Complexity: O(n log n)
+ * Space Complexity: O(1)
+ */
+export const twoPointersSolution = SolutionSchema.implement((nums, target) => {
+  const sortedNums = nums.slice().sort((a, b) => a - b);
+  let left = 0;
+  let right = sortedNums.length - 1;
+  while (left < right) {
+    const sum = sortedNums[left] + sortedNums[right];
+    if (sum === target) {
+      if (sortedNums[left] === sortedNums[right]) {
+        const index = nums.indexOf(sortedNums[left]);
+        return [nums.indexOf(sortedNums[left]), nums.indexOf(sortedNums[right], index + 1)];
+      }
+      return [nums.indexOf(sortedNums[left]), nums.indexOf(sortedNums[right])];
+    }
+    if (sum < target) {
+      left++;
+    } else {
+      right--;
+    }
+  }
+  return [];
+});
+
+export const solutions = [hashMapSolution, twoPointersSolution];

@@ -2,55 +2,97 @@ import { describe, it, expect } from 'vitest';
 import type { TestCase, TestResult } from './types.js';
 
 export interface ProblemModule<T extends (...args: any[]) => any = (...args: any[]) => any> {
-  meta: any;
   solutions: T[];
   cases: TestCase<T>[];
 }
 
-export async function runProblemTests(problemPath: string): Promise<TestResult[]> {
-  const module = await import(problemPath) as ProblemModule;
-  const { solve, cases } = module;
-  const results: TestResult[] = [];
+export async function runProblemTests(problemPath: string): Promise<{ [solutionName: string]: TestResult[] }> {
+  const module = await import(problemPath) as any;
+  const { solutions, cases } = module;
+  const results: { [solutionName: string]: TestResult[] } = {};
 
-  for (const testCase of cases) {
-    const start = performance.now();
-    let actual: any;
-    let error: string | undefined;
-    let passed = false;
+  // Get solution names from module exports
+  const solutionNames = Object.keys(module).filter(key => 
+    key !== 'solutions' && key !== 'cases' && key !== 'SolutionSchema' && 
+    typeof module[key] === 'function' && solutions.includes(module[key])
+  );
 
-    try {
-      actual = solve(testCase.input);
-      passed = JSON.stringify(actual) === JSON.stringify(testCase.expected);
-    } catch (err) {
-      error = err instanceof Error ? err.message : String(err);
-      actual = undefined;
+  for (let i = 0; i < solutions.length; i++) {
+    const solution = solutions[i];
+    const solutionName = solutionNames[i] || `solution${i + 1}`;
+    const solutionResults: TestResult[] = [];
+
+    for (const testCase of cases) {
+      const start = performance.now();
+      let actual: any;
+      let error: string | undefined;
+      let passed = false;
+
+      try {
+        // Handle both array and individual parameter formats
+        if (Array.isArray(testCase.input)) {
+          actual = solution(...testCase.input);
+        } else {
+          actual = solution(testCase.input);
+        }
+        passed = JSON.stringify(actual) === JSON.stringify(testCase.expected);
+      } catch (err) {
+        error = err instanceof Error ? err.message : String(err);
+        actual = undefined;
+      }
+
+      const duration = performance.now() - start;
+
+      solutionResults.push({
+        ...testCase,
+        actual,
+        passed,
+        duration,
+        error,
+      });
     }
 
-    const duration = performance.now() - start;
-
-    results.push({
-      ...testCase,
-      actual,
-      passed,
-      duration,
-      error,
-    });
+    results[solutionName] = solutionResults;
   }
 
   return results;
 }
 
-export function createTestSuite(problemPath: string, module: ProblemModule) {
-  const { meta, solve, cases } = module;
+export function createTestSuite(problemPath: string, module: any) {
+  const { solutions, cases } = module;
   
-  describe(`${meta?.id ?? '?'} ${meta?.title ?? problemPath}`, () => {
-    for (const testCase of cases) {
-      const name = testCase.name ?? JSON.stringify(testCase.input).slice(0, 80);
-      const fn = testCase.only ? it.only : testCase.skip ? it.skip : it;
+  // Extract problem info from the file path or module
+  const problemName = problemPath.split('/').pop()?.replace('.ts', '') || 'Unknown Problem';
+  
+  // Get solution names from module exports
+  const solutionNames = Object.keys(module).filter(key => 
+    key !== 'solutions' && key !== 'cases' && key !== 'SolutionSchema' && 
+    typeof module[key] === 'function' && solutions.includes(module[key])
+  );
+  
+  describe(problemName, () => {
+    for (let i = 0; i < solutions.length; i++) {
+      const solution = solutions[i];
+      const solutionName = solutionNames[i] || `solution${i + 1}`;
       
-      fn(name, () => {
-        const actual = solve(testCase.input);
-        expect(actual).toEqual(testCase.expected);
+      describe(solutionName, () => {
+        for (const testCase of cases) {
+          const name = testCase.name ?? JSON.stringify(testCase.input).slice(0, 80);
+          const fn = testCase.only ? it.only : testCase.skip ? it.skip : it;
+          
+          fn(name, () => {
+            let actual: any;
+            
+            // Handle both array and individual parameter formats
+            if (Array.isArray(testCase.input)) {
+              actual = solution(...testCase.input);
+            } else {
+              actual = solution(testCase.input);
+            }
+            
+            expect(actual).toEqual(testCase.expected);
+          });
+        }
       });
     }
   });
