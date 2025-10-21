@@ -10,23 +10,18 @@
  * 1.  Open brackets must be closed by the same type of brackets.
  * 2.  Open brackets must be closed in the correct order.
  * 3.  Every close bracket has a corresponding open bracket of the same type.
- * **Example 1:**
- * **Input:** s = "()"
- * **Output:** true
- * **Example 2:**
- * **Input:** s = "()\[\]{}"
- * **Output:** true
- * **Example 3:**
- * **Input:** s = "(\]"
- * **Output:** false
- * **Example 4:**
- * **Input:** s = "(\[\])"
- * **Output:** true
- * **Example 5:**
- * **Input:** s = "(\[)\]"
- * **Output:** false
- * **
-
+ *
+ * Examples:
+ * 1. Input: s = "()"
+ *    Output: true
+ * 2. Input: s = "()\[\]{}"
+ *    Output: true
+ * 3. Input: s = "(\]"
+ *    Output: false
+ * 4. Input: s = "(\[\])"
+ *    Output: true
+ * 5. Input: s = "(\[)\]"
+ *    Output: false
  *
  * Constraints:
  * - `1 <= s.length <= 104`
@@ -38,7 +33,7 @@ import type { TestCase } from '../packages/src/types.js';
 
 export const SolutionSchema = z.function({
   input: [z.string()],
-  output: z.any()
+  output: z.boolean()
 });
 
 export type Solution = z.infer<typeof SolutionSchema>;

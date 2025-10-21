@@ -279,13 +279,18 @@ export class LeetCodeScraper {
 
     // Extract follow-up questions
     const followUpMatch = cleanContent.match(
-      /Follow-up:?\s*([\s\S]*?)(?=Example|$)/i
+      /\*{0,2}Follow-up:?\*{0,2}\s*([\s\S]*?)(?=\*{0,2}Example|$)/i
     );
     const followUp = followUpMatch
       ? followUpMatch[1]
         .split('\n')
         .map((line) => line.trim())
         .filter((line) => line.length > 0)
+        .map((line) => {
+          // Remove extra dashes and clean up markdown formatting
+          return line.replace(/^-\s*/, '').replace(/^\*\*\s*/, '').replace(/\*\*$/, '');
+        })
+        .filter((line) => line.length > 0) // Filter out empty lines after cleaning
       : [];
 
     // Extract examples
@@ -295,7 +300,7 @@ export class LeetCodeScraper {
       explanation?: string;
     }> = [];
     const exampleRegex =
-      /Example \d+:\s*Input:\s*([^\n]+?)\s*Output:\s*([^\n]+?)(?:\s*Explanation:\s*([^\n]+?))?(?=Example|\n\n|$)/gis;
+      /\*{0,2}Example \d+:\*{0,2}\s*\n?\*{0,2}Input:\*{0,2}\s*([^\n]+?)\s*\n?\*{0,2}Output:\*{0,2}\s*([^\n]+?)(?:\s*\n?\*{0,2}Explanation:\*{0,2}\s*([^\n]+?))?(?=\*{0,2}Example|\n\n|$)/gis;
     let match;
     while ((match = exampleRegex.exec(cleanContent)) !== null) {
       examples.push({
@@ -307,8 +312,8 @@ export class LeetCodeScraper {
     console.log('examples -------------------->')
     console.log(examples);
 
-    // Extract main description (everything before constraints)
-    const descriptionMatch = cleanContent.match(/([\s\S]*?)(?=Constraints?:)/i);
+    // Extract main description (everything before constraints, examples, or follow-up)
+    const descriptionMatch = cleanContent.match(/([\s\S]*?)(?=\*{0,2}Constraints?:|\*{0,2}Example|\*{0,2}Follow-up)/i);
     const description = descriptionMatch
       ? descriptionMatch[1].trim()
       : cleanContent;
