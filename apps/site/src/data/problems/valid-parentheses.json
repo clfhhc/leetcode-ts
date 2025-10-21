@@ -11,19 +11,70 @@
     {
       "name": "solution",
       "description": "",
-      "approach": "- Add your approach here",
-      "timeComplexity": "O()",
-      "spaceComplexity": "O()",
-      "code": "<pre class=\"shiki github-dark\" style=\"background-color: #24292e\" tabindex=\"0\"><code><span class=\"line\"><span style=\"color: #6A737D\">// Your solution here</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">throw</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">new</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #B392F0\">Error</span><span style=\"color: #E1E4E8\">(</span><span style=\"color: #9ECBFF\">&#39;Not implemented&#39;</span><span style=\"color: #E1E4E8\">);</span></span></code></pre>",
+      "approach": "- Use a stack to store the opening parentheses\n - For each closing parenthesis, check if the stack is empty or the top of the stack is the corresponding opening parenthesis\n - If it is, pop the stack; otherwise, return false\n - If the stack is empty at the end, return true; otherwise, return false",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre class=\"shiki github-dark\" style=\"background-color: #24292e\" tabindex=\"0\"><code><span class=\"line\"><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">matching</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #9ECBFF\">&#39;)&#39;</span><span style=\"color: #E1E4E8\">: </span><span style=\"color: #9ECBFF\">&#39;(&#39;</span><span style=\"color: #E1E4E8\">,</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #9ECBFF\">&#39;]&#39;</span><span style=\"color: #E1E4E8\">: </span><span style=\"color: #9ECBFF\">&#39;[&#39;</span><span style=\"color: #E1E4E8\">,</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #9ECBFF\">&#39;}&#39;</span><span style=\"color: #E1E4E8\">: </span><span style=\"color: #9ECBFF\">&#39;{&#39;</span><span style=\"color: #E1E4E8\">,</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">};</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">stack</span><span style=\"color: #F97583\">:</span><span style=\"color: #E1E4E8\"> (</span><span style=\"color: #9ECBFF\">&#39;(&#39;</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">|</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #9ECBFF\">&#39;[&#39;</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">|</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #9ECBFF\">&#39;{&#39;</span><span style=\"color: #E1E4E8\">)[] </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> [];</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">for</span><span style=\"color: #E1E4E8\"> (</span><span style=\"color: #F97583\">let</span><span style=\"color: #E1E4E8\"> i </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\">; i </span><span style=\"color: #F97583\">&lt;</span><span style=\"color: #E1E4E8\"> s.</span><span style=\"color: #79B8FF\">length</span><span style=\"color: #E1E4E8\">; i</span><span style=\"color: #F97583\">++</span><span style=\"color: #E1E4E8\">) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">char</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> s[i];</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #F97583\">if</span><span style=\"color: #E1E4E8\"> (char </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #9ECBFF\">&#39;(&#39;</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> char </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #9ECBFF\">&#39;[&#39;</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> char </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #9ECBFF\">&#39;{&#39;</span><span style=\"color: #E1E4E8\">) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    stack.</span><span style=\"color: #B392F0\">push</span><span style=\"color: #E1E4E8\">(char);</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  } </span><span style=\"color: #F97583\">else</span><span style=\"color: #E1E4E8\"> {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    </span><span style=\"color: #F97583\">if</span><span style=\"color: #E1E4E8\"> (stack.</span><span style=\"color: #79B8FF\">length</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> stack.</span><span style=\"color: #B392F0\">pop</span><span style=\"color: #E1E4E8\">() </span><span style=\"color: #F97583\">!==</span><span style=\"color: #E1E4E8\"> matching[char]) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">      </span><span style=\"color: #F97583\">return</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">false</span><span style=\"color: #E1E4E8\">;</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    }</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  }</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">}</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">return</span><span style=\"color: #E1E4E8\"> stack.</span><span style=\"color: #79B8FF\">length</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\">;</span></span></code></pre>",
       "utilities": [],
-      "testResults": [],
-      "totalTests": 0,
-      "passedTests": 0,
+      "testResults": [
+        {
+          "input": [
+            "()"
+          ],
+          "expected": true,
+          "name": "Example 1",
+          "actual": true,
+          "passed": true,
+          "duration": 0.08524999999997362
+        },
+        {
+          "input": [
+            "()[]{}"
+          ],
+          "expected": true,
+          "name": "Example 2",
+          "actual": true,
+          "passed": true,
+          "duration": 0.005708000000026914
+        },
+        {
+          "input": [
+            "(]"
+          ],
+          "expected": false,
+          "name": "Example 3",
+          "actual": false,
+          "passed": true,
+          "duration": 0.00804100000004837
+        },
+        {
+          "input": [
+            "([])"
+          ],
+          "expected": true,
+          "name": "Example 4",
+          "actual": true,
+          "passed": true,
+          "duration": 0.004790999999954693
+        },
+        {
+          "input": [
+            "([)]"
+          ],
+          "expected": false,
+          "name": "Example 5",
+          "actual": false,
+          "passed": true,
+          "duration": 0.0015829999999823485
+        }
+      ],
+      "totalTests": 5,
+      "passedTests": 5,
       "failedTests": 0
     }
   ],
-  "notes": "<ul>\n<li><ol start=\"20\">\n<li>Valid Parentheses</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: string, stack</li>\n<li></li>\n<li>Description:</li>\n<li>Given a string <code>s</code> containing just the characters <code>&#39;(&#39;</code>, <code>&#39;)&#39;</code>, <code>&#39;{&#39;</code>, <code>&#39;}&#39;</code>, <code>&#39;[&#39;</code> and <code>&#39;]&#39;</code>, determine if the input string is valid.</li>\n<li>An input string is valid if:</li>\n<li><ul>\n<li>Open brackets must be closed by the same type of brackets.</li>\n</ul>\n</li>\n<li><ul>\n<li>Open brackets must be closed in the correct order.</li>\n</ul>\n</li>\n<li><ul>\n<li>Every close bracket has a corresponding open bracket of the same type.</li>\n</ul>\n</li>\n<li><strong>Example 1:Input:</strong> s = &quot;()&quot;</li>\n<li><br><strong>Output:</strong> true</li>\n<li><strong>Example 2:Input:</strong> s = &quot;()[]{}&quot;</li>\n<li><br><strong>Output:</strong> true</li>\n<li><strong>Example 3:Input:</strong> s = &quot;(]&quot;</li>\n<li><br><strong>Output:</strong> false</li>\n<li><strong>Example 4:Input:</strong> s = &quot;([])&quot;</li>\n<li><br><strong>Output:</strong> true</li>\n<li><strong>Example 5:Input:</strong> s = &quot;([)]&quot;</li>\n<li><br><strong>Output:</strong> false</li>\n</ul>\n\n<ul>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>1 &lt;= s.length &lt;= 10^4^</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>s</code> consists of parentheses only <code>&#39;()[]{}&#39;</code>.</li>\n</ul>\n</li>\n</ul>\n",
-  "totalTests": 0,
-  "passedTests": 0,
+  "notes": "<ul>\n<li><ol start=\"20\">\n<li>Valid Parentheses</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: string, stack</li>\n<li></li>\n<li>Description:</li>\n<li>Given a string <code>s</code> containing just the characters <code>&#39;(&#39;</code>, <code>&#39;)&#39;</code>, <code>&#39;{&#39;</code>, <code>&#39;}&#39;</code>, <code>&#39;[&#39;</code> and <code>&#39;]&#39;</code>, determine if the input string is valid.</li>\n<li></li>\n<li>An input string is valid if:</li>\n<li></li>\n<li><ol>\n<li>Open brackets must be closed by the same type of brackets.</li>\n</ol>\n</li>\n<li><ol start=\"2\">\n<li>Open brackets must be closed in the correct order.</li>\n</ol>\n</li>\n<li><ol start=\"3\">\n<li>Every close bracket has a corresponding open bracket of the same type.</li>\n</ol>\n</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: s = &quot;()&quot;</li>\n</ol>\n</li>\n<li>Output: true</li>\n<li><ol start=\"2\">\n<li>Input: s = &quot;()[]{}&quot;</li>\n</ol>\n</li>\n<li>Output: true</li>\n<li><ol start=\"3\">\n<li>Input: s = &quot;(]&quot;</li>\n</ol>\n</li>\n<li>Output: false</li>\n<li><ol start=\"4\">\n<li>Input: s = &quot;([])&quot;</li>\n</ol>\n</li>\n<li>Output: true</li>\n<li><ol start=\"5\">\n<li>Input: s = &quot;([)]&quot;</li>\n</ol>\n</li>\n<li>Output: false</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>1 &lt;= s.length &lt;= 104</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>s</code> consists of parentheses only <code>&#39;()[]{}&#39;</code>.</li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 5,
+  "passedTests": 5,
   "failedTests": 0
 }

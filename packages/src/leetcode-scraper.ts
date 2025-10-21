@@ -256,9 +256,6 @@ export class LeetCodeScraper {
     // Remove remaining HTML tags and clean up the content
     const cleanContent = this.cleanMarkdown(markdownContent);
 
-    console.log('cleanContent -------------------->')
-    console.log(cleanContent);
-
     // Extract constraints
     const constraintsMatch = cleanContent.match(
       /\*{0,3}Constraints?:?\*{0,2}\s*([\s\S]*?)(?=Follow-up|Example|$)/i
@@ -274,8 +271,6 @@ export class LeetCodeScraper {
         })
         .filter((line) => line.length > 0) // Filter out empty lines after cleaning
       : [];
-    console.log('constraints -------------------->')
-    console.log(constraints);
 
     // Extract follow-up questions
     const followUpMatch = cleanContent.match(
@@ -309,8 +304,6 @@ export class LeetCodeScraper {
         explanation: match[3]?.trim(),
       });
     }
-    console.log('examples -------------------->')
-    console.log(examples);
 
     // Extract main description (everything before constraints, examples, or follow-up)
     const descriptionMatch = cleanContent.match(/([\s\S]*?)(?=\*{0,2}Constraints?:|\*{0,2}Example|\*{0,2}Follow-up)/i);
@@ -324,63 +317,6 @@ export class LeetCodeScraper {
       followUp,
       examples,
     };
-  }
-
-  generateInputSchema(
-    metaData: string,
-    examples: Array<{ input: string; output: string }>
-  ): string {
-    try {
-      // Parse the metadata JSON
-      const parsed = JSON.parse(metaData);
-      const params = parsed.params || [];
-
-      if (params.length === 0) {
-        // Fallback: try to infer from examples
-        if (examples.length > 0) {
-          const firstExample = examples[0];
-          try {
-            const inputObj = JSON.parse(firstExample.input);
-            return this.generateSchemaFromObject(inputObj);
-          } catch {
-            // If parsing fails, return a basic schema
-            return `z.object({
-  // Define your input schema here based on the problem description
-});`;
-          }
-        }
-        return `z.object({
-  // Define your input schema here
-});`;
-      }
-
-      // For LeetCode-style function signatures, generate individual parameters
-      if (params.length === 1) {
-        const param = params[0];
-        const fieldType = this.mapLeetCodeTypeToZod(param.type);
-        return `z.object({
-  ${param.name}: ${fieldType},
-})`;
-      } else {
-        // Multiple parameters - create object with all parameters
-        const schemaFields = params
-          .map((param: any) => {
-            const fieldName = param.name;
-            const fieldType = this.mapLeetCodeTypeToZod(param.type);
-            return `  ${fieldName}: ${fieldType},`;
-          })
-          .join('\n');
-
-        return `z.object({
-${schemaFields}
-})`;
-      }
-    } catch (error) {
-      console.warn('Failed to parse metadata, using fallback schema');
-      return `z.object({
-  // Define your input schema here
-});`;
-    }
   }
 
   private mapLeetCodeTypeToZod(type: string): string {
@@ -457,19 +393,8 @@ ${schemaFields}
     content: ProblemContent
   ): string {
     const id = parseInt(problem.questionFrontendId);
-    const slug = problem.titleSlug;
     const title = problem.title;
     const difficulty = this.mapDifficulty(problem.difficulty);
-    const tags = problem.topicTags.map((tag) => `'${tag.slug}'`).join(', ');
-
-    // Generate input schema
-    const inputSchema = this.generateInputSchema(
-      problem.metaData,
-      content.examples ?? []
-    );
-
-    // Generate output type (simplified - would need more sophisticated parsing)
-    const outputType = this.inferOutputType(content.examples ?? []);
 
     // Generate empty test cases - user will add them manually
     const testCases = `  // Add your test cases here
@@ -477,20 +402,28 @@ ${schemaFields}
 
     // Clean up description formatting - preserve structure
     const cleanedDescription = content.description
-      .split('\n')
-      .map(line => line.trim())
-      .filter(line => line.length > 0)
-      .join('\n');
 
     // Format examples section with proper indentation
-    const examplesSection = content.examples && content.examples.length > 0
+    const examplesSection = content.examples?.length ?? 0 > 0
       ? ` *
  * Examples:
-${content.examples.map((example, index) =>
+${content.examples!.map((example, index) =>
         ` * ${index + 1}. Input: ${example.input}
  *    Output: ${example.output}${example.explanation ? `\n *    Explanation: ${example.explanation}` : ''}`
       ).join('\n')}`
-      : '';
+      : ' *';
+
+    const constraintsSection = content.constraints?.length ?? 0 > 0
+      ? ` *
+ * Constraints:
+${content.constraints!.map((constraint) => ` * - ${constraint}`).join('\n')}`
+      : ' *';
+
+    const followUpSection = content.followUp?.length ?? 0 > 0
+      ? ` *
+ * Follow-up:
+${content.followUp!.map((followUp) => ` * - ${followUp}`).join('\n')}`
+      : ' *';
 
     return `/**
  * ${id.toString().padStart(4, '0')}. ${title}
@@ -504,12 +437,8 @@ ${cleanedDescription
         .map((line) => ` * ${line}`)
         .join('\n')}
 ${examplesSection}
- *
- * Constraints:
-${content.constraints?.map((constraint) => ` * - ${constraint}`).join('\n') || ' * - No constraints specified'}
-${(content.followUp?.length ?? 0 > 0) ? ` *
- * Follow-up:
-${content.followUp!.map((followUp) => ` * - ${followUp}`).join('\n')}` : ''}
+${constraintsSection}
+${followUpSection}
  */
 import { z } from 'zod';
 import type { TestCase } from '../packages/src/types.js';

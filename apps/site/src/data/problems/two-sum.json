@@ -37,7 +37,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.2212910000000079
+          "duration": 0.18958299999997053
         },
         {
           "input": [
@@ -58,7 +58,7 @@
             2
           ],
           "passed": true,
-          "duration": 0.12149999999996908
+          "duration": 0.08924999999999272
         },
         {
           "input": [
@@ -78,7 +78,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.006666999999993095
+          "duration": 0.012125000000082764
         },
         {
           "input": [
@@ -106,7 +106,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.015417000000013559
+          "duration": 0.01595899999995254
         },
         {
           "input": [
@@ -134,7 +134,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.09316599999999653
+          "duration": 0.07833400000004076
         },
         {
           "input": [
@@ -162,7 +162,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.07258300000000872
+          "duration": 0.07054200000004585
         }
       ],
       "totalTests": 6,
@@ -198,7 +198,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.05237499999998363
+          "duration": 0.04975000000001728
         },
         {
           "input": [
@@ -219,7 +219,7 @@
             2
           ],
           "passed": true,
-          "duration": 0.004416999999989457
+          "duration": 0.004500000000007276
         },
         {
           "input": [
@@ -239,7 +239,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.0037919999999758147
+          "duration": 0.005084000000010747
         },
         {
           "input": [
@@ -267,7 +267,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.012417000000027656
+          "duration": 0.01020800000003419
         },
         {
           "input": [
@@ -295,7 +295,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.0061249999999972715
+          "duration": 0.0059160000000701984
         },
         {
           "input": [
@@ -323,7 +323,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.007167000000038115
+          "duration": 0.00691699999993034
         }
       ],
       "totalTests": 6,
@@ -331,7 +331,7 @@
       "failedTests": 0
     }
   ],
-  "notes": "<ul>\n<li><ol>\n<li>Two Sum</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: array, hash-table</li>\n<li></li>\n<li>Description:</li>\n<li>Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.</li>\n<li></li>\n<li>You may assume that each input would have exactly one solution, and you may not use the same element twice.</li>\n<li></li>\n<li>You can return the answer in any order.</li>\n<li></li>\n<li></li>\n<li>Example 1:</li>\n<li></li>\n<li></li>\n<li>Input: nums = [2,7,11,15], target = 9</li>\n<li>Output: [0,1]</li>\n<li>Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].</li>\n<li></li>\n<li></li>\n<li>Example 2:</li>\n<li></li>\n<li></li>\n<li>Input: nums = [3,2,4], target = 6</li>\n<li>Output: [1,2]</li>\n<li></li>\n<li></li>\n<li>Example 3:</li>\n<li></li>\n<li></li>\n<li>Input: nums = [3,3], target = 6</li>\n<li>Output: [0,1]</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>2 &lt;= nums.length &lt;= 104</li>\n</ul>\n</li>\n<li><ul>\n<li>-109 &lt;= nums[i] &lt;= 109</li>\n</ul>\n</li>\n<li><ul>\n<li>-109 &lt;= target &lt;= 109</li>\n</ul>\n</li>\n<li><ul>\n<li>Only one valid answer exists.</li>\n</ul>\n</li>\n<li></li>\n<li>Follow-up:</li>\n<li><ul>\n<li>Can you come up with an algorithm that is less than O(n2) time complexity?</li>\n</ul>\n</li>\n</ul>\n",
+  "notes": "<ul>\n<li><ol>\n<li>Two Sum</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: array, hash-table</li>\n<li></li>\n<li>Description:</li>\n<li>Given an array of integers <code>nums</code> and an integer <code>target</code>, return <em>indices of the two numbers such that they add up to <code>target</code></em>.</li>\n<li></li>\n<li>You may assume that each input would have <strong><em>exactly</em> one solution</strong>, and you may not use the <em>same</em> element twice.</li>\n<li></li>\n<li>You can return the answer in any order.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: nums = [2,7,11,15], target = 9</li>\n</ol>\n</li>\n<li>Output: [0,1]</li>\n<li>Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].</li>\n<li><ol start=\"2\">\n<li>Input: nums = [3,2,4], target = 6</li>\n</ol>\n</li>\n<li>Output: [1,2]</li>\n<li><ol start=\"3\">\n<li>Input: nums = [3,3], target = 6</li>\n</ol>\n</li>\n<li>Output: [0,1]</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>2 &lt;= nums.length &lt;= 104</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>-109 &lt;= nums[i] &lt;= 109</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>-109 &lt;= target &lt;= 109</code></li>\n</ul>\n</li>\n<li><ul>\n<li>Only one valid answer exists.</li>\n</ul>\n</li>\n<li></li>\n<li>Follow-up:</li>\n<li><ul>\n<li>Can you come up with an algorithm that is less than <code>O(n2)</code> time complexity?</li>\n</ul>\n</li>\n</ul>\n",
   "totalTests": 12,
   "passedTests": 12,
   "failedTests": 0
