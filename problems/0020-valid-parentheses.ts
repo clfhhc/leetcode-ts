@@ -5,49 +5,32 @@
  * Tags: string, stack
  *
  * Description:
- * <p>Given a string <code>s</code> containing just the characters <code>'('</code>, <code>')'</code>, <code>'{'</code>, <code>'}'</code>, <code>'['</code> and <code>']'</code>, determine if the input string is valid.</p>
- * <p>An input string is valid if:</p>
- * <ol>
- * <li>Open brackets must be closed by the same type of brackets.</li>
- * <li>Open brackets must be closed in the correct order.</li>
- * <li>Every close bracket has a corresponding open bracket of the same type.</li>
- * </ol>
- * <p> </p>
- * <p><strong class="example">Example 1:</strong></p>
- * <div class="example-block">
- * <p><strong>Input:</strong> <span class="example-io">s = "()"</span></p>
- * <p><strong>Output:</strong> <span class="example-io">true</span></p>
- * </div>
- * <p><strong class="example">Example 2:</strong></p>
- * <div class="example-block">
- * <p><strong>Input:</strong> <span class="example-io">s = "()[]{}"</span></p>
- * <p><strong>Output:</strong> <span class="example-io">true</span></p>
- * </div>
- * <p><strong class="example">Example 3:</strong></p>
- * <div class="example-block">
- * <p><strong>Input:</strong> <span class="example-io">s = "(]"</span></p>
- * <p><strong>Output:</strong> <span class="example-io">false</span></p>
- * </div>
- * <p><strong class="example">Example 4:</strong></p>
- * <div class="example-block">
- * <p><strong>Input:</strong> <span class="example-io">s = "([])"</span></p>
- * <p><strong>Output:</strong> <span class="example-io">true</span></p>
- * </div>
- * <p><strong class="example">Example 5:</strong></p>
- * <div class="example-block">
- * <p><strong>Input:</strong> <span class="example-io">s = "([)]"</span></p>
- * <p><strong>Output:</strong> <span class="example-io">false</span></p>
- * </div>
- * <p> </p>
- * <p><strong>
+ * Given a string `s` containing just the characters `'('`, `')'`, `'{'`, `'}'`, `'['` and `']'`, determine if the input string is valid.
+ * An input string is valid if:
+ * - Open brackets must be closed by the same type of brackets.
+ * - Open brackets must be closed in the correct order.
+ * - Every close bracket has a corresponding open bracket of the same type.
+ * **Example 1:**
+ * **Input:** s = "()"
+ * **Output:** true
+ * **Example 2:**
+ * **Input:** s = "()[]{}"
+ * **Output:** true
+ * **Example 3:**
+ * **Input:** s = "(]"
+ * **Output:** false
+ * **Example 4:**
+ * **Input:** s = "([])"
+ * **Output:** true
+ * **Example 5:**
+ * **Input:** s = "([)]"
+ * **Output:** false
+ * **
 
  *
  * Constraints:
- * - </strong></p>
- * - <ul>
- * - <li><code>1 <= s.length <= 10<sup>4</sup></code></li>
- * - <li><code>s</code> consists of parentheses only <code>'()[]{}'</code>.</li>
- * - </ul>
+ * - `1 <= s.length <= 10^4^`
+ * - `s` consists of parentheses only `'()[]{}'`.
 
  */
 import { z } from 'zod';

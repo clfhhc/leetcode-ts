@@ -225,9 +225,70 @@ export class LeetCodeScraper {
     return data.data.problemsetQuestionList.questions;
   }
 
+  private convertHtmlToMarkdown(content: string): string {
+    let markdown = content;
+
+    // Convert <code>...</code> to `...`
+    markdown = markdown.replace(/<code>(.*?)<\/code>/g, '`$1`');
+
+    // Convert <pre>...</pre> to ```...```
+    markdown = markdown.replace(/<pre>(.*?)<\/pre>/gs, '```\n$1\n```');
+
+    // Convert <ul><li>...</li></ul> to - ...
+    markdown = markdown.replace(/<ul>(.*?)<\/ul>/gs, (match, content) => {
+      const listItems = content.match(/<li>(.*?)<\/li>/gs);
+      if (listItems) {
+        return listItems
+          .map((item: string) => item.replace(/<li>(.*?)<\/li>/s, '- $1'))
+          .join('\n');
+      }
+      return match;
+    });
+
+    // Convert standalone <li>...</li> to - ...
+    markdown = markdown.replace(/<li>(.*?)<\/li>/g, '- $1');
+
+    // Convert <ol><li>...</li></ol> to numbered lists
+    markdown = markdown.replace(/<ol>(.*?)<\/ol>/gs, (match, content) => {
+      const listItems = content.match(/<li>(.*?)<\/li>/gs);
+      if (listItems) {
+        return listItems
+          .map((item: string, index: number) => item.replace(/<li>(.*?)<\/li>/s, `${index + 1}. $1`))
+          .join('\n');
+      }
+      return match;
+    });
+
+    // Convert <strong>...</strong> to **...**
+    markdown = markdown.replace(/<strong>(.*?)<\/strong>/g, '**$1**');
+
+    // Convert <sup>...</sup> to ^...^
+    markdown = markdown.replace(/<sup>(.*?)<\/sup>/g, '^$1^');
+
+    // Convert <p>...</p> to plain text (remove tags, keep content)
+    markdown = markdown.replace(/<p>(.*?)<\/p>/gs, '$1\n');
+
+    // Convert <div>...</div> to plain text (remove tags, keep content)
+    markdown = markdown.replace(/<div[^>]*>(.*?)<\/div>/gs, '$1');
+
+    // Convert <span>...</span> to plain text (remove tags, keep content)
+    markdown = markdown.replace(/<span[^>]*>(.*?)<\/span>/g, '$1');
+
+    // Convert <strong class="example">...</strong> to **...**
+    markdown = markdown.replace(/<strong[^>]*>(.*?)<\/strong>/g, '**$1**');
+
+    // Convert remaining <ol> tags to plain text (remove tags, keep content)
+    markdown = markdown.replace(/<ol[^>]*>(.*?)<\/ol>/gs, '$1');
+
+    return markdown;
+  }
+
   parseProblemContent(content: string): ProblemContent {
-    // Remove HTML tags and clean up the content
-    const cleanContent = content
+    // Convert HTML to markdown first
+    const markdownContent = this.convertHtmlToMarkdown(content);
+
+    // Remove remaining HTML tags and clean up the content
+    const cleanContent = markdownContent
       .replace(/&nbsp;/g, ' ')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
@@ -249,6 +310,11 @@ export class LeetCodeScraper {
         .split('\n')
         .map((line) => line.trim())
         .filter((line) => line.length > 0)
+        .map((line) => {
+          // Remove extra dashes and clean up markdown formatting
+          return line.replace(/^-\s*/, '').replace(/^\*\*\s*/, '').replace(/\*\*$/, '');
+        })
+        .filter((line) => line.length > 0) // Filter out empty lines after cleaning
       : [];
 
     // Extract follow-up questions
@@ -473,7 +539,7 @@ ${cleanedDescription
 ${examplesSection}
  *
  * Constraints:
-${content.constraints?.map((constraint) => ` * - ${constraint}`).join('\n')}
+${content.constraints?.map((constraint) => ` * - ${constraint}`).join('\n') || ' * - No constraints specified'}
 ${(content.followUp?.length ?? 0 > 0) ? ` *
  * Follow-up:
 ${content.followUp!.map((followUp) => ` * - ${followUp}`).join('\n')}` : ''}
