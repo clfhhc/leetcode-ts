@@ -7,6 +7,7 @@ interface Solution {
   timeComplexity: string;
   spaceComplexity: string;
   code: string;
+  utilities: Array<{ name: string; code: string }>;
   testResults: Array<{
     input: any;
     expected: any;
@@ -43,6 +44,9 @@ export default function ProblemDetail(props: ProblemDetailProps) {
     'notes' | 'solutions' | 'tests'
   >('notes');
   const [activeSolution, setActiveSolution] = createSignal(0);
+  const [expandedUtilities, setExpandedUtilities] = createSignal<Set<number>>(
+    new Set()
+  );
 
   // Check URL parameters on mount to set initial tab
   onMount(() => {
@@ -68,6 +72,18 @@ export default function ProblemDetail(props: ProblemDetailProps) {
 
   const getTestStatusColor = (passed: boolean) => {
     return passed ? 'text-green-600 bg-green-100' : 'text-red-600 bg-red-100';
+  };
+
+  const toggleUtilities = (solutionIndex: number) => {
+    setExpandedUtilities((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(solutionIndex)) {
+        newSet.delete(solutionIndex);
+      } else {
+        newSet.add(solutionIndex);
+      }
+      return newSet;
+    });
   };
 
   return (
@@ -143,7 +159,7 @@ export default function ProblemDetail(props: ProblemDetailProps) {
           <div class="prose dark:prose-invert max-w-none prose-sm leading-relaxed">
             <div
               innerHTML={props.problem.notes}
-              class="text-gray-900 dark:text-gray-100 [&_ul]:space-y-1 [&_ol]:space-y-1 [&_li]:leading-tight [&_p]:leading-tight [&_pre]:bg-gray-100 dark:[&_pre]:bg-gray-800 [&_pre]:text-gray-900 dark:[&_pre]:text-gray-100 [&_pre]:border [&_pre]:border-gray-200 dark:[&_pre]:border-gray-700 [&_pre]:rounded [&_pre]:p-2 [&_code]:bg-gray-100 dark:[&_code]:bg-gray-800 [&_code]:text-gray-900 dark:[&_code]:text-gray-100 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm"
+              class="text-gray-900 dark:text-gray-100 [&_ul]:space-y-1 [&_ol]:space-y-1 [&_li]:leading-tight [&_p]:leading-tight [&_pre]:bg-gray-50 dark:[&_pre]:bg-gray-800 [&_pre]:text-gray-900 dark:[&_pre]:text-gray-100 [&_pre]:border [&_pre]:border-gray-200 dark:[&_pre]:border-gray-700 [&_pre]:rounded-lg [&_pre]:p-4 [&_pre]:overflow-hidden [&_code]:bg-gray-50 dark:[&_code]:bg-gray-800 [&_code]:text-gray-900 dark:[&_code]:text-gray-100 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm"
             />
           </div>
         )}
@@ -219,9 +235,54 @@ export default function ProblemDetail(props: ProblemDetailProps) {
                   </div>
                 </div>
 
+                {/* Utilities */}
+                {props.problem.solutions[activeSolution()].utilities.length >
+                  0 && (
+                  <div class="space-y-2">
+                    <button
+                      onClick={() => toggleUtilities(activeSolution())}
+                      class="flex items-center space-x-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                    >
+                      <span>
+                        {expandedUtilities().has(activeSolution()) ? '▼' : '▶'}
+                      </span>
+                      <span>
+                        {expandedUtilities().has(activeSolution())
+                          ? 'Hide'
+                          : 'Show'}{' '}
+                        Utilities (
+                        {
+                          props.problem.solutions[activeSolution()].utilities
+                            .length
+                        }
+                        )
+                      </span>
+                    </button>
+
+                    {expandedUtilities().has(activeSolution()) && (
+                      <div class="space-y-3">
+                        {props.problem.solutions[
+                          activeSolution()
+                        ].utilities.map((utility, index) => (
+                          <div class="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden">
+                            <div class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium">
+                              {utility.name}
+                            </div>
+                            <div class="p-4 overflow-x-auto">
+                              <pre class="text-sm text-gray-900 dark:text-gray-100">
+                                <code>{utility.code}</code>
+                              </pre>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 {/* Code */}
-                <div class="bg-gray-900 rounded-lg overflow-hidden">
-                  <div class="px-4 py-2 bg-gray-800 text-gray-300 text-sm">
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden">
+                  <div class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium">
                     TypeScript
                   </div>
                   <div

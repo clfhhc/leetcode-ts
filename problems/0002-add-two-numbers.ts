@@ -101,6 +101,7 @@ export const cases: TestCase<Solution>[] = [
 
 /**
  * Iterative Solution
+ * @utilities: ListNodeSchema, ListNode
  * Approach:
  *   - Traverse both linked lists simultaneously
  *   - Add corresponding digits plus carry from previous addition

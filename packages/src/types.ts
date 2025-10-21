@@ -38,6 +38,7 @@ export interface Solution {
   timeComplexity: string;
   spaceComplexity: string;
   code: string;
+  utilities: Array<{ name: string; code: string }>;
   testResults: TestResult[];
   totalTests: number;
   passedTests: number;

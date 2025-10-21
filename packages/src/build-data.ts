@@ -196,6 +196,45 @@ async function runProblemTests(problemPath: string, content?: string): Promise<{
   }
 }
 
+function extractUtilityDefinition(sourceContent: string, utilityName: string): string | null {
+  // Try to find type definitions first
+  const typeRegex = new RegExp(`export\\s+type\\s+${utilityName}\\s*=\\s*([^;]+);`, 'g');
+  const typeMatch = typeRegex.exec(sourceContent);
+  if (typeMatch) {
+    return `type ${utilityName} = ${typeMatch[1].trim()};`;
+  }
+
+  // Try to find interface definitions
+  const interfaceRegex = new RegExp(`export\\s+interface\\s+${utilityName}\\s*\\{([\\s\\S]*?)\\}\\s*`, 'g');
+  const interfaceMatch = interfaceRegex.exec(sourceContent);
+  if (interfaceMatch) {
+    return `interface ${utilityName} {${interfaceMatch[1]}}`;
+  }
+
+  // Try to find const/let/var definitions
+  const constRegex = new RegExp(`export\\s+const\\s+${utilityName}\\s*=\\s*([^;]+);`, 'g');
+  const constMatch = constRegex.exec(sourceContent);
+  if (constMatch) {
+    return `const ${utilityName} = ${constMatch[1].trim()};`;
+  }
+
+  // Try to find function definitions
+  const functionRegex = new RegExp(`export\\s+function\\s+${utilityName}\\s*\\([^)]*\\)\\s*\\{([\\s\\S]*?)\\}\\s*`, 'g');
+  const functionMatch = functionRegex.exec(sourceContent);
+  if (functionMatch) {
+    return `function ${utilityName}() {${functionMatch[1]}}`;
+  }
+
+  // Try to find Zod schema definitions
+  const zodRegex = new RegExp(`export\\s+const\\s+${utilityName}\\s*:\\s*z\\.[^=]+=\\s*([^;]+);`, 'g');
+  const zodMatch = zodRegex.exec(sourceContent);
+  if (zodMatch) {
+    return `const ${utilityName}: z.ZodType = ${zodMatch[1].trim()};`;
+  }
+
+  return null;
+}
+
 function extractSolutionInfo(solutionFunction: (...args: any[]) => any, functionName?: string, sourceContent?: string): {
   name: string;
   description: string;
@@ -203,6 +242,7 @@ function extractSolutionInfo(solutionFunction: (...args: any[]) => any, function
   timeComplexity: string;
   spaceComplexity: string;
   code: string;
+  utilities: Array<{ name: string; code: string }>;
 } {
   const functionString = solutionFunction.toString();
 
@@ -243,6 +283,36 @@ function extractSolutionInfo(solutionFunction: (...args: any[]) => any, function
       const spaceMatch = jsdoc.match(/\*\s*Space Complexity:\s*([^\n\r]+)/);
       if (spaceMatch) {
         spaceComplexity = spaceMatch[1].trim();
+      }
+    }
+  }
+
+  // Extract utilities from @utilities JSDoc tag
+  const utilities: Array<{ name: string; code: string }> = [];
+  if (sourceContent && functionName) {
+    // Find all JSDoc comments and their corresponding functions
+    const allMatches = sourceContent.matchAll(/\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*SolutionSchema\.implement/g);
+
+    let jsdoc = null;
+    for (const match of allMatches) {
+      if (match[2] === functionName) {
+        jsdoc = match[1];
+        break;
+      }
+    }
+
+    if (jsdoc) {
+      // Extract utilities from @utilities tag
+      const utilitiesMatch = jsdoc.match(/\*\s*@utilities:\s*([^\n\r]+)/);
+      if (utilitiesMatch) {
+        const utilityNames = utilitiesMatch[1].split(',').map(name => name.trim());
+
+        for (const utilityName of utilityNames) {
+          const utilityCode = extractUtilityDefinition(sourceContent, utilityName);
+          if (utilityCode) {
+            utilities.push({ name: utilityName, code: utilityCode });
+          }
+        }
       }
     }
   }
@@ -309,6 +379,7 @@ function extractSolutionInfo(solutionFunction: (...args: any[]) => any, function
     timeComplexity,
     spaceComplexity,
     code: actualCode,
+    utilities,
   };
 }
 
@@ -375,7 +446,10 @@ export async function buildData(options: BuildDataOptions) {
         // Highlight code for each solution
         const highlightedSolutions = solutions.map((solution) => ({
           ...solution,
-          code: highlighter.codeToHtml(solution.code, { lang: 'typescript' }),
+          code: highlighter.codeToHtml(solution.code, {
+            lang: 'typescript',
+            theme: 'github-dark'
+          }),
         }));
 
         // Create problem data
@@ -460,8 +534,15 @@ async function extractCodeAndNotes(content: string): Promise<{ code: string; not
   const tsdocMatch = content.match(/\/\*\*([\s\S]*?)\*\//);
   const rawNotes = tsdocMatch ? tsdocMatch[1].trim() : '';
 
+  // Clean up excessive newlines before processing
+  const cleanedNotes = rawNotes
+    .replace(/\n\s*\n\s*\n/g, '\n\n') // Replace 3+ consecutive newlines with 2
+    .replace(/^\s*\n/g, '') // Remove leading empty lines
+    .replace(/\n\s*$/g, '') // Remove trailing empty lines
+    .trim();
+
   // Process markdown to HTML
-  const notes = rawNotes ? await marked.parse(rawNotes) : '';
+  const notes = cleanedNotes ? await marked.parse(cleanedNotes) : '';
 
   // For the new format, we don't need to extract code here since
   // the actual solution code is in the exported functions

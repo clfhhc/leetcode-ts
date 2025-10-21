@@ -228,7 +228,6 @@ export class LeetCodeScraper {
   parseProblemContent(content: string): ProblemContent {
     // Remove HTML tags and clean up the content
     const cleanContent = content
-      .replace(/<[^>]*>/g, '')
       .replace(/&nbsp;/g, ' ')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
@@ -236,6 +235,9 @@ export class LeetCodeScraper {
       .replace(/&quot;/g, '"')
       .replace(/&#39;/g, "'")
       .replace(/&apos;/g, "'")
+      .replace(/\n\s*\n\s*\n/g, '\n\n') // Replace 3+ consecutive newlines with 2
+      .replace(/^\s*\n/g, '') // Remove leading empty lines
+      .replace(/\n\s*$/g, '') // Remove trailing empty lines
       .trim();
 
     // Extract constraints
@@ -244,9 +246,9 @@ export class LeetCodeScraper {
     );
     const constraints = constraintsMatch
       ? constraintsMatch[1]
-          .split('\n')
-          .map((line) => line.trim())
-          .filter((line) => line.length > 0)
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0)
       : [];
 
     // Extract follow-up questions
@@ -255,9 +257,9 @@ export class LeetCodeScraper {
     );
     const followUp = followUpMatch
       ? followUpMatch[1]
-          .split('\n')
-          .map((line) => line.trim())
-          .filter((line) => line.length > 0)
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0)
       : [];
 
     // Extract examples
@@ -440,6 +442,23 @@ ${schemaFields}
     const testCases = `  // Add your test cases here
   // { input: [/* your input values */], expected: /* expected output */, name: 'Example 1' },`;
 
+    // Clean up description formatting - preserve structure
+    const cleanedDescription = content.description
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line.length > 0)
+      .join('\n');
+
+    // Format examples section with proper indentation
+    const examplesSection = content.examples && content.examples.length > 0
+      ? ` *
+ * Examples:
+${content.examples.map((example, index) =>
+        ` * ${index + 1}. Input: ${example.input}
+ *    Output: ${example.output}${example.explanation ? `\n *    Explanation: ${example.explanation}` : ''}`
+      ).join('\n')}`
+      : '';
+
     return `/**
  * ${id.toString().padStart(4, '0')}. ${title}
  *
@@ -447,14 +466,17 @@ ${schemaFields}
  * Tags: ${problem.topicTags.map((tag) => tag.slug).join(', ')}
  *
  * Description:
-${content.description
-  .split('\n')
-  .map((line) => ` * ${line}`)
-  .join('\n')}
+${cleanedDescription
+        .split('\n')
+        .map((line) => ` * ${line}`)
+        .join('\n')}
+${examplesSection}
  *
  * Constraints:
 ${content.constraints?.map((constraint) => ` * - ${constraint}`).join('\n')}
-${(content.followUp?.length ?? 0 > 0) ? ` *\n * Follow-up:\n${content.followUp!.map((followUp) => ` * - ${followUp}`).join('\n')}` : ''}
+${(content.followUp?.length ?? 0 > 0) ? ` *
+ * Follow-up:
+${content.followUp!.map((followUp) => ` * - ${followUp}`).join('\n')}` : ''}
  */
 import { z } from 'zod';
 import type { TestCase } from '../packages/src/types.js';
