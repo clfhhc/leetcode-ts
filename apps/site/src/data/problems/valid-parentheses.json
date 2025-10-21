@@ -2,24 +2,78 @@
   "id": 20,
   "slug": "valid-parentheses",
   "title": "Valid Parentheses",
-  "tags": ["string", "stack"],
+  "tags": [
+    "string",
+    "stack"
+  ],
   "difficulty": "easy",
   "solutions": [
     {
-      "name": "Solution",
-      "description": "Solution implementation",
-      "approach": "Add your approach here",
-      "timeComplexity": "O()",
-      "spaceComplexity": "O()",
-      "code": "<pre class=\"shiki github-light\" style=\"background-color: #fff\" tabindex=\"0\"><code><span class=\"line\"><span style=\"color: #D73A49\">function</span><span style=\"color: #24292E\"> (</span><span style=\"color: #D73A49\">...</span><span style=\"color: #E36209\">args</span><span style=\"color: #24292E\">) {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">            </span><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">parsedArgs</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> inst._def.input </span><span style=\"color: #D73A49\">?</span><span style=\"color: #24292E\"> (</span><span style=\"color: #005CC5\">0</span><span style=\"color: #24292E\">, parse_js_1.parse)(inst._def.input, args) </span><span style=\"color: #D73A49\">:</span><span style=\"color: #24292E\"> args;</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">            </span><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">result</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> Reflect.</span><span style=\"color: #6F42C1\">apply</span><span style=\"color: #24292E\">(func, </span><span style=\"color: #005CC5\">this</span><span style=\"color: #24292E\">, parsedArgs);</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">            </span><span style=\"color: #D73A49\">if</span><span style=\"color: #24292E\"> (inst._def.output) {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">                </span><span style=\"color: #D73A49\">return</span><span style=\"color: #24292E\"> (</span><span style=\"color: #005CC5\">0</span><span style=\"color: #24292E\">, parse_js_1.parse)(inst._def.output, result);</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">            }</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">            </span><span style=\"color: #D73A49\">return</span><span style=\"color: #24292E\"> result;</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">        }</span></span></code></pre>",
-      "testResults": [],
-      "totalTests": 0,
-      "passedTests": 0,
+      "name": "solution",
+      "description": "",
+      "approach": "- Use a stack to store the opening parentheses\n - For each closing parenthesis, check if the stack is empty or the top of the stack is the corresponding opening parenthesis\n - If it is, pop the stack; otherwise, return false\n - If the stack is empty at the end, return true; otherwise, return false",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre class=\"shiki github-light\" style=\"background-color: #fff\" tabindex=\"0\"><code><span class=\"line\"><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">matching</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  </span><span style=\"color: #032F62\">&#39;)&#39;</span><span style=\"color: #24292E\">: </span><span style=\"color: #032F62\">&#39;(&#39;</span><span style=\"color: #24292E\">,</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  </span><span style=\"color: #032F62\">&#39;]&#39;</span><span style=\"color: #24292E\">: </span><span style=\"color: #032F62\">&#39;[&#39;</span><span style=\"color: #24292E\">,</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  </span><span style=\"color: #032F62\">&#39;}&#39;</span><span style=\"color: #24292E\">: </span><span style=\"color: #032F62\">&#39;{&#39;</span><span style=\"color: #24292E\">,</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">};</span></span>\n<span class=\"line\"><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">stack</span><span style=\"color: #D73A49\">:</span><span style=\"color: #24292E\"> (</span><span style=\"color: #032F62\">&#39;(&#39;</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">|</span><span style=\"color: #24292E\"> </span><span style=\"color: #032F62\">&#39;[&#39;</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">|</span><span style=\"color: #24292E\"> </span><span style=\"color: #032F62\">&#39;{&#39;</span><span style=\"color: #24292E\">)[] </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> [];</span></span>\n<span class=\"line\"><span style=\"color: #D73A49\">for</span><span style=\"color: #24292E\"> (</span><span style=\"color: #D73A49\">let</span><span style=\"color: #24292E\"> i </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">0</span><span style=\"color: #24292E\">; i </span><span style=\"color: #D73A49\">&lt;</span><span style=\"color: #24292E\"> s.</span><span style=\"color: #005CC5\">length</span><span style=\"color: #24292E\">; i</span><span style=\"color: #D73A49\">++</span><span style=\"color: #24292E\">) {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  </span><span style=\"color: #D73A49\">const</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">char</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">=</span><span style=\"color: #24292E\"> s[i];</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  </span><span style=\"color: #D73A49\">if</span><span style=\"color: #24292E\"> (char </span><span style=\"color: #D73A49\">===</span><span style=\"color: #24292E\"> </span><span style=\"color: #032F62\">&#39;(&#39;</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">||</span><span style=\"color: #24292E\"> char </span><span style=\"color: #D73A49\">===</span><span style=\"color: #24292E\"> </span><span style=\"color: #032F62\">&#39;[&#39;</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">||</span><span style=\"color: #24292E\"> char </span><span style=\"color: #D73A49\">===</span><span style=\"color: #24292E\"> </span><span style=\"color: #032F62\">&#39;{&#39;</span><span style=\"color: #24292E\">) {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    stack.</span><span style=\"color: #6F42C1\">push</span><span style=\"color: #24292E\">(char);</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  } </span><span style=\"color: #D73A49\">else</span><span style=\"color: #24292E\"> {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    </span><span style=\"color: #D73A49\">if</span><span style=\"color: #24292E\"> (stack.</span><span style=\"color: #005CC5\">length</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">===</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">0</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">||</span><span style=\"color: #24292E\"> stack.</span><span style=\"color: #6F42C1\">pop</span><span style=\"color: #24292E\">() </span><span style=\"color: #D73A49\">!==</span><span style=\"color: #24292E\"> matching[char]) {</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">      </span><span style=\"color: #D73A49\">return</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">false</span><span style=\"color: #24292E\">;</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">    }</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">  }</span></span>\n<span class=\"line\"><span style=\"color: #24292E\">}</span></span>\n<span class=\"line\"><span style=\"color: #D73A49\">return</span><span style=\"color: #24292E\"> stack.</span><span style=\"color: #005CC5\">length</span><span style=\"color: #24292E\"> </span><span style=\"color: #D73A49\">===</span><span style=\"color: #24292E\"> </span><span style=\"color: #005CC5\">0</span><span style=\"color: #24292E\">;</span></span></code></pre>",
+      "testResults": [
+        {
+          "input": [
+            "()"
+          ],
+          "expected": true,
+          "name": "Example 1",
+          "actual": true,
+          "passed": true,
+          "duration": 0.061332999999990534
+        },
+        {
+          "input": [
+            "()[]{}"
+          ],
+          "expected": true,
+          "name": "Example 2",
+          "actual": true,
+          "passed": true,
+          "duration": 0.06774999999998954
+        },
+        {
+          "input": [
+            "(]"
+          ],
+          "expected": false,
+          "name": "Example 3",
+          "actual": false,
+          "passed": true,
+          "duration": 0.0072499999999990905
+        },
+        {
+          "input": [
+            "([])"
+          ],
+          "expected": true,
+          "name": "Example 4",
+          "actual": true,
+          "passed": true,
+          "duration": 0.004208000000005541
+        },
+        {
+          "input": [
+            "([)]"
+          ],
+          "expected": false,
+          "name": "Example 5",
+          "actual": false,
+          "passed": true,
+          "duration": 0.0012909999999806132
+        }
+      ],
+      "totalTests": 5,
+      "passedTests": 5,
       "failedTests": 0
     }
   ],
   "notes": "<ul>\n<li><ol start=\"20\">\n<li>Valid Parentheses</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: string, stack</li>\n<li></li>\n<li>Description:</li>\n<li>Given a string s containing just the characters &#39;(&#39;, &#39;)&#39;, &#39;{&#39;, &#39;}&#39;, &#39;[&#39; and &#39;]&#39;, determine if the input string is valid.</li>\n<li></li>\n<li>An input string is valid if:</li>\n<li></li>\n<li></li>\n<li><pre><code>Open brackets must be closed by the same type of brackets.\n</code></pre>\n</li>\n<li><pre><code>Open brackets must be closed in the correct order.\n</code></pre>\n</li>\n<li><pre><code>Every close bracket has a corresponding open bracket of the same type.\n</code></pre>\n</li>\n<li></li>\n<li></li>\n<li></li>\n<li>Example 1:</li>\n<li></li>\n<li></li>\n<li>Input: s = &quot;()&quot;</li>\n<li></li>\n<li>Output: true</li>\n<li></li>\n<li></li>\n<li>Example 2:</li>\n<li></li>\n<li></li>\n<li>Input: s = &quot;()[]{}&quot;</li>\n<li></li>\n<li>Output: true</li>\n<li></li>\n<li></li>\n<li>Example 3:</li>\n<li></li>\n<li></li>\n<li>Input: s = &quot;(]&quot;</li>\n<li></li>\n<li>Output: false</li>\n<li></li>\n<li></li>\n<li>Example 4:</li>\n<li></li>\n<li></li>\n<li>Input: s = &quot;([])&quot;</li>\n<li></li>\n<li>Output: true</li>\n<li></li>\n<li></li>\n<li>Example 5:</li>\n<li></li>\n<li></li>\n<li>Input: s = &quot;([)]&quot;</li>\n<li></li>\n<li>Output: false</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>1 &lt;= s.length &lt;= 104</li>\n</ul>\n</li>\n<li><ul>\n<li>s consists of parentheses only &#39;()[]{}&#39;.</li>\n</ul>\n</li>\n</ul>\n",
-  "totalTests": 0,
-  "passedTests": 0,
+  "totalTests": 5,
+  "passedTests": 5,
   "failedTests": 0
 }

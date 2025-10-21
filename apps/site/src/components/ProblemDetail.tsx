@@ -1,4 +1,4 @@
-import { createSignal } from 'solid-js';
+import { createSignal, onMount } from 'solid-js';
 
 interface Solution {
   name: string;
@@ -43,6 +43,15 @@ export default function ProblemDetail(props: ProblemDetailProps) {
     'notes' | 'solutions' | 'tests'
   >('notes');
   const [activeSolution, setActiveSolution] = createSignal(0);
+
+  // Check URL parameters on mount to set initial tab
+  onMount(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab');
+    if (tab === 'solutions' || tab === 'tests') {
+      setActiveTab(tab as 'solutions' | 'tests');
+    }
+  });
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -131,8 +140,11 @@ export default function ProblemDetail(props: ProblemDetailProps) {
       {/* Tab Content */}
       <div class="space-y-6">
         {activeTab() === 'notes' && (
-          <div class="prose dark:prose-invert max-w-none">
-            <div innerHTML={props.problem.notes} />
+          <div class="prose dark:prose-invert max-w-none prose-sm leading-relaxed">
+            <div
+              innerHTML={props.problem.notes}
+              class="text-gray-900 dark:text-gray-100 [&_ul]:space-y-1 [&_ol]:space-y-1 [&_li]:leading-tight [&_p]:leading-tight [&_pre]:bg-gray-100 dark:[&_pre]:bg-gray-800 [&_pre]:text-gray-900 dark:[&_pre]:text-gray-100 [&_pre]:border [&_pre]:border-gray-200 dark:[&_pre]:border-gray-700 [&_pre]:rounded [&_pre]:p-2 [&_code]:bg-gray-100 dark:[&_code]:bg-gray-800 [&_code]:text-gray-900 dark:[&_code]:text-gray-100 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm"
+            />
           </div>
         )}
 
@@ -171,7 +183,7 @@ export default function ProblemDetail(props: ProblemDetailProps) {
                     <h4 class="font-medium text-gray-900 dark:text-white mb-1">
                       Approach:
                     </h4>
-                    <div class="prose dark:prose-invert text-sm">
+                    <div class="prose dark:prose-invert text-sm text-gray-600 dark:text-gray-400">
                       <div
                         innerHTML={props.problem.solutions[
                           activeSolution()

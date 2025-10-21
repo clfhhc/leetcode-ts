@@ -4,35 +4,46 @@
       "id": 1,
       "slug": "two-sum",
       "title": "Two Sum",
-      "tags": ["array", "hash-table"],
+      "tags": [
+        "array",
+        "hash-table"
+      ],
       "difficulty": "easy"
     },
     {
-      "id": 3,
-      "slug": "test-problem",
-      "title": "Test Problem",
-      "tags": ["'array'", "'string'"],
-      "difficulty": "easy"
+      "id": 2,
+      "slug": "add-two-numbers",
+      "title": "Add Two Numbers",
+      "tags": [
+        "linked-list",
+        "math",
+        "recursion"
+      ],
+      "difficulty": "medium"
     },
     {
       "id": 20,
       "slug": "valid-parentheses",
       "title": "Valid Parentheses",
-      "tags": ["string", "stack"],
+      "tags": [
+        "string",
+        "stack"
+      ],
       "difficulty": "easy"
     }
   ],
   "totalProblems": 3,
   "difficultyCounts": {
-    "easy": 3,
-    "medium": 0,
+    "easy": 2,
+    "medium": 1,
     "hard": 0
   },
   "tagCounts": {
     "array": 1,
     "hash-table": 1,
-    "'array'": 1,
-    "'string'": 1,
+    "linked-list": 1,
+    "math": 1,
+    "recursion": 1,
     "string": 1,
     "stack": 1
   }

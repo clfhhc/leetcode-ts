@@ -2,8 +2,7 @@ import { createTestSuite, type ProblemModule } from './runner.js';
 
 // Eager-import all problem modules from /problems
 const modules = import.meta.glob<{
-  meta: any;
-  solve: Function;
+  solutions: ((...args: any[]) => any)[];
   cases: any[];
 }>('../../problems/**/*.ts', { eager: true });
 

@@ -125,7 +125,7 @@ export default function ProblemList(props: ProblemListProps) {
 
               <div class="ml-4">
                 <a
-                  href={`/leetcode-ts/problem/${problem.slug}`}
+                  href={`/leetcode-ts/problem/${problem.slug}?tab=solutions`}
                   class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
                 >
                   View Solution

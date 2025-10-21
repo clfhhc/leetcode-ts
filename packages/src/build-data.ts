@@ -6,10 +6,11 @@ import {
   readdirSync,
   statSync,
 } from 'fs';
+import { performance } from 'node:perf_hooks';
 import { join, dirname } from 'path';
 import { getHighlighter } from 'shiki';
 import { marked } from 'marked';
-import type { ProblemData, IndexData, TestResult } from './types.js';
+import type { ProblemData, IndexData, TestResult, Difficulty } from './types.js';
 import { problemMetaSchema, testCaseSchema } from './types.js';
 
 export interface BuildDataOptions {
@@ -39,7 +40,7 @@ function findProblemFiles(dir: string): string[] {
 }
 
 async function runSolutionTests(
-  solveFunction: Function,
+  solveFunction: (...args: any[]) => any,
   cases: any[]
 ): Promise<TestResult<any>[]> {
   const results: TestResult<any>[] = [];
@@ -77,7 +78,7 @@ async function runSolutionTests(
   return results;
 }
 
-async function runProblemTests(problemPath: string): Promise<{
+async function runProblemTests(problemPath: string, content?: string): Promise<{
   solutions: any[];
   totalTests: number;
   passedTests: number;
@@ -90,9 +91,23 @@ async function runProblemTests(problemPath: string): Promise<{
   if (solutionExports && Array.isArray(solutionExports)) {
     const solutions = [];
 
-    for (const solution of solutionExports) {
-      // Extract solution info from the function
-      const solutionInfo = extractSolutionInfo(solution);
+    // Get solution names from module exports
+    const solutionNames = Object.keys(module).filter(
+      (key) =>
+        key !== 'solutions' &&
+        key !== 'cases' &&
+        key !== 'SolutionSchema' &&
+        key !== 'meta' &&
+        typeof module[key] === 'function' &&
+        solutionExports.includes(module[key])
+    );
+
+    for (let i = 0; i < solutionExports.length; i++) {
+      const solution = solutionExports[i];
+      const solutionName = solutionNames[i] || `solution${i + 1}`;
+
+      // Extract solution info from the function and source content
+      const solutionInfo = extractSolutionInfo(solution, solutionName, content);
 
       // Run tests with the solution function
       const testResults = await runSolutionTests(solution, cases);
@@ -129,7 +144,7 @@ async function runProblemTests(problemPath: string): Promise<{
         const solution = module[solutionKey];
 
         // Create a temporary solve function from the solution's code
-        const solveFunction = new Function('input', solution.code);
+        const solveFunction = new Function('input', solution.code) as (...args: any[]) => any;
 
         const testResults = await runSolutionTests(solveFunction, cases);
 
@@ -181,7 +196,7 @@ async function runProblemTests(problemPath: string): Promise<{
   }
 }
 
-function extractSolutionInfo(solutionFunction: Function): {
+function extractSolutionInfo(solutionFunction: (...args: any[]) => any, functionName?: string, sourceContent?: string): {
   name: string;
   description: string;
   approach: string;
@@ -192,12 +207,100 @@ function extractSolutionInfo(solutionFunction: Function): {
   const functionString = solutionFunction.toString();
 
   // Try to extract info from JSDoc comments above the function
-  // This is a simplified extraction - in practice, you might want more sophisticated parsing
-  const name = 'Solution'; // Default name
-  const description = 'Solution implementation';
-  const approach = 'Add your approach here';
-  const timeComplexity = 'O()';
-  const spaceComplexity = 'O()';
+  const name = functionName || 'Solution';
+  const description = '';
+  let approach = 'Add your approach here';
+  let timeComplexity = 'O()';
+  let spaceComplexity = 'O()';
+
+  // Extract from source content if available
+  if (sourceContent && functionName) {
+    // Find all JSDoc comments and their corresponding functions
+    const allMatches = sourceContent.matchAll(/\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*SolutionSchema\.implement/g);
+
+    let jsdoc = null;
+    for (const match of allMatches) {
+      if (match[2] === functionName) {
+        jsdoc = match[1];
+        break;
+      }
+    }
+
+    if (jsdoc) {
+      // Extract approach
+      const approachMatch = jsdoc.match(/\*\s*Approach:\s*([\s\S]*?)(?:\*\s*(?:Time|Space|$))/);
+      if (approachMatch) {
+        approach = approachMatch[1].replace(/\*\s*/g, '').trim();
+      }
+
+      // Extract time complexity
+      const timeMatch = jsdoc.match(/\*\s*Time Complexity:\s*([^\n\r]+)/);
+      if (timeMatch) {
+        timeComplexity = timeMatch[1].trim();
+      }
+
+      // Extract space complexity
+      const spaceMatch = jsdoc.match(/\*\s*Space Complexity:\s*([^\n\r]+)/);
+      if (spaceMatch) {
+        spaceComplexity = spaceMatch[1].trim();
+      }
+    }
+  }
+
+  // Extract the actual implementation code from the source content if available
+  let actualCode = functionString;
+
+  if (sourceContent && functionName) {
+    // Look for the actual implementation in the source content
+    const escapedFunctionName = functionName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`export\\s+const\\s+${escapedFunctionName}\\s*=\\s*SolutionSchema\\.implement\\([^)]*\\)\\s*=>\\s*\\{([\\s\\S]*?)\\}\\s*\\);`);
+    const implementationMatch = sourceContent.match(regex);
+
+    if (implementationMatch) {
+      // Extract just the implementation part
+      const implementation = implementationMatch[1];
+      // Clean up the implementation by removing the outer braces and fixing indentation
+      const lines = implementation.split('\n');
+      const cleanedLines = lines.map(line => {
+        // Remove leading whitespace but preserve relative indentation
+        const trimmed = line.trim();
+        if (!trimmed) return '';
+        // Find the minimum indentation level in the code block
+        const minIndent = Math.min(...lines.filter(l => l.trim()).map(l => l.match(/^(\s*)/)?.[1].length || 0));
+        // Adjust indentation to start from 0, using 2-space indentation
+        const currentIndent = line.match(/^(\s*)/)?.[1].length || 0;
+        const adjustedIndent = Math.max(0, currentIndent - minIndent);
+        // Convert to 2-space indentation (divide by 2 since source uses 4-space)
+        const twoSpaceIndent = Math.floor(adjustedIndent / 2);
+        return '  '.repeat(twoSpaceIndent) + trimmed;
+      }).filter(line => line.trim());
+      actualCode = cleanedLines.join('\n');
+    }
+  } else {
+    // Fallback: try to extract from function string
+    const implementationMatch = functionString.match(/SolutionSchema\.implement\(\([^)]*\)\s*=>\s*\{([\s\S]*)\}\);/);
+
+    if (implementationMatch) {
+      // Extract just the implementation part
+      const implementation = implementationMatch[1];
+      // Clean up the implementation by removing the outer braces and fixing indentation
+      const lines = implementation.split('\n');
+      const cleanedLines = lines.map(line => {
+        // Remove leading whitespace but preserve relative indentation
+        const trimmed = line.trim();
+        if (!trimmed) return '';
+        // Find the minimum indentation level in the code block
+        const minIndent = Math.min(...lines.filter(l => l.trim()).map(l => l.match(/^(\s*)/)?.[1].length || 0));
+        // Adjust indentation to start from 0, using 2-space indentation
+        const currentIndent = line.match(/^(\s*)/)?.[1].length || 0;
+        const adjustedIndent = Math.max(0, currentIndent - minIndent);
+        // Convert to 2-space indentation (divide by 2 since source uses 4-space)
+        const twoSpaceIndent = Math.floor(adjustedIndent / 2);
+        return '  '.repeat(twoSpaceIndent) + trimmed;
+      }).filter(line => line.trim());
+      actualCode = cleanedLines.join('\n');
+    }
+  }
 
   return {
     name,
@@ -205,7 +308,7 @@ function extractSolutionInfo(solutionFunction: Function): {
     approach,
     timeComplexity,
     spaceComplexity,
-    code: functionString,
+    code: actualCode,
   };
 }
 
@@ -245,7 +348,7 @@ export async function buildData(options: BuildDataOptions) {
         const content = readFileSync(fullPath, 'utf-8');
 
         // Extract code and notes
-        const { code, notes } = extractCodeAndNotes(content);
+        const { notes } = await extractCodeAndNotes(content);
 
         // Import the module
         const module = await import(fullPath);
@@ -267,7 +370,7 @@ export async function buildData(options: BuildDataOptions) {
 
         // Run tests
         const { solutions, totalTests, passedTests, failedTests } =
-          await runProblemTests(fullPath);
+          await runProblemTests(fullPath, content);
 
         // Highlight code for each solution
         const highlightedSolutions = solutions.map((solution) => ({
@@ -287,10 +390,10 @@ export async function buildData(options: BuildDataOptions) {
 
         problems.push(problemData);
         indexData.problems.push(validatedMeta);
-        indexData.difficultyCounts[validatedMeta.difficulty]++;
+        indexData.difficultyCounts[validatedMeta.difficulty as Difficulty]++;
 
         // Count tags
-        validatedMeta.tags.forEach((tag) => {
+        validatedMeta.tags.forEach((tag: string) => {
           indexData.tagCounts[tag] = (indexData.tagCounts[tag] || 0) + 1;
         });
 
@@ -352,17 +455,18 @@ export async function buildData(options: BuildDataOptions) {
   }
 }
 
-function extractCodeAndNotes(content: string): { code: string; notes: string } {
+async function extractCodeAndNotes(content: string): Promise<{ code: string; notes: string }> {
   // Extract TSDoc comment (between /** and */)
   const tsdocMatch = content.match(/\/\*\*([\s\S]*?)\*\//);
   const rawNotes = tsdocMatch ? tsdocMatch[1].trim() : '';
 
   // Process markdown to HTML
-  const notes = rawNotes ? marked(rawNotes) : '';
+  const notes = rawNotes ? await marked.parse(rawNotes) : '';
 
-  // Extract code (everything after the first */)
-  const codeStart = content.indexOf('*/') + 2;
-  const code = content.slice(codeStart).trim();
+  // For the new format, we don't need to extract code here since
+  // the actual solution code is in the exported functions
+  // This function is mainly for the notes extraction
+  const code = ''; // Code will be extracted from individual solution functions
 
   return { code, notes };
 }

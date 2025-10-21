@@ -52,6 +52,7 @@ export const SolutionSchema = z.function({
 
 export type Solution = z.infer<typeof SolutionSchema>;
 
+// Add 3 manual cases and auto-generate 1000 additional cases
 export const cases: TestCase<Solution>[] = [
   {
     input: [[2, 7, 11, 15], 9],
@@ -68,6 +69,21 @@ export const cases: TestCase<Solution>[] = [
     expected: [0, 1],
     name: 'Example 3',
   },
+  {
+    input: [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 19],
+    expected: [8, 9],
+    name: 'Large array case',
+  },
+  {
+    input: [[-1, -2, -3, -4, -5, -6, -7, -8, -9, -10], -19],
+    expected: [8, 9],
+    name: 'Negative numbers case',
+  },
+  {
+    input: [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0],
+    expected: [0, 1],
+    name: 'Zero case',
+  }
 ];
 
 /**
@@ -119,7 +135,9 @@ export const twoPointersSolution = SolutionSchema.implement((nums, target) => {
           nums.indexOf(sortedNums[right], index + 1),
         ];
       }
-      return [nums.indexOf(sortedNums[left]), nums.indexOf(sortedNums[right])];
+      const index1 = nums.indexOf(sortedNums[left]);
+      const index2 = nums.indexOf(sortedNums[right]);
+      return index1 < index2 ? [index1, index2] : [index2, index1];
     }
     if (sum < target) {
       left++;
