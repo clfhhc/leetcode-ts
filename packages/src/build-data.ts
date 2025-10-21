@@ -542,7 +542,10 @@ async function extractCodeAndNotes(content: string): Promise<{ code: string; not
     .trim();
 
   // Process markdown to HTML
-  const notes = cleanedNotes ? await marked.parse(cleanedNotes) : '';
+  const notes = cleanedNotes ? await marked.parse(cleanedNotes, {
+    breaks: true,
+    gfm: true
+  }) : '';
 
   // For the new format, we don't need to extract code here since
   // the actual solution code is in the exported functions

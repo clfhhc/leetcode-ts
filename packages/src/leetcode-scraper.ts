@@ -1,3 +1,6 @@
+import { default as TurndownService } from 'turndown';
+
+
 export interface LeetCodeProblem {
   questionId: string;
   questionFrontendId: string;
@@ -165,6 +168,12 @@ export interface ProblemContent {
 }
 
 export class LeetCodeScraper {
+  private turndownService: TurndownService;
+
+  constructor() {
+    this.turndownService = new TurndownService({ hr: '', bulletListMarker: '-' });
+  }
+
   private async makeRequest(query: string, variables: any = {}): Promise<any> {
     const response = await fetch(LEETCODE_GRAPHQL_URL, {
       method: 'POST',
@@ -225,70 +234,8 @@ export class LeetCodeScraper {
     return data.data.problemsetQuestionList.questions;
   }
 
-  private convertHtmlToMarkdown(content: string): string {
-    let markdown = content;
-
-    // Convert <code>...</code> to `...`
-    markdown = markdown.replace(/<code>(.*?)<\/code>/g, '`$1`');
-
-    // Convert <pre>...</pre> to ```...```
-    markdown = markdown.replace(/<pre>(.*?)<\/pre>/gs, '```\n$1\n```');
-
-    // Convert <ul><li>...</li></ul> to - ...
-    markdown = markdown.replace(/<ul>(.*?)<\/ul>/gs, (match, content) => {
-      const listItems = content.match(/<li>(.*?)<\/li>/gs);
-      if (listItems) {
-        return listItems
-          .map((item: string) => item.replace(/<li>(.*?)<\/li>/s, '- $1'))
-          .join('\n');
-      }
-      return match;
-    });
-
-    // Convert standalone <li>...</li> to - ...
-    markdown = markdown.replace(/<li>(.*?)<\/li>/g, '- $1');
-
-    // Convert <ol><li>...</li></ol> to numbered lists
-    markdown = markdown.replace(/<ol>(.*?)<\/ol>/gs, (match, content) => {
-      const listItems = content.match(/<li>(.*?)<\/li>/gs);
-      if (listItems) {
-        return listItems
-          .map((item: string, index: number) => item.replace(/<li>(.*?)<\/li>/s, `${index + 1}. $1`))
-          .join('\n');
-      }
-      return match;
-    });
-
-    // Convert <strong>...</strong> to **...**
-    markdown = markdown.replace(/<strong>(.*?)<\/strong>/g, '**$1**');
-
-    // Convert <sup>...</sup> to ^...^
-    markdown = markdown.replace(/<sup>(.*?)<\/sup>/g, '^$1^');
-
-    // Convert <p>...</p> to plain text (remove tags, keep content)
-    markdown = markdown.replace(/<p>(.*?)<\/p>/gs, '$1\n');
-
-    // Convert <div>...</div> to plain text (remove tags, keep content)
-    markdown = markdown.replace(/<div[^>]*>(.*?)<\/div>/gs, '$1');
-
-    // Convert <span>...</span> to plain text (remove tags, keep content)
-    markdown = markdown.replace(/<span[^>]*>(.*?)<\/span>/g, '$1');
-
-    // Convert <strong class="example">...</strong> to **...**
-    markdown = markdown.replace(/<strong[^>]*>(.*?)<\/strong>/g, '**$1**');
-
-    // Convert remaining <ol> tags to plain text (remove tags, keep content)
-    markdown = markdown.replace(/<ol[^>]*>(.*?)<\/ol>/gs, '$1');
-
-    return markdown;
-  }
-
-  parseProblemContent(content: string): ProblemContent {
-    // Convert HTML to markdown first
-    const markdownContent = this.convertHtmlToMarkdown(content);
-
-    // Remove remaining HTML tags and clean up the content
-    const cleanContent = markdownContent
+  private cleanMarkdown(content: string): string {
+    return content
       .replace(/&nbsp;/g, ' ')
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')
@@ -300,10 +247,21 @@ export class LeetCodeScraper {
       .replace(/^\s*\n/g, '') // Remove leading empty lines
       .replace(/\n\s*$/g, '') // Remove trailing empty lines
       .trim();
+  }
+
+  parseProblemContent(content: string): ProblemContent {
+    // Convert HTML to markdown first
+    const markdownContent = this.turndownService.turndown(content);
+
+    // Remove remaining HTML tags and clean up the content
+    const cleanContent = this.cleanMarkdown(markdownContent);
+
+    console.log('cleanContent -------------------->')
+    console.log(cleanContent);
 
     // Extract constraints
     const constraintsMatch = cleanContent.match(
-      /Constraints?:?\s*([\s\S]*?)(?=Follow-up|Example|$)/i
+      /\*{0,3}Constraints?:?\*{0,2}\s*([\s\S]*?)(?=Follow-up|Example|$)/i
     );
     const constraints = constraintsMatch
       ? constraintsMatch[1]
@@ -316,6 +274,8 @@ export class LeetCodeScraper {
         })
         .filter((line) => line.length > 0) // Filter out empty lines after cleaning
       : [];
+    console.log('constraints -------------------->')
+    console.log(constraints);
 
     // Extract follow-up questions
     const followUpMatch = cleanContent.match(
@@ -344,6 +304,8 @@ export class LeetCodeScraper {
         explanation: match[3]?.trim(),
       });
     }
+    console.log('examples -------------------->')
+    console.log(examples);
 
     // Extract main description (everything before constraints)
     const descriptionMatch = cleanContent.match(/([\s\S]*?)(?=Constraints?:)/i);
