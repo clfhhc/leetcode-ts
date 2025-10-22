@@ -42,13 +42,16 @@ pnpm install  # Installs all dependencies
 ### Usage
 
 ```bash
-# Create a new problem
+# Create a new problem from LeetCode
+pnpm new --from-leetcode --leetcode-slug two-sum
+
+# Or create manually
 pnpm new
 
 # Run tests
 pnpm test
 
-# Start development server
+# Start development mode (data watching + site dev server)
 pnpm dev
 
 # Build website
@@ -67,10 +70,14 @@ pnpm build
 
 ## 🎯 Available Scripts
 
-- `pnpm new` - Create a new problem file
+All scripts use the unified CLI (`packages/src/cli.ts`):
+
+- `pnpm new` - Create a new problem file (supports `--from-leetcode` and `--leetcode-slug` options)
 - `pnpm test` - Run all problem tests
-- `pnpm dev` - Start development server
-- `pnpm build` - Build the complete website
+- `pnpm build:data` - Generate website data from problems
+- `pnpm build:site` - Build the static website
+- `pnpm build` - Build both data and site
+- `pnpm dev` - Start development mode (data watching + site dev server)
 - `pnpm lint` - Run ESLint
 - `pnpm format` - Format code with Prettier
 

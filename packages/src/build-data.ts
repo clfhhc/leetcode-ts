@@ -529,9 +529,6 @@ async function extractCodeAndNotes(content: string): Promise<{ code: string; not
     gfm: true
   }) : '';
 
-  console.log('notes ---------------->')
-  console.log(notes);
-
   // For the new format, we don't need to extract code here since
   // the actual solution code is in the exported functions
   // This function is mainly for the notes extraction
