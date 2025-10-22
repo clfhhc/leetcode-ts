@@ -72,7 +72,7 @@
             }
           },
           "passed": true,
-          "duration": 0.6996249999999691
+          "duration": 0.8124169999999822
         },
         {
           "input": [
@@ -95,7 +95,7 @@
             "next": null
           },
           "passed": true,
-          "duration": 0.04112499999996544
+          "duration": 0.026625000000080945
         },
         {
           "input": [
@@ -187,7 +187,7 @@
             }
           },
           "passed": true,
-          "duration": 0.020041999999989457
+          "duration": 0.018790999999964697
         }
       ],
       "totalTests": 3,
@@ -195,7 +195,7 @@
       "failedTests": 0
     }
   ],
-  "notes": "<ul>\n<li><ol start=\"2\">\n<li>Add Two Numbers</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: medium</li>\n<li>Tags: linked-list, math, recursion</li>\n<li></li>\n<li>Description:</li>\n<li>You are given two <strong>non-empty</strong> linked lists representing two non-negative integers. The digits are stored in <strong>reverse order</strong>, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.</li>\n<li></li>\n<li>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: l1 = [0], l2 = [0]</li>\n</ol>\n</li>\n<li>Output: [0]</li>\n<li><ol start=\"2\">\n<li>Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]</li>\n</ol>\n</li>\n<li>Output: [8,9,9,9,0,0,0,1]</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>The number of nodes in each linked list is in the range <code>[1, 100]</code>.</li>\n</ul>\n</li>\n<li><ul>\n<li><code>0 &lt;= Node.val &lt;= 9</code></li>\n</ul>\n</li>\n<li><ul>\n<li>It is guaranteed that the list represents a number that does not have leading zeros.</li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "notes": "<ul>\n<li><ol start=\"2\">\n<li>Add Two Numbers</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: medium</li>\n<li>Tags: linked-list, math, recursion</li>\n<li></li>\n<li>Description:</li>\n<li>You are given two <strong>non-empty</strong> linked lists representing two non-negative integers. The digits are stored in <strong>reverse order</strong>, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.</li>\n<li></li>\n<li>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: l1 = [0], l2 = [0]</li>\n</ol>\n</li>\n<li>Output: [0]</li>\n<li><ol start=\"2\">\n<li>Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]</li>\n</ol>\n</li>\n<li>Output: [8,9,9,9,0,0,0,1]</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>The number of nodes in each linked list is in the range <code>[1, 100]</code>.</li>\n</ul>\n</li>\n<li><ul>\n<li><code>0 <= Node.val <= 9</code></li>\n</ul>\n</li>\n<li><ul>\n<li>It is guaranteed that the list represents a number that does not have leading zeros.</li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
   "totalTests": 3,
   "passedTests": 3,
   "failedTests": 0

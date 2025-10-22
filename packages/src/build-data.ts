@@ -10,7 +10,6 @@ import { performance } from 'node:perf_hooks';
 import { join, dirname } from 'path';
 import { marked } from 'marked';
 import markedCodeFormat from 'marked-code-format';
-// import markedCodePreview from 'marked-code-preview';
 import { markedHighlight } from 'marked-highlight';
 import hljs from 'highlight.js';
 import type { ProblemData, IndexData, TestResult, Difficulty } from './types.js';
@@ -364,7 +363,6 @@ export async function buildData(options: BuildDataOptions) {
 
     // Configure marked with extensions
     marked.use(markedCodeFormat(prettierConfig));
-    // marked.use(markedCodePreview());
     marked.use(markedHighlight({
       highlight: (code: string, lang: string) => {
         if (lang && hljs.getLanguage(lang)) {
@@ -383,6 +381,17 @@ export async function buildData(options: BuildDataOptions) {
         }
       }
     }));
+
+    // Custom renderer to remove backticks from inline code spans
+    marked.use({
+      renderer: {
+        codespan(token) {
+          // Remove any backticks from the beginning and end of the code
+          const cleanCode = token.text.replace(/^`|`$/g, '').trim();
+          return `<code>${cleanCode}</code>`;
+        }
+      }
+    });
 
     // Find all problem files
     const problemFiles = findProblemFiles('problems');
