@@ -363,35 +363,39 @@ export async function buildData(options: BuildDataOptions) {
 
     // Configure marked with extensions
     marked.use(markedCodeFormat(prettierConfig));
-    marked.use(markedHighlight({
-      highlight: (code: string, lang: string) => {
-        if (lang && hljs.getLanguage(lang)) {
-          try {
-            return hljs.highlight(code, { language: lang }).value;
-          } catch (err) {
-            console.warn(`Failed to highlight code with language ${lang}:`, err);
-          }
-        }
-        // Fallback to auto-detection
-        try {
-          return hljs.highlightAuto(code).value;
-        } catch (err) {
-          console.warn('Failed to auto-highlight code:', err);
-          return code;
-        }
-      }
-    }));
 
     // Custom renderer to remove backticks from inline code spans
     marked.use({
       renderer: {
         codespan(token) {
           // Remove any backticks from the beginning and end of the code
-          const cleanCode = token.text.replace(/^`|`$/g, '').trim();
+          const cleanCode = token.text.replace(/^`+|`+$/g, '').trim();
           return `<code>${cleanCode}</code>`;
         }
       }
     });
+
+    marked.use(markedHighlight({
+      highlight: (code: string, lang: string) => {
+        // Clean the code before highlighting
+        const cleanCode = code.replace(/^`+|`+$/g, '').trim();
+
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            return hljs.highlight(cleanCode, { language: lang }).value;
+          } catch (err) {
+            console.warn(`Failed to highlight code with language ${lang}:`, err);
+          }
+        }
+        // Fallback to auto-detection
+        try {
+          return hljs.highlightAuto(cleanCode).value;
+        } catch (err) {
+          console.warn('Failed to auto-highlight code:', err);
+          return cleanCode;
+        }
+      }
+    }));
 
     // Find all problem files
     const problemFiles = findProblemFiles('problems');
@@ -539,6 +543,9 @@ async function extractCodeAndNotes(content: string): Promise<{ code: string; not
     breaks: true,
     gfm: true
   }) : '';
+
+  console.log('notes ---------------->')
+  console.log(notes);
 
   // For the new format, we don't need to extract code here since
   // the actual solution code is in the exported functions
