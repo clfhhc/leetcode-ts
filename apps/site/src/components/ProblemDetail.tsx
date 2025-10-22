@@ -263,16 +263,15 @@ export default function ProblemDetail(props: ProblemDetailProps) {
                       <div class="space-y-3">
                         {props.problem.solutions[
                           activeSolution()
-                        ].utilities.map((utility, index) => (
+                        ].utilities.map((utility) => (
                           <div class="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden">
                             <div class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium">
                               {utility.name}
                             </div>
-                            <div class="p-4 overflow-x-auto">
-                              <pre class="text-sm text-gray-900 dark:text-gray-100">
-                                <code>{utility.code}</code>
-                              </pre>
-                            </div>
+                            <div
+                              class="p-4 overflow-x-auto prose dark:prose-invert max-w-none [&_pre]:bg-transparent [&_pre]:p-0 [&_pre]:m-0 [&_pre]:border-0 [&_pre]:rounded-none [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-sm"
+                              innerHTML={utility.code}
+                            />
                           </div>
                         ))}
                       </div>
@@ -286,7 +285,7 @@ export default function ProblemDetail(props: ProblemDetailProps) {
                     TypeScript
                   </div>
                   <div
-                    class="p-4 overflow-x-auto"
+                    class="p-4 overflow-x-auto prose dark:prose-invert max-w-none [&_pre]:bg-transparent [&_pre]:p-0 [&_pre]:m-0 [&_pre]:border-0 [&_pre]:rounded-none [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-sm"
                     innerHTML={props.problem.solutions[activeSolution()].code}
                   />
                 </div>

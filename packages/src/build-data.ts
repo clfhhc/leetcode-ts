@@ -8,10 +8,15 @@ import {
 } from 'fs';
 import { performance } from 'node:perf_hooks';
 import { join, dirname } from 'path';
-import { getHighlighter } from 'shiki';
 import { marked } from 'marked';
+import markedCodeFormat from 'marked-code-format';
+// import markedCodePreview from 'marked-code-preview';
+import { markedHighlight } from 'marked-highlight';
+import hljs from 'highlight.js';
 import type { ProblemData, IndexData, TestResult, Difficulty } from './types.js';
 import { problemMetaSchema, testCaseSchema } from './types.js';
+// @ts-expect-error: No type definitions for the config file
+import prettierConfig from '../../config/prettier.config.js';
 
 export interface BuildDataOptions {
   watch?: boolean;
@@ -197,42 +202,43 @@ async function runProblemTests(problemPath: string, content?: string): Promise<{
 }
 
 function extractUtilityDefinition(sourceContent: string, utilityName: string): string | null {
+  let result: string | null = null;
   // Try to find type definitions first
   const typeRegex = new RegExp(`export\\s+type\\s+${utilityName}\\s*=\\s*([^;]+);`, 'g');
   const typeMatch = typeRegex.exec(sourceContent);
   if (typeMatch) {
-    return `type ${utilityName} = ${typeMatch[1].trim()};`;
+    result = `type ${utilityName} = ${typeMatch[1].trim()};`;
   }
 
   // Try to find interface definitions
   const interfaceRegex = new RegExp(`export\\s+interface\\s+${utilityName}\\s*\\{([\\s\\S]*?)\\}\\s*`, 'g');
   const interfaceMatch = interfaceRegex.exec(sourceContent);
   if (interfaceMatch) {
-    return `interface ${utilityName} {${interfaceMatch[1]}}`;
+    result = `interface ${utilityName} {${interfaceMatch[1]}}`;
   }
 
   // Try to find const/let/var definitions
   const constRegex = new RegExp(`export\\s+const\\s+${utilityName}\\s*=\\s*([^;]+);`, 'g');
   const constMatch = constRegex.exec(sourceContent);
   if (constMatch) {
-    return `const ${utilityName} = ${constMatch[1].trim()};`;
+    result = `const ${utilityName} = ${constMatch[1].trim()};`;
   }
 
   // Try to find function definitions
   const functionRegex = new RegExp(`export\\s+function\\s+${utilityName}\\s*\\([^)]*\\)\\s*\\{([\\s\\S]*?)\\}\\s*`, 'g');
   const functionMatch = functionRegex.exec(sourceContent);
   if (functionMatch) {
-    return `function ${utilityName}() {${functionMatch[1]}}`;
+    result = `function ${utilityName}() {${functionMatch[1]}}`;
   }
 
   // Try to find Zod schema definitions
   const zodRegex = new RegExp(`export\\s+const\\s+${utilityName}\\s*:\\s*z\\.[^=]+=\\s*([^;]+);`, 'g');
   const zodMatch = zodRegex.exec(sourceContent);
   if (zodMatch) {
-    return `const ${utilityName}: z.ZodType = ${zodMatch[1].trim()};`;
+    result = `const ${utilityName}: z.ZodType = ${zodMatch[1].trim()};`;
   }
 
-  return null;
+  return result || hljs.highlightAuto(sourceContent).value;
 }
 
 function extractSolutionInfo(solutionFunction: (...args: any[]) => any, functionName?: string, sourceContent?: string): {
@@ -329,22 +335,7 @@ function extractSolutionInfo(solutionFunction: (...args: any[]) => any, function
     if (implementationMatch) {
       // Extract just the implementation part
       const implementation = implementationMatch[1];
-      // Clean up the implementation by removing the outer braces and fixing indentation
-      const lines = implementation.split('\n');
-      const cleanedLines = lines.map(line => {
-        // Remove leading whitespace but preserve relative indentation
-        const trimmed = line.trim();
-        if (!trimmed) return '';
-        // Find the minimum indentation level in the code block
-        const minIndent = Math.min(...lines.filter(l => l.trim()).map(l => l.match(/^(\s*)/)?.[1].length || 0));
-        // Adjust indentation to start from 0, using 2-space indentation
-        const currentIndent = line.match(/^(\s*)/)?.[1].length || 0;
-        const adjustedIndent = Math.max(0, currentIndent - minIndent);
-        // Convert to 2-space indentation (divide by 2 since source uses 4-space)
-        const twoSpaceIndent = Math.floor(adjustedIndent / 2);
-        return '  '.repeat(twoSpaceIndent) + trimmed;
-      }).filter(line => line.trim());
-      actualCode = cleanedLines.join('\n');
+      actualCode = implementation;
     }
   } else {
     // Fallback: try to extract from function string
@@ -353,22 +344,7 @@ function extractSolutionInfo(solutionFunction: (...args: any[]) => any, function
     if (implementationMatch) {
       // Extract just the implementation part
       const implementation = implementationMatch[1];
-      // Clean up the implementation by removing the outer braces and fixing indentation
-      const lines = implementation.split('\n');
-      const cleanedLines = lines.map(line => {
-        // Remove leading whitespace but preserve relative indentation
-        const trimmed = line.trim();
-        if (!trimmed) return '';
-        // Find the minimum indentation level in the code block
-        const minIndent = Math.min(...lines.filter(l => l.trim()).map(l => l.match(/^(\s*)/)?.[1].length || 0));
-        // Adjust indentation to start from 0, using 2-space indentation
-        const currentIndent = line.match(/^(\s*)/)?.[1].length || 0;
-        const adjustedIndent = Math.max(0, currentIndent - minIndent);
-        // Convert to 2-space indentation (divide by 2 since source uses 4-space)
-        const twoSpaceIndent = Math.floor(adjustedIndent / 2);
-        return '  '.repeat(twoSpaceIndent) + trimmed;
-      }).filter(line => line.trim());
-      actualCode = cleanedLines.join('\n');
+      actualCode = implementation
     }
   }
 
@@ -394,11 +370,27 @@ export async function buildData(options: BuildDataOptions) {
       mkdirSync(outputDir, { recursive: true });
     }
 
-    // Initialize syntax highlighter
-    const highlighter = await getHighlighter({
-      themes: ['github-light', 'github-dark'],
-      langs: ['typescript', 'javascript'],
-    });
+    // Configure marked with extensions
+    marked.use(markedCodeFormat(prettierConfig));
+    // marked.use(markedCodePreview());
+    marked.use(markedHighlight({
+      highlight: (code: string, lang: string) => {
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            return hljs.highlight(code, { language: lang }).value;
+          } catch (err) {
+            console.warn(`Failed to highlight code with language ${lang}:`, err);
+          }
+        }
+        // Fallback to auto-detection
+        try {
+          return hljs.highlightAuto(code).value;
+        } catch (err) {
+          console.warn('Failed to auto-highlight code:', err);
+          return code;
+        }
+      }
+    }));
 
     // Find all problem files
     const problemFiles = findProblemFiles('problems');
@@ -443,19 +435,20 @@ export async function buildData(options: BuildDataOptions) {
         const { solutions, totalTests, passedTests, failedTests } =
           await runProblemTests(fullPath, content);
 
-        // Highlight code for each solution
-        const highlightedSolutions = solutions.map((solution) => ({
+        // Process code for each solution using marked
+        const processedSolutions = await Promise.all(solutions.map(async (solution) => ({
           ...solution,
-          code: highlighter.codeToHtml(solution.code, {
-            lang: 'typescript',
-            theme: 'github-dark'
-          }),
-        }));
+          code: await marked.parse(`\`\`\`typescript\n${solution.code}\n\`\`\``),
+          utilities: await Promise.all(solution.utilities.map(async (utility) => ({
+            ...utility,
+            code: await marked.parse(`\`\`\`typescript\n${utility.code}\n\`\`\``),
+          }))),
+        })));
 
         // Create problem data
         const problemData: ProblemData = {
           ...validatedMeta,
-          solutions: highlightedSolutions,
+          solutions: processedSolutions,
           notes,
           totalTests,
           passedTests,
@@ -536,7 +529,6 @@ async function extractCodeAndNotes(content: string): Promise<{ code: string; not
 
   // Clean up excessive newlines before processing
   const cleanedNotes = rawNotes
-    .replace(/\n\s*\n\s*\n/g, '\n\n') // Replace 3+ consecutive newlines with 2
     .replace(/^\s*\n/g, '') // Remove leading empty lines
     .replace(/\n\s*$/g, '') // Remove trailing empty lines
     .trim();

@@ -14,7 +14,7 @@
       "approach": "- Use a stack to store the opening parentheses\n - For each closing parenthesis, check if the stack is empty or the top of the stack is the corresponding opening parenthesis\n - If it is, pop the stack; otherwise, return false\n - If the stack is empty at the end, return true; otherwise, return false",
       "timeComplexity": "O(n)",
       "spaceComplexity": "O(n)",
-      "code": "<pre class=\"shiki github-dark\" style=\"background-color: #24292e\" tabindex=\"0\"><code><span class=\"line\"><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">matching</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #9ECBFF\">&#39;)&#39;</span><span style=\"color: #E1E4E8\">: </span><span style=\"color: #9ECBFF\">&#39;(&#39;</span><span style=\"color: #E1E4E8\">,</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #9ECBFF\">&#39;]&#39;</span><span style=\"color: #E1E4E8\">: </span><span style=\"color: #9ECBFF\">&#39;[&#39;</span><span style=\"color: #E1E4E8\">,</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #9ECBFF\">&#39;}&#39;</span><span style=\"color: #E1E4E8\">: </span><span style=\"color: #9ECBFF\">&#39;{&#39;</span><span style=\"color: #E1E4E8\">,</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">};</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">stack</span><span style=\"color: #F97583\">:</span><span style=\"color: #E1E4E8\"> (</span><span style=\"color: #9ECBFF\">&#39;(&#39;</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">|</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #9ECBFF\">&#39;[&#39;</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">|</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #9ECBFF\">&#39;{&#39;</span><span style=\"color: #E1E4E8\">)[] </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> [];</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">for</span><span style=\"color: #E1E4E8\"> (</span><span style=\"color: #F97583\">let</span><span style=\"color: #E1E4E8\"> i </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\">; i </span><span style=\"color: #F97583\">&lt;</span><span style=\"color: #E1E4E8\"> s.</span><span style=\"color: #79B8FF\">length</span><span style=\"color: #E1E4E8\">; i</span><span style=\"color: #F97583\">++</span><span style=\"color: #E1E4E8\">) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">char</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> s[i];</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #F97583\">if</span><span style=\"color: #E1E4E8\"> (char </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #9ECBFF\">&#39;(&#39;</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> char </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #9ECBFF\">&#39;[&#39;</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> char </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #9ECBFF\">&#39;{&#39;</span><span style=\"color: #E1E4E8\">) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    stack.</span><span style=\"color: #B392F0\">push</span><span style=\"color: #E1E4E8\">(char);</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  } </span><span style=\"color: #F97583\">else</span><span style=\"color: #E1E4E8\"> {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    </span><span style=\"color: #F97583\">if</span><span style=\"color: #E1E4E8\"> (stack.</span><span style=\"color: #79B8FF\">length</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> stack.</span><span style=\"color: #B392F0\">pop</span><span style=\"color: #E1E4E8\">() </span><span style=\"color: #F97583\">!==</span><span style=\"color: #E1E4E8\"> matching[char]) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">      </span><span style=\"color: #F97583\">return</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">false</span><span style=\"color: #E1E4E8\">;</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    }</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  }</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">}</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">return</span><span style=\"color: #E1E4E8\"> stack.</span><span style=\"color: #79B8FF\">length</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\">;</span></span></code></pre>",
+      "code": "<pre><code class=\"language-typescript\">\n  <span class=\"hljs-keyword\">const</span> matching = {\n    <span class=\"hljs-string\">&#x27;)&#x27;</span>: <span class=\"hljs-string\">&#x27;(&#x27;</span>,\n    <span class=\"hljs-string\">&#x27;]&#x27;</span>: <span class=\"hljs-string\">&#x27;[&#x27;</span>,\n    <span class=\"hljs-string\">&#x27;}&#x27;</span>: <span class=\"hljs-string\">&#x27;{&#x27;</span>,\n  };\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">stack</span>: (<span class=\"hljs-string\">&#x27;(&#x27;</span> | <span class=\"hljs-string\">&#x27;[&#x27;</span> | <span class=\"hljs-string\">&#x27;{&#x27;</span>)[] = [];\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; s.<span class=\"hljs-property\">length</span>; i++) {\n    <span class=\"hljs-keyword\">const</span> char = s[i];\n    <span class=\"hljs-keyword\">if</span> (char === <span class=\"hljs-string\">&#x27;(&#x27;</span> || char === <span class=\"hljs-string\">&#x27;[&#x27;</span> || char === <span class=\"hljs-string\">&#x27;{&#x27;</span>) {\n      stack.<span class=\"hljs-title function_\">push</span>(char);\n    } <span class=\"hljs-keyword\">else</span> {\n      <span class=\"hljs-keyword\">if</span> (stack.<span class=\"hljs-property\">length</span> === <span class=\"hljs-number\">0</span> || stack.<span class=\"hljs-title function_\">pop</span>() !== matching[char]) {\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">false</span>;\n      }\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> stack.<span class=\"hljs-property\">length</span> === <span class=\"hljs-number\">0</span>;\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -25,7 +25,7 @@
           "name": "Example 1",
           "actual": true,
           "passed": true,
-          "duration": 0.08524999999997362
+          "duration": 0.0599170000000413
         },
         {
           "input": [
@@ -35,7 +35,7 @@
           "name": "Example 2",
           "actual": true,
           "passed": true,
-          "duration": 0.005708000000026914
+          "duration": 0.005374999999958163
         },
         {
           "input": [
@@ -45,7 +45,7 @@
           "name": "Example 3",
           "actual": false,
           "passed": true,
-          "duration": 0.00804100000004837
+          "duration": 0.006917000000044027
         },
         {
           "input": [
@@ -55,7 +55,7 @@
           "name": "Example 4",
           "actual": true,
           "passed": true,
-          "duration": 0.004790999999954693
+          "duration": 0.005207999999981894
         },
         {
           "input": [

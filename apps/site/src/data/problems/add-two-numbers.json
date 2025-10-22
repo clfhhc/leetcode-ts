@@ -15,15 +15,15 @@
       "approach": "- Traverse both linked lists simultaneously\n - Add corresponding digits plus carry from previous addition\n - Create new node for each digit of the result\n - Handle different lengths by treating missing digits as 0",
       "timeComplexity": "O(max(m, n)) where m, n are lengths of the two lists",
       "spaceComplexity": "O(max(m, n)) for the result list",
-      "code": "<pre class=\"shiki github-dark\" style=\"background-color: #24292e\" tabindex=\"0\"><code><span class=\"line\"><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">dummy</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> { val: </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\">, next: </span><span style=\"color: #79B8FF\">null</span><span style=\"color: #E1E4E8\"> } </span><span style=\"color: #F97583\">as</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #B392F0\">ListNode</span><span style=\"color: #E1E4E8\">;</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">let</span><span style=\"color: #E1E4E8\"> current </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> dummy;</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">let</span><span style=\"color: #E1E4E8\"> carry </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\">;</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">while</span><span style=\"color: #E1E4E8\"> (l1 </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> l2 </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> carry) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">sum</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> (l1?.val </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\">) </span><span style=\"color: #F97583\">+</span><span style=\"color: #E1E4E8\"> (l2?.val </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\">) </span><span style=\"color: #F97583\">+</span><span style=\"color: #E1E4E8\"> carry;</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  carry </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> Math.</span><span style=\"color: #B392F0\">floor</span><span style=\"color: #E1E4E8\">(sum </span><span style=\"color: #F97583\">/</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">10</span><span style=\"color: #E1E4E8\">);</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  current.next </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> { val: sum </span><span style=\"color: #F97583\">%</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">10</span><span style=\"color: #E1E4E8\">, next: </span><span style=\"color: #79B8FF\">null</span><span style=\"color: #E1E4E8\"> };</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  current </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> current.next;</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  l1 </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> l1?.next </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">null</span><span style=\"color: #E1E4E8\">;</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  l2 </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> l2?.next </span><span style=\"color: #F97583\">||</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">null</span><span style=\"color: #E1E4E8\">;</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">}</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">return</span><span style=\"color: #E1E4E8\"> dummy.next;</span></span></code></pre>",
+      "code": "<pre><code class=\"language-typescript\">\n    <span class=\"hljs-keyword\">const</span> dummy = { <span class=\"hljs-attr\">val</span>: <span class=\"hljs-number\">0</span>, <span class=\"hljs-attr\">next</span>: <span class=\"hljs-literal\">null</span> } <span class=\"hljs-keyword\">as</span> <span class=\"hljs-title class_\">ListNode</span>;\n    <span class=\"hljs-keyword\">let</span> current = dummy;\n    <span class=\"hljs-keyword\">let</span> carry = <span class=\"hljs-number\">0</span>;\n    <span class=\"hljs-keyword\">while</span> (l1 || l2 || carry) {\n      <span class=\"hljs-keyword\">const</span> sum = (l1?.<span class=\"hljs-property\">val</span> || <span class=\"hljs-number\">0</span>) + (l2?.<span class=\"hljs-property\">val</span> || <span class=\"hljs-number\">0</span>) + carry;\n      carry = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(sum / <span class=\"hljs-number\">10</span>);\n      current.<span class=\"hljs-property\">next</span> = { <span class=\"hljs-attr\">val</span>: sum % <span class=\"hljs-number\">10</span>, <span class=\"hljs-attr\">next</span>: <span class=\"hljs-literal\">null</span> };\n      current = current.<span class=\"hljs-property\">next</span>;\n      l1 = l1?.<span class=\"hljs-property\">next</span> || <span class=\"hljs-literal\">null</span>;\n      l2 = l2?.<span class=\"hljs-property\">next</span> || <span class=\"hljs-literal\">null</span>;\n    }\n    <span class=\"hljs-keyword\">return</span> dummy.<span class=\"hljs-property\">next</span>;\n  \n</code></pre>",
       "utilities": [
         {
           "name": "ListNodeSchema",
-          "code": "const ListNodeSchema: z.ZodType = z.lazy(\n  () =>\n    z.object({\n      val: z.number(),\n      next: z.union([ListNodeSchema, z.null()]),\n    })\n);"
+          "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title class_\">ListNodeSchema</span>: z.<span class=\"hljs-property\">ZodType</span> = z.<span class=\"hljs-title function_\">lazy</span>(\n  <span class=\"hljs-function\">() =&gt;</span>\n    z.<span class=\"hljs-title function_\">object</span>({\n      <span class=\"hljs-attr\">val</span>: z.<span class=\"hljs-title function_\">number</span>(),\n      <span class=\"hljs-attr\">next</span>: z.<span class=\"hljs-title function_\">union</span>([<span class=\"hljs-title class_\">ListNodeSchema</span>, z.<span class=\"hljs-title function_\">null</span>()]),\n    })\n);\n</code></pre>"
         },
         {
           "name": "ListNode",
-          "code": "type ListNode = z.infer<typeof ListNodeSchema>;"
+          "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">type</span> <span class=\"hljs-title class_\">ListNode</span> = z.<span class=\"hljs-property\">infer</span>&lt;<span class=\"hljs-keyword\">typeof</span> <span class=\"hljs-title class_\">ListNodeSchema</span>&gt;;\n</code></pre>"
         }
       ],
       "testResults": [
@@ -72,7 +72,7 @@
             }
           },
           "passed": true,
-          "duration": 0.7131249999999909
+          "duration": 0.6500419999999849
         },
         {
           "input": [
@@ -95,7 +95,7 @@
             "next": null
           },
           "passed": true,
-          "duration": 0.026542000000063126
+          "duration": 0.025374999999996817
         },
         {
           "input": [
@@ -187,7 +187,7 @@
             }
           },
           "passed": true,
-          "duration": 0.018667000000050393
+          "duration": 0.022749999999973625
         }
       ],
       "totalTests": 3,

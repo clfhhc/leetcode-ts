@@ -511,7 +511,7 @@ export const solutions = [solution];
           return fieldType;
         })
         .join(', ');
-    } catch (error) {
+    } catch {
       return 'z.any()';
     }
   }
@@ -552,7 +552,7 @@ export const solutions = [solution];
       }
 
       return params.map((param: any) => param.name).join(', ');
-    } catch (error) {
+    } catch {
       return 'input';
     }
   }

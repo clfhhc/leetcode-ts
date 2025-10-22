@@ -14,7 +14,7 @@
       "approach": "- Use a hash map to store number -> index mappings\n - For each number, check if its complement (target - number) exists in the map\n - If found, return the indices; otherwise, store current number and index",
       "timeComplexity": "O(n)",
       "spaceComplexity": "O(n)",
-      "code": "<pre class=\"shiki github-dark\" style=\"background-color: #24292e\" tabindex=\"0\"><code><span class=\"line\"><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">seen</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">new</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #B392F0\">Map</span><span style=\"color: #E1E4E8\">();</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">for</span><span style=\"color: #E1E4E8\"> (</span><span style=\"color: #F97583\">let</span><span style=\"color: #E1E4E8\"> i </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\">; i </span><span style=\"color: #F97583\">&lt;</span><span style=\"color: #E1E4E8\"> nums.</span><span style=\"color: #79B8FF\">length</span><span style=\"color: #E1E4E8\">; i</span><span style=\"color: #F97583\">++</span><span style=\"color: #E1E4E8\">) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">num</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> nums[i];</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">complement</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> target </span><span style=\"color: #F97583\">-</span><span style=\"color: #E1E4E8\"> num;</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #F97583\">if</span><span style=\"color: #E1E4E8\"> (seen.</span><span style=\"color: #B392F0\">has</span><span style=\"color: #E1E4E8\">(complement)) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    </span><span style=\"color: #F97583\">return</span><span style=\"color: #E1E4E8\"> [seen.</span><span style=\"color: #B392F0\">get</span><span style=\"color: #E1E4E8\">(complement), i];</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  }</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  seen.</span><span style=\"color: #B392F0\">set</span><span style=\"color: #E1E4E8\">(num, i);</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">}</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">return</span><span style=\"color: #E1E4E8\"> [];</span></span></code></pre>",
+      "code": "<pre><code class=\"language-typescript\">\n  <span class=\"hljs-keyword\">const</span> seen = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Map</span>();\n\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; nums.<span class=\"hljs-property\">length</span>; i++) {\n    <span class=\"hljs-keyword\">const</span> num = nums[i];\n    <span class=\"hljs-keyword\">const</span> complement = target - num;\n\n    <span class=\"hljs-keyword\">if</span> (seen.<span class=\"hljs-title function_\">has</span>(complement)) {\n      <span class=\"hljs-keyword\">return</span> [seen.<span class=\"hljs-title function_\">get</span>(complement), i];\n    }\n\n    seen.<span class=\"hljs-title function_\">set</span>(num, i);\n  }\n\n  <span class=\"hljs-keyword\">return</span> [];\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -37,7 +37,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.18958299999997053
+          "duration": 0.19879099999997152
         },
         {
           "input": [
@@ -58,7 +58,7 @@
             2
           ],
           "passed": true,
-          "duration": 0.08924999999999272
+          "duration": 0.09612499999997226
         },
         {
           "input": [
@@ -78,7 +78,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.012125000000082764
+          "duration": 0.013916999999992186
         },
         {
           "input": [
@@ -106,7 +106,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.01595899999995254
+          "duration": 0.01762500000000955
         },
         {
           "input": [
@@ -134,7 +134,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.07833400000004076
+          "duration": 0.08808399999998073
         },
         {
           "input": [
@@ -162,7 +162,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.07054200000004585
+          "duration": 0.06920900000000074
         }
       ],
       "totalTests": 6,
@@ -175,7 +175,7 @@
       "approach": "- Sort the array\n - Use two pointers to find the two numbers\n - If the sum of the two numbers is equal to the target, return the indices; otherwise, move the pointers",
       "timeComplexity": "O(n log n)",
       "spaceComplexity": "O(1)",
-      "code": "<pre class=\"shiki github-dark\" style=\"background-color: #24292e\" tabindex=\"0\"><code><span class=\"line\"><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">sortedNums</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> nums.</span><span style=\"color: #B392F0\">slice</span><span style=\"color: #E1E4E8\">().</span><span style=\"color: #B392F0\">sort</span><span style=\"color: #E1E4E8\">((</span><span style=\"color: #FFAB70\">a</span><span style=\"color: #E1E4E8\">, </span><span style=\"color: #FFAB70\">b</span><span style=\"color: #E1E4E8\">) </span><span style=\"color: #F97583\">=&gt;</span><span style=\"color: #E1E4E8\"> a </span><span style=\"color: #F97583\">-</span><span style=\"color: #E1E4E8\"> b);</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">let</span><span style=\"color: #E1E4E8\"> left </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">0</span><span style=\"color: #E1E4E8\">;</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">let</span><span style=\"color: #E1E4E8\"> right </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> sortedNums.</span><span style=\"color: #79B8FF\">length</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">-</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">1</span><span style=\"color: #E1E4E8\">;</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">while</span><span style=\"color: #E1E4E8\"> (left </span><span style=\"color: #F97583\">&lt;</span><span style=\"color: #E1E4E8\"> right) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">sum</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> sortedNums[left] </span><span style=\"color: #F97583\">+</span><span style=\"color: #E1E4E8\"> sortedNums[right];</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #F97583\">if</span><span style=\"color: #E1E4E8\"> (sum </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> target) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    </span><span style=\"color: #F97583\">if</span><span style=\"color: #E1E4E8\"> (sortedNums[left] </span><span style=\"color: #F97583\">===</span><span style=\"color: #E1E4E8\"> sortedNums[right]) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">      </span><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">index</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> nums.</span><span style=\"color: #B392F0\">indexOf</span><span style=\"color: #E1E4E8\">(sortedNums[left]);</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">      </span><span style=\"color: #F97583\">return</span><span style=\"color: #E1E4E8\"> [</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">        nums.</span><span style=\"color: #B392F0\">indexOf</span><span style=\"color: #E1E4E8\">(sortedNums[left]),</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">        nums.</span><span style=\"color: #B392F0\">indexOf</span><span style=\"color: #E1E4E8\">(sortedNums[right], index </span><span style=\"color: #F97583\">+</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">1</span><span style=\"color: #E1E4E8\">),</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">      ];</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    }</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    </span><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">index1</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> nums.</span><span style=\"color: #B392F0\">indexOf</span><span style=\"color: #E1E4E8\">(sortedNums[left]);</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    </span><span style=\"color: #F97583\">const</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #79B8FF\">index2</span><span style=\"color: #E1E4E8\"> </span><span style=\"color: #F97583\">=</span><span style=\"color: #E1E4E8\"> nums.</span><span style=\"color: #B392F0\">indexOf</span><span style=\"color: #E1E4E8\">(sortedNums[right]);</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    </span><span style=\"color: #F97583\">return</span><span style=\"color: #E1E4E8\"> index1 </span><span style=\"color: #F97583\">&lt;</span><span style=\"color: #E1E4E8\"> index2 </span><span style=\"color: #F97583\">?</span><span style=\"color: #E1E4E8\"> [index1, index2] </span><span style=\"color: #F97583\">:</span><span style=\"color: #E1E4E8\"> [index2, index1];</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  }</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  </span><span style=\"color: #F97583\">if</span><span style=\"color: #E1E4E8\"> (sum </span><span style=\"color: #F97583\">&lt;</span><span style=\"color: #E1E4E8\"> target) {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    left</span><span style=\"color: #F97583\">++</span><span style=\"color: #E1E4E8\">;</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  } </span><span style=\"color: #F97583\">else</span><span style=\"color: #E1E4E8\"> {</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">    right</span><span style=\"color: #F97583\">--</span><span style=\"color: #E1E4E8\">;</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">  }</span></span>\n<span class=\"line\"><span style=\"color: #E1E4E8\">}</span></span>\n<span class=\"line\"><span style=\"color: #F97583\">return</span><span style=\"color: #E1E4E8\"> [];</span></span></code></pre>",
+      "code": "<pre><code class=\"language-typescript\">\n  <span class=\"hljs-keyword\">const</span> sortedNums = nums.<span class=\"hljs-title function_\">slice</span>().<span class=\"hljs-title function_\">sort</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">a, b</span>) =&gt;</span> a - b);\n  <span class=\"hljs-keyword\">let</span> left = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> right = sortedNums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left &lt; right) {\n    <span class=\"hljs-keyword\">const</span> sum = sortedNums[left] + sortedNums[right];\n    <span class=\"hljs-keyword\">if</span> (sum === target) {\n      <span class=\"hljs-keyword\">if</span> (sortedNums[left] === sortedNums[right]) {\n        <span class=\"hljs-keyword\">const</span> index = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]);\n        <span class=\"hljs-keyword\">return</span> [\n          nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]),\n          nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[right], index + <span class=\"hljs-number\">1</span>),\n        ];\n      }\n      <span class=\"hljs-keyword\">const</span> index1 = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]);\n      <span class=\"hljs-keyword\">const</span> index2 = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[right]);\n      <span class=\"hljs-keyword\">return</span> index1 &lt; index2 ? [index1, index2] : [index2, index1];\n    }\n    <span class=\"hljs-keyword\">if</span> (sum &lt; target) {\n      left++;\n    } <span class=\"hljs-keyword\">else</span> {\n      right--;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> [];\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -198,7 +198,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.04975000000001728
+          "duration": 0.050957999999980075
         },
         {
           "input": [
@@ -219,7 +219,7 @@
             2
           ],
           "passed": true,
-          "duration": 0.004500000000007276
+          "duration": 0.0044999999999504325
         },
         {
           "input": [
@@ -239,7 +239,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.005084000000010747
+          "duration": 0.0037090000000148393
         },
         {
           "input": [
@@ -267,7 +267,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.01020800000003419
+          "duration": 0.009833000000014636
         },
         {
           "input": [
@@ -295,7 +295,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.0059160000000701984
+          "duration": 0.010167000000024018
         },
         {
           "input": [
@@ -323,7 +323,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.00691699999993034
+          "duration": 0.0071659999999837964
         }
       ],
       "totalTests": 6,
