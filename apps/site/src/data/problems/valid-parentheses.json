@@ -25,7 +25,7 @@
           "name": "Example 1",
           "actual": true,
           "passed": true,
-          "duration": 0.08129199999996217
+          "duration": 0.050666999999975815
         },
         {
           "input": [
@@ -35,7 +35,7 @@
           "name": "Example 2",
           "actual": true,
           "passed": true,
-          "duration": 0.00583300000005238
+          "duration": 0.004583000000025095
         },
         {
           "input": [
@@ -45,7 +45,7 @@
           "name": "Example 3",
           "actual": false,
           "passed": true,
-          "duration": 0.008000000000038199
+          "duration": 0.005167000000028565
         },
         {
           "input": [
@@ -55,7 +55,7 @@
           "name": "Example 4",
           "actual": true,
           "passed": true,
-          "duration": 0.004874999999969987
+          "duration": 0.004083999999920707
         },
         {
           "input": [
@@ -65,7 +65,7 @@
           "name": "Example 5",
           "actual": false,
           "passed": true,
-          "duration": 0.0015409999999747015
+          "duration": 0.0012500000000272848
         }
       ],
       "totalTests": 5,
@@ -73,7 +73,7 @@
       "failedTests": 0
     }
   ],
-  "notes": "<ul>\n<li><ol start=\"20\">\n<li>Valid Parentheses</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: string, stack</li>\n<li></li>\n<li>Description:</li>\n<li>Given a string <code>s</code> containing just the characters <code>'('</code>, <code>')'</code>, <code>'{'</code>, <code>'}'</code>, <code>'['</code> and <code>']'</code>, determine if the input string is valid.</li>\n<li></li>\n<li>An input string is valid if:</li>\n<li></li>\n<li><ol>\n<li>Open brackets must be closed by the same type of brackets.</li>\n</ol>\n</li>\n<li><ol start=\"2\">\n<li>Open brackets must be closed in the correct order.</li>\n</ol>\n</li>\n<li><ol start=\"3\">\n<li>Every close bracket has a corresponding open bracket of the same type.</li>\n</ol>\n</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: s = &quot;()&quot;</li>\n</ol>\n</li>\n<li>Output: true</li>\n<li><ol start=\"2\">\n<li>Input: s = &quot;()[]{}&quot;</li>\n</ol>\n</li>\n<li>Output: true</li>\n<li><ol start=\"3\">\n<li>Input: s = &quot;(]&quot;</li>\n</ol>\n</li>\n<li>Output: false</li>\n<li><ol start=\"4\">\n<li>Input: s = &quot;([])&quot;</li>\n</ol>\n</li>\n<li>Output: true</li>\n<li><ol start=\"5\">\n<li>Input: s = &quot;([)]&quot;</li>\n</ol>\n</li>\n<li>Output: false</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>1 <= s.length <= 104</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>s</code> consists of parentheses only <code>'()[]{}'</code>.</li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "notes": "<ul>\n<li><ol start=\"20\">\n<li>Valid Parentheses</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: string, stack</li>\n<li></li>\n<li>Description:</li>\n<li>Given a string <code>s</code> containing just the characters <code>&#39;(&#39;</code>, <code>&#39;)&#39;</code>, <code>&#39;{&#39;</code>, <code>&#39;}&#39;</code>, <code>&#39;[&#39;</code> and <code>&#39;]&#39;</code>, determine if the input string is valid.</li>\n<li></li>\n<li>An input string is valid if:</li>\n<li></li>\n<li><ol>\n<li>Open brackets must be closed by the same type of brackets.</li>\n</ol>\n</li>\n<li><ol start=\"2\">\n<li>Open brackets must be closed in the correct order.</li>\n</ol>\n</li>\n<li><ol start=\"3\">\n<li>Every close bracket has a corresponding open bracket of the same type.</li>\n</ol>\n</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: s = &quot;()&quot;</li>\n</ol>\n</li>\n<li>Output: true</li>\n<li><ol start=\"2\">\n<li>Input: s = &quot;()[]{}&quot;</li>\n</ol>\n</li>\n<li>Output: true</li>\n<li><ol start=\"3\">\n<li>Input: s = &quot;(]&quot;</li>\n</ol>\n</li>\n<li>Output: false</li>\n<li><ol start=\"4\">\n<li>Input: s = &quot;([])&quot;</li>\n</ol>\n</li>\n<li>Output: true</li>\n<li><ol start=\"5\">\n<li>Input: s = &quot;([)]&quot;</li>\n</ol>\n</li>\n<li>Output: false</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>1 &lt;= s.length &lt;= 104</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>s</code> consists of parentheses only <code>&#39;()[]{}&#39;</code>.</li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
   "totalTests": 5,
   "passedTests": 5,
   "failedTests": 0

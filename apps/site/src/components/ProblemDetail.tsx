@@ -159,7 +159,7 @@ export default function ProblemDetail(props: ProblemDetailProps) {
           <div class="prose dark:prose-invert max-w-none prose-sm leading-relaxed">
             <div
               innerHTML={props.problem.notes}
-              class="text-gray-900 dark:text-gray-100 [&_ul]:space-y-1 [&_ol]:space-y-1 [&_li]:leading-tight [&_p]:leading-tight [&_pre]:bg-gray-50 dark:[&_pre]:bg-gray-800 [&_pre]:text-gray-900 dark:[&_pre]:text-gray-100 [&_pre]:border [&_pre]:border-gray-200 dark:[&_pre]:border-gray-700 [&_pre]:rounded-lg [&_pre]:p-4 [&_pre]:overflow-hidden [&_code]:bg-gray-50 dark:[&_code]:bg-gray-800 [&_code]:text-gray-900 dark:[&_code]:text-gray-100 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm"
+              class="text-gray-900 dark:text-gray-100 [&_ul]:space-y-1 [&_ol]:space-y-1 [&_li]:leading-tight [&_p]:leading-tight [&_pre]:bg-gray-50 dark:[&_pre]:bg-gray-800 [&_pre]:text-gray-900 dark:[&_pre]:text-gray-100 [&_pre]:border [&_pre]:border-gray-200 dark:[&_pre]:border-gray-700 [&_pre]:rounded-lg [&_pre]:p-4 [&_pre]:overflow-hidden [&_code]:bg-gray-50 dark:[&_code]:bg-gray-800 [&_code]:text-gray-900 dark:[&_code]:text-gray-100 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:before:content-none [&_code]:after:content-none"
             />
           </div>
         )}
@@ -269,7 +269,7 @@ export default function ProblemDetail(props: ProblemDetailProps) {
                               {utility.name}
                             </div>
                             <div
-                              class="p-4 overflow-x-auto prose dark:prose-invert max-w-none [&_pre]:bg-transparent [&_pre]:p-0 [&_pre]:m-0 [&_pre]:border-0 [&_pre]:rounded-none [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-sm"
+                              class="p-4 overflow-x-auto prose dark:prose-invert max-w-none [&_pre]:bg-transparent [&_pre]:p-0 [&_pre]:m-0 [&_pre]:border-0 [&_pre]:rounded-none [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-sm [&_code]:before:content-none [&_code]:after:content-none"
                               innerHTML={utility.code}
                             />
                           </div>
@@ -285,7 +285,7 @@ export default function ProblemDetail(props: ProblemDetailProps) {
                     TypeScript
                   </div>
                   <div
-                    class="p-4 overflow-x-auto prose dark:prose-invert max-w-none [&_pre]:bg-transparent [&_pre]:p-0 [&_pre]:m-0 [&_pre]:border-0 [&_pre]:rounded-none [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-sm"
+                    class="p-4 overflow-x-auto prose dark:prose-invert max-w-none [&_pre]:bg-transparent [&_pre]:p-0 [&_pre]:m-0 [&_pre]:border-0 [&_pre]:rounded-none [&_code]:bg-transparent [&_code]:p-0 [&_code]:text-sm [&_code]:before:content-none [&_code]:after:content-none"
                     innerHTML={props.problem.solutions[activeSolution()].code}
                   />
                 </div>
