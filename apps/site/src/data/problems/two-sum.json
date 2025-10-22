@@ -14,7 +14,7 @@
       "approach": "- Use a hash map to store number -> index mappings\n - For each number, check if its complement (target - number) exists in the map\n - If found, return the indices; otherwise, store current number and index",
       "timeComplexity": "O(n)",
       "spaceComplexity": "O(n)",
-      "code": "<pre><code class=\"language-typescript\">\n  <span class=\"hljs-keyword\">const</span> seen = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Map</span>();\n\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; nums.<span class=\"hljs-property\">length</span>; i++) {\n    <span class=\"hljs-keyword\">const</span> num = nums[i];\n    <span class=\"hljs-keyword\">const</span> complement = target - num;\n\n    <span class=\"hljs-keyword\">if</span> (seen.<span class=\"hljs-title function_\">has</span>(complement)) {\n      <span class=\"hljs-keyword\">return</span> [seen.<span class=\"hljs-title function_\">get</span>(complement), i];\n    }\n\n    seen.<span class=\"hljs-title function_\">set</span>(num, i);\n  }\n\n  <span class=\"hljs-keyword\">return</span> [];\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">hashMapSolution</span> = (<span class=\"hljs-params\">nums, target</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> seen = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Map</span>();\n\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; nums.<span class=\"hljs-property\">length</span>; i++) {\n    <span class=\"hljs-keyword\">const</span> num = nums[i];\n    <span class=\"hljs-keyword\">const</span> complement = target - num;\n\n    <span class=\"hljs-keyword\">if</span> (seen.<span class=\"hljs-title function_\">has</span>(complement)) {\n      <span class=\"hljs-keyword\">return</span> [seen.<span class=\"hljs-title function_\">get</span>(complement), i];\n    }\n\n    seen.<span class=\"hljs-title function_\">set</span>(num, i);\n  }\n\n  <span class=\"hljs-keyword\">return</span> [];\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -37,7 +37,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.19879099999997152
+          "duration": 0.20983400000000074
         },
         {
           "input": [
@@ -58,7 +58,7 @@
             2
           ],
           "passed": true,
-          "duration": 0.09612499999997226
+          "duration": 0.09716600000001563
         },
         {
           "input": [
@@ -78,7 +78,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.013916999999992186
+          "duration": 0.015083000000004176
         },
         {
           "input": [
@@ -106,7 +106,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.01762500000000955
+          "duration": 0.017542000000048574
         },
         {
           "input": [
@@ -134,7 +134,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.08808399999998073
+          "duration": 0.0831670000000031
         },
         {
           "input": [
@@ -162,7 +162,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.06920900000000074
+          "duration": 0.06725000000005821
         }
       ],
       "totalTests": 6,
@@ -175,7 +175,7 @@
       "approach": "- Sort the array\n - Use two pointers to find the two numbers\n - If the sum of the two numbers is equal to the target, return the indices; otherwise, move the pointers",
       "timeComplexity": "O(n log n)",
       "spaceComplexity": "O(1)",
-      "code": "<pre><code class=\"language-typescript\">\n  <span class=\"hljs-keyword\">const</span> sortedNums = nums.<span class=\"hljs-title function_\">slice</span>().<span class=\"hljs-title function_\">sort</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">a, b</span>) =&gt;</span> a - b);\n  <span class=\"hljs-keyword\">let</span> left = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> right = sortedNums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left &lt; right) {\n    <span class=\"hljs-keyword\">const</span> sum = sortedNums[left] + sortedNums[right];\n    <span class=\"hljs-keyword\">if</span> (sum === target) {\n      <span class=\"hljs-keyword\">if</span> (sortedNums[left] === sortedNums[right]) {\n        <span class=\"hljs-keyword\">const</span> index = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]);\n        <span class=\"hljs-keyword\">return</span> [\n          nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]),\n          nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[right], index + <span class=\"hljs-number\">1</span>),\n        ];\n      }\n      <span class=\"hljs-keyword\">const</span> index1 = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]);\n      <span class=\"hljs-keyword\">const</span> index2 = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[right]);\n      <span class=\"hljs-keyword\">return</span> index1 &lt; index2 ? [index1, index2] : [index2, index1];\n    }\n    <span class=\"hljs-keyword\">if</span> (sum &lt; target) {\n      left++;\n    } <span class=\"hljs-keyword\">else</span> {\n      right--;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> [];\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">twoPointersSolution</span> = (<span class=\"hljs-params\">nums, target</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> sortedNums = nums.<span class=\"hljs-title function_\">slice</span>().<span class=\"hljs-title function_\">sort</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">a, b</span>) =&gt;</span> a - b);\n  <span class=\"hljs-keyword\">let</span> left = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> right = sortedNums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left &lt; right) {\n    <span class=\"hljs-keyword\">const</span> sum = sortedNums[left] + sortedNums[right];\n    <span class=\"hljs-keyword\">if</span> (sum === target) {\n      <span class=\"hljs-keyword\">if</span> (sortedNums[left] === sortedNums[right]) {\n        <span class=\"hljs-keyword\">const</span> index = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]);\n        <span class=\"hljs-keyword\">return</span> [\n          nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]),\n          nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[right], index + <span class=\"hljs-number\">1</span>),\n        ];\n      }\n      <span class=\"hljs-keyword\">const</span> index1 = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]);\n      <span class=\"hljs-keyword\">const</span> index2 = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[right]);\n      <span class=\"hljs-keyword\">return</span> index1 &lt; index2 ? [index1, index2] : [index2, index1];\n    }\n    <span class=\"hljs-keyword\">if</span> (sum &lt; target) {\n      left++;\n    } <span class=\"hljs-keyword\">else</span> {\n      right--;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> [];\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -198,7 +198,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.050957999999980075
+          "duration": 0.052166999999940344
         },
         {
           "input": [
@@ -219,7 +219,7 @@
             2
           ],
           "passed": true,
-          "duration": 0.0044999999999504325
+          "duration": 0.004541000000017448
         },
         {
           "input": [
@@ -239,7 +239,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.0037090000000148393
+          "duration": 0.0036250000000563887
         },
         {
           "input": [
@@ -267,7 +267,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.009833000000014636
+          "duration": 0.012666000000081112
         },
         {
           "input": [
@@ -295,7 +295,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.010167000000024018
+          "duration": 0.0060829999999896245
         },
         {
           "input": [
@@ -323,7 +323,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.0071659999999837964
+          "duration": 0.007375000000024556
         }
       ],
       "totalTests": 6,

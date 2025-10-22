@@ -238,7 +238,7 @@ function extractUtilityDefinition(sourceContent: string, utilityName: string): s
     result = `const ${utilityName}: z.ZodType = ${zodMatch[1].trim()};`;
   }
 
-  return result || hljs.highlightAuto(sourceContent).value;
+  return result;
 }
 
 function extractSolutionInfo(solutionFunction: (...args: any[]) => any, functionName?: string, sourceContent?: string): {
@@ -329,22 +329,14 @@ function extractSolutionInfo(solutionFunction: (...args: any[]) => any, function
   if (sourceContent && functionName) {
     // Look for the actual implementation in the source content
     const escapedFunctionName = functionName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(`export\\s+const\\s+${escapedFunctionName}\\s*=\\s*SolutionSchema\\.implement\\([^)]*\\)\\s*=>\\s*\\{([\\s\\S]*?)\\}\\s*\\);`);
-    const implementationMatch = sourceContent.match(regex);
-
-    if (implementationMatch) {
-      // Extract just the implementation part
-      const implementation = implementationMatch[1];
-      actualCode = implementation;
+    const regex = new RegExp(`export\\s+const\\s+${escapedFunctionName}\\s*=\\s*SolutionSchema\\.implement\\(([^)]*\\)\\s*=>\\s*\\{[\\s\\S]*?\\})\\s*\\);`);
+    let implementationMatch = sourceContent.match(regex);
+    if (!implementationMatch) {
+      // Fallback: try to extract from function string
+      implementationMatch = functionString.match(/SolutionSchema\.implement\((\([^)]*\)\s*=>\s*\{[\s\S]*\}\);)/);
     }
-  } else {
-    // Fallback: try to extract from function string
-    const implementationMatch = functionString.match(/SolutionSchema\.implement\(\([^)]*\)\s*=>\s*\{([\s\S]*)\}\);/);
-
     if (implementationMatch) {
-      // Extract just the implementation part
-      const implementation = implementationMatch[1];
-      actualCode = implementation
+      actualCode = `const ${functionName} = ${implementationMatch[1]};`;
     }
   }
 

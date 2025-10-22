@@ -95,7 +95,7 @@ export const cases: TestCase<Solution>[] = [
  * Space Complexity: O(max(m, n)) for the result list
  */
 export const iterativeSolution = SolutionSchema.implement(
-  (l1: ListNode | null, l2: ListNode | null) => {
+  (l1, l2) => {
     const dummy = { val: 0, next: null } as ListNode;
     let current = dummy;
     let carry = 0;
