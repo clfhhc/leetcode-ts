@@ -1,0 +1,14 @@
+{
+  "extends": "../../config/tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*", "**/*.astro"],
+  "exclude": ["node_modules", "dist"]
+}

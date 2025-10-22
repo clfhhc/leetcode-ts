@@ -1,0 +1,338 @@
+{
+  "id": 1,
+  "slug": "two-sum",
+  "title": "Two Sum",
+  "tags": [
+    "array",
+    "hash-table"
+  ],
+  "difficulty": "easy",
+  "solutions": [
+    {
+      "name": "hashMapSolution",
+      "description": "",
+      "approach": "- Use a hash map to store number -> index mappings\n - For each number, check if its complement (target - number) exists in the map\n - If found, return the indices; otherwise, store current number and index",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">hashMapSolution</span> = (<span class=\"hljs-params\">nums, target</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> seen = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Map</span>();\n\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; nums.<span class=\"hljs-property\">length</span>; i++) {\n    <span class=\"hljs-keyword\">const</span> num = nums[i];\n    <span class=\"hljs-keyword\">const</span> complement = target - num;\n\n    <span class=\"hljs-keyword\">if</span> (seen.<span class=\"hljs-title function_\">has</span>(complement)) {\n      <span class=\"hljs-keyword\">return</span> [seen.<span class=\"hljs-title function_\">get</span>(complement), i];\n    }\n\n    seen.<span class=\"hljs-title function_\">set</span>(num, i);\n  }\n\n  <span class=\"hljs-keyword\">return</span> [];\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              2,
+              7,
+              11,
+              15
+            ],
+            9
+          ],
+          "expected": [
+            0,
+            1
+          ],
+          "name": "Example 1",
+          "actual": [
+            0,
+            1
+          ],
+          "passed": true,
+          "duration": 0.19224999999994452
+        },
+        {
+          "input": [
+            [
+              3,
+              2,
+              4
+            ],
+            6
+          ],
+          "expected": [
+            1,
+            2
+          ],
+          "name": "Example 2",
+          "actual": [
+            1,
+            2
+          ],
+          "passed": true,
+          "duration": 0.010125000000016371
+        },
+        {
+          "input": [
+            [
+              3,
+              3
+            ],
+            6
+          ],
+          "expected": [
+            0,
+            1
+          ],
+          "name": "Example 3",
+          "actual": [
+            0,
+            1
+          ],
+          "passed": true,
+          "duration": 0.012207999999986896
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            19
+          ],
+          "expected": [
+            8,
+            9
+          ],
+          "name": "Large array case",
+          "actual": [
+            8,
+            9
+          ],
+          "passed": true,
+          "duration": 0.07437500000003183
+        },
+        {
+          "input": [
+            [
+              -1,
+              -2,
+              -3,
+              -4,
+              -5,
+              -6,
+              -7,
+              -8,
+              -9,
+              -10
+            ],
+            -19
+          ],
+          "expected": [
+            8,
+            9
+          ],
+          "name": "Negative numbers case",
+          "actual": [
+            8,
+            9
+          ],
+          "passed": true,
+          "duration": 0.011208000000010543
+        },
+        {
+          "input": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            0
+          ],
+          "expected": [
+            0,
+            1
+          ],
+          "name": "Zero case",
+          "actual": [
+            0,
+            1
+          ],
+          "passed": true,
+          "duration": 0.10612500000002001
+        }
+      ],
+      "totalTests": 6,
+      "passedTests": 6,
+      "failedTests": 0
+    },
+    {
+      "name": "twoPointersSolution",
+      "description": "",
+      "approach": "- Sort the array\n - Use two pointers to find the two numbers\n - If the sum of the two numbers is equal to the target, return the indices; otherwise, move the pointers",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">twoPointersSolution</span> = (<span class=\"hljs-params\">nums, target</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> sortedNums = nums.<span class=\"hljs-title function_\">slice</span>().<span class=\"hljs-title function_\">sort</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">a, b</span>) =&gt;</span> a - b);\n  <span class=\"hljs-keyword\">let</span> left = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> right = sortedNums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left &lt; right) {\n    <span class=\"hljs-keyword\">const</span> sum = sortedNums[left] + sortedNums[right];\n    <span class=\"hljs-keyword\">if</span> (sum === target) {\n      <span class=\"hljs-keyword\">if</span> (sortedNums[left] === sortedNums[right]) {\n        <span class=\"hljs-keyword\">const</span> index = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]);\n        <span class=\"hljs-keyword\">return</span> [\n          nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]),\n          nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[right], index + <span class=\"hljs-number\">1</span>),\n        ];\n      }\n      <span class=\"hljs-keyword\">const</span> index1 = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[left]);\n      <span class=\"hljs-keyword\">const</span> index2 = nums.<span class=\"hljs-title function_\">indexOf</span>(sortedNums[right]);\n      <span class=\"hljs-keyword\">return</span> index1 &lt; index2 ? [index1, index2] : [index2, index1];\n    }\n    <span class=\"hljs-keyword\">if</span> (sum &lt; target) {\n      left++;\n    } <span class=\"hljs-keyword\">else</span> {\n      right--;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> [];\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              2,
+              7,
+              11,
+              15
+            ],
+            9
+          ],
+          "expected": [
+            0,
+            1
+          ],
+          "name": "Example 1",
+          "actual": [
+            0,
+            1
+          ],
+          "passed": true,
+          "duration": 0.055041000000073836
+        },
+        {
+          "input": [
+            [
+              3,
+              2,
+              4
+            ],
+            6
+          ],
+          "expected": [
+            1,
+            2
+          ],
+          "name": "Example 2",
+          "actual": [
+            1,
+            2
+          ],
+          "passed": true,
+          "duration": 0.004540999999903761
+        },
+        {
+          "input": [
+            [
+              3,
+              3
+            ],
+            6
+          ],
+          "expected": [
+            0,
+            1
+          ],
+          "name": "Example 3",
+          "actual": [
+            0,
+            1
+          ],
+          "passed": true,
+          "duration": 0.0037499999999681677
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            19
+          ],
+          "expected": [
+            8,
+            9
+          ],
+          "name": "Large array case",
+          "actual": [
+            8,
+            9
+          ],
+          "passed": true,
+          "duration": 0.009749999999939973
+        },
+        {
+          "input": [
+            [
+              -1,
+              -2,
+              -3,
+              -4,
+              -5,
+              -6,
+              -7,
+              -8,
+              -9,
+              -10
+            ],
+            -19
+          ],
+          "expected": [
+            8,
+            9
+          ],
+          "name": "Negative numbers case",
+          "actual": [
+            8,
+            9
+          ],
+          "passed": true,
+          "duration": 0.010499999999979082
+        },
+        {
+          "input": [
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            0
+          ],
+          "expected": [
+            0,
+            1
+          ],
+          "name": "Zero case",
+          "actual": [
+            0,
+            1
+          ],
+          "passed": true,
+          "duration": 0.007000000000061846
+        }
+      ],
+      "totalTests": 6,
+      "passedTests": 6,
+      "failedTests": 0
+    }
+  ],
+  "notes": "<ul>\n<li><ol>\n<li>Two Sum</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: array, hash-table</li>\n<li></li>\n<li>Description:</li>\n<li>Given an array of integers <code>nums</code> and an integer <code>target</code>, return <em>indices of the two numbers such that they add up to <code>target</code></em>.</li>\n<li></li>\n<li>You may assume that each input would have <strong><em>exactly</em> one solution</strong>, and you may not use the <em>same</em> element twice.</li>\n<li></li>\n<li>You can return the answer in any order.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: nums = [2,7,11,15], target = 9</li>\n</ol>\n</li>\n<li>Output: [0,1]</li>\n<li>Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].</li>\n<li><ol start=\"2\">\n<li>Input: nums = [3,2,4], target = 6</li>\n</ol>\n</li>\n<li>Output: [1,2]</li>\n<li><ol start=\"3\">\n<li>Input: nums = [3,3], target = 6</li>\n</ol>\n</li>\n<li>Output: [0,1]</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>2 &lt;= nums.length &lt;= 104</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>-109 &lt;= nums[i] &lt;= 109</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>-109 &lt;= target &lt;= 109</code></li>\n</ul>\n</li>\n<li><ul>\n<li>Only one valid answer exists.</li>\n</ul>\n</li>\n<li></li>\n<li>Follow-up:</li>\n<li><ul>\n<li>Can you come up with an algorithm that is less than <code>O(n2)</code> time complexity?</li>\n</ul>\n</li>\n</ul>\n",
+  "totalTests": 12,
+  "passedTests": 12,
+  "failedTests": 0
+}

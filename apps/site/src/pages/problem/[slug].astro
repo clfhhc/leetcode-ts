@@ -1,0 +1,44 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProblemDetail from '../../components/ProblemDetail';
+
+interface ProblemData {
+  id: number;
+  slug: string;
+  title: string;
+  tags: string[];
+  difficulty: string;
+  code: string;
+  notes: string;
+  testResults: Array<{
+    input: any;
+    expected: any;
+    name: string;
+    actual?: any;
+    passed: boolean;
+    duration: number;
+    error?: string;
+  }>;
+  totalTests: number;
+  passedTests: number;
+  failedTests: number;
+}
+
+export async function getStaticPaths() {
+  // Load index data to get all problem slugs
+  const indexData = await import('../../data/index.json').then(m => m.default);
+  
+  return indexData.problems.map((problem) => ({
+    params: { slug: problem.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const problemData: ProblemData = await import(`../../data/problems/${slug}.json`).then(m => m.default);
+---
+
+<Layout title={`${problemData.id}. ${problemData.title}`}>
+  <main class="container mx-auto px-4 py-8">
+    <ProblemDetail problem={problemData} client:load />
+  </main>
+</Layout>
