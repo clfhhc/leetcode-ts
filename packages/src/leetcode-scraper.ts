@@ -172,6 +172,17 @@ export class LeetCodeScraper {
 
   constructor() {
     this.turndownService = new TurndownService({ hr: '', bulletListMarker: '-' });
+
+    // Preserve mathematical superscripts/subscripts from HTML into markdown-ish text
+    // e.g., 2<sup>31</sup> -> 2^31, H<sub>2</sub>O -> H_2O
+    this.turndownService.addRule('sup', {
+      filter: 'sup',
+      replacement: (content) => `^${content}`,
+    });
+    this.turndownService.addRule('sub', {
+      filter: 'sub',
+      replacement: (content) => `_${content}`,
+    });
   }
 
   private async makeRequest(query: string, variables: any = {}): Promise<any> {
@@ -257,8 +268,9 @@ export class LeetCodeScraper {
     const cleanContent = this.cleanMarkdown(markdownContent);
 
     // Extract constraints
+    // Use section-header lookaheads so we don't prematurely stop at a plain word "example" in the description
     const constraintsMatch = cleanContent.match(
-      /\*{0,3}Constraints?:?\*{0,2}\s*([\s\S]*?)(?=Follow-up|Example|$)/i
+      /\*{0,3}Constraints?:?\*{0,2}\s*([\s\S]*?)(?=^\s*\*{0,2}Follow-up:|^\s*\*{0,2}Example\s*\d+:|$)/im
     );
     const constraints = constraintsMatch
       ? constraintsMatch[1]
@@ -274,7 +286,7 @@ export class LeetCodeScraper {
 
     // Extract follow-up questions
     const followUpMatch = cleanContent.match(
-      /\*{0,2}Follow-up:?\*{0,2}\s*([\s\S]*?)(?=\*{0,2}Example|$)/i
+      /\*{0,2}Follow-up:?\*{0,2}\s*([\s\S]*?)(?=^\s*\*{0,2}Example\s*\d+:|$)/im
     );
     const followUp = followUpMatch
       ? followUpMatch[1]
@@ -306,7 +318,8 @@ export class LeetCodeScraper {
     }
 
     // Extract main description (everything before constraints, examples, or follow-up)
-    const descriptionMatch = cleanContent.match(/([\s\S]*?)(?=\*{0,2}Constraints?:|\*{0,2}Example|\*{0,2}Follow-up)/i);
+    // Anchor Example/Follow-up to section headers so inline uses of the word "example" don't truncate the description
+    const descriptionMatch = cleanContent.match(/([\s\S]*?)(?=^\s*\*{0,2}Constraints?:|^\s*\*{0,2}Example\s*\d+:|^\s*\*{0,2}Follow-up)/im);
     const description = descriptionMatch
       ? descriptionMatch[1].trim()
       : cleanContent;

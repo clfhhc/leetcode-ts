@@ -9,7 +9,7 @@
  * 
  * You **must not use** any built-in exponent function or operator.
  * 
- * -   For
+ * -   For example, do not use `pow(x, 0.5)` in c++ or `x ** 0.5` in python.
  *
  * Examples:
  * 1. Input: x = 4
@@ -20,7 +20,7 @@
  *    Explanation: The square root of 8 is 2.82842..., and since we round it down to the nearest integer, 2 is returned.
  *
  * Constraints:
- * - `0 <= x <= 231 - 1`
+ * - `0 <= x <= 2^31 - 1`
  *
  */
 import { z } from 'zod';
