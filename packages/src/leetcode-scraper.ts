@@ -270,23 +270,15 @@ export class LeetCodeScraper {
     // Extract constraints
     // Use section-header lookaheads so we don't prematurely stop at a plain word "example" in the description
     const constraintsMatch = cleanContent.match(
-      /\*{0,3}Constraints?:?\*{0,2}\s*([\s\S]*?)(?=^\s*\*{0,2}Follow-up:|^\s*\*{0,2}Example\s*\d+:|$)/im
+      /\*{0,3}Constraints?:?\*{0,2}\s*([\s\S]*?)(?=^\s*\*{0,2}Follow-up:|^\s*\*{0,2}Example\s*\d+:|(?![\s\S]))/im
     );
     const constraints = constraintsMatch
-      ? constraintsMatch[1]
-        .split('\n')
-        .map((line) => line.trim())
-        .filter((line) => line.length > 0)
-        .map((line) => {
-          // Remove extra dashes and clean up markdown formatting
-          return line.replace(/^-\s*/, '').replace(/^\*\*\s*/, '').replace(/\*\*$/, '');
-        })
-        .filter((line) => line.length > 0) // Filter out empty lines after cleaning
+      ? Array.from(constraintsMatch[1].matchAll(/^\s*[-*]\s+(.+?)\s*$/gm)).map((m) => m[1].trim())
       : [];
 
     // Extract follow-up questions
     const followUpMatch = cleanContent.match(
-      /\*{0,2}Follow-up:?\*{0,2}\s*([\s\S]*?)(?=^\s*\*{0,2}Example\s*\d+:|$)/im
+      /\*{0,2}Follow-up:?\*{0,2}\s*([\s\S]*?)(?=^\s*\*{0,2}Example\s*\d+:|(?![\s\S]))/im
     );
     const followUp = followUpMatch
       ? followUpMatch[1]
