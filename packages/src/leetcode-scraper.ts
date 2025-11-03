@@ -247,19 +247,54 @@ export class LeetCodeScraper {
     return data.data.problemsetQuestionList.questions;
   }
 
+  private normalizeWhitespace(text: string): string {
+    if (!text) return text;
+
+    return (
+      text
+        // Normalize all Unicode whitespace characters to regular spaces
+        .replace(/[\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]/g, ' ')
+        // Replace tabs with spaces
+        .replace(/\t/g, ' ')
+        // Replace multiple consecutive spaces with single space (preserve line breaks)
+        .replace(/[ \u00A0]+/g, ' ')
+        // Remove trailing spaces from each line
+        .replace(/[ \t]+$/gm, '')
+        // Normalize line endings
+        .replace(/\r\n/g, '\n')
+        .replace(/\r/g, '\n')
+        .trim()
+    );
+  }
+
   private cleanMarkdown(content: string): string {
-    return content
-      .replace(/&nbsp;/g, ' ')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&amp;/g, '&')
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'")
-      .replace(/&apos;/g, "'")
-      .replace(/\n\s*\n\s*\n/g, '\n\n') // Replace 3+ consecutive newlines with 2
-      .replace(/^\s*\n/g, '') // Remove leading empty lines
-      .replace(/\n\s*$/g, '') // Remove trailing empty lines
-      .trim();
+    return (
+      content
+        // Replace HTML entities
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&apos;/g, "'")
+        // Normalize all Unicode whitespace characters to regular spaces
+        .replace(/[\u00A0\u1680\u2000-\u200A\u202F\u205F\u3000]/g, ' ')
+        // Replace tabs with spaces
+        .replace(/\t/g, ' ')
+        // Replace multiple consecutive spaces with single space (but preserve indentation at line start)
+        .replace(/([^\n])[ \u00A0]+/g, '$1 ')
+        // Normalize line endings
+        .replace(/\r\n/g, '\n')
+        .replace(/\r/g, '\n')
+        // Replace 3+ consecutive newlines with 2
+        .replace(/\n\s*\n\s*\n+/g, '\n\n')
+        // Remove leading empty lines
+        .replace(/^\s*\n/g, '')
+        // Remove trailing empty lines
+        .replace(/\n\s*$/g, '')
+        .trim()
+    );
   }
 
   parseProblemContent(content: string): ProblemContent {
@@ -276,7 +311,7 @@ export class LeetCodeScraper {
     );
     const constraints = constraintsMatch
       ? Array.from(constraintsMatch[1].matchAll(/^\s*[-*]\s+(.+?)\s*$/gm)).map(
-          (m) => m[1].trim()
+          (m) => this.normalizeWhitespace(m[1].trim())
         )
       : [];
 
@@ -291,10 +326,12 @@ export class LeetCodeScraper {
           .filter((line) => line.length > 0)
           .map((line) => {
             // Remove extra dashes and clean up markdown formatting
-            return line
-              .replace(/^-\s*/, '')
-              .replace(/^\*\*\s*/, '')
-              .replace(/\*\*$/, '');
+            return this.normalizeWhitespace(
+              line
+                .replace(/^-\s*/, '')
+                .replace(/^\*\*\s*/, '')
+                .replace(/\*\*$/, '')
+            );
           })
           .filter((line) => line.length > 0) // Filter out empty lines after cleaning
       : [];
@@ -310,9 +347,11 @@ export class LeetCodeScraper {
     let match;
     while ((match = exampleRegex.exec(cleanContent)) !== null) {
       examples.push({
-        input: match[1].trim(),
-        output: match[2].trim(),
-        explanation: match[3]?.trim(),
+        input: this.normalizeWhitespace(match[1].trim()),
+        output: this.normalizeWhitespace(match[2].trim()),
+        explanation: match[3]
+          ? this.normalizeWhitespace(match[3].trim())
+          : undefined,
       });
     }
 
@@ -414,8 +453,8 @@ export class LeetCodeScraper {
     const testCases = `  // Add your test cases here
   // { input: [/* your input values */], expected: /* expected output */, name: 'Example 1' },`;
 
-    // Clean up description formatting - preserve structure
-    const cleanedDescription = content.description;
+    // Clean up description formatting - normalize whitespace and preserve structure
+    const cleanedDescription = this.normalizeWhitespace(content.description);
 
     // Format examples section with proper indentation
     const examplesSection =
@@ -454,7 +493,11 @@ ${content.followUp!.map((followUp) => ` * - ${followUp}`).join('\n')}`
  * Description:
 ${cleanedDescription
   .split('\n')
-  .map((line) => ` * ${line}`)
+  .map((line) => {
+    // Normalize whitespace in each line and remove trailing spaces
+    const normalizedLine = this.normalizeWhitespace(line);
+    return ` * ${normalizedLine}`;
+  })
   .join('\n')}
 ${examplesSection}
 ${constraintsSection}
