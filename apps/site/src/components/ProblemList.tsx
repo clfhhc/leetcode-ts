@@ -1,4 +1,4 @@
-import { createSignal } from 'solid-js';
+import { createSignal, createEffect } from 'solid-js';
 
 interface ProblemMeta {
   id: number;
@@ -10,12 +10,31 @@ interface ProblemMeta {
 
 interface ProblemListProps {
   problems: ProblemMeta[];
+  initialDifficultyFilter?: string;
+  onDifficultyFilterChange?: (filter: string) => void;
 }
 
 export default function ProblemList(props: ProblemListProps) {
   const [searchTerm, setSearchTerm] = createSignal('');
-  const [difficultyFilter, setDifficultyFilter] = createSignal<string>('all');
+  const [difficultyFilter, setDifficultyFilter] = createSignal<string>(
+    props.initialDifficultyFilter || 'all'
+  );
   const [tagFilter, setTagFilter] = createSignal<string>('all');
+
+  // Sync with external filter changes from SummaryCards
+  createEffect(() => {
+    if (props.initialDifficultyFilter !== undefined) {
+      setDifficultyFilter(props.initialDifficultyFilter);
+    }
+  });
+
+  // Handle internal filter changes (from dropdown) and notify parent
+  const handleDifficultyFilterChange = (filter: string) => {
+    setDifficultyFilter(filter);
+    if (props.onDifficultyFilterChange) {
+      props.onDifficultyFilterChange(filter);
+    }
+  };
 
   // Get unique tags
   const allTags = () =>
@@ -66,7 +85,9 @@ export default function ProblemList(props: ProblemListProps) {
 
           <select
             value={difficultyFilter()}
-            onChange={(e) => setDifficultyFilter(e.currentTarget.value)}
+            onChange={(e) =>
+              handleDifficultyFilterChange(e.currentTarget.value)
+            }
             class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="all">All Difficulties</option>

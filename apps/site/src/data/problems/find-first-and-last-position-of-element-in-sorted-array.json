@@ -1,0 +1,171 @@
+{
+  "id": 34,
+  "slug": "find-first-and-last-position-of-element-in-sorted-array",
+  "title": "Find First and Last Position of Element in Sorted Array",
+  "tags": [
+    "array",
+    "binary-search"
+  ],
+  "difficulty": "medium",
+  "solutions": [
+    {
+      "name": "binarySearchSolution",
+      "description": "",
+      "approach": "- Use binary search to find the first and last position of the target.\n - If the target is found, return the indices.\n - If the target is not found, return [-1, -1].",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">binarySearchSolution</span> = (<span class=\"hljs-params\">nums, target</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> result = [-<span class=\"hljs-number\">1</span>, -<span class=\"hljs-number\">1</span>];\n  <span class=\"hljs-keyword\">let</span> left = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> right = nums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left + <span class=\"hljs-number\">1</span> &lt; right) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(left + (right - left) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (nums[mid] &lt; target) {\n      left = mid;\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[mid] &gt;= target) {\n      right = mid;\n    }\n  }\n  <span class=\"hljs-keyword\">if</span> (nums[left] === target) {\n    result[<span class=\"hljs-number\">0</span>] = left;\n  } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[right] === target) {\n    result[<span class=\"hljs-number\">0</span>] = right;\n    left = right;\n  }\n  right = nums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left + <span class=\"hljs-number\">1</span> &lt; right) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(left + (right - left) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (nums[mid] &gt; target) {\n      right = mid;\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[mid] === target) {\n      left = mid;\n    }\n  }\n  <span class=\"hljs-keyword\">if</span> (nums[right] === target) {\n    result[<span class=\"hljs-number\">1</span>] = right;\n  } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[left] === target) {\n    result[<span class=\"hljs-number\">1</span>] = left;\n  }\n  <span class=\"hljs-keyword\">return</span> result;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              5,
+              7,
+              7,
+              8,
+              8,
+              10
+            ],
+            8
+          ],
+          "expected": [
+            3,
+            4
+          ],
+          "name": "Example 1",
+          "actual": [
+            3,
+            4
+          ],
+          "passed": true,
+          "duration": 0.0392500000000382
+        },
+        {
+          "input": [
+            [
+              5,
+              7,
+              7,
+              8,
+              8,
+              10
+            ],
+            6
+          ],
+          "expected": [
+            -1,
+            -1
+          ],
+          "name": "Example 2",
+          "actual": [
+            -1,
+            -1
+          ],
+          "passed": true,
+          "duration": 0.004040999999972428
+        },
+        {
+          "input": [
+            [],
+            0
+          ],
+          "expected": [
+            -1,
+            -1
+          ],
+          "name": "Example 3",
+          "actual": [
+            -1,
+            -1
+          ],
+          "passed": true,
+          "duration": 0.0027910000000019863
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            1
+          ],
+          "expected": [
+            0,
+            0
+          ],
+          "name": "Extended example 1",
+          "actual": [
+            0,
+            0
+          ],
+          "passed": true,
+          "duration": 0.003958000000011452
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ],
+            10
+          ],
+          "expected": [
+            9,
+            9
+          ],
+          "name": "Extended example 2",
+          "actual": [
+            9,
+            9
+          ],
+          "passed": true,
+          "duration": 0.009457999999995081
+        },
+        {
+          "input": [
+            [
+              2,
+              2
+            ],
+            2
+          ],
+          "expected": [
+            0,
+            1
+          ],
+          "name": "Extended example 3",
+          "actual": [
+            0,
+            1
+          ],
+          "passed": true,
+          "duration": 0.0024579999999900792
+        }
+      ],
+      "totalTests": 6,
+      "passedTests": 6,
+      "failedTests": 0
+    }
+  ],
+  "notes": "<ul>\n<li><ol start=\"34\">\n<li>Find First and Last Position of Element in Sorted Array</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: medium</li>\n<li>Tags: array, binary-search</li>\n<li></li>\n<li>Description:</li>\n<li>Given an array of integers <code>nums</code> sorted in non-decreasing order, find the starting and ending position of a given <code>target</code> value.</li>\n<li></li>\n<li>If <code>target</code> is not found in the array, return <code>[-1, -1]</code>.</li>\n<li></li>\n<li>You must write an algorithm with <code>O(log n)</code> runtime complexity.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: nums = [5,7,7,8,8,10], target = 8</li>\n</ol>\n</li>\n<li>Output: [3,4]</li>\n<li><ol start=\"2\">\n<li>Input: nums = [5,7,7,8,8,10], target = 6</li>\n</ol>\n</li>\n<li>Output: [-1,-1]</li>\n<li><ol start=\"3\">\n<li>Input: nums = [], target = 0</li>\n</ol>\n</li>\n<li>Output: [-1,-1]</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>0 &lt;= nums.length &lt;= 10^5</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>-10^9 &lt;= nums[i] &lt;= 10^9</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>nums</code> is a non-decreasing array.</li>\n</ul>\n</li>\n<li><ul>\n<li><code>-10^9 &lt;= target &lt;= 10^9</code></li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 6,
+  "passedTests": 6,
+  "failedTests": 0
+}

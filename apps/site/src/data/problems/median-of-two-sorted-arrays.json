@@ -1,0 +1,277 @@
+{
+  "id": 4,
+  "slug": "median-of-two-sorted-arrays",
+  "title": "Median of Two Sorted Arrays",
+  "tags": [
+    "array",
+    "binary-search",
+    "divide-and-conquer"
+  ],
+  "difficulty": "hard",
+  "solutions": [
+    {
+      "name": "binarySearchSolution",
+      "description": "",
+      "approach": "- Use binary search to find the median.\n - If the total length is even, return the average of the two middle elements.\n - If the total length is odd, return the middle element.\n - If the left partition of nums1 is too large, we need to move the partition to the left.\n - If the left partition of nums1 is too small, we need to move the partition to the right.",
+      "timeComplexity": "O(log (min(m, n)))",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">binarySearchSolution</span> = (<span class=\"hljs-params\">nums1, nums2</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> [short, long] = nums1.<span class=\"hljs-property\">length</span> &lt;= nums2.<span class=\"hljs-property\">length</span> ? [nums1, nums2] : [nums2, nums1];\n  <span class=\"hljs-keyword\">const</span> totalLength = short.<span class=\"hljs-property\">length</span> + long.<span class=\"hljs-property\">length</span>;\n  <span class=\"hljs-comment\">// Binary search on the shorter array</span>\n  <span class=\"hljs-keyword\">let</span> low = <span class=\"hljs-number\">0</span>, high = short.<span class=\"hljs-property\">length</span>;\n  <span class=\"hljs-keyword\">while</span> (low &lt;= high) {\n    <span class=\"hljs-keyword\">const</span> mid1 = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((low + high) / <span class=\"hljs-number\">2</span>)\n    <span class=\"hljs-keyword\">const</span> mid2 = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((totalLength + <span class=\"hljs-number\">1</span>) / <span class=\"hljs-number\">2</span>) - mid1;\n\n    <span class=\"hljs-comment\">// Find elements to the left and right of partition in short and long</span>\n    <span class=\"hljs-keyword\">const</span> maxLeft1 = mid1 === <span class=\"hljs-number\">0</span> ? -<span class=\"hljs-title class_\">Infinity</span> : short[mid1 - <span class=\"hljs-number\">1</span>];\n    <span class=\"hljs-keyword\">const</span> minRight1 = mid1 === short.<span class=\"hljs-property\">length</span> ? <span class=\"hljs-title class_\">Infinity</span> : short[mid1];\n    <span class=\"hljs-keyword\">const</span> maxLeft2 = mid2 === <span class=\"hljs-number\">0</span> ? -<span class=\"hljs-title class_\">Infinity</span> : long[mid2 - <span class=\"hljs-number\">1</span>];\n    <span class=\"hljs-keyword\">const</span> minRight2 = mid2 === long.<span class=\"hljs-property\">length</span> ? <span class=\"hljs-title class_\">Infinity</span> : long[mid2];\n\n    <span class=\"hljs-keyword\">if</span> (maxLeft1 &lt;= minRight2 &amp;&amp; maxLeft2 &lt;= minRight1) {\n      <span class=\"hljs-comment\">// If we have found the correct partition, return the median</span>\n      <span class=\"hljs-keyword\">if</span> (totalLength % <span class=\"hljs-number\">2</span> === <span class=\"hljs-number\">0</span>) {\n        <span class=\"hljs-comment\">// If the total length is even, return the average of the two middle elements</span>\n        <span class=\"hljs-keyword\">return</span> (<span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLeft1, maxLeft2) + <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">min</span>(minRight1, minRight2)) / <span class=\"hljs-number\">2</span>;\n      } <span class=\"hljs-keyword\">else</span> {\n        <span class=\"hljs-comment\">// If the total length is odd, return the middle element</span>\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLeft1, maxLeft2);\n      }\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (maxLeft1 &gt; minRight2) {\n      <span class=\"hljs-comment\">// If the left partition of nums1 is too large, we need to move the partition to the left</span>\n      high = mid1 - <span class=\"hljs-number\">1</span>;\n    } <span class=\"hljs-keyword\">else</span> {\n      low = mid1 + <span class=\"hljs-number\">1</span>;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">null</span>;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              3
+            ],
+            [
+              2
+            ]
+          ],
+          "expected": 2,
+          "name": "Example 1",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.06999999999999318
+        },
+        {
+          "input": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ]
+          ],
+          "expected": 2.5,
+          "name": "Example 2",
+          "actual": 2.5,
+          "passed": true,
+          "duration": 0.007084000000020296
+        },
+        {
+          "input": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "expected": 0,
+          "name": "Extended Example 1",
+          "actual": 0,
+          "passed": true,
+          "duration": 0.0030409999999960746
+        },
+        {
+          "input": [
+            [],
+            [
+              1
+            ]
+          ],
+          "expected": 1,
+          "name": "Extended Example 2",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.002333000000021457
+        },
+        {
+          "input": [
+            [
+              2
+            ],
+            []
+          ],
+          "expected": 2,
+          "name": "Extended Example 3",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.0021250000000350155
+        },
+        {
+          "input": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ]
+          ],
+          "expected": 5.5,
+          "name": "Extended Example 4",
+          "actual": 5.5,
+          "passed": true,
+          "duration": 0.004165999999997894
+        },
+        {
+          "input": [
+            [],
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          ],
+          "expected": 3,
+          "name": "Extended Example 5",
+          "actual": 3,
+          "passed": true,
+          "duration": 0.08645899999999074
+        }
+      ],
+      "totalTests": 7,
+      "passedTests": 7,
+      "failedTests": 0
+    },
+    {
+      "name": "mergeOfMergeSortSolution",
+      "description": "",
+      "approach": "- The idea is to simulate the merging process of two sorted arrays without actually creating a new one\n - We use two pointers to traverse the two arrays and merge them into a new array\n - We use a variable `i` to traverse the first array and a variable `j` to traverse the second array\n - We use a variable `k` to traverse the merged array\n - We use a variable `merged` to store the merged array\n - We return the median of the merged array",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">mergeOfMergeSortSolution</span> = (<span class=\"hljs-params\">nums1, nums2</span>) =&gt; {\n  <span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>, j = <span class=\"hljs-number\">0</span>, k = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">merged</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n  <span class=\"hljs-keyword\">while</span> (i &lt; nums1.<span class=\"hljs-property\">length</span> &amp;&amp; j &lt; nums2.<span class=\"hljs-property\">length</span>) {\n    <span class=\"hljs-keyword\">if</span> (nums1[i] &lt; nums2[j]) {\n      merged[k] = nums1[i++];\n      k++;\n    } <span class=\"hljs-keyword\">else</span> {\n      merged[k] = nums2[j++];\n      k++;\n    }\n  }\n  <span class=\"hljs-keyword\">while</span> (i &lt; nums1.<span class=\"hljs-property\">length</span>) {\n    merged[k++] = nums1[i++];\n  }\n  <span class=\"hljs-keyword\">while</span> (j &lt; nums2.<span class=\"hljs-property\">length</span>) {\n    merged[k++] = nums2[j++];\n  }\n  <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(merged.<span class=\"hljs-property\">length</span> / <span class=\"hljs-number\">2</span>);\n  <span class=\"hljs-keyword\">if</span> (merged.<span class=\"hljs-property\">length</span> % <span class=\"hljs-number\">2</span> === <span class=\"hljs-number\">0</span>) {\n    <span class=\"hljs-keyword\">return</span> (merged[mid - <span class=\"hljs-number\">1</span>] + merged[mid]) / <span class=\"hljs-number\">2</span>;\n  } <span class=\"hljs-keyword\">else</span> {\n    <span class=\"hljs-keyword\">return</span> merged[mid];\n  }\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              3
+            ],
+            [
+              2
+            ]
+          ],
+          "expected": 2,
+          "name": "Example 1",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.03337499999997817
+        },
+        {
+          "input": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ]
+          ],
+          "expected": 2.5,
+          "name": "Example 2",
+          "actual": 2.5,
+          "passed": true,
+          "duration": 0.004125000000044565
+        },
+        {
+          "input": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "expected": 0,
+          "name": "Extended Example 1",
+          "actual": 0,
+          "passed": true,
+          "duration": 0.004042000000026746
+        },
+        {
+          "input": [
+            [],
+            [
+              1
+            ]
+          ],
+          "expected": 1,
+          "name": "Extended Example 2",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.0020420000000171967
+        },
+        {
+          "input": [
+            [
+              2
+            ],
+            []
+          ],
+          "expected": 2,
+          "name": "Extended Example 3",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.00533300000000736
+        },
+        {
+          "input": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10
+            ]
+          ],
+          "expected": 5.5,
+          "name": "Extended Example 4",
+          "actual": 5.5,
+          "passed": true,
+          "duration": 0.009125000000040018
+        },
+        {
+          "input": [
+            [],
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          ],
+          "expected": 3,
+          "name": "Extended Example 5",
+          "actual": 3,
+          "passed": true,
+          "duration": 0.0028330000000096334
+        }
+      ],
+      "totalTests": 7,
+      "passedTests": 7,
+      "failedTests": 0
+    }
+  ],
+  "notes": "<ul>\n<li><ol start=\"4\">\n<li>Median of Two Sorted Arrays</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: hard</li>\n<li>Tags: array, binary-search, divide-and-conquer</li>\n<li></li>\n<li>Description:</li>\n<li>Given two sorted arrays <code>nums1</code> and <code>nums2</code> of size <code>m</code> and <code>n</code> respectively, return <strong>the median</strong> of the two sorted arrays.</li>\n<li></li>\n<li>The overall run time complexity should be <code>O(log (m+n))</code>.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: nums1 = [1,3], nums2 = [2]</li>\n</ol>\n</li>\n<li>Output: 2.00000</li>\n<li>Explanation: merged array = [1,2,3] and median is 2.</li>\n<li><ol start=\"2\">\n<li>Input: nums1 = [1,2], nums2 = [3,4]</li>\n</ol>\n</li>\n<li>Output: 2.50000</li>\n<li>Explanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5.</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>nums1.length == m</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>nums2.length == n</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>0 &lt;= m &lt;= 1000</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>0 &lt;= n &lt;= 1000</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>1 &lt;= m + n &lt;= 2000</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>-10^6 &lt;= nums1[i], nums2[i] &lt;= 10^6</code></li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 14,
+  "passedTests": 14,
+  "failedTests": 0
+}
