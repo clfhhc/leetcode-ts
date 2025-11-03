@@ -18,6 +18,12 @@ export default [
         ecmaVersion: 2022,
         sourceType: 'module',
       },
+      globals: {
+        URLSearchParams: 'readonly',
+        window: 'readonly',
+        location: 'readonly',
+        document: 'readonly',
+      },
     },
     plugins: {
       '@typescript-eslint': tseslint,
@@ -41,6 +47,25 @@ export default [
     },
   },
   {
-    ignores: ['dist/', 'build/', 'node_modules/', '*.config.js'],
+    files: ['**/*.js', '**/*.mjs', '**/.prettierrc.mjs'],
+    languageOptions: {
+      globals: {
+        module: 'readonly',
+        require: 'readonly',
+        exports: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        process: 'readonly',
+      },
+    },
+  },
+  {
+    files: ['**/*.d.ts'],
+    rules: {
+      '@typescript-eslint/triple-slash-reference': 'off',
+    },
+  },
+  {
+    ignores: ['dist/', 'build/', 'node_modules/', '*.config.js', 'apps/site/dist'],
   },
 ];

@@ -28,8 +28,9 @@
 
 ### Linting & Formatting
 
-- **ESLint**: `config/eslint.config.js` (shared rules)
-- **Prettier**: `config/prettier.config.js` (code formatting)
+- **ESLint**: `eslint.config.js` (flat config, ES modules)
+- **Prettier**: `config/prettier.config.js` (ES modules)
+- **Note**: All configuration files use ES modules (`export default`). The project is configured with `"type": "module"` in `package.json`.
 
 ### Testing
 

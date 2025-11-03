@@ -1,6 +1,7 @@
 {
   "name": "leetcode-ts",
   "private": true,
+  "type": "module",
   "packageManager": "pnpm@10.18.1",
   "scripts": {
     "new": "tsx packages/src/cli.ts new",

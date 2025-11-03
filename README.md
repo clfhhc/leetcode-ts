@@ -39,6 +39,13 @@ mise install  # Installs Node.js and pnpm versions
 pnpm install  # Installs all dependencies
 ```
 
+### Module System
+
+This project uses **ES modules** exclusively:
+- All configuration files use `export default` (ES module syntax)
+- Source code uses `import`/`export` statements
+- Configured with `"type": "module"` in `package.json`
+
 ### Usage
 
 ```bash
@@ -79,6 +86,7 @@ All scripts use the unified CLI (`packages/src/cli.ts`):
 - `pnpm build` - Build both data and site
 - `pnpm dev` - Start development mode (data watching + site dev server)
 - `pnpm lint` - Run ESLint
+- `pnpm lint:fix` - Fix linting and formatting issues automatically
 - `pnpm format` - Format code with Prettier
 
 ## 🌐 Website

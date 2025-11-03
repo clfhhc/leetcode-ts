@@ -29,6 +29,10 @@ export default [
         exports: 'readonly',
         performance: 'readonly',
         fetch: 'readonly',
+        URLSearchParams: 'readonly',
+        window: 'readonly',
+        location: 'readonly',
+        document: 'readonly',
       },
     },
     plugins: {
@@ -53,6 +57,36 @@ export default [
     },
   },
   {
-    ignores: ['dist/', 'build/', 'node_modules/', '*.config.js'],
+    files: ['**/*.js', '**/*.mjs', '**/.prettierrc.mjs'],
+    languageOptions: {
+      globals: {
+        module: 'readonly',
+        require: 'readonly',
+        exports: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        process: 'readonly',
+      },
+    },
+  },
+  {
+    files: ['**/*.tsx'],
+    languageOptions: {
+      globals: {
+        URLSearchParams: 'readonly',
+        window: 'readonly',
+        location: 'readonly',
+        document: 'readonly',
+      },
+    },
+  },
+  {
+    files: ['**/*.d.ts'],
+    rules: {
+      '@typescript-eslint/triple-slash-reference': 'off',
+    },
+  },
+  {
+    ignores: ['dist/', 'build/', 'node_modules/', '*.config.js', 'apps/site/dist'],
   },
 ];

@@ -9,10 +9,10 @@ interface Solution {
   code: string;
   utilities: Array<{ name: string; code: string }>;
   testResults: Array<{
-    input: any;
-    expected: any;
+    input: unknown;
+    expected: unknown;
     name: string;
-    actual?: any;
+    actual?: unknown;
     passed: boolean;
     duration: number;
     error?: string;
@@ -140,7 +140,9 @@ export default function ProblemDetail(props: ProblemDetailProps) {
             { id: 'tests', label: 'Tests' },
           ].map((tab) => (
             <button
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() =>
+                setActiveTab(tab.id as 'notes' | 'solutions' | 'tests')
+              }
               class={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab() === tab.id
                   ? 'border-blue-500 text-blue-600 dark:text-blue-400'
