@@ -19,8 +19,8 @@ leetcode-ts/
 ├── packages/           # Shared packages (types, runner, CLI)
 ├── apps/
 │   └── site/          # Astro static website
-├── config/            # Shared configuration files
-└── docs/              # Documentation
+├── docs/              # Documentation
+└── [config files]     # All config files at root (eslint, prettier, vitest, tsconfig)
 ```
 
 ## 🛠️ Quick Start

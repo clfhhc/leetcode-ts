@@ -20,7 +20,7 @@ import type {
 } from './types.js';
 import { problemMetaSchema, testCaseSchema } from './types.js';
 // @ts-expect-error: No type definitions for the config file
-import prettierConfig from '../../config/prettier.config.js';
+import prettierConfig from '../../prettier.config.js';
 
 export interface BuildDataOptions {
   watch?: boolean;

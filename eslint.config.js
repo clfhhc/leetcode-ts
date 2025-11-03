@@ -57,7 +57,7 @@ export default [
     },
   },
   {
-    files: ['**/*.js', '**/*.mjs', '**/.prettierrc.mjs'],
+    files: ['**/*.js', '**/*.mjs'],
     languageOptions: {
       globals: {
         module: 'readonly',

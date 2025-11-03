@@ -8,3 +8,4 @@ export default {
   useTabs: false,
   endOfLine: 'lf',
 };
+
