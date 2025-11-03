@@ -1,6 +1,11 @@
 import js from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
+import { createRequire } from 'module';
+import prettierPlugin from 'eslint-plugin-prettier';
+
+const require = createRequire(import.meta.url);
+const eslintConfigPrettier = require('eslint-config-prettier');
 
 export default [
   js.configs.recommended,
@@ -28,6 +33,7 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tseslint,
+      prettier: prettierPlugin,
     },
     rules: {
       ...tseslint.configs.recommended.rules,
@@ -38,6 +44,12 @@ export default [
       '@typescript-eslint/no-explicit-any': 'warn',
       'prefer-const': 'error',
       'no-var': 'error',
+      'prettier/prettier': 'error',
+    },
+  },
+  {
+    rules: {
+      ...eslintConfigPrettier.rules,
     },
   },
   {

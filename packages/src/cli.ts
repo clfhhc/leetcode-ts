@@ -40,7 +40,7 @@ program
     console.log('Building Astro site...');
     const child = spawn('pnpm', ['-C', 'apps/site', 'build'], {
       stdio: 'inherit',
-      shell: true
+      shell: true,
     });
 
     child.on('close', (code) => {
@@ -65,7 +65,7 @@ program
       console.log('Building site...');
       const child = spawn('pnpm', ['-C', 'apps/site', 'build'], {
         stdio: 'inherit',
-        shell: true
+        shell: true,
       });
 
       child.on('close', (code) => {
@@ -90,16 +90,20 @@ program
 
     // Start data watcher
     console.log('Starting data watcher...');
-    const dataWatcher = spawn('tsx', ['packages/src/build-data.ts', '--watch'], {
-      stdio: 'pipe',
-      shell: true
-    });
+    const dataWatcher = spawn(
+      'tsx',
+      ['packages/src/build-data.ts', '--watch'],
+      {
+        stdio: 'pipe',
+        shell: true,
+      }
+    );
 
     // Start site dev server
     console.log('Starting site dev server...');
     const siteDev = spawn('pnpm', ['-C', 'apps/site', 'dev', '--open'], {
       stdio: 'inherit',
-      shell: true
+      shell: true,
     });
 
     // Handle cleanup on exit
@@ -123,8 +127,14 @@ program
 program
   .command('test')
   .description('Run tests with optional filtering')
-  .option('-p, --problem <name>', 'Test only a specific problem (e.g., 0278-first-bad-version or 0278)')
-  .option('-s, --solution <name>', 'Test only a specific solution within a problem')
+  .option(
+    '-p, --problem <name>',
+    'Test only a specific problem (e.g., 0278-first-bad-version or 0278)'
+  )
+  .option(
+    '-s, --solution <name>',
+    'Test only a specific solution within a problem'
+  )
   .option('-w, --watch', 'Run tests in watch mode')
   .allowUnknownOption() // Allow passthrough of vitest options
   .action(async (options) => {
@@ -150,16 +160,23 @@ program
         continue;
       }
 
-      if (arg === '--problem' || arg === '-p' ||
-        arg === '--solution' || arg === '-s' ||
-        arg === '--watch' || arg === '-w') {
+      if (
+        arg === '--problem' ||
+        arg === '-p' ||
+        arg === '--solution' ||
+        arg === '-s' ||
+        arg === '--watch' ||
+        arg === '-w'
+      ) {
         skipNext = true; // Skip the next arg which is the value
         continue;
       }
 
       // Skip if this is a value for our options
-      if ((options.problem && arg === options.problem) ||
-        (options.solution && arg === options.solution)) {
+      if (
+        (options.problem && arg === options.problem) ||
+        (options.solution && arg === options.solution)
+      ) {
         continue;
       }
 
@@ -179,7 +196,7 @@ program
     const child = spawn('pnpm', ['exec', ...args], {
       stdio: 'inherit',
       shell: true,
-      env: { ...process.env }
+      env: { ...process.env },
     });
 
     child.on('close', (code) => {

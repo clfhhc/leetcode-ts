@@ -6,7 +6,7 @@
  *
  * Description:
  * Given an array of integers `nums` which is sorted in ascending order, and an integer `target`, write a function to search `target` in `nums`. If `target` exists, then return its index. Otherwise, return `-1`.
- * 
+ *
  * You must write an algorithm with `O(log n)` runtime complexity.
  *
  * Examples:
@@ -29,7 +29,7 @@ import type { TestCase } from '../packages/src/types.js';
 
 export const SolutionSchema = z.function({
   input: [z.array(z.number()), z.number()],
-  output: z.number()
+  output: z.number(),
 });
 
 export type Solution = z.infer<typeof SolutionSchema>;
@@ -59,7 +59,7 @@ export const cases: TestCase<Solution>[] = [
     input: [[-1, 0, 3, 5, 9, 12], 12],
     expected: 5,
     name: 'Added positive number case',
-  }
+  },
 ];
 
 /**

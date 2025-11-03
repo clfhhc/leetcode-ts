@@ -1,6 +1,5 @@
 import { default as TurndownService } from 'turndown';
 
-
 export interface LeetCodeProblem {
   questionId: string;
   questionFrontendId: string;
@@ -171,7 +170,10 @@ export class LeetCodeScraper {
   private turndownService: TurndownService;
 
   constructor() {
-    this.turndownService = new TurndownService({ hr: '', bulletListMarker: '-' });
+    this.turndownService = new TurndownService({
+      hr: '',
+      bulletListMarker: '-',
+    });
 
     // Preserve mathematical superscripts/subscripts from HTML into markdown-ish text
     // e.g., 2<sup>31</sup> -> 2^31, H<sub>2</sub>O -> H_2O
@@ -273,7 +275,9 @@ export class LeetCodeScraper {
       /\*{0,3}Constraints?:?\*{0,2}\s*([\s\S]*?)(?=^\s*\*{0,2}Follow-up:|^\s*\*{0,2}Example\s*\d+:|(?![\s\S]))/im
     );
     const constraints = constraintsMatch
-      ? Array.from(constraintsMatch[1].matchAll(/^\s*[-*]\s+(.+?)\s*$/gm)).map((m) => m[1].trim())
+      ? Array.from(constraintsMatch[1].matchAll(/^\s*[-*]\s+(.+?)\s*$/gm)).map(
+          (m) => m[1].trim()
+        )
       : [];
 
     // Extract follow-up questions
@@ -282,14 +286,17 @@ export class LeetCodeScraper {
     );
     const followUp = followUpMatch
       ? followUpMatch[1]
-        .split('\n')
-        .map((line) => line.trim())
-        .filter((line) => line.length > 0)
-        .map((line) => {
-          // Remove extra dashes and clean up markdown formatting
-          return line.replace(/^-\s*/, '').replace(/^\*\*\s*/, '').replace(/\*\*$/, '');
-        })
-        .filter((line) => line.length > 0) // Filter out empty lines after cleaning
+          .split('\n')
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0)
+          .map((line) => {
+            // Remove extra dashes and clean up markdown formatting
+            return line
+              .replace(/^-\s*/, '')
+              .replace(/^\*\*\s*/, '')
+              .replace(/\*\*$/, '');
+          })
+          .filter((line) => line.length > 0) // Filter out empty lines after cleaning
       : [];
 
     // Extract examples
@@ -311,7 +318,9 @@ export class LeetCodeScraper {
 
     // Extract main description (everything before constraints, examples, or follow-up)
     // Anchor Example/Follow-up to section headers so inline uses of the word "example" don't truncate the description
-    const descriptionMatch = cleanContent.match(/([\s\S]*?)(?=^\s*\*{0,2}Constraints?:|^\s*\*{0,2}Example\s*\d+:|^\s*\*{0,2}Follow-up)/im);
+    const descriptionMatch = cleanContent.match(
+      /([\s\S]*?)(?=^\s*\*{0,2}Constraints?:|^\s*\*{0,2}Example\s*\d+:|^\s*\*{0,2}Follow-up)/im
+    );
     const description = descriptionMatch
       ? descriptionMatch[1].trim()
       : cleanContent;
@@ -406,29 +415,35 @@ export class LeetCodeScraper {
   // { input: [/* your input values */], expected: /* expected output */, name: 'Example 1' },`;
 
     // Clean up description formatting - preserve structure
-    const cleanedDescription = content.description
+    const cleanedDescription = content.description;
 
     // Format examples section with proper indentation
-    const examplesSection = content.examples?.length ?? 0 > 0
-      ? ` *
+    const examplesSection =
+      (content.examples?.length ?? 0 > 0)
+        ? ` *
  * Examples:
-${content.examples!.map((example, index) =>
-        ` * ${index + 1}. Input: ${example.input}
+${content
+  .examples!.map(
+    (example, index) =>
+      ` * ${index + 1}. Input: ${example.input}
  *    Output: ${example.output}${example.explanation ? `\n *    Explanation: ${example.explanation}` : ''}`
-      ).join('\n')}`
-      : ' *';
+  )
+  .join('\n')}`
+        : ' *';
 
-    const constraintsSection = content.constraints?.length ?? 0 > 0
-      ? ` *
+    const constraintsSection =
+      (content.constraints?.length ?? 0 > 0)
+        ? ` *
  * Constraints:
 ${content.constraints!.map((constraint) => ` * - ${constraint}`).join('\n')}`
-      : ' *';
+        : ' *';
 
-    const followUpSection = content.followUp?.length ?? 0 > 0
-      ? ` *
+    const followUpSection =
+      (content.followUp?.length ?? 0 > 0)
+        ? ` *
  * Follow-up:
 ${content.followUp!.map((followUp) => ` * - ${followUp}`).join('\n')}`
-      : ' *';
+        : ' *';
 
     return `/**
  * ${id.toString().padStart(4, '0')}. ${title}
@@ -438,9 +453,9 @@ ${content.followUp!.map((followUp) => ` * - ${followUp}`).join('\n')}`
  *
  * Description:
 ${cleanedDescription
-        .split('\n')
-        .map((line) => ` * ${line}`)
-        .join('\n')}
+  .split('\n')
+  .map((line) => ` * ${line}`)
+  .join('\n')}
 ${examplesSection}
 ${constraintsSection}
 ${followUpSection}

@@ -66,7 +66,11 @@ export async function runProblemTests(
   return results;
 }
 
-export function createTestSuite(problemPath: string, module: any, filterSolution?: string) {
+export function createTestSuite(
+  problemPath: string,
+  module: any,
+  filterSolution?: string
+) {
   const { solutions, cases } = module;
 
   // Extract problem info from the file path or module

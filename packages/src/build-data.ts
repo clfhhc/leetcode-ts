@@ -12,7 +12,12 @@ import { marked } from 'marked';
 import markedCodeFormat from 'marked-code-format';
 import { markedHighlight } from 'marked-highlight';
 import hljs from 'highlight.js';
-import type { ProblemData, IndexData, TestResult, Difficulty } from './types.js';
+import type {
+  ProblemData,
+  IndexData,
+  TestResult,
+  Difficulty,
+} from './types.js';
 import { problemMetaSchema, testCaseSchema } from './types.js';
 // @ts-expect-error: No type definitions for the config file
 import prettierConfig from '../../config/prettier.config.js';
@@ -82,7 +87,10 @@ async function runSolutionTests(
   return results;
 }
 
-async function runProblemTests(problemPath: string, content?: string): Promise<{
+async function runProblemTests(
+  problemPath: string,
+  content?: string
+): Promise<{
   solutions: any[];
   totalTests: number;
   passedTests: number;
@@ -148,7 +156,9 @@ async function runProblemTests(problemPath: string, content?: string): Promise<{
         const solution = module[solutionKey];
 
         // Create a temporary solve function from the solution's code
-        const solveFunction = new Function('input', solution.code) as (...args: any[]) => any;
+        const solveFunction = new Function('input', solution.code) as (
+          ...args: any[]
+        ) => any;
 
         const testResults = await runSolutionTests(solveFunction, cases);
 
@@ -200,38 +210,56 @@ async function runProblemTests(problemPath: string, content?: string): Promise<{
   }
 }
 
-function extractUtilityDefinition(sourceContent: string, utilityName: string): string | null {
+function extractUtilityDefinition(
+  sourceContent: string,
+  utilityName: string
+): string | null {
   let result: string | null = null;
   // Try to find type definitions first
-  const typeRegex = new RegExp(`export\\s+type\\s+${utilityName}\\s*=\\s*([^;]+);`, 'g');
+  const typeRegex = new RegExp(
+    `export\\s+type\\s+${utilityName}\\s*=\\s*([^;]+);`,
+    'g'
+  );
   const typeMatch = typeRegex.exec(sourceContent);
   if (typeMatch) {
     result = `type ${utilityName} = ${typeMatch[1].trim()};`;
   }
 
   // Try to find interface definitions
-  const interfaceRegex = new RegExp(`export\\s+interface\\s+${utilityName}\\s*\\{([\\s\\S]*?)\\}\\s*`, 'g');
+  const interfaceRegex = new RegExp(
+    `export\\s+interface\\s+${utilityName}\\s*\\{([\\s\\S]*?)\\}\\s*`,
+    'g'
+  );
   const interfaceMatch = interfaceRegex.exec(sourceContent);
   if (interfaceMatch) {
     result = `interface ${utilityName} {${interfaceMatch[1]}}`;
   }
 
   // Try to find const/let/var definitions
-  const constRegex = new RegExp(`export\\s+const\\s+${utilityName}\\s*=\\s*([^;]+);`, 'g');
+  const constRegex = new RegExp(
+    `export\\s+const\\s+${utilityName}\\s*=\\s*([^;]+);`,
+    'g'
+  );
   const constMatch = constRegex.exec(sourceContent);
   if (constMatch) {
     result = `const ${utilityName} = ${constMatch[1].trim()};`;
   }
 
   // Try to find function definitions
-  const functionRegex = new RegExp(`export\\s+function\\s+${utilityName}\\s*\\([^)]*\\)\\s*\\{([\\s\\S]*?)\\}\\s*`, 'g');
+  const functionRegex = new RegExp(
+    `export\\s+function\\s+${utilityName}\\s*\\([^)]*\\)\\s*\\{([\\s\\S]*?)\\}\\s*`,
+    'g'
+  );
   const functionMatch = functionRegex.exec(sourceContent);
   if (functionMatch) {
     result = `function ${utilityName}() {${functionMatch[1]}}`;
   }
 
   // Try to find Zod schema definitions
-  const zodRegex = new RegExp(`export\\s+const\\s+${utilityName}\\s*:\\s*z\\.[^=]+=\\s*([^;]+);`, 'g');
+  const zodRegex = new RegExp(
+    `export\\s+const\\s+${utilityName}\\s*:\\s*z\\.[^=]+=\\s*([^;]+);`,
+    'g'
+  );
   const zodMatch = zodRegex.exec(sourceContent);
   if (zodMatch) {
     result = `const ${utilityName}: z.ZodType = ${zodMatch[1].trim()};`;
@@ -240,7 +268,11 @@ function extractUtilityDefinition(sourceContent: string, utilityName: string): s
   return result;
 }
 
-function extractSolutionInfo(solutionFunction: (...args: any[]) => any, functionName?: string, sourceContent?: string): {
+function extractSolutionInfo(
+  solutionFunction: (...args: any[]) => any,
+  functionName?: string,
+  sourceContent?: string
+): {
   name: string;
   description: string;
   approach: string;
@@ -261,7 +293,9 @@ function extractSolutionInfo(solutionFunction: (...args: any[]) => any, function
   // Extract from source content if available
   if (sourceContent && functionName) {
     // Find all JSDoc comments and their corresponding functions
-    const allMatches = sourceContent.matchAll(/\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*SolutionSchema\.implement/g);
+    const allMatches = sourceContent.matchAll(
+      /\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*SolutionSchema\.implement/g
+    );
 
     let jsdoc = null;
     for (const match of allMatches) {
@@ -273,7 +307,9 @@ function extractSolutionInfo(solutionFunction: (...args: any[]) => any, function
 
     if (jsdoc) {
       // Extract approach
-      const approachMatch = jsdoc.match(/\*\s*Approach:\s*([\s\S]*?)(?:\*\s*(?:Time|Space|$))/);
+      const approachMatch = jsdoc.match(
+        /\*\s*Approach:\s*([\s\S]*?)(?:\*\s*(?:Time|Space|$))/
+      );
       if (approachMatch) {
         approach = approachMatch[1].replace(/\*\s*/g, '').trim();
       }
@@ -296,7 +332,9 @@ function extractSolutionInfo(solutionFunction: (...args: any[]) => any, function
   const utilities: Array<{ name: string; code: string }> = [];
   if (sourceContent && functionName) {
     // Find all JSDoc comments and their corresponding functions
-    const allMatches = sourceContent.matchAll(/\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*SolutionSchema\.implement/g);
+    const allMatches = sourceContent.matchAll(
+      /\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*SolutionSchema\.implement/g
+    );
 
     let jsdoc = null;
     for (const match of allMatches) {
@@ -310,10 +348,15 @@ function extractSolutionInfo(solutionFunction: (...args: any[]) => any, function
       // Extract utilities from @utilities tag
       const utilitiesMatch = jsdoc.match(/\*\s*@utilities:\s*([^\n\r]+)/);
       if (utilitiesMatch) {
-        const utilityNames = utilitiesMatch[1].split(',').map(name => name.trim());
+        const utilityNames = utilitiesMatch[1]
+          .split(',')
+          .map((name) => name.trim());
 
         for (const utilityName of utilityNames) {
-          const utilityCode = extractUtilityDefinition(sourceContent, utilityName);
+          const utilityCode = extractUtilityDefinition(
+            sourceContent,
+            utilityName
+          );
           if (utilityCode) {
             utilities.push({ name: utilityName, code: utilityCode });
           }
@@ -327,12 +370,19 @@ function extractSolutionInfo(solutionFunction: (...args: any[]) => any, function
 
   if (sourceContent && functionName) {
     // Look for the actual implementation in the source content
-    const escapedFunctionName = functionName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(`export\\s+const\\s+${escapedFunctionName}\\s*=\\s*SolutionSchema\\.implement\\(([^)]*\\)\\s*=>\\s*\\{[\\s\\S]*?\\})\\s*\\);`);
+    const escapedFunctionName = functionName.replace(
+      /[.*+?^${}()|[\]\\]/g,
+      '\\$&'
+    );
+    const regex = new RegExp(
+      `export\\s+const\\s+${escapedFunctionName}\\s*=\\s*SolutionSchema\\.implement\\(([^)]*\\)\\s*=>\\s*\\{[\\s\\S]*?\\})\\s*\\);`
+    );
     let implementationMatch = sourceContent.match(regex);
     if (!implementationMatch) {
       // Fallback: try to extract from function string
-      implementationMatch = functionString.match(/SolutionSchema\.implement\((\([^)]*\)\s*=>\s*\{[\s\S]*\}\);)/);
+      implementationMatch = functionString.match(
+        /SolutionSchema\.implement\((\([^)]*\)\s*=>\s*\{[\s\S]*\}\);)/
+      );
     }
     if (implementationMatch) {
       actualCode = `const ${functionName} = ${implementationMatch[1]};`;
@@ -363,24 +413,29 @@ export async function buildData(options: BuildDataOptions) {
 
     // Configure marked with extensions
     marked.use(markedCodeFormat(prettierConfig));
-    marked.use(markedHighlight({
-      highlight: (code: string, lang: string) => {
-        if (lang && hljs.getLanguage(lang)) {
-          try {
-            return hljs.highlight(code, { language: lang }).value;
-          } catch (err) {
-            console.warn(`Failed to highlight code with language ${lang}:`, err);
+    marked.use(
+      markedHighlight({
+        highlight: (code: string, lang: string) => {
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              return hljs.highlight(code, { language: lang }).value;
+            } catch (err) {
+              console.warn(
+                `Failed to highlight code with language ${lang}:`,
+                err
+              );
+            }
           }
-        }
-        // Fallback to auto-detection
-        try {
-          return hljs.highlightAuto(code).value;
-        } catch (err) {
-          console.warn('Failed to auto-highlight code:', err);
-          return code;
-        }
-      }
-    }));
+          // Fallback to auto-detection
+          try {
+            return hljs.highlightAuto(code).value;
+          } catch (err) {
+            console.warn('Failed to auto-highlight code:', err);
+            return code;
+          }
+        },
+      })
+    );
 
     // Find all problem files
     const problemFiles = findProblemFiles('problems');
@@ -426,14 +481,22 @@ export async function buildData(options: BuildDataOptions) {
           await runProblemTests(fullPath, content);
 
         // Process code for each solution using marked
-        const processedSolutions = await Promise.all(solutions.map(async (solution) => ({
-          ...solution,
-          code: await marked.parse(`\`\`\`typescript\n${solution.code}\n\`\`\``),
-          utilities: await Promise.all(solution.utilities.map(async (utility) => ({
-            ...utility,
-            code: await marked.parse(`\`\`\`typescript\n${utility.code}\n\`\`\``),
-          }))),
-        })));
+        const processedSolutions = await Promise.all(
+          solutions.map(async (solution) => ({
+            ...solution,
+            code: await marked.parse(
+              `\`\`\`typescript\n${solution.code}\n\`\`\``
+            ),
+            utilities: await Promise.all(
+              solution.utilities.map(async (utility) => ({
+                ...utility,
+                code: await marked.parse(
+                  `\`\`\`typescript\n${utility.code}\n\`\`\``
+                ),
+              }))
+            ),
+          }))
+        );
 
         // Create problem data
         const problemData: ProblemData = {
@@ -512,7 +575,9 @@ export async function buildData(options: BuildDataOptions) {
   }
 }
 
-async function extractCodeAndNotes(content: string): Promise<{ code: string; notes: string }> {
+async function extractCodeAndNotes(
+  content: string
+): Promise<{ code: string; notes: string }> {
   // Extract TSDoc comment (between /** and */)
   const tsdocMatch = content.match(/\/\*\*([\s\S]*?)\*\//);
   const rawNotes = tsdocMatch ? tsdocMatch[1].trim() : '';
@@ -524,10 +589,12 @@ async function extractCodeAndNotes(content: string): Promise<{ code: string; not
     .trim();
 
   // Process markdown to HTML
-  const notes = cleanedNotes ? await marked.parse(cleanedNotes, {
-    breaks: true,
-    gfm: true
-  }) : '';
+  const notes = cleanedNotes
+    ? await marked.parse(cleanedNotes, {
+        breaks: true,
+        gfm: true,
+      })
+    : '';
 
   // For the new format, we don't need to extract code here since
   // the actual solution code is in the exported functions

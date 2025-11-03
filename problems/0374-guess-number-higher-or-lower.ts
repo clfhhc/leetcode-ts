@@ -6,17 +6,17 @@
  *
  * Description:
  * We are playing the Guess Game. The game is as follows:
- * 
+ *
  * I pick a number from `1` to `n`. You have to guess which number I picked (the number I picked stays the same throughout the game).
- * 
+ *
  * Every time you guess wrong, I will tell you whether the number I picked is higher or lower than your guess.
- * 
+ *
  * You call a pre-defined API `int guess(int num)`, which returns three possible results:
- * 
+ *
  * -   `-1`: Your guess is higher than the number I picked (i.e. `num > pick`).
  * -   `1`: Your guess is lower than the number I picked (i.e. `num < pick`).
  * -   `0`: your guess is equal to the number I picked (i.e. `num == pick`).
- * 
+ *
  * Return _the number that I picked_.
  *
  * Examples:
@@ -37,7 +37,7 @@ import type { TestCase } from '../packages/src/types.js';
 
 export const SolutionSchema = z.function({
   input: [z.number(), z.number()],
-  output: z.number()
+  output: z.number(),
 });
 
 export type Solution = z.infer<typeof SolutionSchema>;
@@ -48,11 +48,9 @@ export const cases: TestCase<Solution>[] = [
   { input: [2, 1], expected: 1, name: 'Example 3' },
 ];
 
-
-
 /**
  * Solution
- * Approach: 
+ * Approach:
  *   - Add your approach here
  * Time Complexity: O()
  * Space Complexity: O()
@@ -69,23 +67,23 @@ export const solution = SolutionSchema.implement((n, pick) => {
     let right = n;
     while (left <= right) {
       const mid = Math.floor((left + right) / 2);
-      const guessResult = guess(mid)
+      const guessResult = guess(mid);
       switch (guessResult) {
-        case (0): {
+        case 0: {
           return mid;
         }
-        case (1): {
+        case 1: {
           left = mid + 1;
           break;
         }
-        case (-1): {
+        case -1: {
           right = mid - 1;
           break;
         }
       }
     }
     return Math.min(left, right);
-  }
+  };
 
   return guessNumber(n);
 });

@@ -6,9 +6,9 @@
  *
  * Description:
  * Given an array of integers `nums` and an integer `target`, return _indices of the two numbers such that they add up to `target`_.
- * 
+ *
  * You may assume that each input would have **_exactly_ one solution**, and you may not use the _same_ element twice.
- * 
+ *
  * You can return the answer in any order.
  *
  * Examples:
@@ -34,7 +34,7 @@ import type { TestCase } from '../packages/src/types.js';
 
 export const SolutionSchema = z.function({
   input: [z.array(z.number()), z.number()],
-  output: z.any()
+  output: z.any(),
 });
 
 export type Solution = z.infer<typeof SolutionSchema>;
@@ -69,7 +69,7 @@ export const cases: TestCase<Solution>[] = [
     input: [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 0],
     expected: [0, 1],
     name: 'Zero case',
-  }
+  },
 ];
 
 /**

@@ -6,9 +6,9 @@
  *
  * Description:
  * Given a non-negative integer `x`, return _the square root of_ `x` _rounded down to the nearest integer_. The returned integer should be **non-negative** as well.
- * 
+ *
  * You **must not use** any built-in exponent function or operator.
- * 
+ *
  * -   For example, do not use `pow(x, 0.5)` in c++ or `x ** 0.5` in python.
  *
  * Examples:
@@ -28,7 +28,7 @@ import type { TestCase } from '../packages/src/types.js';
 
 export const SolutionSchema = z.function({
   input: [z.number()],
-  output: z.nullable(z.number())
+  output: z.nullable(z.number()),
 });
 
 export type Solution = z.infer<typeof SolutionSchema>;
@@ -42,7 +42,7 @@ export const cases: TestCase<Solution>[] = [
   {
     input: [8],
     expected: 2,
-    name: 'Example 2'
+    name: 'Example 2',
   },
   {
     input: [16],
@@ -78,7 +78,7 @@ export const cases: TestCase<Solution>[] = [
 
 /**
  * Binary Search Solution
- * Approach: 
+ * Approach:
  *   - Use binary search to find the square root of the number.
  *   - If the square of the middle number is equal to the number, then return the middle number.
  *   - If the square of the middle number is greater than the number, then the square root is less than the middle number, so we need to search in the left half.
@@ -108,7 +108,7 @@ export const binarySearchSolution = SolutionSchema.implement((x) => {
 
 /**
  * Newton's Method Solution
- * Approach: 
+ * Approach:
  *   - Use Newton's method to find the square root of the number.
  *   - If the square of the guess is greater than the number, then the guess is too high, so we need to decrease the guess.
  *   - If the square of the guess is less than the number, then the guess is too low, so we need to increase the guess.

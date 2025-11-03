@@ -6,9 +6,9 @@
  *
  * Description:
  * You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
- * 
+ *
  * Suppose you have `n` versions `[1, 2, ..., n]` and you want to find out the first bad one, which causes all the following ones to be bad.
- * 
+ *
  * You are given an API `bool isBadVersion(version)` which returns whether `version` is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.
  *
  * Examples:
@@ -24,7 +24,7 @@ import type { TestCase } from '../packages/src/types.js';
 
 export const SolutionSchema = z.function({
   input: [z.number(), z.number()],
-  output: z.number()
+  output: z.number(),
 });
 
 export type Solution = z.infer<typeof SolutionSchema>;
@@ -42,7 +42,7 @@ export const cases: TestCase<Solution>[] = [
 
 /**
  * Binary Search Solution
- * Approach: 
+ * Approach:
  *   - Use binary search to find the first bad version.
  *   - If the middle version is bad, then the first bad version is in the left half.
  *   - If the middle version is not bad, then the first bad version is in the right half.
@@ -60,15 +60,15 @@ export const binarySearchSolution = SolutionSchema.implement((n, bad) => {
     let start = 0;
     let end = num;
     while (start < end) {
-      const mid = Math.floor(start + (end - start) / 2)
+      const mid = Math.floor(start + (end - start) / 2);
       if (isBadVersion(mid)) {
-        end = mid
+        end = mid;
       } else {
-        start = mid + 1
+        start = mid + 1;
       }
     }
     return start;
-  }
+  };
 
   return firstBadVersion(n);
 });

@@ -6,7 +6,7 @@
  *
  * Description:
  * Given two sorted arrays `nums1` and `nums2` of size `m` and `n` respectively, return **the median** of the two sorted arrays.
- * 
+ *
  * The overall run time complexity should be `O(log (m+n))`.
  *
  * Examples:
@@ -31,24 +31,45 @@ import type { TestCase } from '../packages/src/types.js';
 
 export const SolutionSchema = z.function({
   input: [z.array(z.number()), z.array(z.number())],
-  output: z.nullable(z.number())
+  output: z.nullable(z.number()),
 });
 
 export type Solution = z.infer<typeof SolutionSchema>;
 
 export const cases: TestCase<Solution>[] = [
-  { input: [[1, 3], [2]], expected: 2.00000, name: 'Example 1' },
-  { input: [[1, 2], [3, 4]], expected: 2.50000, name: 'Example 2' },
-  { input: [[0, 0], [0, 0]], expected: 0.00000, name: 'Extended Example 1' },
-  { input: [[], [1]], expected: 1.00000, name: 'Extended Example 2' },
-  { input: [[2], []], expected: 2.00000, name: 'Extended Example 3' },
-  { input: [[1, 2], [3, 4, 5, 6, 7, 8, 9, 10]], expected: 5.50000, name: 'Extended Example 4' },
-  { input: [[], [1, 2, 3, 4, 5]], expected: 3.00000, name: 'Extended Example 5' },
+  { input: [[1, 3], [2]], expected: 2.0, name: 'Example 1' },
+  {
+    input: [
+      [1, 2],
+      [3, 4],
+    ],
+    expected: 2.5,
+    name: 'Example 2',
+  },
+  {
+    input: [
+      [0, 0],
+      [0, 0],
+    ],
+    expected: 0.0,
+    name: 'Extended Example 1',
+  },
+  { input: [[], [1]], expected: 1.0, name: 'Extended Example 2' },
+  { input: [[2], []], expected: 2.0, name: 'Extended Example 3' },
+  {
+    input: [
+      [1, 2],
+      [3, 4, 5, 6, 7, 8, 9, 10],
+    ],
+    expected: 5.5,
+    name: 'Extended Example 4',
+  },
+  { input: [[], [1, 2, 3, 4, 5]], expected: 3.0, name: 'Extended Example 5' },
 ];
 
 /**
  * Binary Search Solution
- * Approach: 
+ * Approach:
  *   - Use binary search to find the median.
  *   - If the total length is even, return the average of the two middle elements.
  *   - If the total length is odd, return the middle element.
@@ -58,12 +79,14 @@ export const cases: TestCase<Solution>[] = [
  * Space Complexity: O(1)
  */
 export const binarySearchSolution = SolutionSchema.implement((nums1, nums2) => {
-  const [short, long] = nums1.length <= nums2.length ? [nums1, nums2] : [nums2, nums1];
+  const [short, long] =
+    nums1.length <= nums2.length ? [nums1, nums2] : [nums2, nums1];
   const totalLength = short.length + long.length;
   // Binary search on the shorter array
-  let low = 0, high = short.length;
+  let low = 0,
+    high = short.length;
   while (low <= high) {
-    const mid1 = Math.floor((low + high) / 2)
+    const mid1 = Math.floor((low + high) / 2);
     const mid2 = Math.floor((totalLength + 1) / 2) - mid1;
 
     // Find elements to the left and right of partition in short and long
@@ -76,7 +99,9 @@ export const binarySearchSolution = SolutionSchema.implement((nums1, nums2) => {
       // If we have found the correct partition, return the median
       if (totalLength % 2 === 0) {
         // If the total length is even, return the average of the two middle elements
-        return (Math.max(maxLeft1, maxLeft2) + Math.min(minRight1, minRight2)) / 2;
+        return (
+          (Math.max(maxLeft1, maxLeft2) + Math.min(minRight1, minRight2)) / 2
+        );
       } else {
         // If the total length is odd, return the middle element
         return Math.max(maxLeft1, maxLeft2);
@@ -93,7 +118,7 @@ export const binarySearchSolution = SolutionSchema.implement((nums1, nums2) => {
 
 /**
  * Merge of Merge Sort Solution
- * Approach: 
+ * Approach:
  *   - The idea is to simulate the merging process of two sorted arrays without actually creating a new one
  *   - We use two pointers to traverse the two arrays and merge them into a new array
  *   - We use a variable `i` to traverse the first array and a variable `j` to traverse the second array
@@ -103,30 +128,34 @@ export const binarySearchSolution = SolutionSchema.implement((nums1, nums2) => {
  * Time Complexity: O(m + n)
  * Space Complexity: O(1)
  */
-export const mergeOfMergeSortSolution = SolutionSchema.implement((nums1, nums2) => {
-  let i = 0, j = 0, k = 0;
-  const merged: number[] = [];
-  while (i < nums1.length && j < nums2.length) {
-    if (nums1[i] < nums2[j]) {
-      merged[k] = nums1[i++];
-      k++;
+export const mergeOfMergeSortSolution = SolutionSchema.implement(
+  (nums1, nums2) => {
+    let i = 0,
+      j = 0,
+      k = 0;
+    const merged: number[] = [];
+    while (i < nums1.length && j < nums2.length) {
+      if (nums1[i] < nums2[j]) {
+        merged[k] = nums1[i++];
+        k++;
+      } else {
+        merged[k] = nums2[j++];
+        k++;
+      }
+    }
+    while (i < nums1.length) {
+      merged[k++] = nums1[i++];
+    }
+    while (j < nums2.length) {
+      merged[k++] = nums2[j++];
+    }
+    const mid = Math.floor(merged.length / 2);
+    if (merged.length % 2 === 0) {
+      return (merged[mid - 1] + merged[mid]) / 2;
     } else {
-      merged[k] = nums2[j++];
-      k++;
+      return merged[mid];
     }
   }
-  while (i < nums1.length) {
-    merged[k++] = nums1[i++];
-  }
-  while (j < nums2.length) {
-    merged[k++] = nums2[j++];
-  }
-  const mid = Math.floor(merged.length / 2);
-  if (merged.length % 2 === 0) {
-    return (merged[mid - 1] + merged[mid]) / 2;
-  } else {
-    return merged[mid];
-  }
-});
+);
 
 export const solutions = [binarySearchSolution, mergeOfMergeSortSolution];

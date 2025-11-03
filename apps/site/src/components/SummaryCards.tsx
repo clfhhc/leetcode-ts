@@ -12,7 +12,9 @@ interface SummaryCardsProps {
 }
 
 export default function SummaryCards(props: SummaryCardsProps) {
-  const [activeFilter, setActiveFilter] = createSignal<string>(props.currentFilter || 'all');
+  const [activeFilter, setActiveFilter] = createSignal<string>(
+    props.currentFilter || 'all'
+  );
 
   // Sync with external filter changes (from dropdown)
   createEffect(() => {
@@ -28,7 +30,7 @@ export default function SummaryCards(props: SummaryCardsProps) {
       props.onDifficultyFilterChange('all');
       return;
     }
-    
+
     // Toggle behavior: if already active, reset to 'all'; otherwise set to filter
     const newFilter = activeFilter() === filter ? 'all' : filter;
     setActiveFilter(newFilter);
@@ -38,7 +40,7 @@ export default function SummaryCards(props: SummaryCardsProps) {
   const getCardClasses = (filter: string) => {
     const baseClasses = 'cursor-pointer transition-all hover:shadow-lg';
     const currentFilter = activeFilter();
-    
+
     if (filter === 'total') {
       // Total card is active when filter is 'all'
       const isActive = currentFilter === 'all';
@@ -68,29 +70,45 @@ export default function SummaryCards(props: SummaryCardsProps) {
             onClick={() => handleCardClick('total')}
             class={`flex justify-between items-center ${getCardClasses('total')}`}
           >
-            <h3 class="text-base font-semibold text-gray-900 dark:text-white">Total Problems</h3>
-            <p class="text-2xl font-bold text-blue-600">{props.totalProblems}</p>
+            <h3 class="text-base font-semibold text-gray-900 dark:text-white">
+              Total Problems
+            </h3>
+            <p class="text-2xl font-bold text-blue-600">
+              {props.totalProblems}
+            </p>
           </div>
           <div
             onClick={() => handleCardClick('easy')}
             class={`flex justify-between items-center ${getCardClasses('easy')}`}
           >
-            <h3 class="text-base font-semibold text-gray-900 dark:text-white">Easy</h3>
-            <p class="text-2xl font-bold text-green-600">{props.difficultyCounts.easy}</p>
+            <h3 class="text-base font-semibold text-gray-900 dark:text-white">
+              Easy
+            </h3>
+            <p class="text-2xl font-bold text-green-600">
+              {props.difficultyCounts.easy}
+            </p>
           </div>
           <div
             onClick={() => handleCardClick('medium')}
             class={`flex justify-between items-center ${getCardClasses('medium')}`}
           >
-            <h3 class="text-base font-semibold text-gray-900 dark:text-white">Medium</h3>
-            <p class="text-2xl font-bold text-yellow-600">{props.difficultyCounts.medium}</p>
+            <h3 class="text-base font-semibold text-gray-900 dark:text-white">
+              Medium
+            </h3>
+            <p class="text-2xl font-bold text-yellow-600">
+              {props.difficultyCounts.medium}
+            </p>
           </div>
           <div
             onClick={() => handleCardClick('hard')}
             class={`flex justify-between items-center ${getCardClasses('hard')}`}
           >
-            <h3 class="text-base font-semibold text-gray-900 dark:text-white">Hard</h3>
-            <p class="text-2xl font-bold text-red-600">{props.difficultyCounts.hard}</p>
+            <h3 class="text-base font-semibold text-gray-900 dark:text-white">
+              Hard
+            </h3>
+            <p class="text-2xl font-bold text-red-600">
+              {props.difficultyCounts.hard}
+            </p>
           </div>
         </div>
       </div>
@@ -101,32 +119,45 @@ export default function SummaryCards(props: SummaryCardsProps) {
           onClick={() => handleCardClick('total')}
           class={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow ${getCardClasses('total')}`}
         >
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Total Problems</h3>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Total Problems
+          </h3>
           <p class="text-3xl font-bold text-blue-600">{props.totalProblems}</p>
         </div>
         <div
           onClick={() => handleCardClick('easy')}
           class={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow ${getCardClasses('easy')}`}
         >
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Easy</h3>
-          <p class="text-3xl font-bold text-green-600">{props.difficultyCounts.easy}</p>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Easy
+          </h3>
+          <p class="text-3xl font-bold text-green-600">
+            {props.difficultyCounts.easy}
+          </p>
         </div>
         <div
           onClick={() => handleCardClick('medium')}
           class={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow ${getCardClasses('medium')}`}
         >
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Medium</h3>
-          <p class="text-3xl font-bold text-yellow-600">{props.difficultyCounts.medium}</p>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Medium
+          </h3>
+          <p class="text-3xl font-bold text-yellow-600">
+            {props.difficultyCounts.medium}
+          </p>
         </div>
         <div
           onClick={() => handleCardClick('hard')}
           class={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow ${getCardClasses('hard')}`}
         >
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Hard</h3>
-          <p class="text-3xl font-bold text-red-600">{props.difficultyCounts.hard}</p>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            Hard
+          </h3>
+          <p class="text-3xl font-bold text-red-600">
+            {props.difficultyCounts.hard}
+          </p>
         </div>
       </div>
     </div>
   );
 }
-

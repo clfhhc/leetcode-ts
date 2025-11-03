@@ -14,7 +14,11 @@ const filterSolution = process.env.TEST_SOLUTION;
 function matchesProblemFilter(path: string, filter: string): boolean {
   const fileName = path.split('/').pop()?.replace('.ts', '') || '';
   // Support both full name (e.g., "0278-first-bad-version") and partial match (e.g., "0278")
-  return fileName === filter || fileName.startsWith(filter + '-') || fileName.includes(filter);
+  return (
+    fileName === filter ||
+    fileName.startsWith(filter + '-') ||
+    fileName.includes(filter)
+  );
 }
 
 for (const [path, module] of Object.entries(modules) as [

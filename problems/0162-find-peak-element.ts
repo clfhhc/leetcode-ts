@@ -6,11 +6,11 @@
  *
  * Description:
  * A peak element is an element that is strictly greater than its neighbors.
- * 
+ *
  * Given a **0-indexed** integer array `nums`, find a peak element, and return its index. If the array contains multiple peaks, return the index to **any of the peaks**.
- * 
+ *
  * You may imagine that `nums[-1] = nums[n] = -∞`. In other words, an element is always considered to be strictly greater than a neighbor that is outside the array.
- * 
+ *
  * You must write an algorithm that runs in `O(log n)` time.
  *
  * Examples:
@@ -32,7 +32,7 @@ import type { TestCase } from '../packages/src/types.js';
 
 export const SolutionSchema = z.function({
   input: [z.array(z.number())],
-  output: z.number()
+  output: z.number(),
 });
 
 export type Solution = z.infer<typeof SolutionSchema>;
@@ -45,7 +45,7 @@ export const cases: TestCase<Solution>[] = [
 
 /**
  * Binary Search Solution
- * Approach: 
+ * Approach:
  *   - Use binary search to find the peak element.
  *   - If the middle element is greater than the next element, then the peak element is in the left half.
  *   - If the middle element is less than the next element, then the peak element is in the right half.
@@ -58,7 +58,10 @@ export const binarySearchSolution = SolutionSchema.implement((nums) => {
   let right = nums.length - 1;
   while (left < right) {
     const mid = Math.floor(left + (right - left) / 2);
-    if (nums[mid] > nums[mid + 1] && (mid === nums.length - 1 || nums[mid] > nums[mid - 1])) {
+    if (
+      nums[mid] > nums[mid + 1] &&
+      (mid === nums.length - 1 || nums[mid] > nums[mid - 1])
+    ) {
       return mid;
     }
     if (nums[mid] <= nums[mid + 1]) {
