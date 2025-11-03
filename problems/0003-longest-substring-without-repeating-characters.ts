@@ -16,7 +16,7 @@
  *    Explanation: The answer is "b", with the length of 1.
  *
  * Constraints:
- * - `0 <= s.length <= 5 * 104`
+ * - `0 <= s.length <= 5 * 10^4`
  * - `s` consists of English letters, digits, symbols and spaces.
  *
  */

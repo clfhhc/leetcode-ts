@@ -15,7 +15,7 @@
       "approach": "- Traverse both linked lists simultaneously\n - Add corresponding digits plus carry from previous addition\n - Create new node for each digit of the result\n - Handle different lengths by treating missing digits as 0",
       "timeComplexity": "O(max(m, n)) where m, n are lengths of the two lists",
       "spaceComplexity": "O(max(m, n)) for the result list",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">iterativeSolution</span> = \n  (<span class=\"hljs-params\">l1, l2</span>) =&gt; {\n    <span class=\"hljs-keyword\">const</span> dummy = { <span class=\"hljs-attr\">val</span>: <span class=\"hljs-number\">0</span>, <span class=\"hljs-attr\">next</span>: <span class=\"hljs-literal\">null</span> } <span class=\"hljs-keyword\">as</span> <span class=\"hljs-title class_\">ListNode</span>;\n    <span class=\"hljs-keyword\">let</span> current = dummy;\n    <span class=\"hljs-keyword\">let</span> carry = <span class=\"hljs-number\">0</span>;\n    <span class=\"hljs-keyword\">while</span> (l1 || l2 || carry) {\n      <span class=\"hljs-keyword\">const</span> sum = (l1?.<span class=\"hljs-property\">val</span> || <span class=\"hljs-number\">0</span>) + (l2?.<span class=\"hljs-property\">val</span> || <span class=\"hljs-number\">0</span>) + carry;\n      carry = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(sum / <span class=\"hljs-number\">10</span>);\n      current.<span class=\"hljs-property\">next</span> = { <span class=\"hljs-attr\">val</span>: sum % <span class=\"hljs-number\">10</span>, <span class=\"hljs-attr\">next</span>: <span class=\"hljs-literal\">null</span> };\n      current = current.<span class=\"hljs-property\">next</span>;\n      l1 = l1?.<span class=\"hljs-property\">next</span> || <span class=\"hljs-literal\">null</span>;\n      l2 = l2?.<span class=\"hljs-property\">next</span> || <span class=\"hljs-literal\">null</span>;\n    }\n    <span class=\"hljs-keyword\">return</span> dummy.<span class=\"hljs-property\">next</span>;\n  };\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">iterativeSolution</span> = (<span class=\"hljs-params\">l1, l2</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> dummy = { <span class=\"hljs-attr\">val</span>: <span class=\"hljs-number\">0</span>, <span class=\"hljs-attr\">next</span>: <span class=\"hljs-literal\">null</span> } <span class=\"hljs-keyword\">as</span> <span class=\"hljs-title class_\">ListNode</span>;\n  <span class=\"hljs-keyword\">let</span> current = dummy;\n  <span class=\"hljs-keyword\">let</span> carry = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">while</span> (l1 || l2 || carry) {\n    <span class=\"hljs-keyword\">const</span> sum = (l1?.<span class=\"hljs-property\">val</span> || <span class=\"hljs-number\">0</span>) + (l2?.<span class=\"hljs-property\">val</span> || <span class=\"hljs-number\">0</span>) + carry;\n    carry = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(sum / <span class=\"hljs-number\">10</span>);\n    current.<span class=\"hljs-property\">next</span> = { <span class=\"hljs-attr\">val</span>: sum % <span class=\"hljs-number\">10</span>, <span class=\"hljs-attr\">next</span>: <span class=\"hljs-literal\">null</span> };\n    current = current.<span class=\"hljs-property\">next</span>;\n    l1 = l1?.<span class=\"hljs-property\">next</span> || <span class=\"hljs-literal\">null</span>;\n    l2 = l2?.<span class=\"hljs-property\">next</span> || <span class=\"hljs-literal\">null</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> dummy.<span class=\"hljs-property\">next</span>;\n};\n</code></pre>",
       "utilities": [
         {
           "name": "ListNodeSchema",
@@ -72,7 +72,7 @@
             }
           },
           "passed": true,
-          "duration": 0.6307919999999854
+          "duration": 0.29337500000008276
         },
         {
           "input": [
@@ -95,7 +95,7 @@
             "next": null
           },
           "passed": true,
-          "duration": 0.027291999999988548
+          "duration": 0.02333299999997962
         },
         {
           "input": [
@@ -187,7 +187,7 @@
             }
           },
           "passed": true,
-          "duration": 0.0185830000000351
+          "duration": 0.019833999999946172
         }
       ],
       "totalTests": 3,
@@ -195,7 +195,7 @@
       "failedTests": 0
     }
   ],
-  "notes": "<ul>\n<li><ol start=\"2\">\n<li>Add Two Numbers</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: medium</li>\n<li>Tags: linked-list, math, recursion</li>\n<li></li>\n<li>Description:</li>\n<li>You are given two <strong>non-empty</strong> linked lists representing two non-negative integers. The digits are stored in <strong>reverse order</strong>, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.</li>\n<li></li>\n<li>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: l1 = [0], l2 = [0]</li>\n</ol>\n</li>\n<li>Output: [0]</li>\n<li><ol start=\"2\">\n<li>Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]</li>\n</ol>\n</li>\n<li>Output: [8,9,9,9,0,0,0,1]</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>The number of nodes in each linked list is in the range <code>[1, 100]</code>.</li>\n</ul>\n</li>\n<li><ul>\n<li><code>0 &lt;= Node.val &lt;= 9</code></li>\n</ul>\n</li>\n<li><ul>\n<li>It is guaranteed that the list represents a number that does not have leading zeros.</li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "notes": "<ul>\n<li><ol start=\"2\">\n<li>Add Two Numbers</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: medium</li>\n<li>Tags: linked-list, math, recursion</li>\n<li></li>\n<li>Description:</li>\n<li>You are given two <strong>non-empty</strong> linked lists representing two non-negative integers. The digits are stored in <strong>reverse order</strong>, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.</li>\n<li></li>\n<li>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: l1 = [0], l2 = [0]</li>\n</ol>\n</li>\n<li>Output: [0]</li>\n<li><ol start=\"2\">\n<li>Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]</li>\n</ol>\n</li>\n<li>Output: [8,9,9,9,0,0,0,1]</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>The number of nodes in each linked list is in the range <code>[1, 100]</code>.</li>\n</ul>\n</li>\n<li><ul>\n<li><code>0 &lt;= Node.val &lt;= 9</code></li>\n</ul>\n</li>\n<li><ul>\n<li>It is guaranteed that the list represents a number that does not have leading zeros.</li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
   "totalTests": 3,
   "passedTests": 3,
   "failedTests": 0
