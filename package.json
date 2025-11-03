@@ -4,8 +4,8 @@
   "packageManager": "pnpm@10.18.1",
   "scripts": {
     "new": "tsx packages/src/cli.ts new",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "tsx packages/src/cli.ts test",
+    "test:watch": "tsx packages/src/cli.ts test --watch",
     "build:data": "tsx packages/src/cli.ts build-data",
     "build:site": "tsx packages/src/cli.ts build-site",
     "build": "tsx packages/src/cli.ts build",

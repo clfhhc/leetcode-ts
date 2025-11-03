@@ -120,4 +120,71 @@ program
     });
   });
 
+program
+  .command('test')
+  .description('Run tests with optional filtering')
+  .option('-p, --problem <name>', 'Test only a specific problem (e.g., 0278-first-bad-version or 0278)')
+  .option('-s, --solution <name>', 'Test only a specific solution within a problem')
+  .option('-w, --watch', 'Run tests in watch mode')
+  .allowUnknownOption() // Allow passthrough of vitest options
+  .action(async (options) => {
+    const args: string[] = [];
+
+    if (options.watch) {
+      args.push('vitest');
+    } else {
+      args.push('vitest', 'run');
+    }
+
+    // Get passthrough arguments (vitest-specific options)
+    const rawArgs = process.argv.slice(process.argv.indexOf('test') + 1);
+    const passthroughArgs: string[] = [];
+    let skipNext = false;
+
+    for (let i = 0; i < rawArgs.length; i++) {
+      const arg = rawArgs[i];
+
+      // Skip our own options and their values
+      if (skipNext) {
+        skipNext = false;
+        continue;
+      }
+
+      if (arg === '--problem' || arg === '-p' ||
+        arg === '--solution' || arg === '-s' ||
+        arg === '--watch' || arg === '-w') {
+        skipNext = true; // Skip the next arg which is the value
+        continue;
+      }
+
+      // Skip if this is a value for our options
+      if ((options.problem && arg === options.problem) ||
+        (options.solution && arg === options.solution)) {
+        continue;
+      }
+
+      passthroughArgs.push(arg);
+    }
+
+    args.push(...passthroughArgs);
+
+    // Set environment variables for filtering
+    if (options.problem) {
+      process.env.TEST_PROBLEM = options.problem;
+    }
+    if (options.solution) {
+      process.env.TEST_SOLUTION = options.solution;
+    }
+
+    const child = spawn('pnpm', ['exec', ...args], {
+      stdio: 'inherit',
+      shell: true,
+      env: { ...process.env }
+    });
+
+    child.on('close', (code) => {
+      process.exit(code || 0);
+    });
+  });
+
 program.parse();
