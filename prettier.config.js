@@ -1,5 +1,5 @@
 /** @type {import('prettier').Config} */
-module.exports = {
+export default {
   semi: true,
   trailingComma: 'es5',
   singleQuote: true,
@@ -8,3 +8,4 @@ module.exports = {
   useTabs: false,
   endOfLine: 'lf',
 };
+

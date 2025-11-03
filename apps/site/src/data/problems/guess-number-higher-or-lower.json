@@ -1,0 +1,63 @@
+{
+  "id": 374,
+  "slug": "guess-number-higher-or-lower",
+  "title": "Guess Number Higher or Lower",
+  "tags": [
+    "binary-search",
+    "interactive"
+  ],
+  "difficulty": "easy",
+  "solutions": [
+    {
+      "name": "solution",
+      "description": "",
+      "approach": "- Add your approach here",
+      "timeComplexity": "O()",
+      "spaceComplexity": "O()",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">solution</span> = (<span class=\"hljs-params\">n, pick</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">guess</span> = (<span class=\"hljs-params\"><span class=\"hljs-attr\">num</span>: <span class=\"hljs-built_in\">number</span></span>) =&gt; {\n    <span class=\"hljs-keyword\">if</span> (num &gt; pick) <span class=\"hljs-keyword\">return</span> -<span class=\"hljs-number\">1</span>;\n    <span class=\"hljs-keyword\">if</span> (num &lt; pick) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">1</span>;\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  };\n\n  <span class=\"hljs-keyword\">const</span> guessNumber = (<span class=\"hljs-attr\">n</span>: <span class=\"hljs-built_in\">number</span>): <span class=\"hljs-function\"><span class=\"hljs-params\">number</span> =&gt;</span> {\n    <span class=\"hljs-keyword\">let</span> left = <span class=\"hljs-number\">0</span>;\n    <span class=\"hljs-keyword\">let</span> right = n;\n    <span class=\"hljs-keyword\">while</span> (left &lt;= right) {\n      <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((left + right) / <span class=\"hljs-number\">2</span>);\n      <span class=\"hljs-keyword\">const</span> guessResult = <span class=\"hljs-title function_\">guess</span>(mid);\n      <span class=\"hljs-keyword\">switch</span> (guessResult) {\n        <span class=\"hljs-keyword\">case</span> <span class=\"hljs-number\">0</span>: {\n          <span class=\"hljs-keyword\">return</span> mid;\n        }\n        <span class=\"hljs-keyword\">case</span> <span class=\"hljs-number\">1</span>: {\n          left = mid + <span class=\"hljs-number\">1</span>;\n          <span class=\"hljs-keyword\">break</span>;\n        }\n        <span class=\"hljs-keyword\">case</span> -<span class=\"hljs-number\">1</span>: {\n          right = mid - <span class=\"hljs-number\">1</span>;\n          <span class=\"hljs-keyword\">break</span>;\n        }\n      }\n    }\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">min</span>(left, right);\n  };\n\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title function_\">guessNumber</span>(n);\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            10,
+            6
+          ],
+          "expected": 6,
+          "name": "Example 1",
+          "actual": 6,
+          "passed": true,
+          "duration": 0.06904099999997015
+        },
+        {
+          "input": [
+            1,
+            1
+          ],
+          "expected": 1,
+          "name": "Example 2",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.004457999999999629
+        },
+        {
+          "input": [
+            2,
+            1
+          ],
+          "expected": 1,
+          "name": "Example 3",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.0025000000000545697
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    }
+  ],
+  "notes": "<ul>\n<li><ol start=\"374\">\n<li>Guess Number Higher or Lower</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: binary-search, interactive</li>\n<li></li>\n<li>Description:</li>\n<li>We are playing the Guess Game. The game is as follows:</li>\n<li></li>\n<li>I pick a number from <code>1</code> to <code>n</code>. You have to guess which number I picked (the number I picked stays the same throughout the game).</li>\n<li></li>\n<li>Every time you guess wrong, I will tell you whether the number I picked is higher or lower than your guess.</li>\n<li></li>\n<li>You call a pre-defined API <code>int guess(int num)</code>, which returns three possible results:</li>\n<li></li>\n<li><ul>\n<li><code>-1</code>: Your guess is higher than the number I picked (i.e. <code>num &gt; pick</code>).</li>\n</ul>\n</li>\n<li><ul>\n<li><code>1</code>: Your guess is lower than the number I picked (i.e. <code>num &lt; pick</code>).</li>\n</ul>\n</li>\n<li><ul>\n<li><code>0</code>: your guess is equal to the number I picked (i.e. <code>num == pick</code>).</li>\n</ul>\n</li>\n<li></li>\n<li>Return <em>the number that I picked</em>.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: n = 10, pick = 6</li>\n</ol>\n</li>\n<li>Output: 6</li>\n<li><ol start=\"2\">\n<li>Input: n = 1, pick = 1</li>\n</ol>\n</li>\n<li>Output: 1</li>\n<li><ol start=\"3\">\n<li>Input: n = 2, pick = 1</li>\n</ol>\n</li>\n<li>Output: 1</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>1 &lt;= n &lt;= 2^31 - 1</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>1 &lt;= pick &lt;= n</code></li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 3,
+  "passedTests": 3,
+  "failedTests": 0
+}

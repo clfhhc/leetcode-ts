@@ -22,6 +22,28 @@
       "difficulty": "medium"
     },
     {
+      "id": 3,
+      "slug": "longest-substring-without-repeating-characters",
+      "title": "Longest Substring Without Repeating Characters",
+      "tags": [
+        "hash-table",
+        "string",
+        "sliding-window"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": 4,
+      "slug": "median-of-two-sorted-arrays",
+      "title": "Median of Two Sorted Arrays",
+      "tags": [
+        "array",
+        "binary-search",
+        "divide-and-conquer"
+      ],
+      "difficulty": "hard"
+    },
+    {
       "id": 20,
       "slug": "valid-parentheses",
       "title": "Valid Parentheses",
@@ -30,21 +52,85 @@
         "stack"
       ],
       "difficulty": "easy"
+    },
+    {
+      "id": 34,
+      "slug": "find-first-and-last-position-of-element-in-sorted-array",
+      "title": "Find First and Last Position of Element in Sorted Array",
+      "tags": [
+        "array",
+        "binary-search"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": 69,
+      "slug": "sqrt-x",
+      "title": "Sqrt(x)",
+      "tags": [
+        "math",
+        "binary-search"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": 162,
+      "slug": "find-peak-element",
+      "title": "Find Peak Element",
+      "tags": [
+        "array",
+        "binary-search"
+      ],
+      "difficulty": "medium"
+    },
+    {
+      "id": 278,
+      "slug": "first-bad-version",
+      "title": "First Bad Version",
+      "tags": [
+        "binary-search",
+        "interactive"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": 374,
+      "slug": "guess-number-higher-or-lower",
+      "title": "Guess Number Higher or Lower",
+      "tags": [
+        "binary-search",
+        "interactive"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": 704,
+      "slug": "binary-search",
+      "title": "Binary Search",
+      "tags": [
+        "array",
+        "binary-search"
+      ],
+      "difficulty": "easy"
     }
   ],
-  "totalProblems": 3,
+  "totalProblems": 11,
   "difficultyCounts": {
-    "easy": 2,
-    "medium": 1,
-    "hard": 0
+    "easy": 6,
+    "medium": 4,
+    "hard": 1
   },
   "tagCounts": {
-    "array": 1,
-    "hash-table": 1,
+    "array": 5,
+    "hash-table": 2,
     "linked-list": 1,
-    "math": 1,
+    "math": 2,
     "recursion": 1,
-    "string": 1,
-    "stack": 1
+    "string": 2,
+    "sliding-window": 1,
+    "binary-search": 7,
+    "divide-and-conquer": 1,
+    "stack": 1,
+    "interactive": 2
   }
 }

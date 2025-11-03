@@ -25,7 +25,7 @@
           "name": "Example 1",
           "actual": true,
           "passed": true,
-          "duration": 0.07016599999997197
+          "duration": 0.05670799999995779
         },
         {
           "input": [
@@ -35,7 +35,7 @@
           "name": "Example 2",
           "actual": true,
           "passed": true,
-          "duration": 0.0049999999999954525
+          "duration": 0.00483299999996234
         },
         {
           "input": [
@@ -45,7 +45,7 @@
           "name": "Example 3",
           "actual": false,
           "passed": true,
-          "duration": 0.005583000000001448
+          "duration": 0.00541699999996581
         },
         {
           "input": [
@@ -55,7 +55,7 @@
           "name": "Example 4",
           "actual": true,
           "passed": true,
-          "duration": 0.003917000000001281
+          "duration": 0.0037499999999681677
         },
         {
           "input": [
@@ -65,7 +65,7 @@
           "name": "Example 5",
           "actual": false,
           "passed": true,
-          "duration": 0.004667000000040389
+          "duration": 0.0032089999999698193
         }
       ],
       "totalTests": 5,

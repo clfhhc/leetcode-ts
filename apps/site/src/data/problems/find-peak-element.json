@@ -1,0 +1,76 @@
+{
+  "id": 162,
+  "slug": "find-peak-element",
+  "title": "Find Peak Element",
+  "tags": [
+    "array",
+    "binary-search"
+  ],
+  "difficulty": "medium",
+  "solutions": [
+    {
+      "name": "binarySearchSolution",
+      "description": "",
+      "approach": "- Use binary search to find the peak element.\n - If the middle element is greater than the next element, then the peak element is in the left half.\n - If the middle element is less than the next element, then the peak element is in the right half.\n - Return the index of the peak element.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">binarySearchSolution</span> = (<span class=\"hljs-params\">nums</span>) =&gt; {\n  <span class=\"hljs-keyword\">let</span> left = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> right = nums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left &lt; right) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(left + (right - left) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (\n      nums[mid] &gt; nums[mid + <span class=\"hljs-number\">1</span>] &amp;&amp;\n      (mid === nums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span> || nums[mid] &gt; nums[mid - <span class=\"hljs-number\">1</span>])\n    ) {\n      <span class=\"hljs-keyword\">return</span> mid;\n    }\n    <span class=\"hljs-keyword\">if</span> (nums[mid] &lt;= nums[mid + <span class=\"hljs-number\">1</span>]) {\n      left = mid + <span class=\"hljs-number\">1</span>;\n    } <span class=\"hljs-keyword\">else</span> {\n      right = mid;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> left;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              1
+            ]
+          ],
+          "expected": 2,
+          "name": "Example 1",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.053167000000030384
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              1,
+              3,
+              5,
+              6,
+              4
+            ]
+          ],
+          "expected": 5,
+          "name": "Example 2",
+          "actual": 5,
+          "passed": true,
+          "duration": 0.003291999999987638
+        },
+        {
+          "input": [
+            [
+              1,
+              2
+            ]
+          ],
+          "expected": 1,
+          "name": "Extended example 1",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.0014999999999645297
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    }
+  ],
+  "notes": "<ul>\n<li><ol start=\"162\">\n<li>Find Peak Element</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: medium</li>\n<li>Tags: array, binary-search</li>\n<li></li>\n<li>Description:</li>\n<li>A peak element is an element that is strictly greater than its neighbors.</li>\n<li></li>\n<li>Given a <strong>0-indexed</strong> integer array <code>nums</code>, find a peak element, and return its index. If the array contains multiple peaks, return the index to <strong>any of the peaks</strong>.</li>\n<li></li>\n<li>You may imagine that <code>nums[-1] = nums[n] = -∞</code>. In other words, an element is always considered to be strictly greater than a neighbor that is outside the array.</li>\n<li></li>\n<li>You must write an algorithm that runs in <code>O(log n)</code> time.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: nums = [1,2,3,1]</li>\n</ol>\n</li>\n<li>Output: 2</li>\n<li>Explanation: 3 is a peak element and your function should return the index number 2.</li>\n<li><ol start=\"2\">\n<li>Input: nums = [1,2,1,3,5,6,4]</li>\n</ol>\n</li>\n<li>Output: 5</li>\n<li>Explanation: Your function can return either index number 1 where the peak element is 2, or index number 5 where the peak element is 6.</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>1 &lt;= nums.length &lt;= 1000</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>-2^31 &lt;= nums[i] &lt;= 2^31 - 1</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>nums[i] != nums[i + 1]</code> for all valid <code>i</code>.</li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 3,
+  "passedTests": 3,
+  "failedTests": 0
+}

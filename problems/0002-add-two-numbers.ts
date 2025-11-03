@@ -5,8 +5,8 @@
  * Tags: linked-list, math, recursion
  *
  * Description:
- * You are given two **non-empty** linked lists representing two non-negative integers. The digits are stored in **reverse order**, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
- * 
+ * You are given two **non-empty** linked lists representing two non-negative integers. The digits are stored in **reverse order**, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+ *
  * You may assume the two numbers do not contain any leading zero, except the number 0 itself.
  *
  * Examples:
@@ -94,21 +94,19 @@ export const cases: TestCase<Solution>[] = [
  * Time Complexity: O(max(m, n)) where m, n are lengths of the two lists
  * Space Complexity: O(max(m, n)) for the result list
  */
-export const iterativeSolution = SolutionSchema.implement(
-  (l1, l2) => {
-    const dummy = { val: 0, next: null } as ListNode;
-    let current = dummy;
-    let carry = 0;
-    while (l1 || l2 || carry) {
-      const sum = (l1?.val || 0) + (l2?.val || 0) + carry;
-      carry = Math.floor(sum / 10);
-      current.next = { val: sum % 10, next: null };
-      current = current.next;
-      l1 = l1?.next || null;
-      l2 = l2?.next || null;
-    }
-    return dummy.next;
+export const iterativeSolution = SolutionSchema.implement((l1, l2) => {
+  const dummy = { val: 0, next: null } as ListNode;
+  let current = dummy;
+  let carry = 0;
+  while (l1 || l2 || carry) {
+    const sum = (l1?.val || 0) + (l2?.val || 0) + carry;
+    carry = Math.floor(sum / 10);
+    current.next = { val: sum % 10, next: null };
+    current = current.next;
+    l1 = l1?.next || null;
+    l2 = l2?.next || null;
   }
-);
+  return dummy.next;
+});
 
 export const solutions = [iterativeSolution];

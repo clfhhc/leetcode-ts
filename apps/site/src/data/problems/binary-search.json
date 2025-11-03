@@ -1,0 +1,120 @@
+{
+  "id": 704,
+  "slug": "binary-search",
+  "title": "Binary Search",
+  "tags": [
+    "array",
+    "binary-search"
+  ],
+  "difficulty": "easy",
+  "solutions": [
+    {
+      "name": "solution",
+      "description": "",
+      "approach": "- Use a while loop to search for the target in the array.\n - Use a variable `mid` to store the middle index of the array.\n - Use a variable `length` to store the length of the array.\n - Use a variable `target` to store the target value.\n - Use a variable `nums` to store the array.\n - Return the index of the target in the array.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">solution</span> = (<span class=\"hljs-params\">nums, target</span>) =&gt; {\n  <span class=\"hljs-keyword\">let</span> left = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> right = nums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left &lt;= right) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((left + right) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (nums[mid] === target) <span class=\"hljs-keyword\">return</span> mid;\n    <span class=\"hljs-keyword\">if</span> (nums[mid] &lt; target) left = mid + <span class=\"hljs-number\">1</span>;\n    <span class=\"hljs-keyword\">else</span> right = mid - <span class=\"hljs-number\">1</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> -<span class=\"hljs-number\">1</span>;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              -1,
+              0,
+              3,
+              5,
+              9,
+              12
+            ],
+            9
+          ],
+          "expected": 4,
+          "name": "Example 1",
+          "actual": 4,
+          "passed": true,
+          "duration": 0.04279199999996308
+        },
+        {
+          "input": [
+            [
+              -1,
+              0,
+              3,
+              5,
+              9,
+              12
+            ],
+            2
+          ],
+          "expected": -1,
+          "name": "Example 2",
+          "actual": -1,
+          "passed": true,
+          "duration": 0.003417000000013104
+        },
+        {
+          "input": [
+            [
+              -1,
+              0,
+              3,
+              5,
+              9,
+              12
+            ],
+            13
+          ],
+          "expected": -1,
+          "name": "Example 3",
+          "actual": -1,
+          "passed": true,
+          "duration": 0.0036659999999528736
+        },
+        {
+          "input": [
+            [
+              -1,
+              0,
+              3,
+              5,
+              9,
+              12
+            ],
+            -1
+          ],
+          "expected": 0,
+          "name": "Added negative number case",
+          "actual": 0,
+          "passed": true,
+          "duration": 0.006209000000012566
+        },
+        {
+          "input": [
+            [
+              -1,
+              0,
+              3,
+              5,
+              9,
+              12
+            ],
+            12
+          ],
+          "expected": 5,
+          "name": "Added positive number case",
+          "actual": 5,
+          "passed": true,
+          "duration": 0.002375000000029104
+        }
+      ],
+      "totalTests": 5,
+      "passedTests": 5,
+      "failedTests": 0
+    }
+  ],
+  "notes": "<ul>\n<li><ol start=\"704\">\n<li>Binary Search</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: array, binary-search</li>\n<li></li>\n<li>Description:</li>\n<li>Given an array of integers <code>nums</code> which is sorted in ascending order, and an integer <code>target</code>, write a function to search <code>target</code> in <code>nums</code>. If <code>target</code> exists, then return its index. Otherwise, return <code>-1</code>.</li>\n<li></li>\n<li>You must write an algorithm with <code>O(log n)</code> runtime complexity.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: nums = [-1,0,3,5,9,12], target = 9</li>\n</ol>\n</li>\n<li>Output: 4</li>\n<li>Explanation: 9 exists in nums and its index is 4</li>\n<li><ol start=\"2\">\n<li>Input: nums = [-1,0,3,5,9,12], target = 2</li>\n</ol>\n</li>\n<li>Output: -1</li>\n<li>Explanation: 2 does not exist in nums so return -1</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>1 &lt;= nums.length &lt;= 104</code></li>\n</ul>\n</li>\n<li><ul>\n<li><code>-104 &lt; nums[i], target &lt; 104</code></li>\n</ul>\n</li>\n<li><ul>\n<li>All the integers in <code>nums</code> are <strong>unique</strong>.</li>\n</ul>\n</li>\n<li><ul>\n<li><code>nums</code> is sorted in ascending order.</li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 5,
+  "passedTests": 5,
+  "failedTests": 0
+}

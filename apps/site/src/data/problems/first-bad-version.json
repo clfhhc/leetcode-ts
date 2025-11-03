@@ -1,0 +1,118 @@
+{
+  "id": 278,
+  "slug": "first-bad-version",
+  "title": "First Bad Version",
+  "tags": [
+    "binary-search",
+    "interactive"
+  ],
+  "difficulty": "easy",
+  "solutions": [
+    {
+      "name": "binarySearchSolution",
+      "description": "",
+      "approach": "- Use binary search to find the first bad version.\n - If the middle version is bad, then the first bad version is in the left half.\n - If the middle version is not bad, then the first bad version is in the right half.\n - Return the first bad version.",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">binarySearchSolution</span> = (<span class=\"hljs-params\">n, bad</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> isBadVersion = (<span class=\"hljs-attr\">version</span>: <span class=\"hljs-built_in\">number</span>): <span class=\"hljs-function\"><span class=\"hljs-params\">boolean</span> =&gt;</span> version &gt;= bad;\n\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">firstBadVersion</span> = (<span class=\"hljs-params\"><span class=\"hljs-attr\">num</span>: <span class=\"hljs-built_in\">number</span></span>) =&gt; {\n    <span class=\"hljs-keyword\">if</span> (num === <span class=\"hljs-number\">0</span>) {\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n    }\n    <span class=\"hljs-keyword\">let</span> start = <span class=\"hljs-number\">0</span>;\n    <span class=\"hljs-keyword\">let</span> end = num;\n    <span class=\"hljs-keyword\">while</span> (start &lt; end) {\n      <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(start + (end - start) / <span class=\"hljs-number\">2</span>);\n      <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-title function_\">isBadVersion</span>(mid)) {\n        end = mid;\n      } <span class=\"hljs-keyword\">else</span> {\n        start = mid + <span class=\"hljs-number\">1</span>;\n      }\n    }\n    <span class=\"hljs-keyword\">return</span> start;\n  };\n\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title function_\">firstBadVersion</span>(n);\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            1,
+            1
+          ],
+          "expected": 1,
+          "name": "Example 1",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.07633299999997689
+        },
+        {
+          "input": [
+            2,
+            1
+          ],
+          "expected": 1,
+          "name": "Example 2",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.004916999999977634
+        },
+        {
+          "input": [
+            3,
+            2
+          ],
+          "expected": 2,
+          "name": "Example 3",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.0027090000000953296
+        },
+        {
+          "input": [
+            4,
+            1
+          ],
+          "expected": 1,
+          "name": "Example 4",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.003125000000068212
+        },
+        {
+          "input": [
+            5,
+            4
+          ],
+          "expected": 4,
+          "name": "Example 5",
+          "actual": 4,
+          "passed": true,
+          "duration": 0.00937500000009095
+        },
+        {
+          "input": [
+            6,
+            4
+          ],
+          "expected": 4,
+          "name": "Example 6",
+          "actual": 4,
+          "passed": true,
+          "duration": 0.003291999999987638
+        },
+        {
+          "input": [
+            7,
+            4
+          ],
+          "expected": 4,
+          "name": "Example 7",
+          "actual": 4,
+          "passed": true,
+          "duration": 0.0017910000000256332
+        },
+        {
+          "input": [
+            8,
+            4
+          ],
+          "expected": 4,
+          "name": "Example 8",
+          "actual": 4,
+          "passed": true,
+          "duration": 0.0017500000000154614
+        }
+      ],
+      "totalTests": 8,
+      "passedTests": 8,
+      "failedTests": 0
+    }
+  ],
+  "notes": "<ul>\n<li><ol start=\"278\">\n<li>First Bad Version</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: binary-search, interactive</li>\n<li></li>\n<li>Description:</li>\n<li>You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.</li>\n<li></li>\n<li>Suppose you have <code>n</code> versions <code>[1, 2, ..., n]</code> and you want to find out the first bad one, which causes all the following ones to be bad.</li>\n<li></li>\n<li>You are given an API <code>bool isBadVersion(version)</code> which returns whether <code>version</code> is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: n = 1, bad = 1</li>\n</ol>\n</li>\n<li>Output: 1</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>1 &lt;= bad &lt;= n &lt;= 2^31 - 1</code></li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 8,
+  "passedTests": 8,
+  "failedTests": 0
+}

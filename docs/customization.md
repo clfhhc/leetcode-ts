@@ -23,17 +23,20 @@
 ### TypeScript
 
 - **Root config**: `tsconfig.json` (references all packages)
-- **Base config**: `config/tsconfig.base.json` (shared settings)
+- **Base config**: `tsconfig.base.json` (shared settings, root level)
 - **Package configs**: Individual `tsconfig.json` in each package
 
 ### Linting & Formatting
 
-- **ESLint**: `config/eslint.config.js` (shared rules)
-- **Prettier**: `config/prettier.config.js` (code formatting)
+- **ESLint**: `eslint.config.js` (root level, flat config, ES modules)
+- **Prettier**: `prettier.config.js` (root level, ES modules)
+- **Note**: All configuration files use ES modules (`export default`). The project is configured with `"type": "module"` in `package.json`.
 
 ### Testing
 
-- **Vitest**: `config/vitest.config.ts` (test configuration)
+- **Vitest**: `vitest.config.ts` (root level, test configuration)
+
+**Note**: All configuration files are located at the project root for simplicity and consistency. This makes it easier to find and maintain configuration files.
 
 ## Workspace Structure
 
@@ -46,8 +49,8 @@ leetcode-ts/
 ├── apps/
 │   └── site/          # Astro website
 ├── problems/          # LeetCode solutions
-├── config/            # Shared configurations
-└── docs/              # Documentation
+├── docs/              # Documentation
+└── [config files]     # All config files at root (eslint, prettier, vitest, tsconfig)
 ```
 
 ## Dependencies

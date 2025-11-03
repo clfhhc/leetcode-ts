@@ -54,8 +54,18 @@ All scripts now use the unified CLI (`packages/src/cli.ts`):
 - `pnpm build` - Build both data and site
 - `pnpm dev` - Start development mode (data watching + site dev server)
 - `pnpm lint` - Run ESLint
+- `pnpm lint:fix` - Fix linting and formatting issues automatically
 - `pnpm format` - Format code with Prettier
 - `pnpm type-check` - Run TypeScript type checking
+
+## Module System
+
+This project uses **ES modules** exclusively. All configuration files and source code use `import`/`export` syntax. The project is configured with `"type": "module"` in `package.json`, which means:
+
+- All `.js` files are treated as ES modules
+- Use `import` instead of `require()`
+- Use `export default` instead of `module.exports`
+- Configuration files use ES module syntax
 
 ## Typical Workflow
 

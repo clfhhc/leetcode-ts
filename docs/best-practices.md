@@ -80,6 +80,12 @@ Use TSDoc comments at the top of each file:
 
 ## Code Quality
 
+### Module System
+
+- **Use ES modules** - All files use `import`/`export` syntax
+- **No CommonJS** - Avoid `require()` and `module.exports`
+- **Type imports** - Use `import type` for type-only imports when appropriate
+
 ### TypeScript Best Practices
 
 - **Use strict types** - avoid `any` when possible

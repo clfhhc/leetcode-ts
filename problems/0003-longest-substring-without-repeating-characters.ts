@@ -16,7 +16,7 @@
  *    Explanation: The answer is "b", with the length of 1.
  *
  * Constraints:
- * - `0 <= s.length <= 5 * 104`
+ * - `0 <= s.length <= 5 * 10^4`
  * - `s` consists of English letters, digits, symbols and spaces.
  *
  */
@@ -25,7 +25,7 @@ import type { TestCase } from '../packages/src/types.js';
 
 export const SolutionSchema = z.function({
   input: [z.string()],
-  output: z.number()
+  output: z.number(),
 });
 
 export type Solution = z.infer<typeof SolutionSchema>;
@@ -45,7 +45,7 @@ export const cases: TestCase<Solution>[] = [
 
 /**
  * Solution
- * Approach: 
+ * Approach:
  *   - Use a sliding window to find the longest substring without repeating characters
  * Time Complexity: O(n)
  * Space Complexity: O(n)
