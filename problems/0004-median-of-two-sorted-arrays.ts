@@ -42,6 +42,8 @@ export const cases: TestCase<Solution>[] = [
   { input: [[0, 0], [0, 0]], expected: 0.00000, name: 'Extended Example 1' },
   { input: [[], [1]], expected: 1.00000, name: 'Extended Example 2' },
   { input: [[2], []], expected: 2.00000, name: 'Extended Example 3' },
+  { input: [[1, 2], [3, 4, 5, 6, 7, 8, 9, 10]], expected: 5.50000, name: 'Extended Example 4' },
+  { input: [[], [1, 2, 3, 4, 5]], expected: 3.00000, name: 'Extended Example 5' },
 ];
 
 /**
@@ -56,25 +58,23 @@ export const cases: TestCase<Solution>[] = [
  * Space Complexity: O(1)
  */
 export const binarySearchSolution = SolutionSchema.implement((nums1, nums2) => {
-  // Make sure nums1 is the shorter array
-  if (nums1.length > nums2.length) {
-    return binarySearchSolution(nums2, nums1);
-  }
-
-  let low = 0, high = nums1.length;
+  const [short, long] = nums1.length <= nums2.length ? [nums1, nums2] : [nums2, nums1];
+  const totalLength = short.length + long.length;
+  // Binary search on the shorter array
+  let low = 0, high = short.length;
   while (low <= high) {
     const mid1 = Math.floor((low + high) / 2)
-    const mid2 = Math.floor((nums1.length + nums2.length + 1) / 2) - mid1;
+    const mid2 = Math.floor((totalLength + 1) / 2) - mid1;
 
-    // Find elements to the left and right of partition in nums1 and nums2
-    const maxLeft1 = mid1 === 0 ? -Infinity : nums1[mid1 - 1];
-    const minRight1 = mid1 === nums1.length ? Infinity : nums1[mid1];
-    const maxLeft2 = mid2 === 0 ? -Infinity : nums2[mid2 - 1];
-    const minRight2 = mid2 === nums2.length ? Infinity : nums2[mid2];
+    // Find elements to the left and right of partition in short and long
+    const maxLeft1 = mid1 === 0 ? -Infinity : short[mid1 - 1];
+    const minRight1 = mid1 === short.length ? Infinity : short[mid1];
+    const maxLeft2 = mid2 === 0 ? -Infinity : long[mid2 - 1];
+    const minRight2 = mid2 === long.length ? Infinity : long[mid2];
 
     if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1) {
       // If we have found the correct partition, return the median
-      if ((nums1.length + nums2.length) % 2 === 0) {
+      if (totalLength % 2 === 0) {
         // If the total length is even, return the average of the two middle elements
         return (Math.max(maxLeft1, maxLeft2) + Math.min(minRight1, minRight2)) / 2;
       } else {
