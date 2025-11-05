@@ -316,8 +316,8 @@ export class LeetCodeScraper {
     );
     const constraints = constraintsMatch
       ? Array.from(constraintsMatch[1].matchAll(/^\s*[-*]\s+(.+?)\s*$/gm)).map(
-        (m) => this.normalizeWhitespace(m[1].trim())
-      )
+          (m) => this.normalizeWhitespace(m[1].trim())
+        )
       : [];
 
     // Extract follow-up questions
@@ -326,19 +326,19 @@ export class LeetCodeScraper {
     );
     const followUp = followUpMatch
       ? followUpMatch[1]
-        .split('\n')
-        .map((line) => line.trim())
-        .filter((line) => line.length > 0)
-        .map((line) => {
-          // Remove extra dashes and clean up markdown formatting
-          return this.normalizeWhitespace(
-            line
-              .replace(/^-\s*/, '')
-              .replace(/^\*\*\s*/, '')
-              .replace(/\*\*$/, '')
-          );
-        })
-        .filter((line) => line.length > 0) // Filter out empty lines after cleaning
+          .split('\n')
+          .map((line) => line.trim())
+          .filter((line) => line.length > 0)
+          .map((line) => {
+            // Remove extra dashes and clean up markdown formatting
+            return this.normalizeWhitespace(
+              line
+                .replace(/^-\s*/, '')
+                .replace(/^\*\*\s*/, '')
+                .replace(/\*\*$/, '')
+            );
+          })
+          .filter((line) => line.length > 0) // Filter out empty lines after cleaning
       : [];
 
     // First, extract image URLs from HTML content before markdown conversion
@@ -566,12 +566,12 @@ export class LeetCodeScraper {
         ? ` *
  * Examples:
 ${content
-          .examples!.map(
-            (example, index) =>
-              ` * ${index + 1}. Input: ${example.input}
+  .examples!.map(
+    (example, index) =>
+      ` * ${index + 1}. Input: ${example.input}
  *    Output: ${example.output}${example.explanation ? `\n *    Explanation: ${example.explanation}` : ''}${example.imageUrl ? `\n *    Image: ${example.imageUrl}` : ''}`
-          )
-          .join('\n')}`
+  )
+  .join('\n')}`
         : ' *';
 
     const constraintsSection =
@@ -596,13 +596,13 @@ ${content.followUp!.map((followUp) => ` * - ${followUp}`).join('\n')}`
  *
  * Description:
 ${cleanedDescription
-        .split('\n')
-        .map((line) => {
-          // Normalize whitespace in each line and remove trailing spaces
-          const normalizedLine = this.normalizeWhitespace(line);
-          return ` * ${normalizedLine}`;
-        })
-        .join('\n')}
+  .split('\n')
+  .map((line) => {
+    // Normalize whitespace in each line and remove trailing spaces
+    const normalizedLine = this.normalizeWhitespace(line);
+    return ` * ${normalizedLine}`;
+  })
+  .join('\n')}
 ${examplesSection}
 ${constraintsSection}
 ${followUpSection}
@@ -635,32 +635,6 @@ export const solution = SolutionSchema.implement((${this.generateFunctionParams(
 
 export const solutions = [solution];
 `;
-  }
-
-  private inferOutputType(
-    examples: Array<{ output: string }> | undefined
-  ): string {
-    if (examples?.length === 0) return 'any';
-
-    try {
-      const firstOutput = JSON.parse(examples![0].output);
-
-      if (Array.isArray(firstOutput)) {
-        if (firstOutput.length === 0) return 'any[]';
-        if (typeof firstOutput[0] === 'number') return 'number[]';
-        if (typeof firstOutput[0] === 'string') return 'string[]';
-        if (typeof firstOutput[0] === 'boolean') return 'boolean[]';
-        return 'any[]';
-      }
-
-      if (typeof firstOutput === 'number') return 'number';
-      if (typeof firstOutput === 'string') return 'string';
-      if (typeof firstOutput === 'boolean') return 'boolean';
-
-      return 'any';
-    } catch {
-      return 'any';
-    }
   }
 
   private generateZodInputTypes(metaData: string): string {
