@@ -163,7 +163,12 @@ export interface ProblemContent {
   description: string;
   constraints?: string[];
   followUp?: string[];
-  examples?: Array<{ input: string; output: string; explanation?: string }>;
+  examples?: Array<{
+    input: string;
+    output: string;
+    explanation?: string;
+    imageUrl?: string;
+  }>;
 }
 
 export class LeetCodeScraper {
@@ -336,11 +341,26 @@ export class LeetCodeScraper {
         .filter((line) => line.length > 0) // Filter out empty lines after cleaning
       : [];
 
+    // First, extract image URLs from HTML content before markdown conversion
+    // Images are typically in <img> tags within example sections
+    const imageUrlRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
+    const imageUrls: string[] = [];
+    let imageMatch;
+    while ((imageMatch = imageUrlRegex.exec(content)) !== null) {
+      const imageUrl = imageMatch[1];
+      // Only include images that look like LeetCode example images
+      // Usually they're hosted on LeetCode CDN or are relative paths
+      if (imageUrl && !imageUrl.startsWith('data:')) {
+        imageUrls.push(imageUrl);
+      }
+    }
+
     // Extract examples
     const examples: Array<{
       input: string;
       output: string;
       explanation?: string;
+      imageUrl?: string;
     }> = [];
 
     // Try multiple regex patterns to handle different markdown formats from turndown
@@ -383,12 +403,15 @@ export class LeetCodeScraper {
 
         // Only add if we have valid input and output
         if (input && output) {
+          // Try to match image URL to this example (by index)
+          const imageUrl = imageUrls[examples.length] || undefined;
           examples.push({
             input: this.normalizeWhitespace(input),
             output: this.normalizeWhitespace(output),
             explanation: explanation
               ? this.normalizeWhitespace(explanation)
               : undefined,
+            imageUrl: imageUrl,
           });
         }
       }
@@ -422,12 +445,15 @@ export class LeetCodeScraper {
           .replace(/\s+/g, ' ');
 
         if (input && output) {
+          // Try to match image URL to this example (by index)
+          const imageUrl = imageUrls[examples.length] || undefined;
           examples.push({
             input: this.normalizeWhitespace(input),
             output: this.normalizeWhitespace(output),
             explanation: explanation
               ? this.normalizeWhitespace(explanation)
               : undefined,
+            imageUrl: imageUrl,
           });
         }
       }
@@ -543,7 +569,7 @@ ${content
           .examples!.map(
             (example, index) =>
               ` * ${index + 1}. Input: ${example.input}
- *    Output: ${example.output}${example.explanation ? `\n *    Explanation: ${example.explanation}` : ''}`
+ *    Output: ${example.output}${example.explanation ? `\n *    Explanation: ${example.explanation}` : ''}${example.imageUrl ? `\n *    Image: ${example.imageUrl}` : ''}`
           )
           .join('\n')}`
         : ' *';
