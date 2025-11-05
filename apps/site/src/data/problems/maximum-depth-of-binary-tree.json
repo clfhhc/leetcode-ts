@@ -52,7 +52,7 @@
           "name": "Example 1",
           "actual": 3,
           "passed": true,
-          "duration": 0.27191699999997354
+          "duration": 0.32083399999999074
         },
         {
           "input": [
@@ -70,7 +70,7 @@
           "name": "Example 2",
           "actual": 2,
           "passed": true,
-          "duration": 0.013958999999999833
+          "duration": 0.015375000000005912
         }
       ],
       "totalTests": 2,
@@ -119,7 +119,7 @@
           "name": "Example 1",
           "actual": 3,
           "passed": true,
-          "duration": 0.08625000000000682
+          "duration": 0.11254100000002154
         },
         {
           "input": [
@@ -137,7 +137,7 @@
           "name": "Example 2",
           "actual": 2,
           "passed": true,
-          "duration": 0.007040999999958331
+          "duration": 0.008916999999996733
         }
       ],
       "totalTests": 2,
@@ -145,7 +145,7 @@
       "failedTests": 0
     }
   ],
-  "notes": "<ul>\n<li><ol start=\"104\">\n<li>Maximum Depth of Binary Tree</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: tree, depth-first-search, breadth-first-search, binary-tree</li>\n<li></li>\n<li>Description:</li>\n<li>Given the <code>root</code> of a binary tree, return <em>its maximum depth</em>.</li>\n<li></li>\n<li>A binary tree&#39;s <strong>maximum depth</strong> is the number of nodes along the longest path from the root node down to the farthest leaf node.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: root = [1,null,2]</li>\n</ol>\n</li>\n<li>Output: 2</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>The number of nodes in the tree is in the range <code>[0, 10^4]</code>.</li>\n</ul>\n</li>\n<li><ul>\n<li><code>-100 &lt;= Node.val &lt;= 100</code></li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "notes": "<ul>\n<li><ol start=\"104\">\n<li>Maximum Depth of Binary Tree</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: tree, depth-first-search, breadth-first-search, binary-tree</li>\n<li></li>\n<li>Description:</li>\n<li>Given the <code>root</code> of a binary tree, return <em>its maximum depth</em>.</li>\n<li></li>\n<li>A binary tree&#39;s <strong>maximum depth</strong> is the number of nodes along the longest path from the root node down to the farthest leaf node.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: root = [3,9,20,null,null,15,7]</li>\n</ol>\n</li>\n<li>Output: 3</li>\n<li><ol start=\"2\">\n<li>Input: root = [1,null,2]</li>\n</ol>\n</li>\n<li>Output: 2</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>The number of nodes in the tree is in the range <code>[0, 10^4]</code>.</li>\n</ul>\n</li>\n<li><ul>\n<li><code>-100 &lt;= Node.val &lt;= 100</code></li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
   "totalTests": 4,
   "passedTests": 4,
   "failedTests": 0

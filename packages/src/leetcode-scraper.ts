@@ -311,8 +311,8 @@ export class LeetCodeScraper {
     );
     const constraints = constraintsMatch
       ? Array.from(constraintsMatch[1].matchAll(/^\s*[-*]\s+(.+?)\s*$/gm)).map(
-          (m) => this.normalizeWhitespace(m[1].trim())
-        )
+        (m) => this.normalizeWhitespace(m[1].trim())
+      )
       : [];
 
     // Extract follow-up questions
@@ -321,19 +321,19 @@ export class LeetCodeScraper {
     );
     const followUp = followUpMatch
       ? followUpMatch[1]
-          .split('\n')
-          .map((line) => line.trim())
-          .filter((line) => line.length > 0)
-          .map((line) => {
-            // Remove extra dashes and clean up markdown formatting
-            return this.normalizeWhitespace(
-              line
-                .replace(/^-\s*/, '')
-                .replace(/^\*\*\s*/, '')
-                .replace(/\*\*$/, '')
-            );
-          })
-          .filter((line) => line.length > 0) // Filter out empty lines after cleaning
+        .split('\n')
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0)
+        .map((line) => {
+          // Remove extra dashes and clean up markdown formatting
+          return this.normalizeWhitespace(
+            line
+              .replace(/^-\s*/, '')
+              .replace(/^\*\*\s*/, '')
+              .replace(/\*\*$/, '')
+          );
+        })
+        .filter((line) => line.length > 0) // Filter out empty lines after cleaning
       : [];
 
     // Extract examples
@@ -342,17 +342,95 @@ export class LeetCodeScraper {
       output: string;
       explanation?: string;
     }> = [];
-    const exampleRegex =
-      /\*{0,2}Example \d+:\*{0,2}\s*\n?\*{0,2}Input:\*{0,2}\s*([^\n]+?)\s*\n?\*{0,2}Output:\*{0,2}\s*([^\n]+?)(?:\s*\n?\*{0,2}Explanation:\*{0,2}\s*([^\n]+?))?(?=\*{0,2}Example|\n\n|$)/gis;
-    let match;
-    while ((match = exampleRegex.exec(cleanContent)) !== null) {
-      examples.push({
-        input: this.normalizeWhitespace(match[1].trim()),
-        output: this.normalizeWhitespace(match[2].trim()),
-        explanation: match[3]
-          ? this.normalizeWhitespace(match[3].trim())
-          : undefined,
-      });
+
+    // Try multiple regex patterns to handle different markdown formats from turndown
+    // Pattern 1: Standard format with bold markers
+    // Stop at next Example, Constraints, Follow-up, or end of content
+    const exampleRegex1 =
+      /\*{0,2}Example\s+(\d+):\*{0,2}[\s\S]*?\*{0,2}Input:\*{0,2}\s*\n?\s*(.+?)\s*\n\s*\*{0,2}Output:\*{0,2}\s*\n?\s*(.+?)(?:\s*\n\s*\*{0,2}Explanation:\*{0,2}\s*\n?\s*(.+?))?(?=\s*\n\s*\*{0,2}(?:Example\s+\d+|Constraints?|Follow-up):|$)/gis;
+
+    // Pattern 2: Without bold markers (plain text)
+    // Stop at next Example, Constraints, Follow-up, or end of content
+    const exampleRegex2 =
+      /Example\s+(\d+):[\s\S]*?Input:\s*\n?\s*(.+?)\s*\n\s*Output:\s*\n?\s*(.+?)(?:\s*\n\s*Explanation:\s*\n?\s*(.+?))?(?=\s*\n\s*(?:Example\s+\d+|Constraints?|Follow-up):|$)/gis;
+
+    // Pattern 3: More flexible spacing
+    // Stop at next Example, Constraints, Follow-up, or end of content
+    const exampleRegex3 =
+      /\*{0,2}Example\s+(\d+)\*{0,2}[\s\S]*?\*{0,2}Input\*{0,2}[\s\S]*?([^\n]+(?:[\s\S]+?)?)\s*\n\s*\*{0,2}Output\*{0,2}[\s\S]*?([^\n]+(?:[\s\S]+?)?)(?:\s*\n\s*\*{0,2}Explanation\*{0,2}[\s\S]*?([^\n]+(?:[\s\S]+?)?))?(?=\s*\n\s*\*{0,2}(?:Example\s+\d+|Constraints?|Follow-up):|$)/gis;
+
+    const patterns = [exampleRegex1, exampleRegex2, exampleRegex3];
+
+    for (const pattern of patterns) {
+      let match;
+      pattern.lastIndex = 0; // Reset regex
+      while ((match = pattern.exec(cleanContent)) !== null) {
+        let input =
+          match[2]?.trim().replace(/\n\s*/g, ' ').replace(/\s+/g, ' ') || '';
+        let output =
+          match[3]?.trim().replace(/\n\s*/g, ' ').replace(/\s+/g, ' ') || '';
+        let explanation = match[4]
+          ?.trim()
+          .replace(/\n\s*/g, ' ')
+          .replace(/\s+/g, ' ');
+
+        // Remove any section headers that might have been captured (Constraints, Follow-up, etc.)
+        const sectionHeaderRegex =
+          /\s*\*{0,2}(?:Constraints?|Follow-up):\s*.*$/i;
+        input = input.replace(sectionHeaderRegex, '').trim();
+        output = output.replace(sectionHeaderRegex, '').trim();
+        explanation = explanation?.replace(sectionHeaderRegex, '').trim();
+
+        // Only add if we have valid input and output
+        if (input && output) {
+          examples.push({
+            input: this.normalizeWhitespace(input),
+            output: this.normalizeWhitespace(output),
+            explanation: explanation
+              ? this.normalizeWhitespace(explanation)
+              : undefined,
+          });
+        }
+      }
+
+      // If we found examples, break (don't try other patterns)
+      if (examples.length > 0) {
+        break;
+      }
+    }
+
+    // Fallback: parse examples directly from HTML if markdown parsing failed
+    if (examples.length === 0) {
+      // LeetCode often uses <pre> tags with <strong>Input:</strong> and <strong>Output:</strong>
+      const htmlExampleRegex =
+        /<pre[^>]*>[\s\S]*?<strong[^>]*>Input:\s*<\/strong>\s*([^<]+)[\s\S]*?<strong[^>]*>Output:\s*<\/strong>\s*([^<]+)(?:[\s\S]*?<strong[^>]*>Explanation:\s*<\/strong>\s*([^<]+))?[\s\S]*?<\/pre>/gi;
+      let htmlMatch;
+      while ((htmlMatch = htmlExampleRegex.exec(content)) !== null) {
+        const input =
+          htmlMatch[1]
+            ?.trim()
+            .replace(/&nbsp;/g, ' ')
+            .replace(/\s+/g, ' ') || '';
+        const output =
+          htmlMatch[2]
+            ?.trim()
+            .replace(/&nbsp;/g, ' ')
+            .replace(/\s+/g, ' ') || '';
+        const explanation = htmlMatch[3]
+          ?.trim()
+          .replace(/&nbsp;/g, ' ')
+          .replace(/\s+/g, ' ');
+
+        if (input && output) {
+          examples.push({
+            input: this.normalizeWhitespace(input),
+            output: this.normalizeWhitespace(output),
+            explanation: explanation
+              ? this.normalizeWhitespace(explanation)
+              : undefined,
+          });
+        }
+      }
     }
 
     // Extract main description (everything before constraints, examples, or follow-up)
@@ -462,12 +540,12 @@ export class LeetCodeScraper {
         ? ` *
  * Examples:
 ${content
-  .examples!.map(
-    (example, index) =>
-      ` * ${index + 1}. Input: ${example.input}
+          .examples!.map(
+            (example, index) =>
+              ` * ${index + 1}. Input: ${example.input}
  *    Output: ${example.output}${example.explanation ? `\n *    Explanation: ${example.explanation}` : ''}`
-  )
-  .join('\n')}`
+          )
+          .join('\n')}`
         : ' *';
 
     const constraintsSection =
@@ -492,13 +570,13 @@ ${content.followUp!.map((followUp) => ` * - ${followUp}`).join('\n')}`
  *
  * Description:
 ${cleanedDescription
-  .split('\n')
-  .map((line) => {
-    // Normalize whitespace in each line and remove trailing spaces
-    const normalizedLine = this.normalizeWhitespace(line);
-    return ` * ${normalizedLine}`;
-  })
-  .join('\n')}
+        .split('\n')
+        .map((line) => {
+          // Normalize whitespace in each line and remove trailing spaces
+          const normalizedLine = this.normalizeWhitespace(line);
+          return ` * ${normalizedLine}`;
+        })
+        .join('\n')}
 ${examplesSection}
 ${constraintsSection}
 ${followUpSection}

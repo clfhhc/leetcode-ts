@@ -10,7 +10,9 @@
  * A binary tree's **maximum depth** is the number of nodes along the longest path from the root node down to the farthest leaf node.
  *
  * Examples:
- * 1. Input: root = \[1,null,2\]
+ * 1. Input: root = \[3,9,20,null,null,15,7\]
+ *    Output: 3
+ * 2. Input: root = \[1,null,2\]
  *    Output: 2
  *
  * Constraints:
@@ -20,14 +22,6 @@
  */
 import { z } from 'zod';
 import type { TestCase } from '../packages/src/types.js';
-
-// export const TreeNodeSchema: z.ZodType<TreeNode> = z.lazy(() =>
-//   z.object({
-//     val: z.number(),
-//     left: z.lazy(() => TreeNodeSchema).nullable(),
-//     right: z.lazy(() => TreeNodeSchema).nullable(),
-//   })
-// );
 
 export class TreeNode {
   val: number;
