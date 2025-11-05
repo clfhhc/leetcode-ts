@@ -26,7 +26,7 @@
           "name": "Example 1",
           "actual": 3,
           "passed": true,
-          "duration": 0.06400000000002137
+          "duration": 0.050957999999980075
         },
         {
           "input": [
@@ -36,7 +36,7 @@
           "name": "Example 2",
           "actual": 1,
           "passed": true,
-          "duration": 0.0038749999999936335
+          "duration": 0.0030409999999960746
         },
         {
           "input": [
@@ -46,7 +46,7 @@
           "name": "Example 3",
           "actual": 3,
           "passed": true,
-          "duration": 0.002166999999985819
+          "duration": 0.0020000000000095497
         },
         {
           "input": [
@@ -56,7 +56,7 @@
           "name": "Example 4",
           "actual": 1,
           "passed": true,
-          "duration": 0.0009589999999661813
+          "duration": 0.001167000000009466
         },
         {
           "input": [
@@ -66,7 +66,7 @@
           "name": "Example 5",
           "actual": 2,
           "passed": true,
-          "duration": 0.0010419999999840002
+          "duration": 0.0009590000000230248
         },
         {
           "input": [
@@ -76,7 +76,7 @@
           "name": "Example 6",
           "actual": 2,
           "passed": true,
-          "duration": 0.0011249999999449756
+          "duration": 0.001167000000009466
         },
         {
           "input": [
@@ -86,7 +86,7 @@
           "name": "Example 7",
           "actual": 3,
           "passed": true,
-          "duration": 0.0013339999999857355
+          "duration": 0.0012920000000349319
         },
         {
           "input": [
@@ -106,7 +106,7 @@
           "name": "Example 9",
           "actual": 3,
           "passed": true,
-          "duration": 0.0019999999999527063
+          "duration": 0.0018330000000332802
         },
         {
           "input": [
@@ -116,7 +116,7 @@
           "name": "Example 10",
           "actual": 5,
           "passed": true,
-          "duration": 0.002124999999978172
+          "duration": 0.0020420000000171967
         }
       ],
       "totalTests": 10,
