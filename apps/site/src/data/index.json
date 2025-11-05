@@ -74,6 +74,18 @@
       "difficulty": "easy"
     },
     {
+      "id": 104,
+      "slug": "maximum-depth-of-binary-tree",
+      "title": "Maximum Depth of Binary Tree",
+      "tags": [
+        "tree",
+        "depth-first-search",
+        "breadth-first-search",
+        "binary-tree"
+      ],
+      "difficulty": "easy"
+    },
+    {
       "id": 162,
       "slug": "find-peak-element",
       "title": "Find Peak Element",
@@ -114,9 +126,9 @@
       "difficulty": "easy"
     }
   ],
-  "totalProblems": 11,
+  "totalProblems": 12,
   "difficultyCounts": {
-    "easy": 6,
+    "easy": 7,
     "medium": 4,
     "hard": 1
   },
@@ -131,6 +143,10 @@
     "binary-search": 7,
     "divide-and-conquer": 1,
     "stack": 1,
+    "tree": 1,
+    "depth-first-search": 1,
+    "breadth-first-search": 1,
+    "binary-tree": 1,
     "interactive": 2
   }
 }

@@ -1,0 +1,152 @@
+{
+  "id": 104,
+  "slug": "maximum-depth-of-binary-tree",
+  "title": "Maximum Depth of Binary Tree",
+  "tags": [
+    "tree",
+    "depth-first-search",
+    "breadth-first-search",
+    "binary-tree"
+  ],
+  "difficulty": "easy",
+  "solutions": [
+    {
+      "name": "iterativeSolution",
+      "description": "",
+      "approach": "- Use a stack to traverse the tree iteratively\n - Track the current level and the maximum level\n - Return the maximum level",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h) where h is the height of the tree",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">iterativeSolution</span> = (<span class=\"hljs-params\">root</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (!root) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  }\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">stack</span>: [<span class=\"hljs-title class_\">TreeNode</span>, <span class=\"hljs-built_in\">number</span>][] = [[root, <span class=\"hljs-number\">1</span>]];\n  <span class=\"hljs-keyword\">let</span> <span class=\"hljs-attr\">node</span>: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span> = root;\n  <span class=\"hljs-keyword\">let</span> maxLevel = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> currentLevel = <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (stack.<span class=\"hljs-property\">length</span> &gt; <span class=\"hljs-number\">0</span> || node !== <span class=\"hljs-literal\">null</span>) {\n    <span class=\"hljs-keyword\">while</span> (node !== <span class=\"hljs-literal\">null</span>) {\n      stack.<span class=\"hljs-title function_\">push</span>([node, currentLevel]);\n      node = node.<span class=\"hljs-property\">left</span>;\n      currentLevel += <span class=\"hljs-number\">1</span>;\n    }\n\n    <span class=\"hljs-keyword\">const</span> [currentNode, level] = stack.<span class=\"hljs-title function_\">pop</span>() <span class=\"hljs-keyword\">as</span> [<span class=\"hljs-title class_\">TreeNode</span>, <span class=\"hljs-built_in\">number</span>];\n    maxLevel = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLevel, level);\n\n    node = currentNode.<span class=\"hljs-property\">right</span>;\n    currentLevel = level + <span class=\"hljs-number\">1</span>;\n  }\n\n  <span class=\"hljs-keyword\">return</span> maxLevel;\n};\n</code></pre>",
+      "utilities": [
+        {
+          "name": "TreeNode",
+          "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">TreeNode</span> {\n  <span class=\"hljs-attr\">val</span>: <span class=\"hljs-built_in\">number</span>;\n  <span class=\"hljs-attr\">left</span>: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span>;\n  <span class=\"hljs-attr\">right</span>: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span>;\n  <span class=\"hljs-title function_\">constructor</span>(<span class=\"hljs-params\"><span class=\"hljs-attr\">val</span>?: <span class=\"hljs-built_in\">number</span>, <span class=\"hljs-attr\">left</span>?: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span>, <span class=\"hljs-attr\">right</span>?: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span></span>) {\n    <span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">val</span> = val ?? <span class=\"hljs-number\">0</span>;\n    <span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">left</span> = left ?? <span class=\"hljs-literal\">null</span>;\n    <span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">right</span> = right ?? <span class=\"hljs-literal\">null</span>;\n  }\n</code></pre>"
+        }
+      ],
+      "testResults": [
+        {
+          "input": [
+            {
+              "val": 3,
+              "left": {
+                "val": 9,
+                "left": null,
+                "right": null
+              },
+              "right": {
+                "val": 20,
+                "left": {
+                  "val": 15,
+                  "left": null,
+                  "right": null
+                },
+                "right": {
+                  "val": 7,
+                  "left": null,
+                  "right": null
+                }
+              }
+            }
+          ],
+          "expected": 3,
+          "name": "Example 1",
+          "actual": 3,
+          "passed": true,
+          "duration": 0.27191699999997354
+        },
+        {
+          "input": [
+            {
+              "val": 1,
+              "left": null,
+              "right": {
+                "val": 2,
+                "left": null,
+                "right": null
+              }
+            }
+          ],
+          "expected": 2,
+          "name": "Example 2",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.013958999999999833
+        }
+      ],
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0
+    },
+    {
+      "name": "recursiveSolution",
+      "description": "",
+      "approach": "- Use a recursive function to traverse the tree\n - Return the maximum depth of the left and right subtrees\n - Return the maximum depth of the tree",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(h) where h is the height of the tree",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">recursiveSolution</span> = (<span class=\"hljs-params\">root</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (!root) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> (\n    <span class=\"hljs-number\">1</span> + <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(<span class=\"hljs-title function_\">recursiveSolution</span>(root.<span class=\"hljs-property\">left</span>), <span class=\"hljs-title function_\">recursiveSolution</span>(root.<span class=\"hljs-property\">right</span>))\n  );\n};\n</code></pre>",
+      "utilities": [
+        {
+          "name": "TreeNode",
+          "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">TreeNode</span> {\n  <span class=\"hljs-attr\">val</span>: <span class=\"hljs-built_in\">number</span>;\n  <span class=\"hljs-attr\">left</span>: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span>;\n  <span class=\"hljs-attr\">right</span>: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span>;\n  <span class=\"hljs-title function_\">constructor</span>(<span class=\"hljs-params\"><span class=\"hljs-attr\">val</span>?: <span class=\"hljs-built_in\">number</span>, <span class=\"hljs-attr\">left</span>?: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span>, <span class=\"hljs-attr\">right</span>?: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span></span>) {\n    <span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">val</span> = val ?? <span class=\"hljs-number\">0</span>;\n    <span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">left</span> = left ?? <span class=\"hljs-literal\">null</span>;\n    <span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">right</span> = right ?? <span class=\"hljs-literal\">null</span>;\n  }\n</code></pre>"
+        }
+      ],
+      "testResults": [
+        {
+          "input": [
+            {
+              "val": 3,
+              "left": {
+                "val": 9,
+                "left": null,
+                "right": null
+              },
+              "right": {
+                "val": 20,
+                "left": {
+                  "val": 15,
+                  "left": null,
+                  "right": null
+                },
+                "right": {
+                  "val": 7,
+                  "left": null,
+                  "right": null
+                }
+              }
+            }
+          ],
+          "expected": 3,
+          "name": "Example 1",
+          "actual": 3,
+          "passed": true,
+          "duration": 0.08625000000000682
+        },
+        {
+          "input": [
+            {
+              "val": 1,
+              "left": null,
+              "right": {
+                "val": 2,
+                "left": null,
+                "right": null
+              }
+            }
+          ],
+          "expected": 2,
+          "name": "Example 2",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.007040999999958331
+        }
+      ],
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0
+    }
+  ],
+  "notes": "<ul>\n<li><ol start=\"104\">\n<li>Maximum Depth of Binary Tree</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: tree, depth-first-search, breadth-first-search, binary-tree</li>\n<li></li>\n<li>Description:</li>\n<li>Given the <code>root</code> of a binary tree, return <em>its maximum depth</em>.</li>\n<li></li>\n<li>A binary tree&#39;s <strong>maximum depth</strong> is the number of nodes along the longest path from the root node down to the farthest leaf node.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: root = [1,null,2]</li>\n</ol>\n</li>\n<li>Output: 2</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>The number of nodes in the tree is in the range <code>[0, 10^4]</code>.</li>\n</ul>\n</li>\n<li><ul>\n<li><code>-100 &lt;= Node.val &lt;= 100</code></li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 4,
+  "passedTests": 4,
+  "failedTests": 0
+}

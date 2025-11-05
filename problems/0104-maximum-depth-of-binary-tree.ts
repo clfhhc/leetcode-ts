@@ -29,7 +29,7 @@ import type { TestCase } from '../packages/src/types.js';
 //   })
 // );
 
-class TreeNode {
+export class TreeNode {
   val: number;
   left: TreeNode | null;
   right: TreeNode | null;
@@ -91,6 +91,7 @@ export const cases: TestCase<Solution>[] = [
 
 /**
  * Iterative Solution
+ * @utilities: TreeNode
  * Approach:
  *   - Use a stack to traverse the tree iteratively
  *   - Track the current level and the maximum level
@@ -125,6 +126,7 @@ export const iterativeSolution = SolutionSchema.implement((root) => {
 
 /**
  * Recursive Solution
+ * @utilities: TreeNode
  * Approach:
  *   - Use a recursive function to traverse the tree
  *   - Return the maximum depth of the left and right subtrees

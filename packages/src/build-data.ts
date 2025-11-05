@@ -265,6 +265,16 @@ function extractUtilityDefinition(
     result = `const ${utilityName}: z.ZodType = ${zodMatch[1].trim()};`;
   }
 
+  // Try to find class definitions
+  const classRegex = new RegExp(
+    `export\\s+class\\s+${utilityName}\\s*\\{([\\s\\S]*?)\\}\\s*`,
+    'g'
+  );
+  const classMatch = classRegex.exec(sourceContent);
+  if (classMatch) {
+    result = `class ${utilityName} {${classMatch[1]}}`;
+  }
+
   return result;
 }
 
@@ -591,9 +601,9 @@ async function extractCodeAndNotes(
   // Process markdown to HTML
   const notes = cleanedNotes
     ? await marked.parse(cleanedNotes, {
-        breaks: true,
-        gfm: true,
-      })
+      breaks: true,
+      gfm: true,
+    })
     : '';
 
   // For the new format, we don't need to extract code here since

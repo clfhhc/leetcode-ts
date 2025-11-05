@@ -33,7 +33,7 @@
           "name": "Example 1",
           "actual": 4,
           "passed": true,
-          "duration": 0.04279199999996308
+          "duration": 0.029374999999959073
         },
         {
           "input": [
@@ -51,7 +51,7 @@
           "name": "Example 2",
           "actual": -1,
           "passed": true,
-          "duration": 0.003417000000013104
+          "duration": 0.0060839999999871
         },
         {
           "input": [
@@ -69,7 +69,7 @@
           "name": "Example 3",
           "actual": -1,
           "passed": true,
-          "duration": 0.0036659999999528736
+          "duration": 0.0034999999999740794
         },
         {
           "input": [
@@ -87,7 +87,7 @@
           "name": "Added negative number case",
           "actual": 0,
           "passed": true,
-          "duration": 0.006209000000012566
+          "duration": 0.005457999999975982
         },
         {
           "input": [
@@ -105,7 +105,7 @@
           "name": "Added positive number case",
           "actual": 5,
           "passed": true,
-          "duration": 0.002375000000029104
+          "duration": 0.002541000000007898
         }
       ],
       "totalTests": 5,

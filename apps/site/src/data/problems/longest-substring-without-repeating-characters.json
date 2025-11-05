@@ -26,7 +26,7 @@
           "name": "Example 1",
           "actual": 3,
           "passed": true,
-          "duration": 0.049250000000029104
+          "duration": 0.03345799999999599
         },
         {
           "input": [
@@ -36,7 +36,7 @@
           "name": "Example 2",
           "actual": 1,
           "passed": true,
-          "duration": 0.0030420000000503933
+          "duration": 0.0044170000000463006
         },
         {
           "input": [
@@ -46,7 +46,7 @@
           "name": "Example 3",
           "actual": 3,
           "passed": true,
-          "duration": 0.001958000000058746
+          "duration": 0.002124999999978172
         },
         {
           "input": [
@@ -56,7 +56,7 @@
           "name": "Example 4",
           "actual": 1,
           "passed": true,
-          "duration": 0.00100000000009004
+          "duration": 0.0009169999999585343
         },
         {
           "input": [
@@ -66,7 +66,7 @@
           "name": "Example 5",
           "actual": 2,
           "passed": true,
-          "duration": 0.00100000000009004
+          "duration": 0.0009579999999687061
         },
         {
           "input": [
@@ -76,7 +76,7 @@
           "name": "Example 6",
           "actual": 2,
           "passed": true,
-          "duration": 0.005667000000016742
+          "duration": 0.001082999999994172
         },
         {
           "input": [
@@ -86,7 +86,7 @@
           "name": "Example 7",
           "actual": 3,
           "passed": true,
-          "duration": 0.0012910000000374566
+          "duration": 0.0012500000000272848
         },
         {
           "input": [
@@ -96,7 +96,7 @@
           "name": "Example 8",
           "actual": 3,
           "passed": true,
-          "duration": 0.001209000000017113
+          "duration": 0.0012080000000196378
         },
         {
           "input": [
@@ -106,7 +106,7 @@
           "name": "Example 9",
           "actual": 3,
           "passed": true,
-          "duration": 0.0018330000000332802
+          "duration": 0.0017500000000154614
         },
         {
           "input": [
@@ -116,7 +116,7 @@
           "name": "Example 10",
           "actual": 5,
           "passed": true,
-          "duration": 0.0020419999999603533
+          "duration": 0.0019580000000019027
         }
       ],
       "totalTests": 10,
