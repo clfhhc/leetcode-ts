@@ -265,6 +265,16 @@ function extractUtilityDefinition(
     result = `const ${utilityName}: z.ZodType = ${zodMatch[1].trim()};`;
   }
 
+  // Try to find class definitions
+  const classRegex = new RegExp(
+    `export\\s+class\\s+${utilityName}\\s*\\{([\\s\\S]*?)\\}\\s*`,
+    'g'
+  );
+  const classMatch = classRegex.exec(sourceContent);
+  if (classMatch) {
+    result = `class ${utilityName} {${classMatch[1]}}`;
+  }
+
   return result;
 }
 
@@ -583,10 +593,25 @@ async function extractCodeAndNotes(
   const rawNotes = tsdocMatch ? tsdocMatch[1].trim() : '';
 
   // Clean up excessive newlines before processing
-  const cleanedNotes = rawNotes
+  let cleanedNotes = rawNotes
     .replace(/^\s*\n/g, '') // Remove leading empty lines
     .replace(/\n\s*$/g, '') // Remove trailing empty lines
     .trim();
+
+  // Convert "Image: URL" format to markdown image syntax
+  // Pattern: *    Image: https://example.com/image.png
+  // Replace with: ![Example image](https://example.com/image.png)
+  cleanedNotes = cleanedNotes.replace(/\*\s+Image:\s+(\S+)/g, (match, url) => {
+    // Extract example number if available (from previous lines)
+    const exampleMatch = cleanedNotes
+      .substring(0, cleanedNotes.indexOf(match))
+      .match(/\*\s+(\d+)\.\s+Input:/);
+    const exampleNum = exampleMatch ? exampleMatch[1] : '';
+    const altText = exampleNum
+      ? `Example ${exampleNum} image`
+      : 'Example image';
+    return `*\n * ![${altText}](${url})`;
+  });
 
   // Process markdown to HTML
   const notes = cleanedNotes
