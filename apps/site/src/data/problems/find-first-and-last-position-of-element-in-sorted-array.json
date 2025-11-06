@@ -14,7 +14,7 @@
       "approach": "- Use binary search to find the first and last position of the target.\n - If the target is found, return the indices.\n - If the target is not found, return [-1, -1].",
       "timeComplexity": "O(log n)",
       "spaceComplexity": "O(1)",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">binarySearchSolution</span> = (<span class=\"hljs-params\">nums, target</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> result = [-<span class=\"hljs-number\">1</span>, -<span class=\"hljs-number\">1</span>];\n  <span class=\"hljs-keyword\">let</span> left = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> right = nums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left + <span class=\"hljs-number\">1</span> &lt; right) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(left + (right - left) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (nums[mid] &lt; target) {\n      left = mid;\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[mid] &gt;= target) {\n      right = mid;\n    }\n  }\n  <span class=\"hljs-keyword\">if</span> (nums[left] === target) {\n    result[<span class=\"hljs-number\">0</span>] = left;\n  } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[right] === target) {\n    result[<span class=\"hljs-number\">0</span>] = right;\n    left = right;\n  }\n  right = nums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left + <span class=\"hljs-number\">1</span> &lt; right) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(left + (right - left) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (nums[mid] &gt; target) {\n      right = mid;\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[mid] === target) {\n      left = mid;\n    }\n  }\n  <span class=\"hljs-keyword\">if</span> (nums[right] === target) {\n    result[<span class=\"hljs-number\">1</span>] = right;\n  } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[left] === target) {\n    result[<span class=\"hljs-number\">1</span>] = left;\n  }\n  <span class=\"hljs-keyword\">return</span> result;\n};\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">binarySearchSolution</span> = (<span class=\"hljs-params\">nums, target</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> result = [-<span class=\"hljs-number\">1</span>, -<span class=\"hljs-number\">1</span>];\n  <span class=\"hljs-keyword\">let</span> left = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> right = nums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left + <span class=\"hljs-number\">1</span> &lt; right) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(left + (right - left) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (nums[mid] &lt; target) {\n      left = mid;\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[mid] &gt;= target) {\n      right = mid;\n    }\n  }\n  <span class=\"hljs-keyword\">if</span> (nums[left] === target) {\n    result[<span class=\"hljs-number\">0</span>] = left;\n  } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[right] === target) {\n    result[<span class=\"hljs-number\">0</span>] = right;\n    left = right;\n  }\n  right = nums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left + <span class=\"hljs-number\">1</span> &lt; right) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(left + (right - left) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (nums[mid] &gt; target) {\n      right = mid;\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[mid] === target) {\n      left = mid;\n    }\n  }\n  <span class=\"hljs-keyword\">if</span> (nums[right] === target) {\n    result[<span class=\"hljs-number\">1</span>] = right;\n  } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[left] === target) {\n    result[<span class=\"hljs-number\">1</span>] = left;\n  }\n  <span class=\"hljs-keyword\">return</span> result;\n} =&gt; {\n  <span class=\"hljs-keyword\">const</span> result = [-<span class=\"hljs-number\">1</span>, -<span class=\"hljs-number\">1</span>];\n  <span class=\"hljs-keyword\">let</span> left = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> right = nums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left + <span class=\"hljs-number\">1</span> &lt; right) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(left + (right - left) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (nums[mid] &lt; target) {\n      left = mid;\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[mid] &gt;= target) {\n      right = mid;\n    }\n  }\n  <span class=\"hljs-keyword\">if</span> (nums[left] === target) {\n    result[<span class=\"hljs-number\">0</span>] = left;\n  } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[right] === target) {\n    result[<span class=\"hljs-number\">0</span>] = right;\n    left = right;\n  }\n  right = nums.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (left + <span class=\"hljs-number\">1</span> &lt; right) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(left + (right - left) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (nums[mid] &gt; target) {\n      right = mid;\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[mid] === target) {\n      left = mid;\n    }\n  }\n  <span class=\"hljs-keyword\">if</span> (nums[right] === target) {\n    result[<span class=\"hljs-number\">1</span>] = right;\n  } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (nums[left] === target) {\n    result[<span class=\"hljs-number\">1</span>] = left;\n  }\n  <span class=\"hljs-keyword\">return</span> result;\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -39,7 +39,7 @@
             4
           ],
           "passed": true,
-          "duration": 0.053124999999965894
+          "duration": 0.04708299999998644
         },
         {
           "input": [
@@ -63,7 +63,7 @@
             -1
           ],
           "passed": true,
-          "duration": 0.003917000000001281
+          "duration": 0.004542000000014923
         },
         {
           "input": [
@@ -80,7 +80,7 @@
             -1
           ],
           "passed": true,
-          "duration": 0.004958999999985281
+          "duration": 0.005959000000018477
         },
         {
           "input": [
@@ -108,7 +108,7 @@
             0
           ],
           "passed": true,
-          "duration": 0.004041999999969903
+          "duration": 0.0043330000000310065
         },
         {
           "input": [
@@ -136,7 +136,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.008874999999989086
+          "duration": 0.008915999999999258
         },
         {
           "input": [
@@ -156,7 +156,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.002417000000036751
+          "duration": 0.0027499999999918145
         }
       ],
       "totalTests": 6,

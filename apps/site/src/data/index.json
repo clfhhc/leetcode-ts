@@ -116,6 +116,18 @@
       "difficulty": "easy"
     },
     {
+      "id": 529,
+      "slug": "minesweeper",
+      "title": "Minesweeper",
+      "tags": [
+        "array",
+        "depth-first-search",
+        "breadth-first-search",
+        "matrix"
+      ],
+      "difficulty": "medium"
+    },
+    {
       "id": 704,
       "slug": "binary-search",
       "title": "Binary Search",
@@ -124,16 +136,28 @@
         "binary-search"
       ],
       "difficulty": "easy"
+    },
+    {
+      "id": 9999,
+      "slug": "typescript-practice-problems",
+      "title": "TypeScript Practice Problems",
+      "tags": [
+        "'typescript'",
+        "'arrays'",
+        "'loops'",
+        "'fundamentals'"
+      ],
+      "difficulty": "easy"
     }
   ],
-  "totalProblems": 12,
+  "totalProblems": 14,
   "difficultyCounts": {
-    "easy": 7,
-    "medium": 4,
+    "easy": 8,
+    "medium": 5,
     "hard": 1
   },
   "tagCounts": {
-    "array": 5,
+    "array": 6,
     "hash-table": 2,
     "linked-list": 1,
     "math": 2,
@@ -144,9 +168,14 @@
     "divide-and-conquer": 1,
     "stack": 1,
     "tree": 1,
-    "depth-first-search": 1,
-    "breadth-first-search": 1,
+    "depth-first-search": 2,
+    "breadth-first-search": 2,
     "binary-tree": 1,
-    "interactive": 2
+    "interactive": 2,
+    "matrix": 1,
+    "'typescript'": 1,
+    "'arrays'": 1,
+    "'loops'": 1,
+    "'fundamentals'": 1
   }
 }
