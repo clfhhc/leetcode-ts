@@ -117,7 +117,7 @@ export default function ProblemDetail(props: ProblemDetailProps) {
         <div class="flex items-center space-x-6 text-sm">
           <div class="flex items-center space-x-2">
             <span class="text-gray-600 dark:text-gray-400">Tests:</span>
-            <span class="font-semibold">
+            <span class="font-semibold text-gray-600 dark:text-gray-400">
               {props.problem.passedTests}/{props.problem.totalTests}
             </span>
             <span
@@ -169,7 +169,7 @@ export default function ProblemDetail(props: ProblemDetailProps) {
         {activeTab() === 'solutions' && (
           <div class="space-y-6">
             {/* Solution Selector */}
-            <div class="flex space-x-2">
+            <div class="flex flex-wrap gap-2">
               {props.problem.solutions.map((solution, index) => (
                 <button
                   onClick={() => setActiveSolution(index)}
@@ -298,25 +298,24 @@ export default function ProblemDetail(props: ProblemDetailProps) {
 
         {activeTab() === 'tests' && (
           <div class="space-y-4">
-            <div class="flex items-center justify-between">
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                Test Cases
-              </h3>
-              <div class="flex space-x-2">
-                {props.problem.solutions.map((solution, index) => (
-                  <button
-                    onClick={() => setActiveSolution(index)}
-                    class={`px-3 py-1 text-sm rounded ${
-                      activeSolution() === index
-                        ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
-                    }`}
-                  >
-                    {solution.name}
-                  </button>
-                ))}
-              </div>
+            <div class="flex flex-wrap gap-2">
+              {props.problem.solutions.map((solution, index) => (
+                <button
+                  onClick={() => setActiveSolution(index)}
+                  class={`px-3 py-1 text-sm rounded ${
+                    activeSolution() === index
+                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+                  }`}
+                >
+                  {solution.name}
+                </button>
+              ))}
             </div>
+
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+              Test Cases
+            </h3>
 
             <div class="overflow-x-auto">
               <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

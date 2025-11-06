@@ -15,7 +15,7 @@
       "approach": "- Use binary search to find the median.\n - If the total length is even, return the average of the two middle elements.\n - If the total length is odd, return the middle element.\n - If the left partition of nums1 is too large, we need to move the partition to the left.\n - If the left partition of nums1 is too small, we need to move the partition to the right.",
       "timeComplexity": "O(log (min(m, n)))",
       "spaceComplexity": "O(1)",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">binarySearchSolution</span> = (<span class=\"hljs-params\">nums1, nums2</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> [short, long] =\n    nums1.<span class=\"hljs-property\">length</span> &lt;= nums2.<span class=\"hljs-property\">length</span> ? [nums1, nums2] : [nums2, nums1];\n  <span class=\"hljs-keyword\">const</span> totalLength = short.<span class=\"hljs-property\">length</span> + long.<span class=\"hljs-property\">length</span>;\n  <span class=\"hljs-comment\">// Binary search on the shorter array</span>\n  <span class=\"hljs-keyword\">let</span> low = <span class=\"hljs-number\">0</span>,\n    high = short.<span class=\"hljs-property\">length</span>;\n  <span class=\"hljs-keyword\">while</span> (low &lt;= high) {\n    <span class=\"hljs-keyword\">const</span> mid1 = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((low + high) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">const</span> mid2 = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((totalLength + <span class=\"hljs-number\">1</span>) / <span class=\"hljs-number\">2</span>) - mid1;\n\n    <span class=\"hljs-comment\">// Find elements to the left and right of partition in short and long</span>\n    <span class=\"hljs-keyword\">const</span> maxLeft1 = mid1 === <span class=\"hljs-number\">0</span> ? -<span class=\"hljs-title class_\">Infinity</span> : short[mid1 - <span class=\"hljs-number\">1</span>];\n    <span class=\"hljs-keyword\">const</span> minRight1 = mid1 === short.<span class=\"hljs-property\">length</span> ? <span class=\"hljs-title class_\">Infinity</span> : short[mid1];\n    <span class=\"hljs-keyword\">const</span> maxLeft2 = mid2 === <span class=\"hljs-number\">0</span> ? -<span class=\"hljs-title class_\">Infinity</span> : long[mid2 - <span class=\"hljs-number\">1</span>];\n    <span class=\"hljs-keyword\">const</span> minRight2 = mid2 === long.<span class=\"hljs-property\">length</span> ? <span class=\"hljs-title class_\">Infinity</span> : long[mid2];\n\n    <span class=\"hljs-keyword\">if</span> (maxLeft1 &lt;= minRight2 &amp;&amp; maxLeft2 &lt;= minRight1) {\n      <span class=\"hljs-comment\">// If we have found the correct partition, return the median</span>\n      <span class=\"hljs-keyword\">if</span> (totalLength % <span class=\"hljs-number\">2</span> === <span class=\"hljs-number\">0</span>) {\n        <span class=\"hljs-comment\">// If the total length is even, return the average of the two middle elements</span>\n        <span class=\"hljs-keyword\">return</span> (\n          (<span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLeft1, maxLeft2) + <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">min</span>(minRight1, minRight2)) / <span class=\"hljs-number\">2</span>\n        );\n      } <span class=\"hljs-keyword\">else</span> {\n        <span class=\"hljs-comment\">// If the total length is odd, return the middle element</span>\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLeft1, maxLeft2);\n      }\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (maxLeft1 &gt; minRight2) {\n      <span class=\"hljs-comment\">// If the left partition of nums1 is too large, we need to move the partition to the left</span>\n      high = mid1 - <span class=\"hljs-number\">1</span>;\n    } <span class=\"hljs-keyword\">else</span> {\n      low = mid1 + <span class=\"hljs-number\">1</span>;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">null</span>;\n} =&gt; {\n  <span class=\"hljs-keyword\">const</span> [short, long] =\n    nums1.<span class=\"hljs-property\">length</span> &lt;= nums2.<span class=\"hljs-property\">length</span> ? [nums1, nums2] : [nums2, nums1];\n  <span class=\"hljs-keyword\">const</span> totalLength = short.<span class=\"hljs-property\">length</span> + long.<span class=\"hljs-property\">length</span>;\n  <span class=\"hljs-comment\">// Binary search on the shorter array</span>\n  <span class=\"hljs-keyword\">let</span> low = <span class=\"hljs-number\">0</span>,\n    high = short.<span class=\"hljs-property\">length</span>;\n  <span class=\"hljs-keyword\">while</span> (low &lt;= high) {\n    <span class=\"hljs-keyword\">const</span> mid1 = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((low + high) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">const</span> mid2 = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((totalLength + <span class=\"hljs-number\">1</span>) / <span class=\"hljs-number\">2</span>) - mid1;\n\n    <span class=\"hljs-comment\">// Find elements to the left and right of partition in short and long</span>\n    <span class=\"hljs-keyword\">const</span> maxLeft1 = mid1 === <span class=\"hljs-number\">0</span> ? -<span class=\"hljs-title class_\">Infinity</span> : short[mid1 - <span class=\"hljs-number\">1</span>];\n    <span class=\"hljs-keyword\">const</span> minRight1 = mid1 === short.<span class=\"hljs-property\">length</span> ? <span class=\"hljs-title class_\">Infinity</span> : short[mid1];\n    <span class=\"hljs-keyword\">const</span> maxLeft2 = mid2 === <span class=\"hljs-number\">0</span> ? -<span class=\"hljs-title class_\">Infinity</span> : long[mid2 - <span class=\"hljs-number\">1</span>];\n    <span class=\"hljs-keyword\">const</span> minRight2 = mid2 === long.<span class=\"hljs-property\">length</span> ? <span class=\"hljs-title class_\">Infinity</span> : long[mid2];\n\n    <span class=\"hljs-keyword\">if</span> (maxLeft1 &lt;= minRight2 &amp;&amp; maxLeft2 &lt;= minRight1) {\n      <span class=\"hljs-comment\">// If we have found the correct partition, return the median</span>\n      <span class=\"hljs-keyword\">if</span> (totalLength % <span class=\"hljs-number\">2</span> === <span class=\"hljs-number\">0</span>) {\n        <span class=\"hljs-comment\">// If the total length is even, return the average of the two middle elements</span>\n        <span class=\"hljs-keyword\">return</span> (\n          (<span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLeft1, maxLeft2) + <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">min</span>(minRight1, minRight2)) / <span class=\"hljs-number\">2</span>\n        );\n      } <span class=\"hljs-keyword\">else</span> {\n        <span class=\"hljs-comment\">// If the total length is odd, return the middle element</span>\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLeft1, maxLeft2);\n      }\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (maxLeft1 &gt; minRight2) {\n      <span class=\"hljs-comment\">// If the left partition of nums1 is too large, we need to move the partition to the left</span>\n      high = mid1 - <span class=\"hljs-number\">1</span>;\n    } <span class=\"hljs-keyword\">else</span> {\n      low = mid1 + <span class=\"hljs-number\">1</span>;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">null</span>;\n};\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">binarySearchSolution</span> = (<span class=\"hljs-params\">nums1, nums2</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> [short, long] =\n    nums1.<span class=\"hljs-property\">length</span> &lt;= nums2.<span class=\"hljs-property\">length</span> ? [nums1, nums2] : [nums2, nums1];\n  <span class=\"hljs-keyword\">const</span> totalLength = short.<span class=\"hljs-property\">length</span> + long.<span class=\"hljs-property\">length</span>;\n  <span class=\"hljs-comment\">// Binary search on the shorter array</span>\n  <span class=\"hljs-keyword\">let</span> low = <span class=\"hljs-number\">0</span>,\n    high = short.<span class=\"hljs-property\">length</span>;\n  <span class=\"hljs-keyword\">while</span> (low &lt;= high) {\n    <span class=\"hljs-keyword\">const</span> mid1 = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((low + high) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">const</span> mid2 = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((totalLength + <span class=\"hljs-number\">1</span>) / <span class=\"hljs-number\">2</span>) - mid1;\n\n    <span class=\"hljs-comment\">// Find elements to the left and right of partition in short and long</span>\n    <span class=\"hljs-keyword\">const</span> maxLeft1 = mid1 === <span class=\"hljs-number\">0</span> ? -<span class=\"hljs-title class_\">Infinity</span> : short[mid1 - <span class=\"hljs-number\">1</span>];\n    <span class=\"hljs-keyword\">const</span> minRight1 = mid1 === short.<span class=\"hljs-property\">length</span> ? <span class=\"hljs-title class_\">Infinity</span> : short[mid1];\n    <span class=\"hljs-keyword\">const</span> maxLeft2 = mid2 === <span class=\"hljs-number\">0</span> ? -<span class=\"hljs-title class_\">Infinity</span> : long[mid2 - <span class=\"hljs-number\">1</span>];\n    <span class=\"hljs-keyword\">const</span> minRight2 = mid2 === long.<span class=\"hljs-property\">length</span> ? <span class=\"hljs-title class_\">Infinity</span> : long[mid2];\n\n    <span class=\"hljs-keyword\">if</span> (maxLeft1 &lt;= minRight2 &amp;&amp; maxLeft2 &lt;= minRight1) {\n      <span class=\"hljs-comment\">// If we have found the correct partition, return the median</span>\n      <span class=\"hljs-keyword\">if</span> (totalLength % <span class=\"hljs-number\">2</span> === <span class=\"hljs-number\">0</span>) {\n        <span class=\"hljs-comment\">// If the total length is even, return the average of the two middle elements</span>\n        <span class=\"hljs-keyword\">return</span> (\n          (<span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLeft1, maxLeft2) + <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">min</span>(minRight1, minRight2)) / <span class=\"hljs-number\">2</span>\n        );\n      } <span class=\"hljs-keyword\">else</span> {\n        <span class=\"hljs-comment\">// If the total length is odd, return the middle element</span>\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLeft1, maxLeft2);\n      }\n    } <span class=\"hljs-keyword\">else</span> <span class=\"hljs-keyword\">if</span> (maxLeft1 &gt; minRight2) {\n      <span class=\"hljs-comment\">// If the left partition of nums1 is too large, we need to move the partition to the left</span>\n      high = mid1 - <span class=\"hljs-number\">1</span>;\n    } <span class=\"hljs-keyword\">else</span> {\n      low = mid1 + <span class=\"hljs-number\">1</span>;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">null</span>;\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -32,7 +32,7 @@
           "name": "Example 1",
           "actual": 2,
           "passed": true,
-          "duration": 0.07387500000004366
+          "duration": 0.06587500000000546
         },
         {
           "input": [
@@ -49,7 +49,7 @@
           "name": "Example 2",
           "actual": 2.5,
           "passed": true,
-          "duration": 0.006792000000018561
+          "duration": 0.006292000000030384
         },
         {
           "input": [
@@ -66,7 +66,7 @@
           "name": "Extended Example 1",
           "actual": 0,
           "passed": true,
-          "duration": 0.003540999999984251
+          "duration": 0.0029579999999214124
         },
         {
           "input": [
@@ -79,7 +79,7 @@
           "name": "Extended Example 2",
           "actual": 1,
           "passed": true,
-          "duration": 0.0027919999999994616
+          "duration": 0.002334000000018932
         },
         {
           "input": [
@@ -92,7 +92,7 @@
           "name": "Extended Example 3",
           "actual": 2,
           "passed": true,
-          "duration": 0.002333000000021457
+          "duration": 0.004040999999915584
         },
         {
           "input": [
@@ -115,7 +115,7 @@
           "name": "Extended Example 4",
           "actual": 5.5,
           "passed": true,
-          "duration": 0.004208000000005541
+          "duration": 0.004457999999999629
         },
         {
           "input": [
@@ -132,7 +132,7 @@
           "name": "Extended Example 5",
           "actual": 3,
           "passed": true,
-          "duration": 0.06316700000002129
+          "duration": 0.05637500000000273
         }
       ],
       "totalTests": 7,
@@ -145,7 +145,7 @@
       "approach": "- The idea is to simulate the merging process of two sorted arrays without actually creating a new one\n - We use two pointers to traverse the two arrays and merge them into a new array\n - We use a variable `i` to traverse the first array and a variable `j` to traverse the second array\n - We use a variable `k` to traverse the merged array\n - We use a variable `merged` to store the merged array\n - We return the median of the merged array",
       "timeComplexity": "O(m + n)",
       "spaceComplexity": "O(1)",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">mergeOfMergeSortSolution</span> = (<span class=\"hljs-params\">nums1, nums2</span>) =&gt; {\n    <span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>,\n      j = <span class=\"hljs-number\">0</span>,\n      k = <span class=\"hljs-number\">0</span>;\n    <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">merged</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n    <span class=\"hljs-keyword\">while</span> (i &lt; nums1.<span class=\"hljs-property\">length</span> &amp;&amp; j &lt; nums2.<span class=\"hljs-property\">length</span>) {\n      <span class=\"hljs-keyword\">if</span> (nums1[i] &lt; nums2[j]) {\n        merged[k] = nums1[i++];\n        k++;\n      } <span class=\"hljs-keyword\">else</span> {\n        merged[k] = nums2[j++];\n        k++;\n      }\n    }\n    <span class=\"hljs-keyword\">while</span> (i &lt; nums1.<span class=\"hljs-property\">length</span>) {\n      merged[k++] = nums1[i++];\n    }\n    <span class=\"hljs-keyword\">while</span> (j &lt; nums2.<span class=\"hljs-property\">length</span>) {\n      merged[k++] = nums2[j++];\n    }\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(merged.<span class=\"hljs-property\">length</span> / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (merged.<span class=\"hljs-property\">length</span> % <span class=\"hljs-number\">2</span> === <span class=\"hljs-number\">0</span>) {\n      <span class=\"hljs-keyword\">return</span> (merged[mid - <span class=\"hljs-number\">1</span>] + merged[mid]) / <span class=\"hljs-number\">2</span>;\n    } <span class=\"hljs-keyword\">else</span> {\n      <span class=\"hljs-keyword\">return</span> merged[mid];\n    }\n  } =&gt; {\n    <span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>,\n      j = <span class=\"hljs-number\">0</span>,\n      k = <span class=\"hljs-number\">0</span>;\n    <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">merged</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n    <span class=\"hljs-keyword\">while</span> (i &lt; nums1.<span class=\"hljs-property\">length</span> &amp;&amp; j &lt; nums2.<span class=\"hljs-property\">length</span>) {\n      <span class=\"hljs-keyword\">if</span> (nums1[i] &lt; nums2[j]) {\n        merged[k] = nums1[i++];\n        k++;\n      } <span class=\"hljs-keyword\">else</span> {\n        merged[k] = nums2[j++];\n        k++;\n      }\n    }\n    <span class=\"hljs-keyword\">while</span> (i &lt; nums1.<span class=\"hljs-property\">length</span>) {\n      merged[k++] = nums1[i++];\n    }\n    <span class=\"hljs-keyword\">while</span> (j &lt; nums2.<span class=\"hljs-property\">length</span>) {\n      merged[k++] = nums2[j++];\n    }\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(merged.<span class=\"hljs-property\">length</span> / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (merged.<span class=\"hljs-property\">length</span> % <span class=\"hljs-number\">2</span> === <span class=\"hljs-number\">0</span>) {\n      <span class=\"hljs-keyword\">return</span> (merged[mid - <span class=\"hljs-number\">1</span>] + merged[mid]) / <span class=\"hljs-number\">2</span>;\n    } <span class=\"hljs-keyword\">else</span> {\n      <span class=\"hljs-keyword\">return</span> merged[mid];\n    }\n  };\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">mergeOfMergeSortSolution</span> = (<span class=\"hljs-params\">nums1, nums2</span>) =&gt; {\n    <span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>,\n      j = <span class=\"hljs-number\">0</span>,\n      k = <span class=\"hljs-number\">0</span>;\n    <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">merged</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n    <span class=\"hljs-keyword\">while</span> (i &lt; nums1.<span class=\"hljs-property\">length</span> &amp;&amp; j &lt; nums2.<span class=\"hljs-property\">length</span>) {\n      <span class=\"hljs-keyword\">if</span> (nums1[i] &lt; nums2[j]) {\n        merged[k] = nums1[i++];\n        k++;\n      } <span class=\"hljs-keyword\">else</span> {\n        merged[k] = nums2[j++];\n        k++;\n      }\n    }\n    <span class=\"hljs-keyword\">while</span> (i &lt; nums1.<span class=\"hljs-property\">length</span>) {\n      merged[k++] = nums1[i++];\n    }\n    <span class=\"hljs-keyword\">while</span> (j &lt; nums2.<span class=\"hljs-property\">length</span>) {\n      merged[k++] = nums2[j++];\n    }\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(merged.<span class=\"hljs-property\">length</span> / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">if</span> (merged.<span class=\"hljs-property\">length</span> % <span class=\"hljs-number\">2</span> === <span class=\"hljs-number\">0</span>) {\n      <span class=\"hljs-keyword\">return</span> (merged[mid - <span class=\"hljs-number\">1</span>] + merged[mid]) / <span class=\"hljs-number\">2</span>;\n    } <span class=\"hljs-keyword\">else</span> {\n      <span class=\"hljs-keyword\">return</span> merged[mid];\n    }\n  };\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -162,7 +162,7 @@
           "name": "Example 1",
           "actual": 2,
           "passed": true,
-          "duration": 0.02975000000003547
+          "duration": 0.027499999999918145
         },
         {
           "input": [
@@ -179,7 +179,7 @@
           "name": "Example 2",
           "actual": 2.5,
           "passed": true,
-          "duration": 0.005207999999981894
+          "duration": 0.0037909999999783395
         },
         {
           "input": [
@@ -196,7 +196,7 @@
           "name": "Extended Example 1",
           "actual": 0,
           "passed": true,
-          "duration": 0.005332999999950516
+          "duration": 0.0037079999999605207
         },
         {
           "input": [
@@ -209,7 +209,7 @@
           "name": "Extended Example 2",
           "actual": 1,
           "passed": true,
-          "duration": 0.0024999999999977263
+          "duration": 0.0019589999999425345
         },
         {
           "input": [
@@ -222,7 +222,7 @@
           "name": "Extended Example 3",
           "actual": 2,
           "passed": true,
-          "duration": 0.002625000000023192
+          "duration": 0.002000000000066393
         },
         {
           "input": [
@@ -245,7 +245,7 @@
           "name": "Extended Example 4",
           "actual": 5.5,
           "passed": true,
-          "duration": 0.010583999999994376
+          "duration": 0.009208000000057837
         },
         {
           "input": [
@@ -262,7 +262,7 @@
           "name": "Extended Example 5",
           "actual": 3,
           "passed": true,
-          "duration": 0.0031669999999621723
+          "duration": 0.0028330000000096334
         }
       ],
       "totalTests": 7,

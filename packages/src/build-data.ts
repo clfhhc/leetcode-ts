@@ -165,49 +165,12 @@ async function runSolutionTests(
 ): Promise<TestResult<any>[]> {
   const results: TestResult<any>[] = [];
 
-  // Helper function to safely execute a Zod-wrapped function
-  // This attempts to execute the function and catch Zod validation errors
-  const safeExecute = (
-    func: (...args: any[]) => any,
-    args: any[]
-  ): { result: any; error: any } => {
-    try {
-      const result = func(...args);
-      return { result, error: null };
-    } catch (err) {
-      // If it's a Zod error, try to see if we can still get a result
-      if (err && typeof err === 'object' && 'issues' in err) {
-        // Check if the error contains the result
-        const zodError = err as any;
-        if (zodError.cause?.result !== undefined) {
-          return { result: zodError.cause.result, error: zodError };
-        }
-        if (zodError.result !== undefined) {
-          return { result: zodError.result, error: zodError };
-        }
-        // Try to access underlying function
-        if ((func as any)._def?.func) {
-          try {
-            const underlyingFunc = (func as any)._def.func;
-            const result = underlyingFunc(...args);
-            return { result, error: zodError };
-          } catch {
-            return { result: undefined, error: zodError };
-          }
-        }
-        return { result: undefined, error: zodError };
-      }
-      return { result: undefined, error: err };
-    }
-  };
-
   for (const testCase of cases) {
     const start = performance.now();
     let actual: any;
     let error: string | undefined;
     let passed = false;
 
-    // Execute the function safely
     // For Zod function schemas, testCase.input should be an array where
     // each element corresponds to a function parameter
     // e.g., [[1,2,3,4,5]] means pass [1,2,3,4,5] as the first argument
@@ -216,46 +179,18 @@ async function runSolutionTests(
       ? testCase.input
       : [testCase.input];
 
-    // Try calling with underlying function first to bypass Zod validation
-    // This ensures we get the actual result even if Zod validation fails
-    let result: any;
-    let execError: any = null;
-
-    if ((solveFunction as any)._def?.func) {
-      // Use underlying function to bypass Zod validation
-      try {
-        result = (solveFunction as any)._def.func(...args);
-        execError = null;
-      } catch {
-        // If underlying function fails, try with Zod wrapper
-        const safeResult = safeExecute(solveFunction, args);
-        result = safeResult.result;
-        execError = safeResult.error;
-      }
-    } else {
-      // No underlying function, use safe execute
-      const safeResult = safeExecute(solveFunction, args);
-      result = safeResult.result;
-      execError = safeResult.error;
-    }
-
-    actual = result;
-
-    if (execError && typeof execError === 'object' && 'issues' in execError) {
-      // Zod validation error occurred
-      error = JSON.stringify(execError.issues, null, 2);
-      // If we got a result despite the error, check if it matches expected
-      if (actual !== undefined) {
-        passed = JSON.stringify(actual) === JSON.stringify(testCase.expected);
-      }
-    } else if (execError) {
-      // Non-Zod error
-      error =
-        execError instanceof Error ? execError.message : String(execError);
-      actual = undefined;
-    } else {
-      // No error - normal execution
+    try {
+      // Execute the function - this will throw if Zod validation fails
+      actual = solveFunction(...args);
       passed = JSON.stringify(actual) === JSON.stringify(testCase.expected);
+    } catch (err) {
+      // Check if it's a Zod validation error
+      if (err && typeof err === 'object' && 'issues' in err) {
+        error = JSON.stringify((err as any).issues, null, 2);
+      } else {
+        error = err instanceof Error ? err.message : String(err);
+      }
+      actual = undefined;
     }
 
     const duration = performance.now() - start;
@@ -288,8 +223,8 @@ async function runProblemTests(
   if (solutionExports && Array.isArray(solutionExports)) {
     const solutions = [];
 
-    // Get solution names from module exports
-    const solutionNames = Object.keys(module).filter(
+    // Get all solution names from module exports
+    const allSolutionKeys = Object.keys(module).filter(
       (key) =>
         key !== 'solutions' &&
         key !== 'cases' &&
@@ -301,7 +236,15 @@ async function runProblemTests(
 
     for (let i = 0; i < solutionExports.length; i++) {
       const solution = solutionExports[i];
-      const solutionName = solutionNames[i] || `solution${i + 1}`;
+
+      // Find the correct name for this solution by checking which key points to this function
+      let solutionName = `solution${i + 1}`;
+      for (const key of allSolutionKeys) {
+        if (module[key] === solution) {
+          solutionName = key;
+          break;
+        }
+      }
 
       // Extract solution info from the function and source content
       const solutionInfo = extractSolutionInfo(solution, solutionName, content);
@@ -310,7 +253,7 @@ async function runProblemTests(
       const testCases = getTestCasesForSolution(
         module,
         solutionName,
-        solutionNames
+        allSolutionKeys
       );
 
       // Run tests with the solution function
@@ -596,14 +539,14 @@ function extractSolutionInfo(
     );
     // Try to match: export const functionName = SchemaName.implement((params) => { code });
     const regex = new RegExp(
-      `export\\s+const\\s+${escapedFunctionName}\\s*=\\s*\\w+Schema\\.implement\\s*\\(\\s*([^)]*\\)\\s*=>\\s*\\{([\\s\\S]*?)\\})\\s*\\);`
+      `export\\s+const\\s+${escapedFunctionName}\\s*=\\s*\\w+Schema\\.implement\\s*\\(\\s*\\(([^)]*)\\)\\s*=>\\s*\\{([\\s\\S]*?)\\}\\s*\\);`
     );
     let implementationMatch = sourceContent.match(regex);
 
     if (!implementationMatch) {
       // Fallback: try a more flexible pattern that matches any schema
       const flexibleRegex = new RegExp(
-        `export\\s+const\\s+${escapedFunctionName}\\s*=\\s*[^=]+\\.implement\\s*\\(\\s*([^)]*\\)\\s*=>\\s*\\{([\\s\\S]*?)\\})\\s*\\);`
+        `export\\s+const\\s+${escapedFunctionName}\\s*=\\s*[^=]+\\.implement\\s*\\(\\s*\\(([^)]*)\\)\\s*=>\\s*\\{([\\s\\S]*?)\\}\\s*\\);`
       );
       implementationMatch = sourceContent.match(flexibleRegex);
     }
@@ -611,16 +554,16 @@ function extractSolutionInfo(
     if (!implementationMatch) {
       // Fallback: try to extract from function string (less reliable)
       implementationMatch = functionString.match(
-        /\w+Schema\.implement\((\([^)]*\)\s*=>\s*\{[\s\S]*\}\);)/
+        /\w+Schema\.implement\(\(([^)]*)\)\s*=>\s*\{([\s\S]*)\}\);/
       );
     }
 
     if (implementationMatch) {
-      // implementationMatch[1] is the parameters, implementationMatch[2] is the body
+      // implementationMatch[1] is the parameters (without parens), implementationMatch[2] is the body
       if (implementationMatch[2]) {
-        actualCode = `const ${functionName} = ${implementationMatch[1]} => {${implementationMatch[2]}};`;
-      } else {
-        // Fallback format if we only got the full function
+        actualCode = `const ${functionName} = (${implementationMatch[1]}) => {${implementationMatch[2]}};`;
+      } else if (implementationMatch[1]) {
+        // Fallback format if we only got parameters
         actualCode = `const ${functionName} = ${implementationMatch[1]};`;
       }
     }

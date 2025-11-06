@@ -116,18 +116,6 @@
       "difficulty": "easy"
     },
     {
-      "id": 529,
-      "slug": "minesweeper",
-      "title": "Minesweeper",
-      "tags": [
-        "array",
-        "depth-first-search",
-        "breadth-first-search",
-        "matrix"
-      ],
-      "difficulty": "medium"
-    },
-    {
       "id": 704,
       "slug": "binary-search",
       "title": "Binary Search",
@@ -150,14 +138,14 @@
       "difficulty": "easy"
     }
   ],
-  "totalProblems": 14,
+  "totalProblems": 13,
   "difficultyCounts": {
     "easy": 8,
-    "medium": 5,
+    "medium": 4,
     "hard": 1
   },
   "tagCounts": {
-    "array": 6,
+    "array": 5,
     "hash-table": 2,
     "linked-list": 1,
     "math": 2,
@@ -168,11 +156,10 @@
     "divide-and-conquer": 1,
     "stack": 1,
     "tree": 1,
-    "depth-first-search": 2,
-    "breadth-first-search": 2,
+    "depth-first-search": 1,
+    "breadth-first-search": 1,
     "binary-tree": 1,
     "interactive": 2,
-    "matrix": 1,
     "'typescript'": 1,
     "'arrays'": 1,
     "'loops'": 1,

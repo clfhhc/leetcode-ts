@@ -16,7 +16,7 @@
       "approach": "- Use a stack to traverse the tree iteratively\n - Track the current level and the maximum level\n - Return the maximum level",
       "timeComplexity": "O(n)",
       "spaceComplexity": "O(h) where h is the height of the tree",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">iterativeSolution</span> = (<span class=\"hljs-params\">root</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (!root) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  }\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">stack</span>: [<span class=\"hljs-title class_\">TreeNode</span>, <span class=\"hljs-built_in\">number</span>][] = [[root, <span class=\"hljs-number\">1</span>]];\n  <span class=\"hljs-keyword\">let</span> <span class=\"hljs-attr\">node</span>: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span> = root;\n  <span class=\"hljs-keyword\">let</span> maxLevel = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> currentLevel = <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (stack.<span class=\"hljs-property\">length</span> &gt; <span class=\"hljs-number\">0</span> || node !== <span class=\"hljs-literal\">null</span>) {\n    <span class=\"hljs-keyword\">while</span> (node !== <span class=\"hljs-literal\">null</span>) {\n      stack.<span class=\"hljs-title function_\">push</span>([node, currentLevel]);\n      node = node.<span class=\"hljs-property\">left</span>;\n      currentLevel += <span class=\"hljs-number\">1</span>;\n    }\n\n    <span class=\"hljs-keyword\">const</span> [currentNode, level] = stack.<span class=\"hljs-title function_\">pop</span>() <span class=\"hljs-keyword\">as</span> [<span class=\"hljs-title class_\">TreeNode</span>, <span class=\"hljs-built_in\">number</span>];\n    maxLevel = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLevel, level);\n\n    node = currentNode.<span class=\"hljs-property\">right</span>;\n    currentLevel = level + <span class=\"hljs-number\">1</span>;\n  }\n\n  <span class=\"hljs-keyword\">return</span> maxLevel;\n} =&gt; {\n  <span class=\"hljs-keyword\">if</span> (!root) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  }\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">stack</span>: [<span class=\"hljs-title class_\">TreeNode</span>, <span class=\"hljs-built_in\">number</span>][] = [[root, <span class=\"hljs-number\">1</span>]];\n  <span class=\"hljs-keyword\">let</span> <span class=\"hljs-attr\">node</span>: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span> = root;\n  <span class=\"hljs-keyword\">let</span> maxLevel = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> currentLevel = <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (stack.<span class=\"hljs-property\">length</span> &gt; <span class=\"hljs-number\">0</span> || node !== <span class=\"hljs-literal\">null</span>) {\n    <span class=\"hljs-keyword\">while</span> (node !== <span class=\"hljs-literal\">null</span>) {\n      stack.<span class=\"hljs-title function_\">push</span>([node, currentLevel]);\n      node = node.<span class=\"hljs-property\">left</span>;\n      currentLevel += <span class=\"hljs-number\">1</span>;\n    }\n\n    <span class=\"hljs-keyword\">const</span> [currentNode, level] = stack.<span class=\"hljs-title function_\">pop</span>() <span class=\"hljs-keyword\">as</span> [<span class=\"hljs-title class_\">TreeNode</span>, <span class=\"hljs-built_in\">number</span>];\n    maxLevel = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLevel, level);\n\n    node = currentNode.<span class=\"hljs-property\">right</span>;\n    currentLevel = level + <span class=\"hljs-number\">1</span>;\n  }\n\n  <span class=\"hljs-keyword\">return</span> maxLevel;\n};\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">iterativeSolution</span> = (<span class=\"hljs-params\">root</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (!root) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  }\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">stack</span>: [<span class=\"hljs-title class_\">TreeNode</span>, <span class=\"hljs-built_in\">number</span>][] = [[root, <span class=\"hljs-number\">1</span>]];\n  <span class=\"hljs-keyword\">let</span> <span class=\"hljs-attr\">node</span>: <span class=\"hljs-title class_\">TreeNode</span> | <span class=\"hljs-literal\">null</span> = root;\n  <span class=\"hljs-keyword\">let</span> maxLevel = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> currentLevel = <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">while</span> (stack.<span class=\"hljs-property\">length</span> &gt; <span class=\"hljs-number\">0</span> || node !== <span class=\"hljs-literal\">null</span>) {\n    <span class=\"hljs-keyword\">while</span> (node !== <span class=\"hljs-literal\">null</span>) {\n      stack.<span class=\"hljs-title function_\">push</span>([node, currentLevel]);\n      node = node.<span class=\"hljs-property\">left</span>;\n      currentLevel += <span class=\"hljs-number\">1</span>;\n    }\n\n    <span class=\"hljs-keyword\">const</span> [currentNode, level] = stack.<span class=\"hljs-title function_\">pop</span>() <span class=\"hljs-keyword\">as</span> [<span class=\"hljs-title class_\">TreeNode</span>, <span class=\"hljs-built_in\">number</span>];\n    maxLevel = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(maxLevel, level);\n\n    node = currentNode.<span class=\"hljs-property\">right</span>;\n    currentLevel = level + <span class=\"hljs-number\">1</span>;\n  }\n\n  <span class=\"hljs-keyword\">return</span> maxLevel;\n};\n</code></pre>",
       "utilities": [
         {
           "name": "TreeNode",
@@ -52,7 +52,7 @@
           "name": "Example 1",
           "actual": 3,
           "passed": true,
-          "duration": 0.29366599999997334
+          "duration": 0.36495800000000145
         },
         {
           "input": [
@@ -70,7 +70,7 @@
           "name": "Example 2",
           "actual": 2,
           "passed": true,
-          "duration": 0.01525000000003729
+          "duration": 0.028208000000063294
         }
       ],
       "totalTests": 2,
@@ -83,7 +83,7 @@
       "approach": "- Use a recursive function to traverse the tree\n - Return the maximum depth of the left and right subtrees\n - Return the maximum depth of the tree",
       "timeComplexity": "O(n)",
       "spaceComplexity": "O(h) where h is the height of the tree",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">recursiveSolution</span> = (<span class=\"hljs-params\">root</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (!root) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> (\n    <span class=\"hljs-number\">1</span> + <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(<span class=\"hljs-title function_\">recursiveSolution</span>(root.<span class=\"hljs-property\">left</span>), <span class=\"hljs-title function_\">recursiveSolution</span>(root.<span class=\"hljs-property\">right</span>))\n  );\n} =&gt; {\n  <span class=\"hljs-keyword\">if</span> (!root) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> (\n    <span class=\"hljs-number\">1</span> + <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(<span class=\"hljs-title function_\">recursiveSolution</span>(root.<span class=\"hljs-property\">left</span>), <span class=\"hljs-title function_\">recursiveSolution</span>(root.<span class=\"hljs-property\">right</span>))\n  );\n};\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">recursiveSolution</span> = (<span class=\"hljs-params\">root</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (!root) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> (\n    <span class=\"hljs-number\">1</span> + <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(<span class=\"hljs-title function_\">recursiveSolution</span>(root.<span class=\"hljs-property\">left</span>), <span class=\"hljs-title function_\">recursiveSolution</span>(root.<span class=\"hljs-property\">right</span>))\n  );\n};\n</code></pre>",
       "utilities": [
         {
           "name": "TreeNode",
@@ -119,7 +119,7 @@
           "name": "Example 1",
           "actual": 3,
           "passed": true,
-          "duration": 0.09858400000001666
+          "duration": 0.12062500000001819
         },
         {
           "input": [
@@ -137,7 +137,7 @@
           "name": "Example 2",
           "actual": 2,
           "passed": true,
-          "duration": 0.007375000000024556
+          "duration": 0.007541999999943982
         }
       ],
       "totalTests": 2,

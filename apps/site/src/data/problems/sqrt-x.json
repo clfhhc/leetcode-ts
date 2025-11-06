@@ -14,7 +14,7 @@
       "approach": "- Use binary search to find the square root of the number.\n - If the square of the middle number is equal to the number, then return the middle number.\n - If the square of the middle number is greater than the number, then the square root is less than the middle number, so we need to search in the left half.\n - If the square of the middle number is less than the number, then the square root is greater than the middle number, so we need to search in the right half.",
       "timeComplexity": "O(log n)",
       "spaceComplexity": "O(1)",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">binarySearchSolution</span> = (<span class=\"hljs-params\">x</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">0</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">1</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">let</span> start = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> end = x;\n  <span class=\"hljs-keyword\">while</span> (start &lt;= end) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((end + start) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">const</span> mid_square = mid * mid;\n    <span class=\"hljs-keyword\">if</span> (mid_square === x) {\n      <span class=\"hljs-keyword\">return</span> mid;\n    }\n    <span class=\"hljs-keyword\">if</span> (mid_square &gt; x) {\n      end = mid - <span class=\"hljs-number\">1</span>;\n    } <span class=\"hljs-keyword\">else</span> {\n      start = mid + <span class=\"hljs-number\">1</span>;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">min</span>(start, end);\n} =&gt; {\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">0</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">1</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">let</span> start = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> end = x;\n  <span class=\"hljs-keyword\">while</span> (start &lt;= end) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((end + start) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">const</span> mid_square = mid * mid;\n    <span class=\"hljs-keyword\">if</span> (mid_square === x) {\n      <span class=\"hljs-keyword\">return</span> mid;\n    }\n    <span class=\"hljs-keyword\">if</span> (mid_square &gt; x) {\n      end = mid - <span class=\"hljs-number\">1</span>;\n    } <span class=\"hljs-keyword\">else</span> {\n      start = mid + <span class=\"hljs-number\">1</span>;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">min</span>(start, end);\n};\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">binarySearchSolution</span> = (<span class=\"hljs-params\">x</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">0</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">1</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">let</span> start = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> end = x;\n  <span class=\"hljs-keyword\">while</span> (start &lt;= end) {\n    <span class=\"hljs-keyword\">const</span> mid = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>((end + start) / <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">const</span> mid_square = mid * mid;\n    <span class=\"hljs-keyword\">if</span> (mid_square === x) {\n      <span class=\"hljs-keyword\">return</span> mid;\n    }\n    <span class=\"hljs-keyword\">if</span> (mid_square &gt; x) {\n      end = mid - <span class=\"hljs-number\">1</span>;\n    } <span class=\"hljs-keyword\">else</span> {\n      start = mid + <span class=\"hljs-number\">1</span>;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">min</span>(start, end);\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -25,7 +25,7 @@
           "name": "Example 1",
           "actual": 2,
           "passed": true,
-          "duration": 0.04816700000003493
+          "duration": 0.03350000000000364
         },
         {
           "input": [
@@ -35,7 +35,7 @@
           "name": "Example 2",
           "actual": 2,
           "passed": true,
-          "duration": 0.0036670000000071923
+          "duration": 0.0029590000000325745
         },
         {
           "input": [
@@ -45,7 +45,7 @@
           "name": "Extended Example 1",
           "actual": 4,
           "passed": true,
-          "duration": 0.001833999999973912
+          "duration": 0.0015000000000782165
         },
         {
           "input": [
@@ -55,7 +55,7 @@
           "name": "Extended Example 2",
           "actual": 5,
           "passed": true,
-          "duration": 0.0014169999999467109
+          "duration": 0.001082999999994172
         },
         {
           "input": [
@@ -65,7 +65,7 @@
           "name": "Extended Example 3",
           "actual": 0,
           "passed": true,
-          "duration": 0.0017500000000154614
+          "duration": 0.0014170000000603977
         },
         {
           "input": [
@@ -75,7 +75,7 @@
           "name": "Extended Example 4",
           "actual": 3,
           "passed": true,
-          "duration": 0.00333299999999781
+          "duration": 0.0028330000000096334
         },
         {
           "input": [
@@ -85,7 +85,7 @@
           "name": "Extended Example 5",
           "actual": 1,
           "passed": true,
-          "duration": 0.0014999999999645297
+          "duration": 0.001040999999986525
         },
         {
           "input": [
@@ -95,7 +95,7 @@
           "name": "Extended Example 6",
           "actual": 1,
           "passed": true,
-          "duration": 0.001167000000009466
+          "duration": 0.0008339999999407155
         }
       ],
       "totalTests": 8,
@@ -108,7 +108,7 @@
       "approach": "- Use Newton's method to find the square root of the number.\n - If the square of the guess is greater than the number, then the guess is too high, so we need to decrease the guess.\n - If the square of the guess is less than the number, then the guess is too low, so we need to increase the guess.\n - If the square of the guess is equal to the number, then return the guess.",
       "timeComplexity": "O(log n)",
       "spaceComplexity": "O(1)",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">newtonMethodSolution</span> = (<span class=\"hljs-params\">x</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">0</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">1</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">let</span> guess = x;\n  <span class=\"hljs-keyword\">while</span> (guess * guess &gt; x &amp;&amp; guess) {\n    guess = (guess + x / guess) / <span class=\"hljs-number\">2</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(guess);\n} =&gt; {\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">0</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">1</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">let</span> guess = x;\n  <span class=\"hljs-keyword\">while</span> (guess * guess &gt; x &amp;&amp; guess) {\n    guess = (guess + x / guess) / <span class=\"hljs-number\">2</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(guess);\n};\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">newtonMethodSolution</span> = (<span class=\"hljs-params\">x</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">0</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">if</span> (x === <span class=\"hljs-number\">1</span>) <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">let</span> guess = x;\n  <span class=\"hljs-keyword\">while</span> (guess * guess &gt; x &amp;&amp; guess) {\n    guess = (guess + x / guess) / <span class=\"hljs-number\">2</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(guess);\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -119,7 +119,7 @@
           "name": "Example 1",
           "actual": 2,
           "passed": true,
-          "duration": 0.01866699999999355
+          "duration": 0.01749999999992724
         },
         {
           "input": [
@@ -129,7 +129,7 @@
           "name": "Example 2",
           "actual": 2,
           "passed": true,
-          "duration": 0.0019169999999917309
+          "duration": 0.0015420000000858636
         },
         {
           "input": [
@@ -139,7 +139,7 @@
           "name": "Extended Example 1",
           "actual": 4,
           "passed": true,
-          "duration": 0.0028340000000071086
+          "duration": 0.0025000000000545697
         },
         {
           "input": [
@@ -149,7 +149,7 @@
           "name": "Extended Example 2",
           "actual": 5,
           "passed": true,
-          "duration": 0.0016249999999899956
+          "duration": 0.001291999999921245
         },
         {
           "input": [
@@ -159,7 +159,7 @@
           "name": "Extended Example 3",
           "actual": 0,
           "passed": true,
-          "duration": 0.001125000000001819
+          "duration": 0.0008330000000569271
         },
         {
           "input": [
@@ -169,7 +169,7 @@
           "name": "Extended Example 4",
           "actual": 3,
           "passed": true,
-          "duration": 0.0014169999999467109
+          "duration": 0.001084000000105334
         },
         {
           "input": [
@@ -179,7 +179,7 @@
           "name": "Extended Example 5",
           "actual": 1,
           "passed": true,
-          "duration": 0.0012919999999780885
+          "duration": 0.0009580000000823929
         },
         {
           "input": [
@@ -189,7 +189,7 @@
           "name": "Extended Example 6",
           "actual": 1,
           "passed": true,
-          "duration": 0.0010839999999916472
+          "duration": 0.0008330000000569271
         }
       ],
       "totalTests": 8,
