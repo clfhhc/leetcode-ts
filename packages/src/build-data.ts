@@ -12,6 +12,7 @@ import { marked } from 'marked';
 import markedCodeFormat from 'marked-code-format';
 import { markedHighlight } from 'marked-highlight';
 import hljs from 'highlight.js';
+import prettier from 'prettier';
 import type {
   ProblemData,
   IndexData,
@@ -46,6 +47,23 @@ function findProblemFiles(dir: string): string[] {
 
   traverse(dir);
   return files;
+}
+
+/**
+ * Format TypeScript code using Prettier
+ * This ensures consistent, readable formatting for all extracted solutions
+ */
+async function formatTypeScriptCode(code: string): Promise<string> {
+  try {
+    const formatted = await prettier.format(code, {
+      ...prettierConfig,
+      parser: 'typescript',
+    });
+    return formatted;
+  } catch (error) {
+    console.warn('Failed to format code with Prettier:', error);
+    return code; // Return unformatted code on error
+  }
 }
 
 /**
@@ -247,7 +265,11 @@ async function runProblemTests(
       }
 
       // Extract solution info from the function and source content
-      const solutionInfo = extractSolutionInfo(solution, solutionName, content);
+      const solutionInfo = await extractSolutionInfo(
+        solution,
+        solutionName,
+        content
+      );
 
       // Get test cases specific to this solution
       const testCases = getTestCasesForSolution(
@@ -430,11 +452,11 @@ function extractUtilityDefinition(
   return result;
 }
 
-function extractSolutionInfo(
+async function extractSolutionInfo(
   solutionFunction: (...args: any[]) => any,
   functionName?: string,
   sourceContent?: string
-): {
+): Promise<{
   name: string;
   description: string;
   approach: string;
@@ -442,7 +464,7 @@ function extractSolutionInfo(
   spaceComplexity: string;
   code: string;
   utilities: Array<{ name: string; code: string }>;
-} {
+}> {
   const functionString = solutionFunction.toString();
 
   // Try to extract info from JSDoc comments above the function
@@ -455,8 +477,9 @@ function extractSolutionInfo(
   // Extract from source content if available
   if (sourceContent && functionName) {
     // Find all JSDoc comments and their corresponding functions
+    // Match any schema name (SolutionSchema, Problem1Schema, etc.)
     const allMatches = sourceContent.matchAll(
-      /\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*SolutionSchema\.implement/g
+      /\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*\w+Schema\.implement/g
     );
 
     let jsdoc = null;
@@ -494,8 +517,9 @@ function extractSolutionInfo(
   const utilities: Array<{ name: string; code: string }> = [];
   if (sourceContent && functionName) {
     // Find all JSDoc comments and their corresponding functions
+    // Match any schema name (SolutionSchema, Problem1Schema, etc.)
     const allMatches = sourceContent.matchAll(
-      /\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*SolutionSchema\.implement/g
+      /\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*\w+Schema\.implement/g
     );
 
     let jsdoc = null;
@@ -531,43 +555,67 @@ function extractSolutionInfo(
   let actualCode = functionString;
 
   if (sourceContent && functionName) {
-    // Look for the actual implementation in the source content
-    // Match any Schema name (Problem1Schema, Problem5Schema, SolutionSchema, etc.)
     const escapedFunctionName = functionName.replace(
       /[.*+?^${}()|[\]\\]/g,
       '\\$&'
     );
-    // Try to match: export const functionName = SchemaName.implement((params) => { code });
-    const regex = new RegExp(
-      `export\\s+const\\s+${escapedFunctionName}\\s*=\\s*\\w+Schema\\.implement\\s*\\(\\s*\\(([^)]*)\\)\\s*=>\\s*\\{([\\s\\S]*?)\\}\\s*\\);`
+
+    // Find the start of the implementation
+    const startPattern = new RegExp(
+      `export\\s+const\\s+${escapedFunctionName}\\s*=\\s*\\w+Schema\\.implement\\s*\\(\\s*\\(([^)]*)\\)\\s*=>\\s*`
     );
-    let implementationMatch = sourceContent.match(regex);
+    const startMatch = sourceContent.match(startPattern);
 
-    if (!implementationMatch) {
-      // Fallback: try a more flexible pattern that matches any schema
-      const flexibleRegex = new RegExp(
-        `export\\s+const\\s+${escapedFunctionName}\\s*=\\s*[^=]+\\.implement\\s*\\(\\s*\\(([^)]*)\\)\\s*=>\\s*\\{([\\s\\S]*?)\\}\\s*\\);`
-      );
-      implementationMatch = sourceContent.match(flexibleRegex);
-    }
+    if (startMatch) {
+      const params = startMatch[1];
+      const startIndex = startMatch.index! + startMatch[0].length;
 
-    if (!implementationMatch) {
-      // Fallback: try to extract from function string (less reliable)
-      implementationMatch = functionString.match(
-        /\w+Schema\.implement\(\(([^)]*)\)\s*=>\s*\{([\s\S]*)\}\);/
-      );
-    }
+      // Check if it's an expression form (no opening brace)
+      if (sourceContent[startIndex] !== '{') {
+        // Expression form: (params) => expression
+        // Find the closing );
+        let depth = 1; // We're inside the .implement( already
+        let endIndex = startIndex;
 
-    if (implementationMatch) {
-      // implementationMatch[1] is the parameters (without parens), implementationMatch[2] is the body
-      if (implementationMatch[2]) {
-        actualCode = `const ${functionName} = (${implementationMatch[1]}) => {${implementationMatch[2]}};`;
-      } else if (implementationMatch[1]) {
-        // Fallback format if we only got parameters
-        actualCode = `const ${functionName} = ${implementationMatch[1]};`;
+        for (let i = startIndex; i < sourceContent.length; i++) {
+          if (sourceContent[i] === '(') depth++;
+          else if (sourceContent[i] === ')') {
+            depth--;
+            if (depth === 0) {
+              endIndex = i;
+              break;
+            }
+          }
+        }
+
+        const expression = sourceContent.substring(startIndex, endIndex).trim();
+        // Wrap expression in braces with return
+        actualCode = `const ${functionName} = (${params}) => {\n  return ${expression};\n};`;
+      } else {
+        // Block form: (params) => { body }
+        // Use brace counting to find the matching closing brace
+        let braceCount = 0;
+        let endIndex = startIndex;
+
+        for (let i = startIndex; i < sourceContent.length; i++) {
+          if (sourceContent[i] === '{') braceCount++;
+          else if (sourceContent[i] === '}') {
+            braceCount--;
+            if (braceCount === 0) {
+              endIndex = i + 1;
+              break;
+            }
+          }
+        }
+
+        const body = sourceContent.substring(startIndex + 1, endIndex - 1);
+        actualCode = `const ${functionName} = (${params}) => {${body}};`;
       }
     }
   }
+
+  // Format the code with Prettier for consistent, clean output
+  const formattedCode = await formatTypeScriptCode(actualCode);
 
   return {
     name,
@@ -575,7 +623,7 @@ function extractSolutionInfo(
     approach,
     timeComplexity,
     spaceComplexity,
-    code: actualCode,
+    code: formattedCode,
     utilities,
   };
 }

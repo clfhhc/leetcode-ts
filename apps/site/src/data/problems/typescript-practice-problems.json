@@ -16,7 +16,7 @@
       "approach": "Add your approach here",
       "timeComplexity": "O()",
       "spaceComplexity": "O()",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem1Solution</span> = (<span class=\"hljs-params\">start, diff, count</span>) =&gt; {\n    <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">array</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n    <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; count; i += <span class=\"hljs-number\">1</span>) {\n      array.<span class=\"hljs-title function_\">push</span>(i * diff + start);\n    }\n    <span class=\"hljs-keyword\">return</span> array;\n  };\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem1Solution</span> = (<span class=\"hljs-params\">start, diff, count</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">array</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; count; i += <span class=\"hljs-number\">1</span>) {\n    array.<span class=\"hljs-title function_\">push</span>(i * diff + start);\n  }\n  <span class=\"hljs-keyword\">return</span> array;\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -41,7 +41,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.029625000000010004
+          "duration": 0.03637500000002092
         },
         {
           "input": [
@@ -63,7 +63,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.017208999999979824
+          "duration": 0.02275000000008731
         },
         {
           "input": [
@@ -83,7 +83,7 @@
             10
           ],
           "passed": true,
-          "duration": 0.007958000000030552
+          "duration": 0.007583000000067841
         }
       ],
       "totalTests": 3,
@@ -96,7 +96,7 @@
       "approach": "Add your approach here",
       "timeComplexity": "O()",
       "spaceComplexity": "O()",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem2Solution</span> = (<span class=\"hljs-params\">start, diff, count</span>) =&gt; {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Array</span>.<span class=\"hljs-title function_\">from</span>({ <span class=\"hljs-attr\">length</span>: count }, <span class=\"hljs-function\">(<span class=\"hljs-params\">_, i</span>) =&gt;</span> i * diff + start);\n  };\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem2Solution</span> = (<span class=\"hljs-params\">start, diff, count</span>) =&gt; {\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Array</span>.<span class=\"hljs-title function_\">from</span>({ <span class=\"hljs-attr\">length</span>: count }, <span class=\"hljs-function\">(<span class=\"hljs-params\">_, i</span>) =&gt;</span> i * diff + start);\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -119,7 +119,7 @@
             11
           ],
           "passed": true,
-          "duration": 0.031791999999995824
+          "duration": 0.039041999999994914
         },
         {
           "input": [
@@ -143,7 +143,7 @@
             60
           ],
           "passed": true,
-          "duration": 0.0073749999999108695
+          "duration": 0.006792000000018561
         }
       ],
       "totalTests": 2,
@@ -156,7 +156,7 @@
       "approach": "Add your approach here",
       "timeComplexity": "O()",
       "spaceComplexity": "O()",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem3Solution</span> = (<span class=\"hljs-params\">start, ratio, count</span>) =&gt; {\n    <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">array</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n    <span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>;\n    <span class=\"hljs-keyword\">while</span> (i &lt; count) {\n      array[i] = start * ratio ** i;\n      i += <span class=\"hljs-number\">1</span>;\n    }\n    <span class=\"hljs-keyword\">return</span> array;\n  };\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem3Solution</span> = (<span class=\"hljs-params\">start, ratio, count</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">array</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n  <span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">while</span> (i &lt; count) {\n    array[i] = start * ratio ** i;\n    i += <span class=\"hljs-number\">1</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> array;\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -179,7 +179,7 @@
             54
           ],
           "passed": true,
-          "duration": 0.01824999999996635
+          "duration": 0.02949999999998454
         },
         {
           "input": [
@@ -203,7 +203,7 @@
             16
           ],
           "passed": true,
-          "duration": 0.0034160000000156288
+          "duration": 0.0036250000000563887
         },
         {
           "input": [
@@ -225,7 +225,7 @@
             12.5
           ],
           "passed": true,
-          "duration": 0.007166999999981272
+          "duration": 0.005999999999971806
         }
       ],
       "totalTests": 3,
@@ -238,7 +238,7 @@
       "approach": "Add your approach here",
       "timeComplexity": "O()",
       "spaceComplexity": "O()",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem4Solution</span> = (<span class=\"hljs-params\">arr, predicate</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">array</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n  arr.<span class=\"hljs-title function_\">forEach</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">n</span>) =&gt;</span> {\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-title function_\">predicate</span>(n)) {\n      array.<span class=\"hljs-title function_\">push</span>(n);\n    }\n  };\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem4Solution</span> = (<span class=\"hljs-params\">arr, predicate</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">array</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n  arr.<span class=\"hljs-title function_\">forEach</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">n</span>) =&gt;</span> {\n    <span class=\"hljs-keyword\">if</span> (<span class=\"hljs-title function_\">predicate</span>(n)) {\n      array.<span class=\"hljs-title function_\">push</span>(n);\n    }\n  });\n  <span class=\"hljs-keyword\">return</span> array;\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -262,7 +262,7 @@
             4
           ],
           "passed": true,
-          "duration": 0.052166999999940344
+          "duration": 0.05712500000004184
         },
         {
           "input": [
@@ -284,7 +284,7 @@
             40
           ],
           "passed": true,
-          "duration": 0.01045899999996891
+          "duration": 0.010125000000016371
         }
       ],
       "totalTests": 2,
@@ -324,7 +324,7 @@
             16
           ],
           "passed": true,
-          "duration": 0.01504099999999653
+          "duration": 0.020458999999959815
         },
         {
           "input": [
@@ -347,7 +347,7 @@
             7
           ],
           "passed": true,
-          "duration": 0.006750000000010914
+          "duration": 0.007791999999994914
         }
       ],
       "totalTests": 2,
@@ -377,7 +377,7 @@
           "name": "Sum: [1,2,3,4,5] = 15",
           "actual": 15,
           "passed": true,
-          "duration": 0.014916999999968539
+          "duration": 0.02104199999996581
         },
         {
           "input": [
@@ -391,7 +391,7 @@
           "name": "Sum: [10,-5,3] = 8",
           "actual": 8,
           "passed": true,
-          "duration": 0.002207999999995991
+          "duration": 0.0024580000000469227
         },
         {
           "input": [
@@ -414,7 +414,7 @@
       "approach": "Add your approach here",
       "timeComplexity": "O()",
       "spaceComplexity": "O()",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem7Solution</span> = (<span class=\"hljs-params\">size</span>) =&gt; {\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Array</span>.<span class=\"hljs-title function_\">from</span>({ <span class=\"hljs-attr\">length</span>: size }, <span class=\"hljs-function\">(<span class=\"hljs-params\">_, i</span>) =&gt;</span>\n    <span class=\"hljs-title class_\">Array</span>.<span class=\"hljs-title function_\">from</span>({ <span class=\"hljs-attr\">length</span>: size }, <span class=\"hljs-function\">(<span class=\"hljs-params\">_, j</span>) =&gt;</span> i + <span class=\"hljs-number\">1</span> + j * (i + <span class=\"hljs-number\">1</span>))\n  );\n};\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem7Solution</span> = (<span class=\"hljs-params\">size</span>) =&gt; {\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title class_\">Array</span>.<span class=\"hljs-title function_\">from</span>({ <span class=\"hljs-attr\">length</span>: size }, <span class=\"hljs-function\">(<span class=\"hljs-params\">_, i</span>) =&gt;</span>\n    <span class=\"hljs-title class_\">Array</span>.<span class=\"hljs-title function_\">from</span>({ <span class=\"hljs-attr\">length</span>: size }, <span class=\"hljs-function\">(<span class=\"hljs-params\">_, j</span>) =&gt;</span> (i + <span class=\"hljs-number\">1</span>) * (j + <span class=\"hljs-number\">1</span>))\n  );\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -457,7 +457,7 @@
             ]
           ],
           "passed": true,
-          "duration": 0.03974999999991269
+          "duration": 0.051124999999956344
         },
         {
           "input": [
@@ -485,7 +485,7 @@
             ]
           ],
           "passed": true,
-          "duration": 0.007041999999955806
+          "duration": 0.005625000000009095
         }
       ],
       "totalTests": 2,
@@ -509,7 +509,7 @@
           "name": "Reverse: \"hello\" → \"olleh\"",
           "actual": "olleh",
           "passed": true,
-          "duration": 0.01712499999996453
+          "duration": 0.020499999999969987
         },
         {
           "input": [
@@ -519,7 +519,7 @@
           "name": "Reverse: \"TypeScript\"",
           "actual": "tpircSepyT",
           "passed": true,
-          "duration": 0.00333299999999781
+          "duration": 0.004666999999926702
         },
         {
           "input": [
@@ -529,7 +529,7 @@
           "name": "Reverse: single character",
           "actual": "a",
           "passed": true,
-          "duration": 0.001167000000009466
+          "duration": 0.0012920000000349319
         }
       ],
       "totalTests": 3,
@@ -553,7 +553,7 @@
           "name": "Reverse: \"hello\" → \"olleh\"",
           "actual": "olleh",
           "passed": true,
-          "duration": 0.010292000000049484
+          "duration": 0.01775000000009186
         },
         {
           "input": [
@@ -563,7 +563,7 @@
           "name": "Reverse: \"TypeScript\"",
           "actual": "tpircSepyT",
           "passed": true,
-          "duration": 0.0014169999999467109
+          "duration": 0.002165999999988344
         },
         {
           "input": [
@@ -573,7 +573,7 @@
           "name": "Reverse: single character",
           "actual": "a",
           "passed": true,
-          "duration": 0.001082999999994172
+          "duration": 0.0012500000000272848
         }
       ],
       "totalTests": 3,
@@ -597,7 +597,7 @@
           "name": "Reverse: \"hello\" → \"olleh\"",
           "actual": "olleh",
           "passed": true,
-          "duration": 0.01641699999993307
+          "duration": 0.023416999999994914
         },
         {
           "input": [
@@ -607,7 +607,7 @@
           "name": "Reverse: \"TypeScript\"",
           "actual": "tpircSepyT",
           "passed": true,
-          "duration": 0.009832999999957792
+          "duration": 0.010415999999963788
         },
         {
           "input": [
@@ -617,7 +617,7 @@
           "name": "Reverse: single character",
           "actual": "a",
           "passed": true,
-          "duration": 0.0013750000000527507
+          "duration": 0.0014579999999568827
         }
       ],
       "totalTests": 3,
@@ -627,10 +627,10 @@
     {
       "name": "problem9Solution",
       "description": "",
-      "approach": "Add your approach here",
-      "timeComplexity": "O()",
-      "spaceComplexity": "O()",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem9Solution</span> = (<span class=\"hljs-params\">str</span>) =&gt; {\n  <span class=\"hljs-keyword\">return</span> str.<span class=\"hljs-title function_\">split</span>(<span class=\"hljs-string\">&#x27;&#x27;</span>).<span class=\"hljs-title function_\">reduce</span>(\n    <span class=\"hljs-function\">(<span class=\"hljs-params\">obj, char</span>) =&gt;</span> ({\n      ...obj,\n      [char]: (obj[char] ?? <span class=\"hljs-number\">0</span>) + <span class=\"hljs-number\">1</span>,\n    }),\n    {};\n</code></pre>",
+      "approach": "- Iterate the chars in the string\n - create a hash map of the seen characters",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem9Solution</span> = (<span class=\"hljs-params\">str</span>) =&gt; {\n  <span class=\"hljs-keyword\">return</span> str.<span class=\"hljs-title function_\">split</span>(<span class=\"hljs-string\">&#x27;&#x27;</span>).<span class=\"hljs-property\">reduce</span>&lt;<span class=\"hljs-title class_\">Record</span>&lt;<span class=\"hljs-built_in\">string</span>, <span class=\"hljs-built_in\">number</span>&gt;&gt;(<span class=\"hljs-function\">(<span class=\"hljs-params\">obj, char</span>) =&gt;</span> {\n    obj[char] = (obj[char] ?? <span class=\"hljs-number\">0</span>) + <span class=\"hljs-number\">1</span>;\n    <span class=\"hljs-keyword\">return</span> obj;\n  }, {});\n};\n</code></pre>",
       "utilities": [],
       "testResults": [
         {
@@ -651,7 +651,7 @@
             "o": 1
           },
           "passed": true,
-          "duration": 0.1346249999999145
+          "duration": 0.15012500000000273
         },
         {
           "input": [
@@ -669,7 +669,7 @@
             "c": 2
           },
           "passed": true,
-          "duration": 0.01495799999997871
+          "duration": 0.015125000000011823
         },
         {
           "input": [
@@ -679,7 +679,7 @@
           "name": "Count frequencies: empty string",
           "actual": {},
           "passed": true,
-          "duration": 0.0019999999999527063
+          "duration": 0.002499999999940883
         }
       ],
       "totalTests": 3,
@@ -730,7 +730,7 @@
             6
           ],
           "passed": true,
-          "duration": 0.022832999999991443
+          "duration": 0.027041000000053828
         },
         {
           "input": [
@@ -752,7 +752,7 @@
             3
           ],
           "passed": true,
-          "duration": 0.007999999999924512
+          "duration": 0.007458000000042375
         },
         {
           "input": [
@@ -780,7 +780,1413 @@
             3
           ],
           "passed": true,
-          "duration": 0.002459000000044398
+          "duration": 0.0025000000000545697
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem11Solution",
+      "description": "",
+      "approach": "- Iterate the numbers in the array\n - Compare the number and the current maximum\n - Replace the current maximum with the number if the number is greater",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem11Solution</span> = (<span class=\"hljs-params\">arr</span>) =&gt; {\n  <span class=\"hljs-keyword\">let</span> <span class=\"hljs-attr\">max</span>: <span class=\"hljs-built_in\">number</span> = -<span class=\"hljs-title class_\">Infinity</span>;\n  arr.<span class=\"hljs-title function_\">forEach</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">n</span>) =&gt;</span> {\n    max = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">max</span>(max, n);\n  });\n  <span class=\"hljs-keyword\">return</span> max;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              3,
+              1,
+              4,
+              1,
+              5,
+              9,
+              2,
+              6
+            ]
+          ],
+          "expected": 9,
+          "name": "Max: find maximum in array",
+          "actual": 9,
+          "passed": true,
+          "duration": 0.031959000000028936
+        },
+        {
+          "input": [
+            [
+              -5,
+              -2,
+              -10,
+              -1
+            ]
+          ],
+          "expected": -1,
+          "name": "Max: all negative numbers",
+          "actual": -1,
+          "passed": true,
+          "duration": 0.004249999999956344
+        },
+        {
+          "input": [
+            [
+              42
+            ]
+          ],
+          "expected": 42,
+          "name": "Max: single element",
+          "actual": 42,
+          "passed": true,
+          "duration": 0.0014169999999467109
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem12Solution",
+      "description": "",
+      "approach": "- Iterate the characters from left to right and right to left\n - Compare the characters at the two pointers",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem12Solution</span> = (<span class=\"hljs-params\">str</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> end = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">ceil</span>(str.<span class=\"hljs-property\">length</span> / <span class=\"hljs-number\">2</span>);\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; end; i += <span class=\"hljs-number\">1</span>) {\n    <span class=\"hljs-keyword\">if</span> (str.<span class=\"hljs-title function_\">charAt</span>(i) !== str.<span class=\"hljs-title function_\">charAt</span>(str.<span class=\"hljs-property\">length</span> - <span class=\"hljs-number\">1</span> - i)) {\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">false</span>;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">true</span>;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            "racecar"
+          ],
+          "expected": true,
+          "name": "Palindrome: \"racecar\"",
+          "actual": true,
+          "passed": true,
+          "duration": 0.03945899999996527
+        },
+        {
+          "input": [
+            "hello"
+          ],
+          "expected": false,
+          "name": "Not palindrome: \"hello\"",
+          "actual": false,
+          "passed": true,
+          "duration": 0.0022910000000138098
+        },
+        {
+          "input": [
+            "a"
+          ],
+          "expected": true,
+          "name": "Palindrome: single character",
+          "actual": true,
+          "passed": true,
+          "duration": 0.002207999999995991
+        },
+        {
+          "input": [
+            ""
+          ],
+          "expected": true,
+          "name": "Palindrome: empty string",
+          "actual": true,
+          "passed": true,
+          "duration": 0.0009999999999763531
+        }
+      ],
+      "totalTests": 4,
+      "passedTests": 4,
+      "failedTests": 0
+    },
+    {
+      "name": "problem13Solution",
+      "description": "",
+      "approach": "- Iterate the elements in the array\n - Create a hash map of the seen elements\n - Remove the elements that were seen",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem13Solution</span> = (<span class=\"hljs-params\">arr</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> seen = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Set</span>&lt;<span class=\"hljs-built_in\">number</span>&gt;();\n  <span class=\"hljs-keyword\">return</span> arr.<span class=\"hljs-title function_\">filter</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">e</span>) =&gt;</span> {\n    <span class=\"hljs-keyword\">if</span> (seen.<span class=\"hljs-title function_\">has</span>(e)) {\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">false</span>;\n    }\n    seen.<span class=\"hljs-title function_\">add</span>(e);\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">true</span>;\n  });\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              2,
+              2,
+              3,
+              4,
+              4,
+              5
+            ]
+          ],
+          "expected": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "name": "Remove duplicates: [1,2,2,3,4,4,5]",
+          "actual": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "passed": true,
+          "duration": 0.04987499999992906
+        },
+        {
+          "input": [
+            [
+              1,
+              1,
+              1,
+              1
+            ]
+          ],
+          "expected": [
+            1
+          ],
+          "name": "Remove duplicates: all same",
+          "actual": [
+            1
+          ],
+          "passed": true,
+          "duration": 0.005249999999932697
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          "expected": [
+            1,
+            2,
+            3
+          ],
+          "name": "Remove duplicates: no duplicates",
+          "actual": [
+            1,
+            2,
+            3
+          ],
+          "passed": true,
+          "duration": 0.00354200000003857
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem14Solution",
+      "description": "",
+      "approach": "- Iterate the elements in the array\n - Return the index of the element if the element is the same as target\n - return -1 if all the elements are not the same as target",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem14Solution</span> = (<span class=\"hljs-params\">arr, target</span>) =&gt; {\n  <span class=\"hljs-keyword\">return</span> arr.<span class=\"hljs-title function_\">indexOf</span>(target);\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              10,
+              20,
+              30,
+              40,
+              50
+            ],
+            30
+          ],
+          "expected": 2,
+          "name": "Find index: element exists",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.021916999999916698
+        },
+        {
+          "input": [
+            [
+              10,
+              20,
+              30,
+              40,
+              50
+            ],
+            100
+          ],
+          "expected": -1,
+          "name": "Find index: element not found",
+          "actual": -1,
+          "passed": true,
+          "duration": 0.0029170000000249274
+        },
+        {
+          "input": [
+            [
+              5
+            ],
+            5
+          ],
+          "expected": 0,
+          "name": "Find index: single element",
+          "actual": 0,
+          "passed": true,
+          "duration": 0.0014159999999492356
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem15Solution",
+      "description": "",
+      "approach": "- Have two pointers\n - One pointer starts from the first element of the first array\n - One pointer starts from the first element of the second array\n - Move the pointer to the next one in its array only if the pointer is smaller than the other pointer\n - add the pointer to the result array before moving",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem15Solution</span> = (<span class=\"hljs-params\">arr1, arr2</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">result</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n  <span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>,\n    j = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">while</span> (i &lt; arr1.<span class=\"hljs-property\">length</span> &amp;&amp; j &lt; arr2.<span class=\"hljs-property\">length</span>) {\n    <span class=\"hljs-keyword\">if</span> (arr1[i] &lt;= arr2[j]) {\n      result.<span class=\"hljs-title function_\">push</span>(arr1[i++]);\n    } <span class=\"hljs-keyword\">else</span> {\n      result.<span class=\"hljs-title function_\">push</span>(arr2[j++]);\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> result.<span class=\"hljs-title function_\">concat</span>(arr1.<span class=\"hljs-title function_\">slice</span>(i), arr2.<span class=\"hljs-title function_\">slice</span>(j));\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              3,
+              5
+            ],
+            [
+              2,
+              4,
+              6
+            ]
+          ],
+          "expected": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "name": "Merge: two equal-length arrays",
+          "actual": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "passed": true,
+          "duration": 0.043874999999957254
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              4,
+              5
+            ]
+          ],
+          "expected": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "name": "Merge: different lengths",
+          "actual": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "passed": true,
+          "duration": 0.004874999999969987
+        },
+        {
+          "input": [
+            [],
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          "expected": [
+            1,
+            2,
+            3
+          ],
+          "name": "Merge: one empty array",
+          "actual": [
+            1,
+            2,
+            3
+          ],
+          "passed": true,
+          "duration": 0.0038329999999859865
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem16Solution",
+      "description": "",
+      "approach": "- Times the (step + 1) iteratively",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem16Solution</span> = (<span class=\"hljs-params\">n</span>) =&gt; {\n  <span class=\"hljs-keyword\">let</span> result = <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">1</span>; i &lt;= n; i += <span class=\"hljs-number\">1</span>) {\n    result *= i;\n  }\n  <span class=\"hljs-keyword\">return</span> result;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            5
+          ],
+          "expected": 120,
+          "name": "Factorial: 5! = 120",
+          "actual": 120,
+          "passed": true,
+          "duration": 0.0222079999999778
+        },
+        {
+          "input": [
+            0
+          ],
+          "expected": 1,
+          "name": "Factorial: 0! = 1",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.0014579999999568827
+        },
+        {
+          "input": [
+            1
+          ],
+          "expected": 1,
+          "name": "Factorial: 1! = 1",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.0009159999999610591
+        },
+        {
+          "input": [
+            7
+          ],
+          "expected": 5040,
+          "name": "Factorial: 7! = 5040",
+          "actual": 5040,
+          "passed": true,
+          "duration": 0.004042000000026746
+        }
+      ],
+      "totalTests": 4,
+      "passedTests": 4,
+      "failedTests": 0
+    },
+    {
+      "name": "problem17Solution",
+      "description": "",
+      "approach": "- Iterate from 2 to the number - 1\n - See if the number can divide the number",
+      "timeComplexity": "O(n^0.5)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem17Solution</span> = (<span class=\"hljs-params\">n</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (n &lt;= <span class=\"hljs-number\">1</span>) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">false</span>;\n  }\n  <span class=\"hljs-keyword\">if</span> (n === <span class=\"hljs-number\">2</span>) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">true</span>;\n  }\n  <span class=\"hljs-keyword\">if</span> (n % <span class=\"hljs-number\">2</span> === <span class=\"hljs-number\">0</span>) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">false</span>;\n  }\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">3</span>; i &lt; <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">sqrt</span>(n); i += <span class=\"hljs-number\">2</span>) {\n    <span class=\"hljs-keyword\">if</span> (n % i === <span class=\"hljs-number\">0</span>) {\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">false</span>;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">true</span>;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            7
+          ],
+          "expected": true,
+          "name": "Prime: 7 is prime",
+          "actual": true,
+          "passed": true,
+          "duration": 0.035499999999956344
+        },
+        {
+          "input": [
+            10
+          ],
+          "expected": false,
+          "name": "Not prime: 10 is not prime",
+          "actual": false,
+          "passed": true,
+          "duration": 0.0018330000000332802
+        },
+        {
+          "input": [
+            2
+          ],
+          "expected": true,
+          "name": "Prime: 2 is prime",
+          "actual": true,
+          "passed": true,
+          "duration": 0.00100000000009004
+        },
+        {
+          "input": [
+            1
+          ],
+          "expected": false,
+          "name": "Not prime: 1 is not prime",
+          "actual": false,
+          "passed": true,
+          "duration": 0.0008750000000645741
+        }
+      ],
+      "totalTests": 4,
+      "passedTests": 4,
+      "failedTests": 0
+    },
+    {
+      "name": "problem18Solution",
+      "description": "",
+      "approach": "- Find the modulo of the (array length - target) divide the length of array\n - split the array at the modulo\n - combine the right split and left split",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem18Solution</span> = (<span class=\"hljs-params\">arr, k</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> index = (arr.<span class=\"hljs-property\">length</span> - k) % arr.<span class=\"hljs-property\">length</span>;\n  <span class=\"hljs-keyword\">return</span> arr.<span class=\"hljs-title function_\">slice</span>(index).<span class=\"hljs-title function_\">concat</span>(arr.<span class=\"hljs-title function_\">slice</span>(<span class=\"hljs-number\">0</span>, index));\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            2
+          ],
+          "expected": [
+            4,
+            5,
+            1,
+            2,
+            3
+          ],
+          "name": "Rotate: [1,2,3,4,5] right by 2",
+          "actual": [
+            4,
+            5,
+            1,
+            2,
+            3
+          ],
+          "passed": true,
+          "duration": 0.03379100000006474
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3
+            ],
+            4
+          ],
+          "expected": [
+            3,
+            1,
+            2
+          ],
+          "name": "Rotate: steps > length",
+          "actual": [
+            3,
+            1,
+            2
+          ],
+          "passed": true,
+          "duration": 0.0035409999999274078
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            0
+          ],
+          "expected": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "name": "Rotate: 0 steps",
+          "actual": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "passed": true,
+          "duration": 0.003375000000005457
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem19Solution",
+      "description": "",
+      "approach": "- Iterate the element in the array\n - Compare the element with the index\n - return the index if there's inconsistency",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem19Solution</span> = (<span class=\"hljs-params\">arr</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (arr.<span class=\"hljs-property\">length</span> === <span class=\"hljs-number\">0</span>) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  }\n  <span class=\"hljs-keyword\">const</span> index = arr.<span class=\"hljs-title function_\">findIndex</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">n, i</span>) =&gt;</span> i !== n);\n  <span class=\"hljs-keyword\">return</span> index === -<span class=\"hljs-number\">1</span> ? arr.<span class=\"hljs-property\">length</span> : index;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              0,
+              1,
+              3,
+              4,
+              5
+            ]
+          ],
+          "expected": 2,
+          "name": "Missing: 2 in [0,1,3,4,5]",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.041208000000096945
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4
+            ]
+          ],
+          "expected": 0,
+          "name": "Missing: 0 in [1,2,3,4]",
+          "actual": 0,
+          "passed": true,
+          "duration": 0.0051249999999072315
+        },
+        {
+          "input": [
+            [
+              0
+            ]
+          ],
+          "expected": 1,
+          "name": "Missing: 1 in [0]",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.0014160000000629225
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem20Solution",
+      "description": "",
+      "approach": "- Find the first letter that has no letter before\n - Replace that with upper letter",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n) (strings are immutable in JavaScript)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem20Solution</span> = (<span class=\"hljs-params\">str</span>) =&gt; {\n  <span class=\"hljs-keyword\">return</span> str.<span class=\"hljs-title function_\">replace</span>(<span class=\"hljs-regexp\">/\\b\\w/g</span>, <span class=\"hljs-function\">(<span class=\"hljs-params\">c</span>) =&gt;</span> c.<span class=\"hljs-title function_\">toUpperCase</span>());\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            "hello world"
+          ],
+          "expected": "Hello World",
+          "name": "Title case: \"hello world\"",
+          "actual": "Hello World",
+          "passed": true,
+          "duration": 0.07387500000004366
+        },
+        {
+          "input": [
+            "the quick brown fox"
+          ],
+          "expected": "The Quick Brown Fox",
+          "name": "Title case: multiple words",
+          "actual": "The Quick Brown Fox",
+          "passed": true,
+          "duration": 0.003291999999987638
+        },
+        {
+          "input": [
+            "a"
+          ],
+          "expected": "A",
+          "name": "Title case: single letter",
+          "actual": "A",
+          "passed": true,
+          "duration": 0.0014169999999467109
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem21Solution",
+      "description": "",
+      "approach": "- Use a hash map to store number -> index mappings\n - For each number, check if its complement (target - number) exists in the map\n - If found, return the indices; otherwise, store current number and index",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem21Solution</span> = (<span class=\"hljs-params\">arr, target</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">complement</span>: <span class=\"hljs-title class_\">Record</span>&lt;<span class=\"hljs-built_in\">number</span>, <span class=\"hljs-built_in\">number</span>&gt; = {};\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; arr.<span class=\"hljs-property\">length</span>; i += <span class=\"hljs-number\">1</span>) {\n    <span class=\"hljs-keyword\">if</span> (complement[arr[i]] != <span class=\"hljs-literal\">null</span>) {\n      <span class=\"hljs-keyword\">return</span> [target - arr[i], arr[i]];\n    } <span class=\"hljs-keyword\">else</span> {\n      complement[target - arr[i]] = i;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">null</span>;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              2,
+              7,
+              11,
+              15
+            ],
+            9
+          ],
+          "expected": [
+            2,
+            7
+          ],
+          "name": "Two sum: found pair [2,7]",
+          "actual": [
+            2,
+            7
+          ],
+          "passed": true,
+          "duration": 0.04233299999998508
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            10
+          ],
+          "expected": null,
+          "name": "Two sum: no pair found",
+          "actual": null,
+          "passed": true,
+          "duration": 0.00333299999999781
+        },
+        {
+          "input": [
+            [
+              3,
+              3
+            ],
+            6
+          ],
+          "expected": [
+            3,
+            3
+          ],
+          "name": "Two sum: same number twice",
+          "actual": [
+            3,
+            3
+          ],
+          "passed": true,
+          "duration": 0.0025829999999587017
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem22Solution",
+      "description": "",
+      "approach": "- Use a hash map to store vowels\n - for each character, check if vowels exists",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem22Solution</span> = (<span class=\"hljs-params\">str</span>) =&gt; {\n  <span class=\"hljs-keyword\">let</span> count = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">const</span> char <span class=\"hljs-keyword\">of</span> str) {\n    <span class=\"hljs-keyword\">if</span> (vowels.<span class=\"hljs-title function_\">has</span>(char)) {\n      count += <span class=\"hljs-number\">1</span>;\n    }\n  }\n  <span class=\"hljs-keyword\">return</span> count;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            "hello"
+          ],
+          "expected": 2,
+          "name": "Count vowels: \"hello\" has 2",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.024541999999996733
+        },
+        {
+          "input": [
+            "typescript"
+          ],
+          "expected": 2,
+          "name": "Count vowels: \"typescript\" has 2",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.0032089999999698193
+        },
+        {
+          "input": [
+            "aeiou"
+          ],
+          "expected": 5,
+          "name": "Count vowels: all vowels",
+          "actual": 5,
+          "passed": true,
+          "duration": 0.00358399999993253
+        },
+        {
+          "input": [
+            "xyz"
+          ],
+          "expected": 0,
+          "name": "Count vowels: no vowels",
+          "actual": 0,
+          "passed": true,
+          "duration": 0.0012080000000196378
+        }
+      ],
+      "totalTests": 4,
+      "passedTests": 4,
+      "failedTests": 0
+    },
+    {
+      "name": "problem23Solution",
+      "description": "",
+      "approach": "- Iterate over the string\n - use a counter to store the current longest string",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem23Solution</span> = (<span class=\"hljs-params\">str</span>) =&gt; {\n  <span class=\"hljs-keyword\">return</span> str\n    .<span class=\"hljs-title function_\">split</span>(<span class=\"hljs-string\">&#x27; &#x27;</span>)\n    .<span class=\"hljs-title function_\">reduce</span>(\n      <span class=\"hljs-function\">(<span class=\"hljs-params\">longest, word</span>) =&gt;</span> (longest.<span class=\"hljs-property\">length</span> &lt; word.<span class=\"hljs-property\">length</span> ? word : longest),\n      <span class=\"hljs-string\">&#x27;&#x27;</span>\n    );\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            "The quick brown fox"
+          ],
+          "expected": "quick",
+          "name": "Longest word: \"quick\"",
+          "actual": "quick",
+          "passed": true,
+          "duration": 0.0569590000000062
+        },
+        {
+          "input": [
+            "I love programming"
+          ],
+          "expected": "programming",
+          "name": "Longest word: \"programming\"",
+          "actual": "programming",
+          "passed": true,
+          "duration": 0.005667000000016742
+        },
+        {
+          "input": [
+            "a bb ccc"
+          ],
+          "expected": "ccc",
+          "name": "Longest word: \"ccc\"",
+          "actual": "ccc",
+          "passed": true,
+          "duration": 0.004000000000019099
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem24Solution",
+      "description": "",
+      "approach": "- use 0, 1 as the beginning\n - for the rest of the steps, append the sum of the previous 2 numbers",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem24Solution</span> = (<span class=\"hljs-params\">n</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (n === <span class=\"hljs-number\">1</span>) {\n    <span class=\"hljs-keyword\">return</span> [<span class=\"hljs-number\">0</span>];\n  }\n  <span class=\"hljs-keyword\">if</span> (n === <span class=\"hljs-number\">2</span>) {\n    <span class=\"hljs-keyword\">return</span> [<span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">1</span>];\n  }\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">result</span>: <span class=\"hljs-built_in\">number</span>[] = <span class=\"hljs-title class_\">Array</span>.<span class=\"hljs-title function_\">from</span>({ <span class=\"hljs-attr\">length</span>: n }, <span class=\"hljs-function\">(<span class=\"hljs-params\">_, i</span>) =&gt;</span> {\n    <span class=\"hljs-keyword\">if</span> (i === <span class=\"hljs-number\">0</span>) {\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n    }\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">1</span>;\n  });\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">2</span>; i &lt; n; i += <span class=\"hljs-number\">1</span>) {\n    result[i] = result[i - <span class=\"hljs-number\">1</span>] + result[i - <span class=\"hljs-number\">2</span>];\n  }\n  <span class=\"hljs-keyword\">return</span> result;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            5
+          ],
+          "expected": [
+            0,
+            1,
+            1,
+            2,
+            3
+          ],
+          "name": "Fibonacci: first 5 numbers",
+          "actual": [
+            0,
+            1,
+            1,
+            2,
+            3
+          ],
+          "passed": true,
+          "duration": 0.0681250000000091
+        },
+        {
+          "input": [
+            1
+          ],
+          "expected": [
+            0
+          ],
+          "name": "Fibonacci: first 1 number",
+          "actual": [
+            0
+          ],
+          "passed": true,
+          "duration": 0.002124999999978172
+        },
+        {
+          "input": [
+            8
+          ],
+          "expected": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            5,
+            8,
+            13
+          ],
+          "name": "Fibonacci: first 8 numbers",
+          "actual": [
+            0,
+            1,
+            1,
+            2,
+            3,
+            5,
+            8,
+            13
+          ],
+          "passed": true,
+          "duration": 0.005415999999968335
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem25Solution",
+      "description": "",
+      "approach": "- Iterate over the array\n - compare the current element with the last element",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem25Solution</span> = (<span class=\"hljs-params\">arr</span>) =&gt; {\n  <span class=\"hljs-keyword\">return</span> arr.<span class=\"hljs-title function_\">every</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">n, i</span>) =&gt;</span> {\n    <span class=\"hljs-keyword\">if</span> (i === <span class=\"hljs-number\">0</span>) {\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">true</span>;\n    }\n    <span class=\"hljs-keyword\">return</span> arr[i - <span class=\"hljs-number\">1</span>] &lt;= n;\n  });\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          ],
+          "expected": true,
+          "name": "Sorted: ascending order",
+          "actual": true,
+          "passed": true,
+          "duration": 0.029374999999959073
+        },
+        {
+          "input": [
+            [
+              1,
+              3,
+              2,
+              4
+            ]
+          ],
+          "expected": false,
+          "name": "Not sorted: mixed order",
+          "actual": false,
+          "passed": true,
+          "duration": 0.0029999999999290594
+        },
+        {
+          "input": [
+            [
+              5
+            ]
+          ],
+          "expected": true,
+          "name": "Sorted: single element",
+          "actual": true,
+          "passed": true,
+          "duration": 0.001333999999928892
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem26Solution",
+      "description": "",
+      "approach": "- Iterate over the array\n - Track used indices to ensure each element is only used once\n - Return all valid pairs found",
+      "timeComplexity": "O(n log n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem26Solution</span> = (<span class=\"hljs-params\">arr, target</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> complement = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Set</span>&lt;<span class=\"hljs-built_in\">number</span>&gt;();\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">result</span>: [<span class=\"hljs-built_in\">number</span>, <span class=\"hljs-built_in\">number</span>][] = [];\n  arr.<span class=\"hljs-title function_\">forEach</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">n</span>) =&gt;</span> {\n    <span class=\"hljs-keyword\">if</span> (complement.<span class=\"hljs-title function_\">has</span>(n)) {\n      result.<span class=\"hljs-title function_\">push</span>([target - n, n]);\n      complement.<span class=\"hljs-title function_\">delete</span>(n);\n    } <span class=\"hljs-keyword\">else</span> {\n      complement.<span class=\"hljs-title function_\">add</span>(target - n);\n    }\n  });\n  result.<span class=\"hljs-title function_\">sort</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">a, b</span>) =&gt;</span> a[<span class=\"hljs-number\">0</span>] - b[<span class=\"hljs-number\">0</span>]);\n  <span class=\"hljs-keyword\">return</span> result;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            5
+          ],
+          "expected": [
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "name": "Pairs: sum to 5",
+          "actual": [
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "passed": true,
+          "duration": 0.055708999999978914
+        },
+        {
+          "input": [
+            [
+              1,
+              1,
+              1,
+              1
+            ],
+            2
+          ],
+          "expected": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "name": "Pairs: duplicates (each element used once)",
+          "actual": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "passed": true,
+          "duration": 0.00641700000005585
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3
+            ],
+            10
+          ],
+          "expected": [],
+          "name": "Pairs: no pairs found",
+          "actual": [],
+          "passed": true,
+          "duration": 0.0035830000000487416
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem27Solution",
+      "description": "",
+      "approach": "- filter all the elements that are not equal to the value",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem27Solution</span> = (<span class=\"hljs-params\">arr, value</span>) =&gt; {\n  <span class=\"hljs-keyword\">return</span> arr.<span class=\"hljs-title function_\">filter</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">n</span>) =&gt;</span> n !== value);\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              2,
+              4
+            ],
+            2
+          ],
+          "expected": [
+            1,
+            3,
+            4
+          ],
+          "name": "Remove: all 2s",
+          "actual": [
+            1,
+            3,
+            4
+          ],
+          "passed": true,
+          "duration": 0.029332999999951426
+        },
+        {
+          "input": [
+            [
+              5,
+              5,
+              5,
+              5
+            ],
+            5
+          ],
+          "expected": [],
+          "name": "Remove: all elements",
+          "actual": [],
+          "passed": true,
+          "duration": 0.003666999999950349
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3
+            ],
+            4
+          ],
+          "expected": [
+            1,
+            2,
+            3
+          ],
+          "name": "Remove: value not present",
+          "actual": [
+            1,
+            2,
+            3
+          ],
+          "passed": true,
+          "duration": 0.0027499999999918145
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem28Solution",
+      "description": "",
+      "approach": "Add your approach here",
+      "timeComplexity": "O()",
+      "spaceComplexity": "O()",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem28Solution</span> = (<span class=\"hljs-params\">arr</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (arr.<span class=\"hljs-property\">length</span> === <span class=\"hljs-number\">0</span>) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-literal\">null</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> arr.<span class=\"hljs-title function_\">reduce</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">sum, n</span>) =&gt;</span> sum + n, <span class=\"hljs-number\">0</span>) / arr.<span class=\"hljs-property\">length</span>;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ]
+          ],
+          "expected": 3,
+          "name": "Average: [1,2,3,4,5] = 3",
+          "actual": 3,
+          "passed": true,
+          "duration": 0.03070900000000165
+        },
+        {
+          "input": [
+            [
+              10,
+              20,
+              30
+            ]
+          ],
+          "expected": 20,
+          "name": "Average: [10,20,30] = 20",
+          "actual": 20,
+          "passed": true,
+          "duration": 0.0029170000000249274
+        },
+        {
+          "input": [
+            [
+              5
+            ]
+          ],
+          "expected": 5,
+          "name": "Average: single element",
+          "actual": 5,
+          "passed": true,
+          "duration": 0.0019589999999425345
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem29Solution",
+      "description": "",
+      "approach": "- find the sets of two arrays\n - find the intersection of two sets",
+      "timeComplexity": "O(m + n)",
+      "spaceComplexity": "O(m + n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem29Solution</span> = (<span class=\"hljs-params\">arr1, arr2</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> set1 = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Set</span>(arr1);\n  <span class=\"hljs-keyword\">const</span> set2 = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Set</span>(arr2);\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">intersection</span>: <span class=\"hljs-built_in\">number</span>[] = [];\n  set1.<span class=\"hljs-title function_\">forEach</span>(<span class=\"hljs-function\">(<span class=\"hljs-params\">n</span>) =&gt;</span> {\n    <span class=\"hljs-keyword\">if</span> (set2.<span class=\"hljs-title function_\">has</span>(n)) {\n      intersection.<span class=\"hljs-title function_\">push</span>(n);\n    }\n  });\n  <span class=\"hljs-keyword\">return</span> intersection;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            [
+              3,
+              4,
+              5,
+              6
+            ]
+          ],
+          "expected": [
+            3,
+            4
+          ],
+          "name": "Common: [3,4]",
+          "actual": [
+            3,
+            4
+          ],
+          "passed": true,
+          "duration": 0.0359169999999267
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              4,
+              5,
+              6
+            ]
+          ],
+          "expected": [],
+          "name": "Common: no common elements",
+          "actual": [],
+          "passed": true,
+          "duration": 0.003666999999950349
+        },
+        {
+          "input": [
+            [
+              1,
+              1,
+              2,
+              2
+            ],
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          "expected": [
+            1,
+            2
+          ],
+          "name": "Common: with duplicates",
+          "actual": [
+            1,
+            2
+          ],
+          "passed": true,
+          "duration": 0.004082999999923231
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 3,
+      "failedTests": 0
+    },
+    {
+      "name": "problem30Solution",
+      "description": "",
+      "approach": "- chunk the array by the target chunk size",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">problem30Solution</span> = (<span class=\"hljs-params\">arr, size</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">result</span>: <span class=\"hljs-built_in\">number</span>[][] = [];\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; arr.<span class=\"hljs-property\">length</span>; i += size) {\n    result.<span class=\"hljs-title function_\">push</span>(arr.<span class=\"hljs-title function_\">slice</span>(i, i + size));\n  }\n  <span class=\"hljs-keyword\">return</span> result;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            2
+          ],
+          "expected": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ]
+          ],
+          "name": "Chunk: size 2",
+          "actual": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ],
+            [
+              5,
+              6
+            ]
+          ],
+          "passed": true,
+          "duration": 0.03441699999996217
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            3
+          ],
+          "expected": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              4,
+              5
+            ]
+          ],
+          "name": "Chunk: uneven division",
+          "actual": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              4,
+              5
+            ]
+          ],
+          "passed": true,
+          "duration": 0.004708000000050561
+        },
+        {
+          "input": [
+            [
+              1,
+              2,
+              3
+            ],
+            5
+          ],
+          "expected": [
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          "name": "Chunk: size larger than array",
+          "actual": [
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          "passed": true,
+          "duration": 0.003375000000005457
         }
       ],
       "totalTests": 3,
@@ -788,8 +2194,8 @@
       "failedTests": 0
     }
   ],
-  "notes": "<ul>\n<li><ol start=\"9999\">\n<li>TypeScript Practice Problems</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: &#39;typescript&#39;, &#39;arrays&#39;, &#39;loops&#39;, &#39;fundamentals&#39;</li>\n<li></li>\n<li>Description:</li>\n<li>A collection of 10 practice problems to sharpen TypeScript skills:</li>\n<li><ol>\n<li>Create arithmetic sequence using for loop</li>\n</ol>\n</li>\n<li><ol start=\"2\">\n<li>Create arithmetic sequence using Array.from</li>\n</ol>\n</li>\n<li><ol start=\"3\">\n<li>Create geometric sequence using while loop</li>\n</ol>\n</li>\n<li><ol start=\"4\">\n<li>Filter array elements using forEach</li>\n</ol>\n</li>\n<li><ol start=\"5\">\n<li>Transform array using map</li>\n</ol>\n</li>\n<li><ol start=\"6\">\n<li>Sum array elements using reduce</li>\n</ol>\n</li>\n<li><ol start=\"7\">\n<li>Create multiplication table using nested loops</li>\n</ol>\n</li>\n<li><ol start=\"8\">\n<li>Reverse string using different methods</li>\n</ol>\n</li>\n<li><ol start=\"9\">\n<li>Count character frequencies using object</li>\n</ol>\n</li>\n<li><ol start=\"10\">\n<li>Flatten nested arrays recursively</li>\n</ol>\n</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>All problems should use TypeScript types properly</li>\n</ul>\n</li>\n<li><ul>\n<li>Try to use different loop types and array methods</li>\n</ul>\n</li>\n<li><ul>\n<li>Focus on clean, readable code</li>\n</ul>\n</li>\n</ul>\n",
-  "totalTests": 32,
-  "passedTests": 32,
+  "notes": "<ul>\n<li><ol start=\"9999\">\n<li>TypeScript Practice Problems</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: &#39;typescript&#39;, &#39;arrays&#39;, &#39;loops&#39;, &#39;fundamentals&#39;</li>\n<li></li>\n<li>Description:</li>\n<li>A collection of 30 practice problems to sharpen TypeScript/JavaScript fundamentals:</li>\n<li><ol>\n<li>Create arithmetic sequence using for loop</li>\n</ol>\n</li>\n<li><ol start=\"2\">\n<li>Create arithmetic sequence using Array.from</li>\n</ol>\n</li>\n<li><ol start=\"3\">\n<li>Create geometric sequence using while loop</li>\n</ol>\n</li>\n<li><ol start=\"4\">\n<li>Filter array elements using forEach</li>\n</ol>\n</li>\n<li><ol start=\"5\">\n<li>Transform array using map</li>\n</ol>\n</li>\n<li><ol start=\"6\">\n<li>Sum array elements using reduce</li>\n</ol>\n</li>\n<li><ol start=\"7\">\n<li>Create multiplication table using nested loops</li>\n</ol>\n</li>\n<li><ol start=\"8\">\n<li>Reverse string using different methods (3 variations)</li>\n</ol>\n</li>\n<li><ol start=\"9\">\n<li>Count character frequencies using object</li>\n</ol>\n</li>\n<li><ol start=\"10\">\n<li>Flatten nested arrays recursively</li>\n</ol>\n</li>\n<li><ol start=\"11\">\n<li>Find maximum value in array</li>\n</ol>\n</li>\n<li><ol start=\"12\">\n<li>Check if string is palindrome</li>\n</ol>\n</li>\n<li><ol start=\"13\">\n<li>Remove duplicates from array</li>\n</ol>\n</li>\n<li><ol start=\"14\">\n<li>Find index of element in array</li>\n</ol>\n</li>\n<li><ol start=\"15\">\n<li>Merge two sorted arrays</li>\n</ol>\n</li>\n<li><ol start=\"16\">\n<li>Calculate factorial</li>\n</ol>\n</li>\n<li><ol start=\"17\">\n<li>Check if number is prime</li>\n</ol>\n</li>\n<li><ol start=\"18\">\n<li>Rotate array to the right</li>\n</ol>\n</li>\n<li><ol start=\"19\">\n<li>Find missing number in sequence</li>\n</ol>\n</li>\n<li><ol start=\"20\">\n<li>Convert string to title case</li>\n</ol>\n</li>\n<li><ol start=\"21\">\n<li>Find two numbers that sum to target</li>\n</ol>\n</li>\n<li><ol start=\"22\">\n<li>Count vowels in string</li>\n</ol>\n</li>\n<li><ol start=\"23\">\n<li>Find longest word in string</li>\n</ol>\n</li>\n<li><ol start=\"24\">\n<li>Generate Fibonacci sequence</li>\n</ol>\n</li>\n<li><ol start=\"25\">\n<li>Check if array is sorted</li>\n</ol>\n</li>\n<li><ol start=\"26\">\n<li>Find all pairs with given sum</li>\n</ol>\n</li>\n<li><ol start=\"27\">\n<li>Remove all occurrences of value</li>\n</ol>\n</li>\n<li><ol start=\"28\">\n<li>Calculate average of array</li>\n</ol>\n</li>\n<li><ol start=\"29\">\n<li>Find common elements in two arrays</li>\n</ol>\n</li>\n<li><ol start=\"30\">\n<li>Chunk array into groups</li>\n</ol>\n</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>All problems use TypeScript types properly</li>\n</ul>\n</li>\n<li><ul>\n<li>Practice different loop types and array methods</li>\n</ul>\n</li>\n<li><ul>\n<li>Focus on clean, readable code</li>\n</ul>\n</li>\n<li><ul>\n<li>Build fundamental skills for algorithm problems</li>\n</ul>\n</li>\n</ul>\n",
+  "totalTests": 96,
+  "passedTests": 96,
   "failedTests": 0
 }
