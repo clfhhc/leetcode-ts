@@ -5,7 +5,7 @@
  * Tags: 'typescript', 'arrays', 'loops', 'fundamentals'
  *
  * Description:
- * A collection of 10 practice problems to sharpen TypeScript skills:
+ * A collection of 30 practice problems to sharpen TypeScript/JavaScript fundamentals:
  * 1. Create arithmetic sequence using for loop
  * 2. Create arithmetic sequence using Array.from
  * 3. Create geometric sequence using while loop
@@ -13,14 +13,35 @@
  * 5. Transform array using map
  * 6. Sum array elements using reduce
  * 7. Create multiplication table using nested loops
- * 8. Reverse string using different methods
+ * 8. Reverse string using different methods (3 variations)
  * 9. Count character frequencies using object
  * 10. Flatten nested arrays recursively
+ * 11. Find maximum value in array
+ * 12. Check if string is palindrome
+ * 13. Remove duplicates from array
+ * 14. Find index of element in array
+ * 15. Merge two sorted arrays
+ * 16. Calculate factorial
+ * 17. Check if number is prime
+ * 18. Rotate array to the right
+ * 19. Find missing number in sequence
+ * 20. Convert string to title case
+ * 21. Find two numbers that sum to target
+ * 22. Count vowels in string
+ * 23. Find longest word in string
+ * 24. Generate Fibonacci sequence
+ * 25. Check if array is sorted
+ * 26. Find all pairs with given sum
+ * 27. Remove all occurrences of value
+ * 28. Calculate average of array
+ * 29. Find common elements in two arrays
+ * 30. Chunk array into groups
  *
  * Constraints:
- * - All problems should use TypeScript types properly
- * - Try to use different loop types and array methods
+ * - All problems use TypeScript types properly
+ * - Practice different loop types and array methods
  * - Focus on clean, readable code
+ * - Build fundamental skills for algorithm problems
  */
 
 import { z } from 'zod';
@@ -396,6 +417,655 @@ export const problem10Solution = Problem10Schema.implement((arr) => {
 });
 
 // ============================================================================
+// Problem 11: Find maximum value in array
+// ============================================================================
+export const Problem11Schema = z.function({
+  input: [z.array(z.number())],
+  output: z.number(),
+});
+
+export type Problem11Solution = z.infer<typeof Problem11Schema>;
+
+export const problem11Cases: TestCase<Problem11Solution>[] = [
+  {
+    input: [[3, 1, 4, 1, 5, 9, 2, 6]],
+    expected: 9,
+    name: 'Max: find maximum in array',
+  },
+  {
+    input: [[-5, -2, -10, -1]],
+    expected: -1,
+    name: 'Max: all negative numbers',
+  },
+  {
+    input: [[42]],
+    expected: 42,
+    name: 'Max: single element',
+  },
+];
+
+export const problem11Solution = Problem11Schema.implement((arr) => {});
+
+// ============================================================================
+// Problem 12: Check if string is palindrome
+// ============================================================================
+export const Problem12Schema = z.function({
+  input: [z.string()],
+  output: z.boolean(),
+});
+
+export type Problem12Solution = z.infer<typeof Problem12Schema>;
+
+export const problem12Cases: TestCase<Problem12Solution>[] = [
+  {
+    input: ['racecar'],
+    expected: true,
+    name: 'Palindrome: "racecar"',
+  },
+  {
+    input: ['hello'],
+    expected: false,
+    name: 'Not palindrome: "hello"',
+  },
+  {
+    input: ['a'],
+    expected: true,
+    name: 'Palindrome: single character',
+  },
+  {
+    input: [''],
+    expected: true,
+    name: 'Palindrome: empty string',
+  },
+];
+
+export const problem12Solution = Problem12Schema.implement((str) => {});
+
+// ============================================================================
+// Problem 13: Remove duplicates from array
+// ============================================================================
+export const Problem13Schema = z.function({
+  input: [z.array(z.number())],
+  output: z.array(z.number()),
+});
+
+export type Problem13Solution = z.infer<typeof Problem13Schema>;
+
+export const problem13Cases: TestCase<Problem13Solution>[] = [
+  {
+    input: [[1, 2, 2, 3, 4, 4, 5]],
+    expected: [1, 2, 3, 4, 5],
+    name: 'Remove duplicates: [1,2,2,3,4,4,5]',
+  },
+  {
+    input: [[1, 1, 1, 1]],
+    expected: [1],
+    name: 'Remove duplicates: all same',
+  },
+  {
+    input: [[1, 2, 3]],
+    expected: [1, 2, 3],
+    name: 'Remove duplicates: no duplicates',
+  },
+];
+
+export const problem13Solution = Problem13Schema.implement((arr) => {});
+
+// ============================================================================
+// Problem 14: Find index of element in array
+// ============================================================================
+export const Problem14Schema = z.function({
+  input: [z.array(z.number()), z.number()],
+  output: z.number(),
+});
+
+export type Problem14Solution = z.infer<typeof Problem14Schema>;
+
+export const problem14Cases: TestCase<Problem14Solution>[] = [
+  {
+    input: [[10, 20, 30, 40, 50], 30],
+    expected: 2,
+    name: 'Find index: element exists',
+  },
+  {
+    input: [[10, 20, 30, 40, 50], 100],
+    expected: -1,
+    name: 'Find index: element not found',
+  },
+  {
+    input: [[5], 5],
+    expected: 0,
+    name: 'Find index: single element',
+  },
+];
+
+export const problem14Solution = Problem14Schema.implement((arr, target) => {});
+
+// ============================================================================
+// Problem 15: Merge two sorted arrays
+// ============================================================================
+export const Problem15Schema = z.function({
+  input: [z.array(z.number()), z.array(z.number())],
+  output: z.array(z.number()),
+});
+
+export type Problem15Solution = z.infer<typeof Problem15Schema>;
+
+export const problem15Cases: TestCase<Problem15Solution>[] = [
+  {
+    input: [
+      [1, 3, 5],
+      [2, 4, 6],
+    ],
+    expected: [1, 2, 3, 4, 5, 6],
+    name: 'Merge: two equal-length arrays',
+  },
+  {
+    input: [
+      [1, 2, 3],
+      [4, 5],
+    ],
+    expected: [1, 2, 3, 4, 5],
+    name: 'Merge: different lengths',
+  },
+  {
+    input: [[], [1, 2, 3]],
+    expected: [1, 2, 3],
+    name: 'Merge: one empty array',
+  },
+];
+
+export const problem15Solution = Problem15Schema.implement((arr1, arr2) => {});
+
+// ============================================================================
+// Problem 16: Calculate factorial
+// ============================================================================
+export const Problem16Schema = z.function({
+  input: [z.number()],
+  output: z.number(),
+});
+
+export type Problem16Solution = z.infer<typeof Problem16Schema>;
+
+export const problem16Cases: TestCase<Problem16Solution>[] = [
+  {
+    input: [5],
+    expected: 120,
+    name: 'Factorial: 5! = 120',
+  },
+  {
+    input: [0],
+    expected: 1,
+    name: 'Factorial: 0! = 1',
+  },
+  {
+    input: [1],
+    expected: 1,
+    name: 'Factorial: 1! = 1',
+  },
+  {
+    input: [7],
+    expected: 5040,
+    name: 'Factorial: 7! = 5040',
+  },
+];
+
+export const problem16Solution = Problem16Schema.implement((n) => {});
+
+// ============================================================================
+// Problem 17: Check if number is prime
+// ============================================================================
+export const Problem17Schema = z.function({
+  input: [z.number()],
+  output: z.boolean(),
+});
+
+export type Problem17Solution = z.infer<typeof Problem17Schema>;
+
+export const problem17Cases: TestCase<Problem17Solution>[] = [
+  {
+    input: [7],
+    expected: true,
+    name: 'Prime: 7 is prime',
+  },
+  {
+    input: [10],
+    expected: false,
+    name: 'Not prime: 10 is not prime',
+  },
+  {
+    input: [2],
+    expected: true,
+    name: 'Prime: 2 is prime',
+  },
+  {
+    input: [1],
+    expected: false,
+    name: 'Not prime: 1 is not prime',
+  },
+];
+
+export const problem17Solution = Problem17Schema.implement((n) => {});
+
+// ============================================================================
+// Problem 18: Rotate array to the right
+// ============================================================================
+export const Problem18Schema = z.function({
+  input: [z.array(z.number()), z.number()],
+  output: z.array(z.number()),
+});
+
+export type Problem18Solution = z.infer<typeof Problem18Schema>;
+
+export const problem18Cases: TestCase<Problem18Solution>[] = [
+  {
+    input: [[1, 2, 3, 4, 5], 2],
+    expected: [4, 5, 1, 2, 3],
+    name: 'Rotate: [1,2,3,4,5] right by 2',
+  },
+  {
+    input: [[1, 2, 3], 4],
+    expected: [3, 1, 2],
+    name: 'Rotate: steps > length',
+  },
+  {
+    input: [[1, 2, 3, 4], 0],
+    expected: [1, 2, 3, 4],
+    name: 'Rotate: 0 steps',
+  },
+];
+
+export const problem18Solution = Problem18Schema.implement((arr, k) => {});
+
+// ============================================================================
+// Problem 19: Find missing number in sequence
+// ============================================================================
+export const Problem19Schema = z.function({
+  input: [z.array(z.number())],
+  output: z.number(),
+});
+
+export type Problem19Solution = z.infer<typeof Problem19Schema>;
+
+export const problem19Cases: TestCase<Problem19Solution>[] = [
+  {
+    input: [[0, 1, 3, 4, 5]],
+    expected: 2,
+    name: 'Missing: 2 in [0,1,3,4,5]',
+  },
+  {
+    input: [[1, 2, 3, 4]],
+    expected: 0,
+    name: 'Missing: 0 in [1,2,3,4]',
+  },
+  {
+    input: [[0]],
+    expected: 1,
+    name: 'Missing: 1 in [0]',
+  },
+];
+
+export const problem19Solution = Problem19Schema.implement((arr) => {});
+
+// ============================================================================
+// Problem 20: Convert string to title case
+// ============================================================================
+export const Problem20Schema = z.function({
+  input: [z.string()],
+  output: z.string(),
+});
+
+export type Problem20Solution = z.infer<typeof Problem20Schema>;
+
+export const problem20Cases: TestCase<Problem20Solution>[] = [
+  {
+    input: ['hello world'],
+    expected: 'Hello World',
+    name: 'Title case: "hello world"',
+  },
+  {
+    input: ['the quick brown fox'],
+    expected: 'The Quick Brown Fox',
+    name: 'Title case: multiple words',
+  },
+  {
+    input: ['a'],
+    expected: 'A',
+    name: 'Title case: single letter',
+  },
+];
+
+export const problem20Solution = Problem20Schema.implement((str) => {});
+
+// ============================================================================
+// Problem 21: Find two numbers that sum to target
+// ============================================================================
+export const Problem21Schema = z.function({
+  input: [z.array(z.number()), z.number()],
+  output: z.array(z.number()).nullable(),
+});
+
+export type Problem21Solution = z.infer<typeof Problem21Schema>;
+
+export const problem21Cases: TestCase<Problem21Solution>[] = [
+  {
+    input: [[2, 7, 11, 15], 9],
+    expected: [2, 7],
+    name: 'Two sum: found pair [2,7]',
+  },
+  {
+    input: [[1, 2, 3, 4], 10],
+    expected: null,
+    name: 'Two sum: no pair found',
+  },
+  {
+    input: [[3, 3], 6],
+    expected: [3, 3],
+    name: 'Two sum: same number twice',
+  },
+];
+
+export const problem21Solution = Problem21Schema.implement((arr, target) => {});
+
+// ============================================================================
+// Problem 22: Count vowels in string
+// ============================================================================
+export const Problem22Schema = z.function({
+  input: [z.string()],
+  output: z.number(),
+});
+
+export type Problem22Solution = z.infer<typeof Problem22Schema>;
+
+export const problem22Cases: TestCase<Problem22Solution>[] = [
+  {
+    input: ['hello'],
+    expected: 2,
+    name: 'Count vowels: "hello" has 2',
+  },
+  {
+    input: ['typescript'],
+    expected: 2,
+    name: 'Count vowels: "typescript" has 2',
+  },
+  {
+    input: ['aeiou'],
+    expected: 5,
+    name: 'Count vowels: all vowels',
+  },
+  {
+    input: ['xyz'],
+    expected: 0,
+    name: 'Count vowels: no vowels',
+  },
+];
+
+export const problem22Solution = Problem22Schema.implement((str) => {});
+
+// ============================================================================
+// Problem 23: Find longest word in string
+// ============================================================================
+export const Problem23Schema = z.function({
+  input: [z.string()],
+  output: z.string(),
+});
+
+export type Problem23Solution = z.infer<typeof Problem23Schema>;
+
+export const problem23Cases: TestCase<Problem23Solution>[] = [
+  {
+    input: ['The quick brown fox'],
+    expected: 'quick',
+    name: 'Longest word: "quick"',
+  },
+  {
+    input: ['I love programming'],
+    expected: 'programming',
+    name: 'Longest word: "programming"',
+  },
+  {
+    input: ['a bb ccc'],
+    expected: 'ccc',
+    name: 'Longest word: "ccc"',
+  },
+];
+
+export const problem23Solution = Problem23Schema.implement((str) => {});
+
+// ============================================================================
+// Problem 24: Generate Fibonacci sequence
+// ============================================================================
+export const Problem24Schema = z.function({
+  input: [z.number()],
+  output: z.array(z.number()),
+});
+
+export type Problem24Solution = z.infer<typeof Problem24Schema>;
+
+export const problem24Cases: TestCase<Problem24Solution>[] = [
+  {
+    input: [5],
+    expected: [0, 1, 1, 2, 3],
+    name: 'Fibonacci: first 5 numbers',
+  },
+  {
+    input: [1],
+    expected: [0],
+    name: 'Fibonacci: first 1 number',
+  },
+  {
+    input: [8],
+    expected: [0, 1, 1, 2, 3, 5, 8, 13],
+    name: 'Fibonacci: first 8 numbers',
+  },
+];
+
+export const problem24Solution = Problem24Schema.implement((n) => {});
+
+// ============================================================================
+// Problem 25: Check if array is sorted
+// ============================================================================
+export const Problem25Schema = z.function({
+  input: [z.array(z.number())],
+  output: z.boolean(),
+});
+
+export type Problem25Solution = z.infer<typeof Problem25Schema>;
+
+export const problem25Cases: TestCase<Problem25Solution>[] = [
+  {
+    input: [[1, 2, 3, 4, 5]],
+    expected: true,
+    name: 'Sorted: ascending order',
+  },
+  {
+    input: [[1, 3, 2, 4]],
+    expected: false,
+    name: 'Not sorted: mixed order',
+  },
+  {
+    input: [[5]],
+    expected: true,
+    name: 'Sorted: single element',
+  },
+];
+
+export const problem25Solution = Problem25Schema.implement((arr) => {});
+
+// ============================================================================
+// Problem 26: Find all pairs with given sum
+// ============================================================================
+export const Problem26Schema = z.function({
+  input: [z.array(z.number()), z.number()],
+  output: z.array(z.array(z.number())),
+});
+
+export type Problem26Solution = z.infer<typeof Problem26Schema>;
+
+export const problem26Cases: TestCase<Problem26Solution>[] = [
+  {
+    input: [[1, 2, 3, 4, 5], 5],
+    expected: [
+      [1, 4],
+      [2, 3],
+    ],
+    name: 'Pairs: sum to 5',
+  },
+  {
+    input: [[1, 1, 1, 1], 2],
+    expected: [
+      [1, 1],
+      [1, 1],
+      [1, 1],
+    ],
+    name: 'Pairs: duplicates',
+  },
+  {
+    input: [[1, 2, 3], 10],
+    expected: [],
+    name: 'Pairs: no pairs found',
+  },
+];
+
+export const problem26Solution = Problem26Schema.implement((arr, target) => {});
+
+// ============================================================================
+// Problem 27: Remove all occurrences of value
+// ============================================================================
+export const Problem27Schema = z.function({
+  input: [z.array(z.number()), z.number()],
+  output: z.array(z.number()),
+});
+
+export type Problem27Solution = z.infer<typeof Problem27Schema>;
+
+export const problem27Cases: TestCase<Problem27Solution>[] = [
+  {
+    input: [[1, 2, 3, 2, 4], 2],
+    expected: [1, 3, 4],
+    name: 'Remove: all 2s',
+  },
+  {
+    input: [[5, 5, 5, 5], 5],
+    expected: [],
+    name: 'Remove: all elements',
+  },
+  {
+    input: [[1, 2, 3], 4],
+    expected: [1, 2, 3],
+    name: 'Remove: value not present',
+  },
+];
+
+export const problem27Solution = Problem27Schema.implement((arr, value) => {});
+
+// ============================================================================
+// Problem 28: Calculate average of array
+// ============================================================================
+export const Problem28Schema = z.function({
+  input: [z.array(z.number())],
+  output: z.number(),
+});
+
+export type Problem28Solution = z.infer<typeof Problem28Schema>;
+
+export const problem28Cases: TestCase<Problem28Solution>[] = [
+  {
+    input: [[1, 2, 3, 4, 5]],
+    expected: 3,
+    name: 'Average: [1,2,3,4,5] = 3',
+  },
+  {
+    input: [[10, 20, 30]],
+    expected: 20,
+    name: 'Average: [10,20,30] = 20',
+  },
+  {
+    input: [[5]],
+    expected: 5,
+    name: 'Average: single element',
+  },
+];
+
+export const problem28Solution = Problem28Schema.implement((arr) => {});
+
+// ============================================================================
+// Problem 29: Find common elements in two arrays
+// ============================================================================
+export const Problem29Schema = z.function({
+  input: [z.array(z.number()), z.array(z.number())],
+  output: z.array(z.number()),
+});
+
+export type Problem29Solution = z.infer<typeof Problem29Schema>;
+
+export const problem29Cases: TestCase<Problem29Solution>[] = [
+  {
+    input: [
+      [1, 2, 3, 4],
+      [3, 4, 5, 6],
+    ],
+    expected: [3, 4],
+    name: 'Common: [3,4]',
+  },
+  {
+    input: [
+      [1, 2, 3],
+      [4, 5, 6],
+    ],
+    expected: [],
+    name: 'Common: no common elements',
+  },
+  {
+    input: [
+      [1, 1, 2, 2],
+      [1, 2, 3],
+    ],
+    expected: [1, 2],
+    name: 'Common: with duplicates',
+  },
+];
+
+export const problem29Solution = Problem29Schema.implement((arr1, arr2) => {});
+
+// ============================================================================
+// Problem 30: Chunk array into groups
+// ============================================================================
+export const Problem30Schema = z.function({
+  input: [z.array(z.number()), z.number()],
+  output: z.array(z.array(z.number())),
+});
+
+export type Problem30Solution = z.infer<typeof Problem30Schema>;
+
+export const problem30Cases: TestCase<Problem30Solution>[] = [
+  {
+    input: [[1, 2, 3, 4, 5, 6], 2],
+    expected: [
+      [1, 2],
+      [3, 4],
+      [5, 6],
+    ],
+    name: 'Chunk: size 2',
+  },
+  {
+    input: [[1, 2, 3, 4, 5], 3],
+    expected: [
+      [1, 2, 3],
+      [4, 5],
+    ],
+    name: 'Chunk: uneven division',
+  },
+  {
+    input: [[1, 2, 3], 5],
+    expected: [[1, 2, 3]],
+    name: 'Chunk: size larger than array',
+  },
+];
+
+export const problem30Solution = Problem30Schema.implement((arr, size) => {});
+
+// ============================================================================
 // Export all solutions and cases
 // ============================================================================
 export const solutions = [
@@ -411,4 +1081,24 @@ export const solutions = [
   problem8RecursionSolution,
   problem9Solution,
   problem10Solution,
+  problem11Solution,
+  problem12Solution,
+  problem13Solution,
+  problem14Solution,
+  problem15Solution,
+  problem16Solution,
+  problem17Solution,
+  problem18Solution,
+  problem19Solution,
+  problem20Solution,
+  problem21Solution,
+  problem22Solution,
+  problem23Solution,
+  problem24Solution,
+  problem25Solution,
+  problem26Solution,
+  problem27Solution,
+  problem28Solution,
+  problem29Solution,
+  problem30Solution,
 ];
