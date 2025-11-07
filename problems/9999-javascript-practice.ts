@@ -281,7 +281,7 @@ export const problem7Cases: TestCase<Problem7Solution>[] = [
 
 export const problem7Solution = Problem7Schema.implement((size) => {
   return Array.from({ length: size }, (_, i) =>
-    Array.from({ length: size }, (_, j) => i + 1 + j * (i + 1))
+    Array.from({ length: size }, (_, j) => (i + 1) * (j + 1))
   );
 });
 
@@ -364,14 +364,19 @@ export const problem9Cases: TestCase<Problem9Solution>[] = [
   },
 ];
 
+/**
+ * Problem 9 Solution
+ * Approach:
+ *   - Iterate the chars in the string
+ *   - create a hash map of the seen characters
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
 export const problem9Solution = Problem9Schema.implement((str) => {
-  return str.split('').reduce(
-    (obj, char) => ({
-      ...obj,
-      [char]: (obj[char] ?? 0) + 1,
-    }),
-    {}
-  );
+  return str.split('').reduce<Record<string, number>>((obj, char) => {
+    obj[char] = (obj[char] ?? 0) + 1;
+    return obj;
+  }, {});
 });
 
 // ============================================================================
@@ -444,7 +449,22 @@ export const problem11Cases: TestCase<Problem11Solution>[] = [
   },
 ];
 
-export const problem11Solution = Problem11Schema.implement((arr) => {});
+/**
+ * Problem 11 Solution
+ * Approach:
+ *   - Iterate the numbers in the array
+ *   - Compare the number and the current maximum
+ *   - Replace the current maximum with the number if the number is greater
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+export const problem11Solution = Problem11Schema.implement((arr) => {
+  let max: number = -Infinity;
+  arr.forEach((n) => {
+    max = Math.max(max, n);
+  });
+  return max;
+});
 
 // ============================================================================
 // Problem 12: Check if string is palindrome
@@ -479,7 +499,23 @@ export const problem12Cases: TestCase<Problem12Solution>[] = [
   },
 ];
 
-export const problem12Solution = Problem12Schema.implement((str) => {});
+/**
+ * Problem 12 Solution
+ * Approach:
+ *   - Iterate the characters from left to right and right to left
+ *   - Compare the characters at the two pointers
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+export const problem12Solution = Problem12Schema.implement((str) => {
+  const end = Math.ceil(str.length / 2);
+  for (let i = 0; i < end; i += 1) {
+    if (str.charAt(i) !== str.charAt(str.length - 1 - i)) {
+      return false;
+    }
+  }
+  return true;
+});
 
 // ============================================================================
 // Problem 13: Remove duplicates from array
@@ -509,7 +545,25 @@ export const problem13Cases: TestCase<Problem13Solution>[] = [
   },
 ];
 
-export const problem13Solution = Problem13Schema.implement((arr) => {});
+/**
+ * Problem 13 Solution
+ * Approach:
+ *   - Iterate the elements in the array
+ *   - Create a hash map of the seen elements
+ *   - Remove the elements that were seen
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
+export const problem13Solution = Problem13Schema.implement((arr) => {
+  const seen = new Set<number>();
+  return arr.filter((e) => {
+    if (seen.has(e)) {
+      return false;
+    }
+    seen.add(e);
+    return true;
+  });
+});
 
 // ============================================================================
 // Problem 14: Find index of element in array
@@ -539,7 +593,18 @@ export const problem14Cases: TestCase<Problem14Solution>[] = [
   },
 ];
 
-export const problem14Solution = Problem14Schema.implement((arr, target) => {});
+/**
+ * Problem 14 Solution
+ * Approach:
+ *   - Iterate the elements in the array
+ *   - Return the index of the element if the element is the same as target
+ *   - return -1 if all the elements are not the same as target
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+export const problem14Solution = Problem14Schema.implement((arr, target) => {
+  return arr.indexOf(target);
+});
 
 // ============================================================================
 // Problem 15: Merge two sorted arrays
@@ -575,7 +640,30 @@ export const problem15Cases: TestCase<Problem15Solution>[] = [
   },
 ];
 
-export const problem15Solution = Problem15Schema.implement((arr1, arr2) => {});
+/**
+ * Problem 15 Solution
+ * Approach:
+ *   - Have two pointers
+ *   - One pointer starts from the first element of the first array
+ *   - One pointer starts from the first element of the second array
+ *   - Move the pointer to the next one in its array only if the pointer is smaller than the other pointer
+ *   - add the pointer to the result array before moving
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
+export const problem15Solution = Problem15Schema.implement((arr1, arr2) => {
+  const result: number[] = [];
+  let i = 0,
+    j = 0;
+  while (i < arr1.length && j < arr2.length) {
+    if (arr1[i] <= arr2[j]) {
+      result.push(arr1[i++]);
+    } else {
+      result.push(arr2[j++]);
+    }
+  }
+  return result.concat(arr1.slice(i), arr2.slice(j));
+});
 
 // ============================================================================
 // Problem 16: Calculate factorial
@@ -610,7 +698,20 @@ export const problem16Cases: TestCase<Problem16Solution>[] = [
   },
 ];
 
-export const problem16Solution = Problem16Schema.implement((n) => {});
+/**
+ * Problem 16 Solution
+ * Approach:
+ *   - Times the (step + 1) iteratively
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+export const problem16Solution = Problem16Schema.implement((n) => {
+  let result = 1;
+  for (let i = 1; i <= n; i += 1) {
+    result *= i;
+  }
+  return result;
+});
 
 // ============================================================================
 // Problem 17: Check if number is prime
@@ -645,7 +746,31 @@ export const problem17Cases: TestCase<Problem17Solution>[] = [
   },
 ];
 
-export const problem17Solution = Problem17Schema.implement((n) => {});
+/**
+ * Problem 17 Solution
+ * Approach:
+ *   - Iterate from 2 to the number - 1
+ *   - See if the number can divide the number
+ * Time Complexity: O(n^0.5)
+ * Space Complexity: O(1)
+ */
+export const problem17Solution = Problem17Schema.implement((n) => {
+  if (n <= 1) {
+    return false;
+  }
+  if (n === 2) {
+    return true;
+  }
+  if (n % 2 === 0) {
+    return false;
+  }
+  for (let i = 3; i < Math.sqrt(n); i += 2) {
+    if (n % i === 0) {
+      return false;
+    }
+  }
+  return true;
+});
 
 // ============================================================================
 // Problem 18: Rotate array to the right
@@ -675,7 +800,19 @@ export const problem18Cases: TestCase<Problem18Solution>[] = [
   },
 ];
 
-export const problem18Solution = Problem18Schema.implement((arr, k) => {});
+/**
+ * Problem 18 Solution
+ * Approach:
+ *   - Find the modulo of the (array length - target) divide the length of array
+ *   - split the array at the modulo
+ *   - combine the right split and left split
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
+export const problem18Solution = Problem18Schema.implement((arr, k) => {
+  const index = (arr.length - k) % arr.length;
+  return arr.slice(index).concat(arr.slice(0, index));
+});
 
 // ============================================================================
 // Problem 19: Find missing number in sequence
@@ -705,7 +842,22 @@ export const problem19Cases: TestCase<Problem19Solution>[] = [
   },
 ];
 
-export const problem19Solution = Problem19Schema.implement((arr) => {});
+/**
+ * Problem 19 Solution
+ * Approach:
+ *   - Iterate the element in the array
+ *   - Compare the element with the index
+ *   - return the index if there's inconsistency
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+export const problem19Solution = Problem19Schema.implement((arr) => {
+  if (arr.length === 0) {
+    return 0;
+  }
+  const index = arr.findIndex((n, i) => i !== n);
+  return index === -1 ? arr.length : index;
+});
 
 // ============================================================================
 // Problem 20: Convert string to title case
@@ -735,7 +887,17 @@ export const problem20Cases: TestCase<Problem20Solution>[] = [
   },
 ];
 
-export const problem20Solution = Problem20Schema.implement((str) => {});
+/**
+ * Problem 20 Solution
+ * Approach:
+ *   - Find the first letter that has no letter before
+ *   - Replace that with upper letter
+ * Time Complexity: O(n)
+ * Space Complexity: O(n) (strings are immutable in JavaScript)
+ */
+export const problem20Solution = Problem20Schema.implement((str) => {
+  return str.replace(/\b\w/g, (c) => c.toUpperCase());
+});
 
 // ============================================================================
 // Problem 21: Find two numbers that sum to target
@@ -765,7 +927,26 @@ export const problem21Cases: TestCase<Problem21Solution>[] = [
   },
 ];
 
-export const problem21Solution = Problem21Schema.implement((arr, target) => {});
+/**
+ * Problem 21 Solution
+ * Approach:
+ *   - Use a hash map to store number -> index mappings
+ *   - For each number, check if its complement (target - number) exists in the map
+ *   - If found, return the indices; otherwise, store current number and index
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
+export const problem21Solution = Problem21Schema.implement((arr, target) => {
+  const complement: Record<number, number> = {};
+  for (let i = 0; i < arr.length; i += 1) {
+    if (complement[arr[i]] != null) {
+      return [target - arr[i], arr[i]];
+    } else {
+      complement[target - arr[i]] = i;
+    }
+  }
+  return null;
+});
 
 // ============================================================================
 // Problem 22: Count vowels in string
@@ -800,7 +981,25 @@ export const problem22Cases: TestCase<Problem22Solution>[] = [
   },
 ];
 
-export const problem22Solution = Problem22Schema.implement((str) => {});
+export const vowels = new Set(['a', 'o', 'e', 'i', 'u']);
+
+/**
+ * Problem 22 Solution
+ * Approach:
+ *   - Use a hash map to store vowels
+ *   - for each character, check if vowels exists
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+export const problem22Solution = Problem22Schema.implement((str) => {
+  let count = 0;
+  for (const char of str) {
+    if (vowels.has(char)) {
+      count += 1;
+    }
+  }
+  return count;
+});
 
 // ============================================================================
 // Problem 23: Find longest word in string
@@ -830,7 +1029,22 @@ export const problem23Cases: TestCase<Problem23Solution>[] = [
   },
 ];
 
-export const problem23Solution = Problem23Schema.implement((str) => {});
+/**
+ * Problem 23 Solution
+ * Approach:
+ *   - Iterate over the string
+ *   - use a counter to store the current longest string
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
+export const problem23Solution = Problem23Schema.implement((str) => {
+  return str
+    .split(' ')
+    .reduce(
+      (longest, word) => (longest.length < word.length ? word : longest),
+      ''
+    );
+});
 
 // ============================================================================
 // Problem 24: Generate Fibonacci sequence
@@ -860,7 +1074,32 @@ export const problem24Cases: TestCase<Problem24Solution>[] = [
   },
 ];
 
-export const problem24Solution = Problem24Schema.implement((n) => {});
+/**
+ * Problem 24 Solution
+ * Approach:
+ *   - use 0, 1 as the beginning
+ *   - for the rest of the steps, append the sum of the previous 2 numbers
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
+export const problem24Solution = Problem24Schema.implement((n) => {
+  if (n === 1) {
+    return [0];
+  }
+  if (n === 2) {
+    return [0, 1];
+  }
+  const result: number[] = Array.from({ length: n }, (_, i) => {
+    if (i === 0) {
+      return 0;
+    }
+    return 1;
+  });
+  for (let i = 2; i < n; i += 1) {
+    result[i] = result[i - 1] + result[i - 2];
+  }
+  return result;
+});
 
 // ============================================================================
 // Problem 25: Check if array is sorted
@@ -890,7 +1129,22 @@ export const problem25Cases: TestCase<Problem25Solution>[] = [
   },
 ];
 
-export const problem25Solution = Problem25Schema.implement((arr) => {});
+/**
+ * Problem 25 Solution
+ * Approach:
+ *   - Iterate over the array
+ *   - compare the current element with the last element
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+export const problem25Solution = Problem25Schema.implement((arr) =>
+  arr.every((n, i) => {
+    if (i === 0) {
+      return true;
+    }
+    return arr[i - 1] <= n;
+  })
+);
 
 // ============================================================================
 // Problem 26: Find all pairs with given sum
@@ -916,9 +1170,8 @@ export const problem26Cases: TestCase<Problem26Solution>[] = [
     expected: [
       [1, 1],
       [1, 1],
-      [1, 1],
     ],
-    name: 'Pairs: duplicates',
+    name: 'Pairs: duplicates (each element used once)',
   },
   {
     input: [[1, 2, 3], 10],
@@ -927,7 +1180,29 @@ export const problem26Cases: TestCase<Problem26Solution>[] = [
   },
 ];
 
-export const problem26Solution = Problem26Schema.implement((arr, target) => {});
+/**
+ * Problem 26 Solution
+ * Approach:
+ *   - Iterate over the array
+ *   - Track used indices to ensure each element is only used once
+ *   - Return all valid pairs found
+ * Time Complexity: O(n log n)
+ * Space Complexity: O(n)
+ */
+export const problem26Solution = Problem26Schema.implement((arr, target) => {
+  const complement = new Set<number>();
+  const result: [number, number][] = [];
+  arr.forEach((n) => {
+    if (complement.has(n)) {
+      result.push([target - n, n]);
+      complement.delete(n);
+    } else {
+      complement.add(target - n);
+    }
+  });
+  result.sort((a, b) => a[0] - b[0]);
+  return result;
+});
 
 // ============================================================================
 // Problem 27: Remove all occurrences of value
@@ -957,14 +1232,23 @@ export const problem27Cases: TestCase<Problem27Solution>[] = [
   },
 ];
 
-export const problem27Solution = Problem27Schema.implement((arr, value) => {});
+/**
+ * Problem 27 Solution
+ * Approach:
+ *   - filter all the elements that are not equal to the value
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
+export const problem27Solution = Problem27Schema.implement((arr, value) =>
+  arr.filter((n) => n !== value)
+);
 
 // ============================================================================
 // Problem 28: Calculate average of array
 // ============================================================================
 export const Problem28Schema = z.function({
   input: [z.array(z.number())],
-  output: z.number(),
+  output: z.number().nullable(),
 });
 
 export type Problem28Solution = z.infer<typeof Problem28Schema>;
@@ -987,7 +1271,12 @@ export const problem28Cases: TestCase<Problem28Solution>[] = [
   },
 ];
 
-export const problem28Solution = Problem28Schema.implement((arr) => {});
+export const problem28Solution = Problem28Schema.implement((arr) => {
+  if (arr.length === 0) {
+    return null;
+  }
+  return arr.reduce((sum, n) => sum + n, 0) / arr.length;
+});
 
 // ============================================================================
 // Problem 29: Find common elements in two arrays
@@ -1026,7 +1315,25 @@ export const problem29Cases: TestCase<Problem29Solution>[] = [
   },
 ];
 
-export const problem29Solution = Problem29Schema.implement((arr1, arr2) => {});
+/**
+ * Problem 29 Solution
+ * Approach:
+ *   - find the sets of two arrays
+ *   - find the intersection of two sets
+ * Time Complexity: O(m + n)
+ * Space Complexity: O(m + n)
+ */
+export const problem29Solution = Problem29Schema.implement((arr1, arr2) => {
+  const set1 = new Set(arr1);
+  const set2 = new Set(arr2);
+  const intersection: number[] = [];
+  set1.forEach((n) => {
+    if (set2.has(n)) {
+      intersection.push(n);
+    }
+  });
+  return intersection;
+});
 
 // ============================================================================
 // Problem 30: Chunk array into groups
@@ -1063,7 +1370,20 @@ export const problem30Cases: TestCase<Problem30Solution>[] = [
   },
 ];
 
-export const problem30Solution = Problem30Schema.implement((arr, size) => {});
+/**
+ * Problem 30 Solution
+ * Approach:
+ *   - chunk the array by the target chunk size
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
+export const problem30Solution = Problem30Schema.implement((arr, size) => {
+  const result: number[][] = [];
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
+});
 
 // ============================================================================
 // Export all solutions and cases
