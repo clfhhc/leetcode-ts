@@ -12,6 +12,7 @@ import { marked } from 'marked';
 import markedCodeFormat from 'marked-code-format';
 import { markedHighlight } from 'marked-highlight';
 import hljs from 'highlight.js';
+import prettier from 'prettier';
 import type {
   ProblemData,
   IndexData,
@@ -48,6 +49,134 @@ function findProblemFiles(dir: string): string[] {
   return files;
 }
 
+/**
+ * Format TypeScript code using Prettier
+ * This ensures consistent, readable formatting for all extracted solutions
+ */
+async function formatTypeScriptCode(code: string): Promise<string> {
+  try {
+    const formatted = await prettier.format(code, {
+      ...prettierConfig,
+      parser: 'typescript',
+    });
+    return formatted;
+  } catch (error) {
+    console.warn('Failed to format code with Prettier:', error);
+    return code; // Return unformatted code on error
+  }
+}
+
+/**
+ * Sanitize test cases by replacing functions with string representations
+ * This is needed because functions cannot be serialized to JSON
+ */
+function sanitizeTestCases(testCases: any[]): any[] {
+  const sanitizeValue = (value: any): any => {
+    if (typeof value === 'function') {
+      // Try to get function name or use a generic placeholder
+      const funcName = value.name || 'anonymous';
+      return `[Function: ${funcName}]`;
+    }
+    if (Array.isArray(value)) {
+      return value.map(sanitizeValue);
+    }
+    if (value !== null && typeof value === 'object') {
+      const sanitized: any = {};
+      for (const [key, val] of Object.entries(value)) {
+        sanitized[key] = sanitizeValue(val);
+      }
+      return sanitized;
+    }
+    return value;
+  };
+
+  return testCases.map((testCase) => ({
+    ...testCase,
+    input: sanitizeValue(testCase.input),
+    expected: sanitizeValue(testCase.expected),
+    actual:
+      testCase.actual !== undefined
+        ? sanitizeValue(testCase.actual)
+        : undefined,
+  }));
+}
+
+/**
+ * Extract the base name from a solution or case name
+ * e.g., "problem3Solution" -> "problem3", "problem3Cases" -> "problem3"
+ */
+function extractBaseName(name: string): string | null {
+  // Remove common suffixes
+  const baseName = name
+    .replace(/Solution$/, '')
+    .replace(/Cases$/, '')
+    .replace(/Case$/, '');
+  return baseName !== name ? baseName : null;
+}
+
+/**
+ * Check if a case array name matches a solution name
+ * e.g., "problem3Cases" matches "problem3Solution"
+ */
+function matchesSolution(caseArrayName: string, solutionName: string): boolean {
+  const caseBase = extractBaseName(caseArrayName);
+  const solutionBase = extractBaseName(solutionName);
+  return (
+    caseBase !== null && solutionBase !== null && caseBase === solutionBase
+  );
+}
+
+/**
+ * Check if a case array name is generic (should be run for all solutions)
+ * Generic names don't match any solution pattern
+ */
+function isGenericCaseArray(
+  caseArrayName: string,
+  solutionNames: string[]
+): boolean {
+  const caseBase = extractBaseName(caseArrayName);
+  if (caseBase === null) {
+    return true; // Doesn't follow naming pattern, treat as generic
+  }
+  // Check if it matches any solution
+  return !solutionNames.some((solutionName) =>
+    matchesSolution(caseArrayName, solutionName)
+  );
+}
+
+/**
+ * Get test cases for a specific solution
+ */
+function getTestCasesForSolution(
+  module: any,
+  solutionName: string,
+  solutionNames: string[]
+): any[] {
+  const testCases: any[] = [];
+
+  // Find all exported case arrays
+  const caseArrayKeys = Object.keys(module).filter(
+    (key) =>
+      Array.isArray(module[key]) &&
+      (key.toLowerCase().includes('case') || key === 'cases')
+  );
+
+  for (const caseArrayKey of caseArrayKeys) {
+    const caseArray = module[caseArrayKey];
+
+    // Check if this is a generic case array (runs for all solutions)
+    if (isGenericCaseArray(caseArrayKey, solutionNames)) {
+      testCases.push(...caseArray);
+    }
+    // Check if this case array matches the current solution
+    else if (matchesSolution(caseArrayKey, solutionName)) {
+      testCases.push(...caseArray);
+    }
+  }
+
+  return testCases;
+}
+
 async function runSolutionTests(
   solveFunction: (...args: any[]) => any,
   cases: any[]
@@ -60,16 +189,25 @@ async function runSolutionTests(
     let error: string | undefined;
     let passed = false;
 
+    // For Zod function schemas, testCase.input should be an array where
+    // each element corresponds to a function parameter
+    // e.g., [[1,2,3,4,5]] means pass [1,2,3,4,5] as the first argument
+    // When we spread it with ..., it becomes func([1,2,3,4,5])
+    const args = Array.isArray(testCase.input)
+      ? testCase.input
+      : [testCase.input];
+
     try {
-      // Handle both array and individual parameter formats
-      if (Array.isArray(testCase.input)) {
-        actual = solveFunction(...testCase.input);
-      } else {
-        actual = solveFunction(testCase.input);
-      }
+      // Execute the function - this will throw if Zod validation fails
+      actual = solveFunction(...args);
       passed = JSON.stringify(actual) === JSON.stringify(testCase.expected);
     } catch (err) {
-      error = err instanceof Error ? err.message : String(err);
+      // Check if it's a Zod validation error
+      if (err && typeof err === 'object' && 'issues' in err) {
+        error = JSON.stringify((err as any).issues, null, 2);
+      } else {
+        error = err instanceof Error ? err.message : String(err);
+      }
       actual = undefined;
     }
 
@@ -97,14 +235,14 @@ async function runProblemTests(
   failedTests: number;
 }> {
   const module = (await import(problemPath)) as any;
-  const { cases, solutions: solutionExports } = module;
+  const { solutions: solutionExports } = module;
 
   // Check if this is the new Zod function format
   if (solutionExports && Array.isArray(solutionExports)) {
     const solutions = [];
 
-    // Get solution names from module exports
-    const solutionNames = Object.keys(module).filter(
+    // Get all solution names from module exports
+    const allSolutionKeys = Object.keys(module).filter(
       (key) =>
         key !== 'solutions' &&
         key !== 'cases' &&
@@ -116,13 +254,32 @@ async function runProblemTests(
 
     for (let i = 0; i < solutionExports.length; i++) {
       const solution = solutionExports[i];
-      const solutionName = solutionNames[i] || `solution${i + 1}`;
+
+      // Find the correct name for this solution by checking which key points to this function
+      let solutionName = `solution${i + 1}`;
+      for (const key of allSolutionKeys) {
+        if (module[key] === solution) {
+          solutionName = key;
+          break;
+        }
+      }
 
       // Extract solution info from the function and source content
-      const solutionInfo = extractSolutionInfo(solution, solutionName, content);
+      const solutionInfo = await extractSolutionInfo(
+        solution,
+        solutionName,
+        content
+      );
+
+      // Get test cases specific to this solution
+      const testCases = getTestCasesForSolution(
+        module,
+        solutionName,
+        allSolutionKeys
+      );
 
       // Run tests with the solution function
-      const testResults = await runSolutionTests(solution, cases);
+      const testResults = await runSolutionTests(solution, testCases);
 
       const totalTests = testResults.length;
       const passedTests = testResults.filter((r) => r.passed).length;
@@ -130,7 +287,7 @@ async function runProblemTests(
 
       solutions.push({
         ...solutionInfo,
-        testResults,
+        testResults: sanitizeTestCases(testResults),
         totalTests,
         passedTests,
         failedTests,
@@ -160,7 +317,14 @@ async function runProblemTests(
           ...args: any[]
         ) => any;
 
-        const testResults = await runSolutionTests(solveFunction, cases);
+        // Get test cases for the legacy solution format
+        const testCases = getTestCasesForSolution(
+          module,
+          solutionKey,
+          solutionKeys
+        );
+
+        const testResults = await runSolutionTests(solveFunction, testCases);
 
         const totalTests = testResults.length;
         const passedTests = testResults.filter((r) => r.passed).length;
@@ -168,7 +332,7 @@ async function runProblemTests(
 
         solutions.push({
           ...solution,
-          testResults,
+          testResults: sanitizeTestCases(testResults),
           totalTests,
           passedTests,
           failedTests,
@@ -183,7 +347,17 @@ async function runProblemTests(
     } else {
       // Legacy format with single solve function
       const { solve } = module;
-      const testResults = await runSolutionTests(solve, cases);
+
+      // Attempt to find test cases for the legacy single solve function (assume 'testCases' or similar key)
+      // Fallback to empty array if not found
+      const testCases =
+        module.testCases ||
+        module.cases ||
+        (typeof getTestCasesForSolution === 'function'
+          ? getTestCasesForSolution(module, 'solution', ['solution'])
+          : []);
+
+      const testResults = await runSolutionTests(solve, testCases);
 
       const totalTests = testResults.length;
       const passedTests = testResults.filter((r) => r.passed).length;
@@ -198,7 +372,7 @@ async function runProblemTests(
           timeComplexity: 'O()',
           spaceComplexity: 'O()',
           code: solve.toString(),
-          testResults,
+          testResults: sanitizeTestCases(testResults),
           totalTests,
           passedTests,
           failedTests,
@@ -278,11 +452,11 @@ function extractUtilityDefinition(
   return result;
 }
 
-function extractSolutionInfo(
+async function extractSolutionInfo(
   solutionFunction: (...args: any[]) => any,
   functionName?: string,
   sourceContent?: string
-): {
+): Promise<{
   name: string;
   description: string;
   approach: string;
@@ -290,7 +464,7 @@ function extractSolutionInfo(
   spaceComplexity: string;
   code: string;
   utilities: Array<{ name: string; code: string }>;
-} {
+}> {
   const functionString = solutionFunction.toString();
 
   // Try to extract info from JSDoc comments above the function
@@ -303,8 +477,9 @@ function extractSolutionInfo(
   // Extract from source content if available
   if (sourceContent && functionName) {
     // Find all JSDoc comments and their corresponding functions
+    // Match any schema name (SolutionSchema, Problem1Schema, etc.)
     const allMatches = sourceContent.matchAll(
-      /\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*SolutionSchema\.implement/g
+      /\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*\w+Schema\.implement/g
     );
 
     let jsdoc = null;
@@ -342,8 +517,9 @@ function extractSolutionInfo(
   const utilities: Array<{ name: string; code: string }> = [];
   if (sourceContent && functionName) {
     // Find all JSDoc comments and their corresponding functions
+    // Match any schema name (SolutionSchema, Problem1Schema, etc.)
     const allMatches = sourceContent.matchAll(
-      /\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*SolutionSchema\.implement/g
+      /\/\*\*([\s\S]*?)\*\/\s*export\s+const\s+(\w+)\s*=\s*\w+Schema\.implement/g
     );
 
     let jsdoc = null;
@@ -379,25 +555,67 @@ function extractSolutionInfo(
   let actualCode = functionString;
 
   if (sourceContent && functionName) {
-    // Look for the actual implementation in the source content
     const escapedFunctionName = functionName.replace(
       /[.*+?^${}()|[\]\\]/g,
       '\\$&'
     );
-    const regex = new RegExp(
-      `export\\s+const\\s+${escapedFunctionName}\\s*=\\s*SolutionSchema\\.implement\\(([^)]*\\)\\s*=>\\s*\\{[\\s\\S]*?\\})\\s*\\);`
+
+    // Find the start of the implementation
+    const startPattern = new RegExp(
+      `export\\s+const\\s+${escapedFunctionName}\\s*=\\s*\\w+Schema\\.implement\\s*\\(\\s*\\(([^)]*)\\)\\s*=>\\s*`
     );
-    let implementationMatch = sourceContent.match(regex);
-    if (!implementationMatch) {
-      // Fallback: try to extract from function string
-      implementationMatch = functionString.match(
-        /SolutionSchema\.implement\((\([^)]*\)\s*=>\s*\{[\s\S]*\}\);)/
-      );
-    }
-    if (implementationMatch) {
-      actualCode = `const ${functionName} = ${implementationMatch[1]};`;
+    const startMatch = sourceContent.match(startPattern);
+
+    if (startMatch) {
+      const params = startMatch[1];
+      const startIndex = startMatch.index! + startMatch[0].length;
+
+      // Check if it's an expression form (no opening brace)
+      if (sourceContent[startIndex] !== '{') {
+        // Expression form: (params) => expression
+        // Find the closing );
+        let depth = 1; // We're inside the .implement( already
+        let endIndex = startIndex;
+
+        for (let i = startIndex; i < sourceContent.length; i++) {
+          if (sourceContent[i] === '(') depth++;
+          else if (sourceContent[i] === ')') {
+            depth--;
+            if (depth === 0) {
+              endIndex = i;
+              break;
+            }
+          }
+        }
+
+        const expression = sourceContent.substring(startIndex, endIndex).trim();
+        // Wrap expression in braces with return
+        actualCode = `const ${functionName} = (${params}) => {\n  return ${expression};\n};`;
+      } else {
+        // Block form: (params) => { body }
+        // Use brace counting to find the matching closing brace
+        let braceCount = 0;
+        let endIndex = startIndex;
+
+        for (let i = startIndex; i < sourceContent.length; i++) {
+          if (sourceContent[i] === '{') braceCount++;
+          else if (sourceContent[i] === '}') {
+            braceCount--;
+            if (braceCount === 0) {
+              endIndex = i + 1;
+              break;
+            }
+          }
+        }
+
+        const body = sourceContent.substring(startIndex + 1, endIndex - 1);
+        actualCode = `const ${functionName} = (${params}) => {${body}};`;
+      }
     }
   }
+
+  // Format the code with Prettier for consistent, clean output
+  const formattedCode = await formatTypeScriptCode(actualCode);
 
   return {
     name,
@@ -405,7 +623,7 @@ function extractSolutionInfo(
     approach,
     timeComplexity,
     spaceComplexity,
-    code: actualCode,
+    code: formattedCode,
     utilities,
   };
 }
@@ -481,10 +699,14 @@ export async function buildData(options: BuildDataOptions) {
           validatedMeta = extractMetaFromTSDoc(content);
         }
 
-        // Validate test cases
-        cases.forEach((testCase: any) => {
-          testCaseSchema.parse(testCase);
-        });
+        // Validate test cases (if cases export exists)
+        // Note: Individual case arrays (e.g., problem1Cases) will be validated
+        // when they are used in runProblemTests
+        if (cases && Array.isArray(cases)) {
+          cases.forEach((testCase: any) => {
+            testCaseSchema.parse(testCase);
+          });
+        }
 
         // Run tests
         const { solutions, totalTests, passedTests, failedTests } =
@@ -498,7 +720,7 @@ export async function buildData(options: BuildDataOptions) {
               `\`\`\`typescript\n${solution.code}\n\`\`\``
             ),
             utilities: await Promise.all(
-              solution.utilities.map(async (utility) => ({
+              solution.utilities.map(async (utility: any) => ({
                 ...utility,
                 code: await marked.parse(
                   `\`\`\`typescript\n${utility.code}\n\`\`\``

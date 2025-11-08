@@ -8,11 +8,87 @@ export interface ProblemModule<
   cases: TestCase<T>[];
 }
 
+/**
+ * Extract the base name from a solution or case name
+ * e.g., "problem3Solution" -> "problem3", "problem3Cases" -> "problem3"
+ */
+function extractBaseName(name: string): string | null {
+  // Remove common suffixes
+  const baseName = name
+    .replace(/Solution$/, '')
+    .replace(/Cases$/, '')
+    .replace(/Case$/, '');
+  return baseName !== name ? baseName : null;
+}
+
+/**
+ * Check if a case array name matches a solution name
+ * e.g., "problem3Cases" matches "problem3Solution"
+ */
+function matchesSolution(caseArrayName: string, solutionName: string): boolean {
+  const caseBase = extractBaseName(caseArrayName);
+  const solutionBase = extractBaseName(solutionName);
+  return (
+    caseBase !== null && solutionBase !== null && caseBase === solutionBase
+  );
+}
+
+/**
+ * Check if a case array name is generic (should be run for all solutions)
+ * Generic names don't match any solution pattern
+ */
+function isGenericCaseArray(
+  caseArrayName: string,
+  solutionNames: string[]
+): boolean {
+  const caseBase = extractBaseName(caseArrayName);
+  if (caseBase === null) {
+    return true; // Doesn't follow naming pattern, treat as generic
+  }
+  // Check if it matches any solution
+  return !solutionNames.some((solutionName) =>
+    matchesSolution(caseArrayName, solutionName)
+  );
+}
+
+/**
+ * Get test cases for a specific solution
+ */
+function getTestCasesForSolution(
+  module: any,
+  solutionName: string,
+  solutionNames: string[]
+): any[] {
+  const testCases: any[] = [];
+
+  // Find all exported case arrays
+  const caseArrayKeys = Object.keys(module).filter(
+    (key) =>
+      Array.isArray(module[key]) &&
+      (key.toLowerCase().includes('case') || key === 'cases')
+  );
+
+  for (const caseArrayKey of caseArrayKeys) {
+    const caseArray = module[caseArrayKey];
+
+    // Check if this is a generic case array (runs for all solutions)
+    if (isGenericCaseArray(caseArrayKey, solutionNames)) {
+      testCases.push(...caseArray);
+    }
+    // Check if this case array matches the current solution
+    else if (matchesSolution(caseArrayKey, solutionName)) {
+      testCases.push(...caseArray);
+    }
+  }
+
+  return testCases;
+}
+
 export async function runProblemTests(
   problemPath: string
 ): Promise<{ [solutionName: string]: TestResult[] }> {
   const module = (await import(problemPath)) as any;
-  const { solutions, cases } = module;
+  const { solutions } = module;
   const results: { [solutionName: string]: TestResult[] } = {};
 
   // Get solution names from module exports
@@ -30,7 +106,14 @@ export async function runProblemTests(
     const solutionName = solutionNames[i] || `solution${i + 1}`;
     const solutionResults: TestResult[] = [];
 
-    for (const testCase of cases) {
+    // Get test cases specific to this solution
+    const testCases = getTestCasesForSolution(
+      module,
+      solutionName,
+      solutionNames
+    );
+
+    for (const testCase of testCases) {
       const start = performance.now();
       let actual: any;
       let error: string | undefined;
@@ -71,7 +154,7 @@ export function createTestSuite(
   module: any,
   filterSolution?: string
 ) {
-  const { solutions, cases } = module;
+  const { solutions } = module;
 
   // Extract problem info from the file path or module
   const problemName =
@@ -98,7 +181,14 @@ export function createTestSuite(
       }
 
       describe(solutionName, () => {
-        for (const testCase of cases) {
+        // Get test cases specific to this solution
+        const testCases = getTestCasesForSolution(
+          module,
+          solutionName,
+          solutionNames
+        );
+
+        for (const testCase of testCases) {
           const name =
             testCase.name ?? JSON.stringify(testCase.input).slice(0, 80);
           const fn = testCase.only ? it.only : testCase.skip ? it.skip : it;

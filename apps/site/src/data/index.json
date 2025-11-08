@@ -124,11 +124,23 @@
         "binary-search"
       ],
       "difficulty": "easy"
+    },
+    {
+      "id": 9999,
+      "slug": "typescript-practice-problems",
+      "title": "TypeScript Practice Problems",
+      "tags": [
+        "'typescript'",
+        "'arrays'",
+        "'loops'",
+        "'fundamentals'"
+      ],
+      "difficulty": "easy"
     }
   ],
-  "totalProblems": 12,
+  "totalProblems": 13,
   "difficultyCounts": {
-    "easy": 7,
+    "easy": 8,
     "medium": 4,
     "hard": 1
   },
@@ -147,6 +159,10 @@
     "depth-first-search": 1,
     "breadth-first-search": 1,
     "binary-tree": 1,
-    "interactive": 2
+    "interactive": 2,
+    "'typescript'": 1,
+    "'arrays'": 1,
+    "'loops'": 1,
+    "'fundamentals'": 1
   }
 }
