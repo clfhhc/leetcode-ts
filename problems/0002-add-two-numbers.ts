@@ -23,44 +23,18 @@
  */
 import { z } from 'zod';
 import type { TestCase } from '../packages/src/types.js';
-
-export const ListNodeSchema: z.ZodType<{ val: number; next: any }> = z.lazy(
-  () =>
-    z.object({
-      val: z.number(),
-      next: z.union([ListNodeSchema, z.null()]),
-    })
-);
-
-export type ListNode = z.infer<typeof ListNodeSchema>;
+import {
+  arrayToLinkedList,
+  ListNode,
+  ListNodeSchema,
+} from '../shared/list-node.js';
 
 export const SolutionSchema = z.function({
-  input: [ListNodeSchema, ListNodeSchema],
-  output: ListNodeSchema,
+  input: [ListNodeSchema.nullable(), ListNodeSchema.nullable()],
+  output: ListNodeSchema.nullable(),
 });
 
 export type Solution = z.infer<typeof SolutionSchema>;
-
-export const arrayToLinkedList = (arr: number[]): ListNode => {
-  if (arr.length === 0) throw new Error('Array is empty');
-  const head = { val: arr[0], next: null } as ListNode;
-  let current = head;
-  for (let i = 1; i < arr.length; i++) {
-    current.next = { val: arr[i], next: null } as ListNode;
-    current = current.next;
-  }
-  return head;
-};
-
-export const linkedListToArray = (head: ListNode): number[] => {
-  const result: number[] = [];
-  let current = head;
-  while (current !== null) {
-    result.push(current.val);
-    current = current.next;
-  }
-  return result;
-};
 
 export const cases: TestCase<Solution>[] = [
   {
@@ -85,7 +59,7 @@ export const cases: TestCase<Solution>[] = [
 
 /**
  * Iterative Solution
- * @utilities: ListNodeSchema, ListNode
+ * @utilities: ListNode
  * Approach:
  *   - Traverse both linked lists simultaneously
  *   - Add corresponding digits plus carry from previous addition
@@ -95,13 +69,13 @@ export const cases: TestCase<Solution>[] = [
  * Space Complexity: O(max(m, n)) for the result list
  */
 export const iterativeSolution = SolutionSchema.implement((l1, l2) => {
-  const dummy = { val: 0, next: null } as ListNode;
+  const dummy = new ListNode();
   let current = dummy;
   let carry = 0;
   while (l1 || l2 || carry) {
     const sum = (l1?.val || 0) + (l2?.val || 0) + carry;
     carry = Math.floor(sum / 10);
-    current.next = { val: sum % 10, next: null };
+    current.next = new ListNode(sum % 10);
     current = current.next;
     l1 = l1?.next || null;
     l2 = l2?.next || null;
