@@ -15,15 +15,11 @@
       "approach": "- Traverse both linked lists simultaneously\n - Add corresponding digits plus carry from previous addition\n - Create new node for each digit of the result\n - Handle different lengths by treating missing digits as 0",
       "timeComplexity": "O(max(m, n)) where m, n are lengths of the two lists",
       "spaceComplexity": "O(max(m, n)) for the result list",
-      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">iterativeSolution</span> = (<span class=\"hljs-params\">l1, l2</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> dummy = { <span class=\"hljs-attr\">val</span>: <span class=\"hljs-number\">0</span>, <span class=\"hljs-attr\">next</span>: <span class=\"hljs-literal\">null</span> } <span class=\"hljs-keyword\">as</span> <span class=\"hljs-title class_\">ListNode</span>;\n  <span class=\"hljs-keyword\">let</span> current = dummy;\n  <span class=\"hljs-keyword\">let</span> carry = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">while</span> (l1 || l2 || carry) {\n    <span class=\"hljs-keyword\">const</span> sum = (l1?.<span class=\"hljs-property\">val</span> || <span class=\"hljs-number\">0</span>) + (l2?.<span class=\"hljs-property\">val</span> || <span class=\"hljs-number\">0</span>) + carry;\n    carry = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(sum / <span class=\"hljs-number\">10</span>);\n    current.<span class=\"hljs-property\">next</span> = { <span class=\"hljs-attr\">val</span>: sum % <span class=\"hljs-number\">10</span>, <span class=\"hljs-attr\">next</span>: <span class=\"hljs-literal\">null</span> };\n    current = current.<span class=\"hljs-property\">next</span>;\n    l1 = l1?.<span class=\"hljs-property\">next</span> || <span class=\"hljs-literal\">null</span>;\n    l2 = l2?.<span class=\"hljs-property\">next</span> || <span class=\"hljs-literal\">null</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> dummy.<span class=\"hljs-property\">next</span>;\n};\n</code></pre>",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">iterativeSolution</span> = (<span class=\"hljs-params\">l1, l2</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> dummy = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">ListNode</span>();\n  <span class=\"hljs-keyword\">let</span> current = dummy;\n  <span class=\"hljs-keyword\">let</span> carry = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">while</span> (l1 || l2 || carry) {\n    <span class=\"hljs-keyword\">const</span> sum = (l1?.<span class=\"hljs-property\">val</span> || <span class=\"hljs-number\">0</span>) + (l2?.<span class=\"hljs-property\">val</span> || <span class=\"hljs-number\">0</span>) + carry;\n    carry = <span class=\"hljs-title class_\">Math</span>.<span class=\"hljs-title function_\">floor</span>(sum / <span class=\"hljs-number\">10</span>);\n    current.<span class=\"hljs-property\">next</span> = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">ListNode</span>(sum % <span class=\"hljs-number\">10</span>);\n    current = current.<span class=\"hljs-property\">next</span>;\n    l1 = l1?.<span class=\"hljs-property\">next</span> || <span class=\"hljs-literal\">null</span>;\n    l2 = l2?.<span class=\"hljs-property\">next</span> || <span class=\"hljs-literal\">null</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> dummy.<span class=\"hljs-property\">next</span>;\n};\n</code></pre>",
       "utilities": [
         {
-          "name": "ListNodeSchema",
-          "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title class_\">ListNodeSchema</span>: z.<span class=\"hljs-property\">ZodType</span> = z.<span class=\"hljs-title function_\">lazy</span>(\n  <span class=\"hljs-function\">() =&gt;</span>\n    z.<span class=\"hljs-title function_\">object</span>({\n      <span class=\"hljs-attr\">val</span>: z.<span class=\"hljs-title function_\">number</span>(),\n      <span class=\"hljs-attr\">next</span>: z.<span class=\"hljs-title function_\">union</span>([<span class=\"hljs-title class_\">ListNodeSchema</span>, z.<span class=\"hljs-title function_\">null</span>()]),\n    })\n);\n</code></pre>"
-        },
-        {
           "name": "ListNode",
-          "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">type</span> <span class=\"hljs-title class_\">ListNode</span> = z.<span class=\"hljs-property\">infer</span>&lt;<span class=\"hljs-keyword\">typeof</span> <span class=\"hljs-title class_\">ListNodeSchema</span>&gt;;\n</code></pre>"
+          "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title class_\">ListNode</span> {\n<span class=\"hljs-attr\">val</span>: <span class=\"hljs-built_in\">number</span>;\n  <span class=\"hljs-attr\">next</span>: <span class=\"hljs-title class_\">ListNode</span> | <span class=\"hljs-literal\">null</span>;\n  <span class=\"hljs-title function_\">constructor</span>(<span class=\"hljs-params\"><span class=\"hljs-attr\">val</span>?: <span class=\"hljs-built_in\">number</span>, <span class=\"hljs-attr\">next</span>?: <span class=\"hljs-title class_\">ListNode</span> | <span class=\"hljs-literal\">null</span></span>) {\n    <span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">val</span> = val ?? <span class=\"hljs-number\">0</span>;\n    <span class=\"hljs-variable language_\">this</span>.<span class=\"hljs-property\">next</span> = next ?? <span class=\"hljs-literal\">null</span>;\n  }\n}\n</code></pre>"
         }
       ],
       "testResults": [
@@ -72,7 +68,7 @@
             }
           },
           "passed": true,
-          "duration": 0.3073340000000826
+          "duration": 0.5502079999999978
         },
         {
           "input": [
@@ -95,7 +91,7 @@
             "next": null
           },
           "passed": true,
-          "duration": 0.021459000000049855
+          "duration": 0.015208000000029642
         },
         {
           "input": [
@@ -187,7 +183,7 @@
             }
           },
           "passed": true,
-          "duration": 0.021583999999961634
+          "duration": 0.038000000000010914
         }
       ],
       "totalTests": 3,

@@ -268,7 +268,8 @@ async function runProblemTests(
       const solutionInfo = await extractSolutionInfo(
         solution,
         solutionName,
-        content
+        content,
+        problemPath
       );
 
       // Get test cases specific to this solution
@@ -384,6 +385,99 @@ async function runProblemTests(
   }
 }
 
+/**
+ * Parse import statements to find where a utility is imported from
+ */
+function findUtilityImport(
+  sourceContent: string,
+  utilityName: string
+): { importPath: string; isNamedImport: boolean } | null {
+  // Match both named and default imports
+  // Pattern: import { utilityName } from 'path' or import utilityName from 'path'
+  const namedImportRegex = new RegExp(
+    `import\\s+\\{[^}]*\\b${utilityName}\\b[^}]*\\}\\s+from\\s+['"]([^'"]+)['"]`,
+    'g'
+  );
+  const defaultImportRegex = new RegExp(
+    `import\\s+${utilityName}\\s+from\\s+['"]([^'"]+)['"]`,
+    'g'
+  );
+
+  // Try named import first
+  let match = namedImportRegex.exec(sourceContent);
+  if (match) {
+    return { importPath: match[1], isNamedImport: true };
+  }
+
+  // Try default import
+  match = defaultImportRegex.exec(sourceContent);
+  if (match) {
+    return { importPath: match[1], isNamedImport: false };
+  }
+
+  return null;
+}
+
+/**
+ * Resolve import path to actual file path
+ */
+function resolveImportPath(
+  importPath: string,
+  fromFile: string
+): string | null {
+  const fromDir = dirname(fromFile);
+  const projectRoot = process.cwd();
+
+  // Handle relative imports
+  if (importPath.startsWith('.')) {
+    // Remove .js extension if present (TypeScript allows importing .ts files with .js extension)
+    const pathWithoutExt = importPath.replace(/\.js$/, '');
+    const resolvedPath = join(fromDir, pathWithoutExt);
+
+    // Try .ts extension first
+    if (existsSync(`${resolvedPath}.ts`)) {
+      return `${resolvedPath}.ts`;
+    }
+    // Try .js extension
+    if (existsSync(`${resolvedPath}.js`)) {
+      return `${resolvedPath}.js`;
+    }
+    // Try as directory with index
+    if (existsSync(join(resolvedPath, 'index.ts'))) {
+      return join(resolvedPath, 'index.ts');
+    }
+    if (existsSync(join(resolvedPath, 'index.js'))) {
+      return join(resolvedPath, 'index.js');
+    }
+  }
+
+  // Handle absolute imports from project root (e.g., starting with /)
+  if (importPath.startsWith('/')) {
+    const pathWithoutExt = importPath.slice(1).replace(/\.js$/, '');
+    const resolvedPath = join(projectRoot, pathWithoutExt);
+
+    if (existsSync(`${resolvedPath}.ts`)) {
+      return `${resolvedPath}.ts`;
+    }
+    if (existsSync(`${resolvedPath}.js`)) {
+      return `${resolvedPath}.js`;
+    }
+  }
+
+  // Handle imports from shared/ or other directories relative to project root
+  const pathWithoutExt = importPath.replace(/\.js$/, '');
+  const resolvedPath = join(projectRoot, pathWithoutExt);
+
+  if (existsSync(`${resolvedPath}.ts`)) {
+    return `${resolvedPath}.ts`;
+  }
+  if (existsSync(`${resolvedPath}.js`)) {
+    return `${resolvedPath}.js`;
+  }
+
+  return null;
+}
+
 function extractUtilityDefinition(
   sourceContent: string,
   utilityName: string
@@ -439,14 +533,30 @@ function extractUtilityDefinition(
     result = `const ${utilityName}: z.ZodType = ${zodMatch[1].trim()};`;
   }
 
-  // Try to find class definitions
-  const classRegex = new RegExp(
-    `export\\s+class\\s+${utilityName}\\s*\\{([\\s\\S]*?)\\}\\s*`,
+  // Try to find class definitions (with proper brace matching)
+  const classStartRegex = new RegExp(
+    `export\\s+class\\s+${utilityName}\\s*[^{]*\\{`,
     'g'
   );
-  const classMatch = classRegex.exec(sourceContent);
-  if (classMatch) {
-    result = `class ${utilityName} {${classMatch[1]}}`;
+  const classStartMatch = classStartRegex.exec(sourceContent);
+  if (classStartMatch) {
+    const startIndex = classStartMatch.index + classStartMatch[0].length - 1; // -1 to include the opening brace
+    let braceCount = 1;
+    let endIndex = startIndex + 1;
+
+    for (let i = startIndex + 1; i < sourceContent.length; i++) {
+      if (sourceContent[i] === '{') braceCount++;
+      else if (sourceContent[i] === '}') {
+        braceCount--;
+        if (braceCount === 0) {
+          endIndex = i;
+          break;
+        }
+      }
+    }
+
+    const classBody = sourceContent.substring(startIndex + 1, endIndex).trim();
+    result = `class ${utilityName} {\n${classBody}\n}`;
   }
 
   return result;
@@ -455,7 +565,8 @@ function extractUtilityDefinition(
 async function extractSolutionInfo(
   solutionFunction: (...args: any[]) => any,
   functionName?: string,
-  sourceContent?: string
+  sourceContent?: string,
+  problemFilePath?: string
 ): Promise<{
   name: string;
   description: string;
@@ -539,12 +650,79 @@ async function extractSolutionInfo(
           .map((name) => name.trim());
 
         for (const utilityName of utilityNames) {
-          const utilityCode = extractUtilityDefinition(
-            sourceContent,
-            utilityName
-          );
+          let utilityCode: string | null = null;
+
+          // First, try to find if the utility is imported from another file
+          if (problemFilePath) {
+            const importInfo = findUtilityImport(sourceContent, utilityName);
+
+            if (importInfo) {
+              const resolvedPath = resolveImportPath(
+                importInfo.importPath,
+                problemFilePath
+              );
+
+              if (resolvedPath && existsSync(resolvedPath)) {
+                try {
+                  const utilityFileContent = readFileSync(
+                    resolvedPath,
+                    'utf-8'
+                  );
+                  utilityCode = extractUtilityDefinition(
+                    utilityFileContent,
+                    utilityName
+                  );
+                } catch (error) {
+                  console.warn(
+                    `Failed to read utility file ${resolvedPath}:`,
+                    error
+                  );
+                }
+              }
+            }
+
+            // If not found via import, try common utility locations
+            if (!utilityCode) {
+              const projectRoot = process.cwd();
+              const commonPaths = [
+                join(projectRoot, 'shared', 'list-node.ts'),
+                join(projectRoot, 'shared', `${utilityName.toLowerCase()}.ts`),
+                join(projectRoot, 'shared', 'index.ts'),
+              ];
+
+              for (const commonPath of commonPaths) {
+                if (existsSync(commonPath)) {
+                  try {
+                    const utilityFileContent = readFileSync(
+                      commonPath,
+                      'utf-8'
+                    );
+                    utilityCode = extractUtilityDefinition(
+                      utilityFileContent,
+                      utilityName
+                    );
+                    if (utilityCode) {
+                      break; // Found it, stop searching
+                    }
+                  } catch (error) {
+                    // Continue to next path
+                  }
+                }
+              }
+            }
+          }
+
+          // If not found in imports or common locations, try to find in the current file
+          if (!utilityCode) {
+            utilityCode = extractUtilityDefinition(sourceContent, utilityName);
+          }
+
           if (utilityCode) {
             utilities.push({ name: utilityName, code: utilityCode });
+          } else {
+            console.warn(
+              `Could not find utility definition for ${utilityName} in ${problemFilePath || 'current file'}`
+            );
           }
         }
       }
@@ -594,22 +772,22 @@ async function extractSolutionInfo(
       } else {
         // Block form: (params) => { body }
         // Use brace counting to find the matching closing brace
-        let braceCount = 0;
-        let endIndex = startIndex;
+        let braceCount = 1; // We're already inside the opening brace
+        let endIndex = startIndex + 1;
 
-        for (let i = startIndex; i < sourceContent.length; i++) {
+        for (let i = startIndex + 1; i < sourceContent.length; i++) {
           if (sourceContent[i] === '{') braceCount++;
           else if (sourceContent[i] === '}') {
             braceCount--;
             if (braceCount === 0) {
-              endIndex = i + 1;
+              endIndex = i;
               break;
             }
           }
         }
 
-        const body = sourceContent.substring(startIndex + 1, endIndex - 1);
-        actualCode = `const ${functionName} = (${params}) => {${body}};`;
+        const body = sourceContent.substring(startIndex + 1, endIndex).trim();
+        actualCode = `const ${functionName} = (${params}) => {\n${body}\n};`;
       }
     }
   }

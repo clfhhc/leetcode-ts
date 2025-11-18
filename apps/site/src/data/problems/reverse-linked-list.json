@@ -1,0 +1,134 @@
+{
+  "id": 206,
+  "slug": "reverse-linked-list",
+  "title": "Reverse Linked List",
+  "tags": [
+    "linked-list",
+    "recursion"
+  ],
+  "difficulty": "easy",
+  "solutions": [
+    {
+      "name": "recursiveSolution",
+      "description": "",
+      "approach": "- Recursive approach",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">recursiveSolution</span> = (<span class=\"hljs-params\">head</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (head?.<span class=\"hljs-property\">next</span> == <span class=\"hljs-literal\">null</span>) {\n    <span class=\"hljs-keyword\">return</span> head;\n  }\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">helper</span> = (<span class=\"hljs-params\"><span class=\"hljs-attr\">l1</span>: <span class=\"hljs-title class_\">ListNode</span> | <span class=\"hljs-literal\">null</span>, <span class=\"hljs-attr\">l2</span>: <span class=\"hljs-title class_\">ListNode</span> | <span class=\"hljs-literal\">null</span></span>) =&gt; {\n    <span class=\"hljs-keyword\">if</span> (l1 == <span class=\"hljs-literal\">null</span>) {\n      <span class=\"hljs-keyword\">return</span> l2;\n    }\n    <span class=\"hljs-keyword\">if</span> (l2 == <span class=\"hljs-literal\">null</span>) {\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title function_\">helper</span>(l1.<span class=\"hljs-property\">next</span>, <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">ListNode</span>(l1.<span class=\"hljs-property\">val</span>));\n    }\n    <span class=\"hljs-keyword\">const</span> temp2 = l1.<span class=\"hljs-property\">next</span>;\n    <span class=\"hljs-keyword\">const</span> temp1 = l1;\n    temp1.<span class=\"hljs-property\">next</span> = l2;\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title function_\">helper</span>(temp2, temp1);\n  };\n\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title function_\">helper</span>(head, <span class=\"hljs-literal\">null</span>);\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": "[Function: input]",
+          "expected": {
+            "val": 5,
+            "next": {
+              "val": 4,
+              "next": {
+                "val": 3,
+                "next": {
+                  "val": 2,
+                  "next": {
+                    "val": 1,
+                    "next": null
+                  }
+                }
+              }
+            }
+          },
+          "name": "Example 1",
+          "passed": false,
+          "duration": 0.27704099999994014,
+          "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
+        },
+        {
+          "input": "[Function: input]",
+          "expected": {
+            "val": 2,
+            "next": {
+              "val": 1,
+              "next": null
+            }
+          },
+          "name": "Example 2",
+          "passed": false,
+          "duration": 0.13541699999996126,
+          "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
+        },
+        {
+          "input": "[Function: input]",
+          "expected": null,
+          "name": "Example 3",
+          "passed": false,
+          "duration": 0.020999999999958163,
+          "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 0,
+      "failedTests": 3
+    },
+    {
+      "name": "iterativeSolution",
+      "description": "",
+      "approach": "- Iterative approach",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">iterativeSolution</span> = (<span class=\"hljs-params\">head</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">result</span>: [<span class=\"hljs-title class_\">ListNode</span> | <span class=\"hljs-literal\">null</span>, <span class=\"hljs-title class_\">ListNode</span> | <span class=\"hljs-literal\">null</span>] = [head, <span class=\"hljs-literal\">null</span>];\n  <span class=\"hljs-keyword\">while</span> (result[<span class=\"hljs-number\">0</span>] != <span class=\"hljs-literal\">null</span>) {\n    <span class=\"hljs-keyword\">const</span> temp = result[<span class=\"hljs-number\">0</span>].<span class=\"hljs-property\">next</span>;\n    result[<span class=\"hljs-number\">0</span>].<span class=\"hljs-property\">next</span> = result[<span class=\"hljs-number\">1</span>];\n    result[<span class=\"hljs-number\">1</span>] = result[<span class=\"hljs-number\">0</span>];\n    result[<span class=\"hljs-number\">0</span>] = temp;\n  }\n  <span class=\"hljs-keyword\">return</span> result[<span class=\"hljs-number\">1</span>];\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": "[Function: input]",
+          "expected": {
+            "val": 5,
+            "next": {
+              "val": 4,
+              "next": {
+                "val": 3,
+                "next": {
+                  "val": 2,
+                  "next": {
+                    "val": 1,
+                    "next": null
+                  }
+                }
+              }
+            }
+          },
+          "name": "Example 1",
+          "passed": false,
+          "duration": 0.07241599999997561,
+          "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
+        },
+        {
+          "input": "[Function: input]",
+          "expected": {
+            "val": 2,
+            "next": {
+              "val": 1,
+              "next": null
+            }
+          },
+          "name": "Example 2",
+          "passed": false,
+          "duration": 0.023291999999969448,
+          "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
+        },
+        {
+          "input": "[Function: input]",
+          "expected": null,
+          "name": "Example 3",
+          "passed": false,
+          "duration": 0.01783299999999599,
+          "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
+        }
+      ],
+      "totalTests": 3,
+      "passedTests": 0,
+      "failedTests": 3
+    }
+  ],
+  "notes": "<ul>\n<li><ol start=\"206\">\n<li>Reverse Linked List</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: linked-list, recursion</li>\n<li></li>\n<li>Description:</li>\n<li>Given the <code>head</code> of a singly linked list, reverse the list, and return <em>the reversed list</em>.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: head = [1,2,3,4,5]</li>\n</ol>\n</li>\n<li>Output: [5,4,3,2,1]</li>\n<li></li>\n<li><img src=\"https://assets.leetcode.com/uploads/2021/02/19/rev1ex1.jpg\" alt=\"Example 1 image\"></li>\n<li><ol start=\"2\">\n<li>Input: head = [1,2]</li>\n</ol>\n</li>\n<li>Output: [2,1]</li>\n<li></li>\n<li><img src=\"https://assets.leetcode.com/uploads/2021/02/19/rev1ex2.jpg\" alt=\"Example 1 image\"></li>\n<li><ol start=\"3\">\n<li>Input: head = []</li>\n</ol>\n</li>\n<li>Output: []</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>The number of nodes in the list is the range <code>[0, 5000]</code>.</li>\n</ul>\n</li>\n<li><ul>\n<li><code>-5000 &lt;= Node.val &lt;= 5000</code></li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 6,
+  "passedTests": 0,
+  "failedTests": 6
+}

@@ -54,6 +54,16 @@
       "difficulty": "easy"
     },
     {
+      "id": 24,
+      "slug": "swap-nodes-in-pairs",
+      "title": "Swap Nodes in Pairs",
+      "tags": [
+        "linked-list",
+        "recursion"
+      ],
+      "difficulty": "medium"
+    },
+    {
       "id": 34,
       "slug": "find-first-and-last-position-of-element-in-sorted-array",
       "title": "Find First and Last Position of Element in Sorted Array",
@@ -96,12 +106,32 @@
       "difficulty": "medium"
     },
     {
+      "id": 206,
+      "slug": "reverse-linked-list",
+      "title": "Reverse Linked List",
+      "tags": [
+        "linked-list",
+        "recursion"
+      ],
+      "difficulty": "easy"
+    },
+    {
       "id": 278,
       "slug": "first-bad-version",
       "title": "First Bad Version",
       "tags": [
         "binary-search",
         "interactive"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": 344,
+      "slug": "reverse-string",
+      "title": "Reverse String",
+      "tags": [
+        "two-pointers",
+        "string"
       ],
       "difficulty": "easy"
     },
@@ -138,19 +168,19 @@
       "difficulty": "easy"
     }
   ],
-  "totalProblems": 13,
+  "totalProblems": 16,
   "difficultyCounts": {
-    "easy": 8,
-    "medium": 4,
+    "easy": 10,
+    "medium": 5,
     "hard": 1
   },
   "tagCounts": {
     "array": 5,
     "hash-table": 2,
-    "linked-list": 1,
+    "linked-list": 3,
     "math": 2,
-    "recursion": 1,
-    "string": 2,
+    "recursion": 3,
+    "string": 3,
     "sliding-window": 1,
     "binary-search": 7,
     "divide-and-conquer": 1,
@@ -160,6 +190,7 @@
     "breadth-first-search": 1,
     "binary-tree": 1,
     "interactive": 2,
+    "two-pointers": 1,
     "'typescript'": 1,
     "'arrays'": 1,
     "'loops'": 1,
