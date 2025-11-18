@@ -23,25 +23,11 @@
  */
 import { z } from 'zod';
 import type { TestCase } from '../packages/src/types.js';
-
-export class TreeNode {
-  val: number;
-  left: TreeNode | null;
-  right: TreeNode | null;
-  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
-    this.val = val ?? 0;
-    this.left = left ?? null;
-    this.right = right ?? null;
-  }
-}
-
-export const TreeNodeSchema = z
-  .instanceof(TreeNode)
-  .check(
-    z.property('val', z.number()),
-    z.property('left', z.lazy(() => TreeNodeSchema).nullable()),
-    z.property('right', z.lazy(() => TreeNodeSchema).nullable())
-  );
+import {
+  arrayToTreeNode,
+  TreeNode,
+  TreeNodeSchema,
+} from '../shared/tree-node.js';
 
 export const SolutionSchema = z.function({
   input: [TreeNodeSchema.nullable()],
@@ -50,35 +36,14 @@ export const SolutionSchema = z.function({
 
 export type Solution = z.infer<typeof SolutionSchema>;
 
-const arrayToTreeNode = (array: (number | null)[]): TreeNode => {
-  if (array.length === 0) {
-    throw new Error('Array is empty');
-  }
-  const root = new TreeNode(array[0]!);
-  const queue: (TreeNode | null)[] = [root];
-
-  for (let index = 1; index < array.length + 1; index += 2) {
-    const node = queue.shift();
-    if (node) {
-      node.left = array[index] ? new TreeNode(array[index]!) : null;
-      queue.push(node.left);
-      if (index + 1 < array.length) {
-        node.right = array[index + 1] ? new TreeNode(array[index + 1]!) : null;
-        queue.push(node.right);
-      }
-    }
-  }
-  return root;
-};
-
 export const cases: TestCase<Solution>[] = [
   {
-    input: [arrayToTreeNode([3, 9, 20, null, null, 15, 7])],
+    input: () => [arrayToTreeNode([3, 9, 20, null, null, 15, 7])],
     expected: 3,
     name: 'Example 1',
   },
   {
-    input: [arrayToTreeNode([1, null, 2])],
+    input: () => [arrayToTreeNode([1, null, 2])],
     expected: 2,
     name: 'Example 2',
   },

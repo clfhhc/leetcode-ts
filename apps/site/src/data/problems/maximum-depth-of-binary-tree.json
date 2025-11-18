@@ -25,57 +25,25 @@
       ],
       "testResults": [
         {
-          "input": [
-            {
-              "val": 3,
-              "left": {
-                "val": 9,
-                "left": null,
-                "right": null
-              },
-              "right": {
-                "val": 20,
-                "left": {
-                  "val": 15,
-                  "left": null,
-                  "right": null
-                },
-                "right": {
-                  "val": 7,
-                  "left": null,
-                  "right": null
-                }
-              }
-            }
-          ],
+          "input": "[Function: input]",
           "expected": 3,
           "name": "Example 1",
-          "actual": 3,
-          "passed": true,
-          "duration": 0.22374999999999545
+          "passed": false,
+          "duration": 0.24441700000011224,
+          "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of TreeNode\"\n  }\n]"
         },
         {
-          "input": [
-            {
-              "val": 1,
-              "left": null,
-              "right": {
-                "val": 2,
-                "left": null,
-                "right": null
-              }
-            }
-          ],
+          "input": "[Function: input]",
           "expected": 2,
           "name": "Example 2",
-          "actual": 2,
-          "passed": true,
-          "duration": 0.017249999999989996
+          "passed": false,
+          "duration": 0.024415999999973792,
+          "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of TreeNode\"\n  }\n]"
         }
       ],
       "totalTests": 2,
-      "passedTests": 2,
-      "failedTests": 0
+      "passedTests": 0,
+      "failedTests": 2
     },
     {
       "name": "recursiveSolution",
@@ -92,61 +60,29 @@
       ],
       "testResults": [
         {
-          "input": [
-            {
-              "val": 3,
-              "left": {
-                "val": 9,
-                "left": null,
-                "right": null
-              },
-              "right": {
-                "val": 20,
-                "left": {
-                  "val": 15,
-                  "left": null,
-                  "right": null
-                },
-                "right": {
-                  "val": 7,
-                  "left": null,
-                  "right": null
-                }
-              }
-            }
-          ],
+          "input": "[Function: input]",
           "expected": 3,
           "name": "Example 1",
-          "actual": 3,
-          "passed": true,
-          "duration": 0.09708399999999529
+          "passed": false,
+          "duration": 0.02874999999994543,
+          "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of TreeNode\"\n  }\n]"
         },
         {
-          "input": [
-            {
-              "val": 1,
-              "left": null,
-              "right": {
-                "val": 2,
-                "left": null,
-                "right": null
-              }
-            }
-          ],
+          "input": "[Function: input]",
           "expected": 2,
           "name": "Example 2",
-          "actual": 2,
-          "passed": true,
-          "duration": 0.008541999999920336
+          "passed": false,
+          "duration": 0.016208000000005995,
+          "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of TreeNode\"\n  }\n]"
         }
       ],
       "totalTests": 2,
-      "passedTests": 2,
-      "failedTests": 0
+      "passedTests": 0,
+      "failedTests": 2
     }
   ],
   "notes": "<ul>\n<li><ol start=\"104\">\n<li>Maximum Depth of Binary Tree</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: tree, depth-first-search, breadth-first-search, binary-tree</li>\n<li></li>\n<li>Description:</li>\n<li>Given the <code>root</code> of a binary tree, return <em>its maximum depth</em>.</li>\n<li></li>\n<li>A binary tree&#39;s <strong>maximum depth</strong> is the number of nodes along the longest path from the root node down to the farthest leaf node.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: root = [3,9,20,null,null,15,7]</li>\n</ol>\n</li>\n<li>Output: 3</li>\n<li></li>\n<li><img src=\"https://assets.leetcode.com/uploads/2020/11/26/tmp-tree.jpg\" alt=\"Example 1 image\"></li>\n<li><ol start=\"2\">\n<li>Input: root = [1,null,2]</li>\n</ol>\n</li>\n<li>Output: 2</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li>The number of nodes in the tree is in the range <code>[0, 10^4]</code>.</li>\n</ul>\n</li>\n<li><ul>\n<li><code>-100 &lt;= Node.val &lt;= 100</code></li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
   "totalTests": 4,
-  "passedTests": 4,
-  "failedTests": 0
+  "passedTests": 0,
+  "failedTests": 4
 }

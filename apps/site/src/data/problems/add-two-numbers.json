@@ -68,7 +68,7 @@
             }
           },
           "passed": true,
-          "duration": 0.5502079999999978
+          "duration": 0.3770000000000664
         },
         {
           "input": [
@@ -91,7 +91,7 @@
             "next": null
           },
           "passed": true,
-          "duration": 0.015208000000029642
+          "duration": 0.010541999999986729
         },
         {
           "input": [
@@ -183,7 +183,7 @@
             }
           },
           "passed": true,
-          "duration": 0.038000000000010914
+          "duration": 0.04691700000000765
         }
       ],
       "totalTests": 3,

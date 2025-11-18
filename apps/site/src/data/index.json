@@ -146,6 +146,17 @@
       "difficulty": "easy"
     },
     {
+      "id": 700,
+      "slug": "search-in-a-binary-search-tree",
+      "title": "Search in a Binary Search Tree",
+      "tags": [
+        "tree",
+        "binary-search-tree",
+        "binary-tree"
+      ],
+      "difficulty": "easy"
+    },
+    {
       "id": 704,
       "slug": "binary-search",
       "title": "Binary Search",
@@ -168,9 +179,9 @@
       "difficulty": "easy"
     }
   ],
-  "totalProblems": 16,
+  "totalProblems": 17,
   "difficultyCounts": {
-    "easy": 10,
+    "easy": 11,
     "medium": 5,
     "hard": 1
   },
@@ -185,12 +196,13 @@
     "binary-search": 7,
     "divide-and-conquer": 1,
     "stack": 1,
-    "tree": 1,
+    "tree": 2,
     "depth-first-search": 1,
     "breadth-first-search": 1,
-    "binary-tree": 1,
+    "binary-tree": 2,
     "interactive": 2,
     "two-pointers": 1,
+    "binary-search-tree": 1,
     "'typescript'": 1,
     "'arrays'": 1,
     "'loops'": 1,
