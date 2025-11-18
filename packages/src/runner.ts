@@ -84,6 +84,13 @@ function getTestCasesForSolution(
   return testCases;
 }
 
+/**
+ * Resolve input/expected values - if they're functions, call them to get fresh values
+ */
+function resolveValue<T>(value: T | (() => T)): T {
+  return typeof value === 'function' ? (value as () => T)() : value;
+}
+
 export async function runProblemTests(
   problemPath: string
 ): Promise<{ [solutionName: string]: TestResult[] }> {
@@ -115,18 +122,22 @@ export async function runProblemTests(
 
     for (const testCase of testCases) {
       const start = performance.now();
+      // Resolve input and expected (call functions if provided)
+      const input = resolveValue(testCase.input);
+      const expected = resolveValue(testCase.expected);
+
       let actual: any;
       let error: string | undefined;
       let passed = false;
 
       try {
         // Handle both array and individual parameter formats
-        if (Array.isArray(testCase.input)) {
-          actual = solution(...testCase.input);
+        if (Array.isArray(input)) {
+          actual = solution(...input);
         } else {
-          actual = solution(testCase.input);
+          actual = solution(input);
         }
-        passed = JSON.stringify(actual) === JSON.stringify(testCase.expected);
+        passed = JSON.stringify(actual) === JSON.stringify(expected);
       } catch (err) {
         error = err instanceof Error ? err.message : String(err);
         actual = undefined;
@@ -136,6 +147,8 @@ export async function runProblemTests(
 
       solutionResults.push({
         ...testCase,
+        input,
+        expected,
         actual,
         passed,
         duration,
@@ -189,21 +202,24 @@ export function createTestSuite(
         );
 
         for (const testCase of testCases) {
-          const name =
-            testCase.name ?? JSON.stringify(testCase.input).slice(0, 80);
+          // Resolve input and expected (call functions if provided)
+          const input = resolveValue(testCase.input);
+          const expected = resolveValue(testCase.expected);
+
+          const name = testCase.name ?? JSON.stringify(input).slice(0, 80);
           const fn = testCase.only ? it.only : testCase.skip ? it.skip : it;
 
           fn(name, () => {
             let actual: any;
 
             // Handle both array and individual parameter formats
-            if (Array.isArray(testCase.input)) {
-              actual = solution(...testCase.input);
+            if (Array.isArray(input)) {
+              actual = solution(...input);
             } else {
-              actual = solution(testCase.input);
+              actual = solution(input);
             }
 
-            expect(actual).toEqual(testCase.expected);
+            expect(actual).toEqual(expected);
           });
         }
       });

@@ -16,8 +16,8 @@ export interface TestCase<
   T extends (...args: any[]) => any = (...args: any[]) => any,
 > {
   name?: string;
-  input: Parameters<T>;
-  expected: ReturnType<T>;
+  input: Parameters<T> | ((...args: any[]) => Parameters<T>);
+  expected: ReturnType<T> | ((...args: any[]) => ReturnType<T>);
   only?: boolean;
   skip?: boolean;
 }
