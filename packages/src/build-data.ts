@@ -704,7 +704,7 @@ async function extractSolutionInfo(
                     if (utilityCode) {
                       break; // Found it, stop searching
                     }
-                  } catch (error) {
+                  } catch {
                     // Continue to next path
                   }
                 }
