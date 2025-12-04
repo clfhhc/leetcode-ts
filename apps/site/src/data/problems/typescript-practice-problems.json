@@ -41,7 +41,7 @@
             9
           ],
           "passed": true,
-          "duration": 0.028207999999949607
+          "duration": 0.03245799999990595
         },
         {
           "input": [
@@ -63,7 +63,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.027833000000100583
+          "duration": 0.02874999999994543
         },
         {
           "input": [
@@ -83,7 +83,7 @@
             10
           ],
           "passed": true,
-          "duration": 0.003958000000011452
+          "duration": 0.005167000000028565
         }
       ],
       "totalTests": 3,
@@ -119,7 +119,7 @@
             11
           ],
           "passed": true,
-          "duration": 0.07254100000000108
+          "duration": 0.0286670000000413
         },
         {
           "input": [
@@ -143,7 +143,7 @@
             60
           ],
           "passed": true,
-          "duration": 0.009000000000014552
+          "duration": 0.006333999999924345
         }
       ],
       "totalTests": 2,
@@ -179,7 +179,7 @@
             54
           ],
           "passed": true,
-          "duration": 0.03508400000009715
+          "duration": 0.0236250000000382
         },
         {
           "input": [
@@ -203,7 +203,7 @@
             16
           ],
           "passed": true,
-          "duration": 0.004707999999936874
+          "duration": 0.0035410000000410946
         },
         {
           "input": [
@@ -225,7 +225,7 @@
             12.5
           ],
           "passed": true,
-          "duration": 0.007666999999855761
+          "duration": 0.006458000000066022
         }
       ],
       "totalTests": 3,
@@ -262,7 +262,7 @@
             4
           ],
           "passed": true,
-          "duration": 0.05025000000000546
+          "duration": 0.050917000000026746
         },
         {
           "input": [
@@ -284,7 +284,7 @@
             40
           ],
           "passed": true,
-          "duration": 0.009833000000071479
+          "duration": 0.010250000000041837
         }
       ],
       "totalTests": 2,
@@ -324,7 +324,7 @@
             16
           ],
           "passed": true,
-          "duration": 0.020083999999997104
+          "duration": 0.02250000000003638
         },
         {
           "input": [
@@ -347,7 +347,7 @@
             7
           ],
           "passed": true,
-          "duration": 0.00620800000001509
+          "duration": 0.007166000000097483
         }
       ],
       "totalTests": 2,
@@ -377,7 +377,7 @@
           "name": "Sum: [1,2,3,4,5] = 15",
           "actual": 15,
           "passed": true,
-          "duration": 0.021707999999989624
+          "duration": 0.021167000000104963
         },
         {
           "input": [
@@ -391,7 +391,7 @@
           "name": "Sum: [10,-5,3] = 8",
           "actual": 8,
           "passed": true,
-          "duration": 0.0022910000000138098
+          "duration": 0.0025000000000545697
         },
         {
           "input": [
@@ -401,7 +401,7 @@
           "name": "Sum: empty array = 0",
           "actual": 0,
           "passed": true,
-          "duration": 0.0009169999998448475
+          "duration": 0.001125000000001819
         }
       ],
       "totalTests": 3,
@@ -457,7 +457,7 @@
             ]
           ],
           "passed": true,
-          "duration": 0.07858400000009169
+          "duration": 0.06204200000001947
         },
         {
           "input": [
@@ -485,7 +485,7 @@
             ]
           ],
           "passed": true,
-          "duration": 0.005541999999877589
+          "duration": 0.005250000000160071
         }
       ],
       "totalTests": 2,
@@ -509,7 +509,7 @@
           "name": "Reverse: \"hello\" → \"olleh\"",
           "actual": "olleh",
           "passed": true,
-          "duration": 0.02183399999989888
+          "duration": 0.029332999999951426
         },
         {
           "input": [
@@ -519,7 +519,7 @@
           "name": "Reverse: \"TypeScript\"",
           "actual": "tpircSepyT",
           "passed": true,
-          "duration": 0.0049579999999878055
+          "duration": 0.004916999999977634
         },
         {
           "input": [
@@ -529,7 +529,7 @@
           "name": "Reverse: single character",
           "actual": "a",
           "passed": true,
-          "duration": 0.0013750000000527507
+          "duration": 0.001334000000042579
         }
       ],
       "totalTests": 3,
@@ -553,7 +553,7 @@
           "name": "Reverse: \"hello\" → \"olleh\"",
           "actual": "olleh",
           "passed": true,
-          "duration": 0.016834000000017113
+          "duration": 0.013167000000066764
         },
         {
           "input": [
@@ -563,7 +563,7 @@
           "name": "Reverse: \"TypeScript\"",
           "actual": "tpircSepyT",
           "passed": true,
-          "duration": 0.002125000000205546
+          "duration": 0.0018340000001444423
         },
         {
           "input": [
@@ -597,7 +597,7 @@
           "name": "Reverse: \"hello\" → \"olleh\"",
           "actual": "olleh",
           "passed": true,
-          "duration": 0.023957999999993262
+          "duration": 0.020375000000058208
         },
         {
           "input": [
@@ -607,7 +607,7 @@
           "name": "Reverse: \"TypeScript\"",
           "actual": "tpircSepyT",
           "passed": true,
-          "duration": 0.008499999999912689
+          "duration": 0.00829199999998309
         },
         {
           "input": [
@@ -617,7 +617,7 @@
           "name": "Reverse: single character",
           "actual": "a",
           "passed": true,
-          "duration": 0.0013329999999314168
+          "duration": 0.001458999999840671
         }
       ],
       "totalTests": 3,
@@ -651,7 +651,7 @@
             "o": 1
           },
           "passed": true,
-          "duration": 0.1429169999998976
+          "duration": 0.13208300000019335
         },
         {
           "input": [
@@ -669,7 +669,7 @@
             "c": 2
           },
           "passed": true,
-          "duration": 0.014625000000023647
+          "duration": 0.0126669999999649
         },
         {
           "input": [
@@ -679,7 +679,7 @@
           "name": "Count frequencies: empty string",
           "actual": {},
           "passed": true,
-          "duration": 0.002540999999837368
+          "duration": 0.002124999999978172
         }
       ],
       "totalTests": 3,
@@ -730,7 +730,7 @@
             6
           ],
           "passed": true,
-          "duration": 0.026667000000088592
+          "duration": 0.026959000000033484
         },
         {
           "input": [
@@ -752,7 +752,7 @@
             3
           ],
           "passed": true,
-          "duration": 0.006667000000106782
+          "duration": 0.006415999999944688
         },
         {
           "input": [
@@ -780,7 +780,7 @@
             3
           ],
           "passed": true,
-          "duration": 0.0026250000000800355
+          "duration": 0.0026669999999739957
         }
       ],
       "totalTests": 3,
@@ -813,7 +813,7 @@
           "name": "Max: find maximum in array",
           "actual": 9,
           "passed": true,
-          "duration": 0.02454200000011042
+          "duration": 0.026624999999967258
         },
         {
           "input": [
@@ -828,7 +828,7 @@
           "name": "Max: all negative numbers",
           "actual": -1,
           "passed": true,
-          "duration": 0.00437499999998181
+          "duration": 0.004083000000036918
         },
         {
           "input": [
@@ -840,7 +840,7 @@
           "name": "Max: single element",
           "actual": 42,
           "passed": true,
-          "duration": 0.0015000000000782165
+          "duration": 0.0013329999999314168
         }
       ],
       "totalTests": 3,
@@ -864,7 +864,7 @@
           "name": "Palindrome: \"racecar\"",
           "actual": true,
           "passed": true,
-          "duration": 0.02374999999983629
+          "duration": 0.03495799999996052
         },
         {
           "input": [
@@ -874,7 +874,7 @@
           "name": "Not palindrome: \"hello\"",
           "actual": false,
           "passed": true,
-          "duration": 0.0018749999999272404
+          "duration": 0.0019170000000485743
         },
         {
           "input": [
@@ -884,7 +884,7 @@
           "name": "Palindrome: single character",
           "actual": true,
           "passed": true,
-          "duration": 0.001290999999810083
+          "duration": 0.0012500000000272848
         },
         {
           "input": [
@@ -894,7 +894,7 @@
           "name": "Palindrome: empty string",
           "actual": true,
           "passed": true,
-          "duration": 0.0010839999999916472
+          "duration": 0.0009589999999661813
         }
       ],
       "totalTests": 4,
@@ -938,7 +938,7 @@
             5
           ],
           "passed": true,
-          "duration": 0.05199999999990723
+          "duration": 0.026416999999810287
         },
         {
           "input": [
@@ -957,7 +957,7 @@
             1
           ],
           "passed": true,
-          "duration": 0.005334000000175365
+          "duration": 0.004332999999860476
         },
         {
           "input": [
@@ -979,7 +979,7 @@
             3
           ],
           "passed": true,
-          "duration": 0.0032919999998739513
+          "duration": 0.003208000000086031
         }
       ],
       "totalTests": 3,
@@ -1010,7 +1010,7 @@
           "name": "Find index: element exists",
           "actual": 2,
           "passed": true,
-          "duration": 0.02158400000007532
+          "duration": 0.015582999999878666
         },
         {
           "input": [
@@ -1027,7 +1027,7 @@
           "name": "Find index: element not found",
           "actual": -1,
           "passed": true,
-          "duration": 0.0029159999999137654
+          "duration": 0.002499999999827196
         },
         {
           "input": [
@@ -1087,7 +1087,7 @@
             6
           ],
           "passed": true,
-          "duration": 0.037332999999989624
+          "duration": 0.03395799999998417
         },
         {
           "input": [
@@ -1117,7 +1117,7 @@
             5
           ],
           "passed": true,
-          "duration": 0.004292000000077678
+          "duration": 0.004124999999930878
         },
         {
           "input": [
@@ -1140,7 +1140,7 @@
             3
           ],
           "passed": true,
-          "duration": 0.0039999999999054126
+          "duration": 0.07983400000011898
         }
       ],
       "totalTests": 3,
@@ -1164,7 +1164,7 @@
           "name": "Factorial: 5! = 120",
           "actual": 120,
           "passed": true,
-          "duration": 0.018124999999827196
+          "duration": 0.0157920000001468
         },
         {
           "input": [
@@ -1174,7 +1174,7 @@
           "name": "Factorial: 0! = 1",
           "actual": 1,
           "passed": true,
-          "duration": 0.0012910000000374566
+          "duration": 0.001209000000017113
         },
         {
           "input": [
@@ -1184,7 +1184,7 @@
           "name": "Factorial: 1! = 1",
           "actual": 1,
           "passed": true,
-          "duration": 0.0007920000000467553
+          "duration": 0.0008339999999407155
         },
         {
           "input": [
@@ -1194,7 +1194,7 @@
           "name": "Factorial: 7! = 5040",
           "actual": 5040,
           "passed": true,
-          "duration": 0.0015000000000782165
+          "duration": 0.0015409999998610147
         }
       ],
       "totalTests": 4,
@@ -1218,7 +1218,7 @@
           "name": "Prime: 7 is prime",
           "actual": true,
           "passed": true,
-          "duration": 0.02162499999985812
+          "duration": 0.02004199999987577
         },
         {
           "input": [
@@ -1228,7 +1228,7 @@
           "name": "Not prime: 10 is not prime",
           "actual": false,
           "passed": true,
-          "duration": 0.0014580000001842564
+          "duration": 0.001334000000042579
         },
         {
           "input": [
@@ -1238,7 +1238,7 @@
           "name": "Prime: 2 is prime",
           "actual": true,
           "passed": true,
-          "duration": 0.0008339999999407155
+          "duration": 0.0008749999999508873
         },
         {
           "input": [
@@ -1248,7 +1248,7 @@
           "name": "Not prime: 1 is not prime",
           "actual": false,
           "passed": true,
-          "duration": 0.0007920000000467553
+          "duration": 0.0008330000000569271
         }
       ],
       "totalTests": 4,
@@ -1291,7 +1291,7 @@
             3
           ],
           "passed": true,
-          "duration": 0.03095900000016627
+          "duration": 0.026082999999971435
         },
         {
           "input": [
@@ -1314,7 +1314,7 @@
             2
           ],
           "passed": true,
-          "duration": 0.003584000000046217
+          "duration": 0.003665999999839187
         },
         {
           "input": [
@@ -1340,7 +1340,7 @@
             4
           ],
           "passed": true,
-          "duration": 0.003292000000101325
+          "duration": 0.004916999999977634
         }
       ],
       "totalTests": 3,
@@ -1370,7 +1370,7 @@
           "name": "Missing: 2 in [0,1,3,4,5]",
           "actual": 2,
           "passed": true,
-          "duration": 0.06600000000003092
+          "duration": 0.037542000000030384
         },
         {
           "input": [
@@ -1385,7 +1385,7 @@
           "name": "Missing: 0 in [1,2,3,4]",
           "actual": 0,
           "passed": true,
-          "duration": 0.003041000000166605
+          "duration": 0.0029170000000249274
         },
         {
           "input": [
@@ -1397,7 +1397,7 @@
           "name": "Missing: 1 in [0]",
           "actual": 1,
           "passed": true,
-          "duration": 0.0014999999998508429
+          "duration": 0.001334000000042579
         }
       ],
       "totalTests": 3,
@@ -1421,7 +1421,7 @@
           "name": "Title case: \"hello world\"",
           "actual": "Hello World",
           "passed": true,
-          "duration": 0.052458000000115135
+          "duration": 0.0437499999998181
         },
         {
           "input": [
@@ -1431,7 +1431,7 @@
           "name": "Title case: multiple words",
           "actual": "The Quick Brown Fox",
           "passed": true,
-          "duration": 0.0033749999997780833
+          "duration": 0.0030839999999443535
         },
         {
           "input": [
@@ -1441,7 +1441,7 @@
           "name": "Title case: single letter",
           "actual": "A",
           "passed": true,
-          "duration": 0.0015419999999721767
+          "duration": 0.0014170000001740846
         }
       ],
       "totalTests": 3,
@@ -1477,7 +1477,7 @@
             7
           ],
           "passed": true,
-          "duration": 0.03724999999985812
+          "duration": 0.033707999999933236
         },
         {
           "input": [
@@ -1493,7 +1493,7 @@
           "name": "Two sum: no pair found",
           "actual": null,
           "passed": true,
-          "duration": 0.0032919999998739513
+          "duration": 0.004249999999956344
         },
         {
           "input": [
@@ -1513,7 +1513,7 @@
             3
           ],
           "passed": true,
-          "duration": 0.00254199999994853
+          "duration": 0.0025829999999587017
         }
       ],
       "totalTests": 3,
@@ -1537,7 +1537,7 @@
           "name": "Count vowels: \"hello\" has 2",
           "actual": 2,
           "passed": true,
-          "duration": 0.025875000000041837
+          "duration": 0.025749999999788997
         },
         {
           "input": [
@@ -1547,7 +1547,7 @@
           "name": "Count vowels: \"typescript\" has 2",
           "actual": 2,
           "passed": true,
-          "duration": 0.0031249999999545253
+          "duration": 0.0030839999999443535
         },
         {
           "input": [
@@ -1557,7 +1557,7 @@
           "name": "Count vowels: all vowels",
           "actual": 5,
           "passed": true,
-          "duration": 0.003584000000046217
+          "duration": 0.003500000000030923
         },
         {
           "input": [
@@ -1567,7 +1567,7 @@
           "name": "Count vowels: no vowels",
           "actual": 0,
           "passed": true,
-          "duration": 0.001125000000001819
+          "duration": 0.0011670000001231529
         }
       ],
       "totalTests": 4,
@@ -1591,7 +1591,7 @@
           "name": "Longest word: \"quick\"",
           "actual": "quick",
           "passed": true,
-          "duration": 0.02762499999994361
+          "duration": 0.025791000000026543
         },
         {
           "input": [
@@ -1601,7 +1601,7 @@
           "name": "Longest word: \"programming\"",
           "actual": "programming",
           "passed": true,
-          "duration": 0.003249999999979991
+          "duration": 0.0032079999998586572
         },
         {
           "input": [
@@ -1611,7 +1611,7 @@
           "name": "Longest word: \"ccc\"",
           "actual": "ccc",
           "passed": true,
-          "duration": 0.003500000000030923
+          "duration": 0.003375000000005457
         }
       ],
       "totalTests": 3,
@@ -1647,7 +1647,7 @@
             3
           ],
           "passed": true,
-          "duration": 0.05945799999994961
+          "duration": 0.05208300000003874
         },
         {
           "input": [
@@ -1661,7 +1661,7 @@
             0
           ],
           "passed": true,
-          "duration": 0.0018329999998059066
+          "duration": 0.001959000000169908
         },
         {
           "input": [
@@ -1689,7 +1689,7 @@
             13
           ],
           "passed": true,
-          "duration": 0.00966599999992468
+          "duration": 0.005458999999973457
         }
       ],
       "totalTests": 3,
@@ -1719,7 +1719,7 @@
           "name": "Sorted: ascending order",
           "actual": true,
           "passed": true,
-          "duration": 0.048792000000048574
+          "duration": 0.030749999999898137
         },
         {
           "input": [
@@ -1734,7 +1734,7 @@
           "name": "Not sorted: mixed order",
           "actual": false,
           "passed": true,
-          "duration": 0.0029170000000249274
+          "duration": 0.0028330000000096334
         },
         {
           "input": [
@@ -1746,7 +1746,7 @@
           "name": "Sorted: single element",
           "actual": true,
           "passed": true,
-          "duration": 0.0012500000000272848
+          "duration": 0.0013329999999314168
         }
       ],
       "totalTests": 3,
@@ -1795,7 +1795,7 @@
             ]
           ],
           "passed": true,
-          "duration": 0.06625000000008185
+          "duration": 0.10229200000003402
         },
         {
           "input": [
@@ -1829,7 +1829,7 @@
             ]
           ],
           "passed": true,
-          "duration": 0.06329199999981938
+          "duration": 0.09500000000002728
         },
         {
           "input": [
@@ -1844,7 +1844,7 @@
           "name": "Pairs: no pairs found",
           "actual": [],
           "passed": true,
-          "duration": 0.00441699999987577
+          "duration": 0.007249999999885404
         }
       ],
       "totalTests": 3,
@@ -1883,7 +1883,7 @@
             4
           ],
           "passed": true,
-          "duration": 0.02383300000019517
+          "duration": 0.04958299999998417
         },
         {
           "input": [
@@ -1899,7 +1899,7 @@
           "name": "Remove: all elements",
           "actual": [],
           "passed": true,
-          "duration": 0.0029999999999290594
+          "duration": 0.0037919999999758147
         },
         {
           "input": [
@@ -1922,7 +1922,7 @@
             3
           ],
           "passed": true,
-          "duration": 0.0027090000000953296
+          "duration": 0.0028330000000096334
         }
       ],
       "totalTests": 3,
@@ -1952,7 +1952,7 @@
           "name": "Average: [1,2,3,4,5] = 3",
           "actual": 3,
           "passed": true,
-          "duration": 0.029083000000127868
+          "duration": 0.03670900000020083
         },
         {
           "input": [
@@ -1966,7 +1966,7 @@
           "name": "Average: [10,20,30] = 20",
           "actual": 20,
           "passed": true,
-          "duration": 0.003000000000156433
+          "duration": 0.0028750000001309672
         },
         {
           "input": [
@@ -1978,7 +1978,7 @@
           "name": "Average: single element",
           "actual": 5,
           "passed": true,
-          "duration": 0.0018749999999272404
+          "duration": 0.0019999999999527063
         }
       ],
       "totalTests": 3,
@@ -2019,7 +2019,7 @@
             4
           ],
           "passed": true,
-          "duration": 0.04162499999983993
+          "duration": 0.05787499999996726
         },
         {
           "input": [
@@ -2038,7 +2038,7 @@
           "name": "Common: no common elements",
           "actual": [],
           "passed": true,
-          "duration": 0.006999999999834472
+          "duration": 0.0037500000000818545
         },
         {
           "input": [
@@ -2064,7 +2064,7 @@
             2
           ],
           "passed": true,
-          "duration": 0.04920799999990777
+          "duration": 0.0569590000000062
         }
       ],
       "totalTests": 3,
@@ -2122,7 +2122,7 @@
             ]
           ],
           "passed": true,
-          "duration": 0.033040999999911946
+          "duration": 0.04958400000009533
         },
         {
           "input": [
@@ -2159,7 +2159,7 @@
             ]
           ],
           "passed": true,
-          "duration": 0.004666000000042914
+          "duration": 0.004959000000098968
         },
         {
           "input": [
@@ -2186,7 +2186,7 @@
             ]
           ],
           "passed": true,
-          "duration": 0.003500000000030923
+          "duration": 0.003582999999935055
         }
       ],
       "totalTests": 3,

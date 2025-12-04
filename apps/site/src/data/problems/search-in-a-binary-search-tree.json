@@ -35,7 +35,7 @@
           },
           "name": "Example 1",
           "passed": false,
-          "duration": 0.16454099999987193,
+          "duration": 0.22974999999996726,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of TreeNode\"\n  },\n  {\n    \"expected\": \"number\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      1\n    ],\n    \"message\": \"Invalid input: expected number, received undefined\"\n  }\n]"
         },
         {
@@ -43,7 +43,7 @@
           "expected": null,
           "name": "Example 2",
           "passed": false,
-          "duration": 0.0204999999998563,
+          "duration": 0.03308399999991707,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of TreeNode\"\n  },\n  {\n    \"expected\": \"number\",\n    \"code\": \"invalid_type\",\n    \"path\": [\n      1\n    ],\n    \"message\": \"Invalid input: expected number, received undefined\"\n  }\n]"
         }
       ],

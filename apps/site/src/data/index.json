@@ -96,6 +96,16 @@
       "difficulty": "easy"
     },
     {
+      "id": 119,
+      "slug": "pascal-s-triangle-ii",
+      "title": "Pascal's Triangle II",
+      "tags": [
+        "array",
+        "dynamic-programming"
+      ],
+      "difficulty": "easy"
+    },
+    {
       "id": 162,
       "slug": "find-peak-element",
       "title": "Find Peak Element",
@@ -179,14 +189,14 @@
       "difficulty": "easy"
     }
   ],
-  "totalProblems": 17,
+  "totalProblems": 18,
   "difficultyCounts": {
-    "easy": 11,
+    "easy": 12,
     "medium": 5,
     "hard": 1
   },
   "tagCounts": {
-    "array": 5,
+    "array": 6,
     "hash-table": 2,
     "linked-list": 3,
     "math": 2,
@@ -200,6 +210,7 @@
     "depth-first-search": 1,
     "breadth-first-search": 1,
     "binary-tree": 2,
+    "dynamic-programming": 1,
     "interactive": 2,
     "two-pointers": 1,
     "binary-search-tree": 1,

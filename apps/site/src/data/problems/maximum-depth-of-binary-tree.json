@@ -29,7 +29,7 @@
           "expected": 3,
           "name": "Example 1",
           "passed": false,
-          "duration": 0.24441700000011224,
+          "duration": 0.19250000000010914,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of TreeNode\"\n  }\n]"
         },
         {
@@ -37,7 +37,7 @@
           "expected": 2,
           "name": "Example 2",
           "passed": false,
-          "duration": 0.024415999999973792,
+          "duration": 0.028249999999843567,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of TreeNode\"\n  }\n]"
         }
       ],
@@ -64,7 +64,7 @@
           "expected": 3,
           "name": "Example 1",
           "passed": false,
-          "duration": 0.02874999999994543,
+          "duration": 0.04287500000009459,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of TreeNode\"\n  }\n]"
         },
         {
@@ -72,7 +72,7 @@
           "expected": 2,
           "name": "Example 2",
           "passed": false,
-          "duration": 0.016208000000005995,
+          "duration": 0.01950000000010732,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of TreeNode\"\n  }\n]"
         }
       ],

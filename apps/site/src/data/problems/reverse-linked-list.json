@@ -37,7 +37,7 @@
           },
           "name": "Example 1",
           "passed": false,
-          "duration": 0.07529199999999037,
+          "duration": 0.06787499999995816,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
         },
         {
@@ -51,7 +51,7 @@
           },
           "name": "Example 2",
           "passed": false,
-          "duration": 0.01974999999993088,
+          "duration": 0.018542000000024927,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
         },
         {
@@ -59,7 +59,7 @@
           "expected": null,
           "name": "Example 3",
           "passed": false,
-          "duration": 0.016499999999950887,
+          "duration": 0.015791000000035638,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
         }
       ],
@@ -96,7 +96,7 @@
           },
           "name": "Example 1",
           "passed": false,
-          "duration": 0.046832999999878666,
+          "duration": 0.0362920000000031,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
         },
         {
@@ -110,7 +110,7 @@
           },
           "name": "Example 2",
           "passed": false,
-          "duration": 0.07175000000006548,
+          "duration": 0.07008300000006784,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
         },
         {
@@ -118,7 +118,7 @@
           "expected": null,
           "name": "Example 3",
           "passed": false,
-          "duration": 0.023999999999887223,
+          "duration": 0.026124999999865395,
           "error": "[\n  {\n    \"code\": \"custom\",\n    \"path\": [\n      0\n    ],\n    \"message\": \"Input not instance of ListNode\"\n  }\n]"
         }
       ],
