@@ -1,0 +1,119 @@
+{
+  "id": 1137,
+  "slug": "n-th-tribonacci-number",
+  "title": "N-th Tribonacci Number",
+  "tags": [
+    "math",
+    "dynamic-programming",
+    "memoization"
+  ],
+  "difficulty": "easy",
+  "solutions": [
+    {
+      "name": "memoizationRecursiveSolution",
+      "description": "",
+      "approach": "Memoization and Recursive\n - We use a memoization array to store the results of the previous tribonacci numbers\n - We then use an recursive approach to calculate the nth tribonacci number",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">memoizationRecursiveSolution</span> = (<span class=\"hljs-params\">n</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> result = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Array</span>(n);\n  result[<span class=\"hljs-number\">0</span>] = <span class=\"hljs-number\">0</span>;\n  result[<span class=\"hljs-number\">1</span>] = <span class=\"hljs-number\">1</span>;\n  result[<span class=\"hljs-number\">2</span>] = <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">nthTribonacci</span>(<span class=\"hljs-params\"><span class=\"hljs-attr\">n</span>: <span class=\"hljs-built_in\">number</span></span>): <span class=\"hljs-built_in\">number</span> {\n    <span class=\"hljs-keyword\">if</span> (n &lt;= <span class=\"hljs-number\">2</span>) {\n      <span class=\"hljs-keyword\">return</span> result[n];\n    }\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title function_\">nthTribonacci</span>(n - <span class=\"hljs-number\">1</span>) + <span class=\"hljs-title function_\">nthTribonacci</span>(n - <span class=\"hljs-number\">2</span>) + <span class=\"hljs-title function_\">nthTribonacci</span>(n - <span class=\"hljs-number\">3</span>);\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title function_\">nthTribonacci</span>(n);\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            4
+          ],
+          "expected": 4,
+          "name": "Example 1",
+          "actual": 4,
+          "passed": true,
+          "duration": 0.1224170000000413
+        },
+        {
+          "input": [
+            25
+          ],
+          "expected": 1389537,
+          "name": "Example 2",
+          "actual": 1389537,
+          "passed": true,
+          "duration": 11.061750000000075
+        }
+      ],
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0
+    },
+    {
+      "name": "memoizationIterativeSolution",
+      "description": "",
+      "approach": "Memoization and Iterative\n - We use a memoization array to store the results of the previous tribonacci numbers\n - We then use an iterative approach to calculate the nth tribonacci number",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">memoizationIterativeSolution</span> = (<span class=\"hljs-params\">n</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> result = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Array</span>(n);\n  result[<span class=\"hljs-number\">0</span>] = <span class=\"hljs-number\">0</span>;\n  result[<span class=\"hljs-number\">1</span>] = <span class=\"hljs-number\">1</span>;\n  result[<span class=\"hljs-number\">2</span>] = <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">3</span>; i &lt;= n; i += <span class=\"hljs-number\">1</span>) {\n    result[i] = result[i - <span class=\"hljs-number\">3</span>] + result[i - <span class=\"hljs-number\">2</span>] + result[i - <span class=\"hljs-number\">1</span>];\n  }\n  <span class=\"hljs-keyword\">return</span> result[n];\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            4
+          ],
+          "expected": 4,
+          "name": "Example 1",
+          "actual": 4,
+          "passed": true,
+          "duration": 0.07175000000006548
+        },
+        {
+          "input": [
+            25
+          ],
+          "expected": 1389537,
+          "name": "Example 2",
+          "actual": 1389537,
+          "passed": true,
+          "duration": 0.011375000000043656
+        }
+      ],
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0
+    },
+    {
+      "name": "matrixSolution",
+      "description": "",
+      "approach": "- We use a matrix to represent the tribonacci sequence\n - We then use a matrix exponentiation to calculate the nth tribonacci number",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">matrixSolution</span> = (<span class=\"hljs-params\">n</span>) =&gt; {\n  <span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">multiplyMatrixInPlace</span>(<span class=\"hljs-params\"><span class=\"hljs-attr\">m1</span>: <span class=\"hljs-built_in\">number</span>[][], <span class=\"hljs-attr\">m2</span>: <span class=\"hljs-built_in\">number</span>[][]</span>): <span class=\"hljs-built_in\">number</span>[][] {\n    <span class=\"hljs-keyword\">const</span> c = <span class=\"hljs-title class_\">Array</span>.<span class=\"hljs-title function_\">from</span>({ <span class=\"hljs-attr\">length</span>: m1.<span class=\"hljs-property\">length</span> }, <span class=\"hljs-function\">() =&gt;</span>\n      <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Array</span>(m2[<span class=\"hljs-number\">0</span>].<span class=\"hljs-property\">length</span>).<span class=\"hljs-title function_\">fill</span>(<span class=\"hljs-number\">0</span>)\n    );\n    <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; m1.<span class=\"hljs-property\">length</span>; i += <span class=\"hljs-number\">1</span>) {\n      <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> j = <span class=\"hljs-number\">0</span>; j &lt; m2[<span class=\"hljs-number\">0</span>].<span class=\"hljs-property\">length</span>; j += <span class=\"hljs-number\">1</span>) {\n        <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> k = <span class=\"hljs-number\">0</span>; k &lt; m2.<span class=\"hljs-property\">length</span>; k += <span class=\"hljs-number\">1</span>) {\n          c[i][j] += m1[i][k] * m2[k][j];\n        }\n      }\n    }\n    <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">0</span>; i &lt; c.<span class=\"hljs-property\">length</span>; i += <span class=\"hljs-number\">1</span>) {\n      <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> j = <span class=\"hljs-number\">0</span>; j &lt; c.<span class=\"hljs-property\">length</span>; j += <span class=\"hljs-number\">1</span>) {\n        m1[i][j] = c[i][j];\n      }\n    }\n    <span class=\"hljs-keyword\">return</span> m1;\n  }\n\n  <span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">matrixPowerInPlace</span>(<span class=\"hljs-params\"><span class=\"hljs-attr\">m</span>: <span class=\"hljs-built_in\">number</span>[][], <span class=\"hljs-attr\">power</span>: <span class=\"hljs-built_in\">number</span></span>): <span class=\"hljs-built_in\">number</span>[][] {\n    <span class=\"hljs-keyword\">const</span> ans = [\n      [<span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">0</span>],\n      [<span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">0</span>],\n      [<span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">1</span>],\n    ];\n    <span class=\"hljs-keyword\">if</span> (power === <span class=\"hljs-number\">0</span>) {\n      <span class=\"hljs-keyword\">return</span> ans;\n    }\n    <span class=\"hljs-keyword\">while</span> (power &gt; <span class=\"hljs-number\">0</span>) {\n      <span class=\"hljs-keyword\">if</span> (power &amp; <span class=\"hljs-number\">1</span>) {\n        <span class=\"hljs-title function_\">multiplyMatrixInPlace</span>(ans, m);\n      }\n      <span class=\"hljs-title function_\">multiplyMatrixInPlace</span>(m, m);\n      power &gt;&gt;= <span class=\"hljs-number\">1</span>;\n    }\n    <span class=\"hljs-keyword\">return</span> ans;\n  }\n\n  <span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">nthTribonacci</span>(<span class=\"hljs-params\"><span class=\"hljs-attr\">n</span>: <span class=\"hljs-built_in\">number</span></span>): <span class=\"hljs-built_in\">number</span> {\n    <span class=\"hljs-keyword\">const</span> F = [\n      [<span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">0</span>],\n      [<span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">0</span>],\n      [<span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">0</span>],\n    ];\n    <span class=\"hljs-keyword\">if</span> (n &lt;= <span class=\"hljs-number\">2</span>) {\n      <span class=\"hljs-keyword\">return</span> F[<span class=\"hljs-number\">2</span> - n][<span class=\"hljs-number\">0</span>];\n    }\n    <span class=\"hljs-keyword\">const</span> M = [\n      [<span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">1</span>],\n      [<span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">0</span>],\n      [<span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">0</span>],\n    ];\n    <span class=\"hljs-keyword\">const</span> result = <span class=\"hljs-title function_\">matrixPowerInPlace</span>(M, n - <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title function_\">multiplyMatrixInPlace</span>(result, F)[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">0</span>];\n  }\n\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title function_\">nthTribonacci</span>(n);\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            4
+          ],
+          "expected": 4,
+          "name": "Example 1",
+          "actual": 4,
+          "passed": true,
+          "duration": 0.18433300000015151
+        },
+        {
+          "input": [
+            25
+          ],
+          "expected": 1389537,
+          "name": "Example 2",
+          "actual": 1389537,
+          "passed": true,
+          "duration": 0.07124999999996362
+        }
+      ],
+      "totalTests": 2,
+      "passedTests": 2,
+      "failedTests": 0
+    }
+  ],
+  "notes": "<ul>\n<li><ol start=\"1137\">\n<li>N-th Tribonacci Number</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: math, dynamic-programming, memoization</li>\n<li></li>\n<li>Description:</li>\n<li>The Tribonacci sequence T_n is defined as follows:</li>\n<li></li>\n<li>T_0 = 0, T_1 = 1, T_2 = 1, and T_n+3 = T_n + T_n+1 + T_n+2 for n &gt;= 0.</li>\n<li></li>\n<li>Given <code>n</code>, return the value of T_n.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: n = 4</li>\n</ol>\n</li>\n<li>Output: 4</li>\n<li>Explanation: T_3 = 0 + 1 + 1 = 2 T_4 = 1 + 1 + 2 = 4</li>\n<li><ol start=\"2\">\n<li>Input: n = 25</li>\n</ol>\n</li>\n<li>Output: 1389537</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>0 &lt;= n &lt;= 37</code></li>\n</ul>\n</li>\n<li><ul>\n<li>The answer is guaranteed to fit within a 32-bit integer, ie. <code>answer &lt;= 2^31 - 1</code>.</li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 6,
+  "passedTests": 6,
+  "failedTests": 0
+}

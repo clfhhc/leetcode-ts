@@ -85,10 +85,19 @@ function getTestCasesForSolution(
 }
 
 /**
- * Resolve input/expected values - if they're functions, call them to get fresh values
+ * Resolve input values - if they're functions, call them to get fresh values
  */
-function resolveValue<T>(value: T | (() => T)): T {
+function resolveInput<T>(value: T | (() => T)): T {
   return typeof value === 'function' ? (value as () => T)() : value;
+}
+
+/**
+ * Check if expected is a validation function
+ */
+function isValidationFunction<T extends (...args: any[]) => any>(
+  expected: ReturnType<T> | ((solution: T, input: Parameters<T>) => boolean)
+): expected is (solution: T, input: Parameters<T>) => boolean {
+  return typeof expected === 'function';
 }
 
 export async function runProblemTests(
@@ -122,25 +131,38 @@ export async function runProblemTests(
 
     for (const testCase of testCases) {
       const start = performance.now();
-      // Resolve input and expected (call functions if provided)
-      const input = resolveValue(testCase.input);
-      const expected = resolveValue(testCase.expected);
+      // Resolve input (call function if provided)
+      const input = resolveInput(testCase.input);
 
       let actual: any;
       let error: string | undefined;
       let passed = false;
+      let expected: any;
 
       try {
         // Handle both array and individual parameter formats
-        if (Array.isArray(input)) {
-          actual = solution(...input);
+        const args = Array.isArray(input) ? input : [input];
+        actual = solution(...args);
+
+        // Check if expected is a validation function
+        if (isValidationFunction(testCase.expected)) {
+          // Call the validation function with solution and input
+          passed = testCase.expected(
+            solution,
+            input as Parameters<typeof solution>
+          );
+          expected = '[Validation Function]';
         } else {
-          actual = solution(input);
+          // Use value comparison
+          expected = testCase.expected;
+          passed = JSON.stringify(actual) === JSON.stringify(expected);
         }
-        passed = JSON.stringify(actual) === JSON.stringify(expected);
       } catch (err) {
         error = err instanceof Error ? err.message : String(err);
         actual = undefined;
+        expected = isValidationFunction(testCase.expected)
+          ? '[Validation Function]'
+          : testCase.expected;
       }
 
       const duration = performance.now() - start;
@@ -202,24 +224,31 @@ export function createTestSuite(
         );
 
         for (const testCase of testCases) {
-          // Resolve input and expected (call functions if provided)
-          const input = resolveValue(testCase.input);
-          const expected = resolveValue(testCase.expected);
+          // Resolve input (call function if provided)
+          const input = resolveInput(testCase.input);
 
           const name = testCase.name ?? JSON.stringify(input).slice(0, 80);
+          // Support for testCase.only (runs only this test) and testCase.skip (skips this test)
+          // Note: only takes precedence over skip if both are set
           const fn = testCase.only ? it.only : testCase.skip ? it.skip : it;
 
           fn(name, () => {
-            let actual: any;
-
             // Handle both array and individual parameter formats
-            if (Array.isArray(input)) {
-              actual = solution(...input);
-            } else {
-              actual = solution(input);
-            }
+            const args = Array.isArray(input) ? input : [input];
+            const actual = solution(...args);
 
-            expect(actual).toEqual(expected);
+            // Check if expected is a validation function
+            if (isValidationFunction(testCase.expected)) {
+              // Call the validation function with solution and input
+              const passed = testCase.expected(
+                solution,
+                input as Parameters<typeof solution>
+              );
+              expect(passed).toBe(true);
+            } else {
+              // Use value comparison
+              expect(actual).toEqual(testCase.expected);
+            }
           });
         }
       });

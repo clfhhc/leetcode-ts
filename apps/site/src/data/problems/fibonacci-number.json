@@ -1,0 +1,234 @@
+{
+  "id": 509,
+  "slug": "fibonacci-number",
+  "title": "Fibonacci Number",
+  "tags": [
+    "math",
+    "dynamic-programming",
+    "recursion",
+    "memoization"
+  ],
+  "difficulty": "easy",
+  "solutions": [
+    {
+      "name": "memoizationRecursiveSolution",
+      "description": "",
+      "approach": "- Use a cache to store the Fibonacci numbers\n - Use a recursive function to calculate the Fibonacci number\n - If the Fibonacci number is already in the cache, return it\n - Otherwise, calculate the Fibonacci number and store it in the cache\n - Return the Fibonacci number",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">memoizationRecursiveSolution</span> = (<span class=\"hljs-params\">n</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-attr\">cache</span>: <span class=\"hljs-title class_\">Record</span>&lt;<span class=\"hljs-built_in\">number</span>, <span class=\"hljs-built_in\">number</span>&gt; = {\n    <span class=\"hljs-number\">0</span>: <span class=\"hljs-number\">0</span>,\n    <span class=\"hljs-number\">1</span>: <span class=\"hljs-number\">1</span>,\n    <span class=\"hljs-number\">2</span>: <span class=\"hljs-number\">1</span>,\n  };\n  <span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">fibonacci</span>(<span class=\"hljs-params\"><span class=\"hljs-attr\">n</span>: <span class=\"hljs-built_in\">number</span></span>): <span class=\"hljs-built_in\">number</span> {\n    <span class=\"hljs-keyword\">if</span> (cache[n] != <span class=\"hljs-literal\">null</span>) {\n      <span class=\"hljs-keyword\">return</span> cache[n];\n    }\n    cache[n] = <span class=\"hljs-title function_\">fibonacci</span>(n - <span class=\"hljs-number\">1</span>) + <span class=\"hljs-title function_\">fibonacci</span>(n - <span class=\"hljs-number\">2</span>);\n    <span class=\"hljs-keyword\">return</span> cache[n];\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title function_\">fibonacci</span>(n);\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            2
+          ],
+          "expected": 1,
+          "name": "Example 1",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.05216599999994287
+        },
+        {
+          "input": [
+            3
+          ],
+          "expected": 2,
+          "name": "Example 2",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.005249999999932697
+        },
+        {
+          "input": [
+            4
+          ],
+          "expected": 3,
+          "name": "Example 3",
+          "actual": 3,
+          "passed": true,
+          "duration": 0.0024170000001504377
+        },
+        {
+          "input": [
+            5
+          ],
+          "expected": 5,
+          "name": "Example 4",
+          "actual": 5,
+          "passed": true,
+          "duration": 0.0029170000000249274
+        }
+      ],
+      "totalTests": 4,
+      "passedTests": 4,
+      "failedTests": 0
+    },
+    {
+      "name": "memoizationIterativeSolution",
+      "description": "",
+      "approach": "- Use a cache to store the Fibonacci numbers\n - Use a loop to calculate the Fibonacci number\n - If the Fibonacci number is already in the cache, return it\n - Otherwise, calculate the Fibonacci number and store it in the cache\n - Return the Fibonacci number",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">memoizationIterativeSolution</span> = (<span class=\"hljs-params\">n</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> cache = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Array</span>(n + <span class=\"hljs-number\">1</span>);\n  cache[<span class=\"hljs-number\">0</span>] = <span class=\"hljs-number\">0</span>;\n  cache[<span class=\"hljs-number\">1</span>] = <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">2</span>; i &lt;= n; i += <span class=\"hljs-number\">1</span>) {\n    cache[i] = cache[i - <span class=\"hljs-number\">1</span>] + cache[i - <span class=\"hljs-number\">2</span>];\n  }\n  <span class=\"hljs-keyword\">return</span> cache[n];\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            2
+          ],
+          "expected": 1,
+          "name": "Example 1",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.14979199999993398
+        },
+        {
+          "input": [
+            3
+          ],
+          "expected": 2,
+          "name": "Example 2",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.005542000000104963
+        },
+        {
+          "input": [
+            4
+          ],
+          "expected": 3,
+          "name": "Example 3",
+          "actual": 3,
+          "passed": true,
+          "duration": 0.003749999999854481
+        },
+        {
+          "input": [
+            5
+          ],
+          "expected": 5,
+          "name": "Example 4",
+          "actual": 5,
+          "passed": true,
+          "duration": 0.3843339999998534
+        }
+      ],
+      "totalTests": 4,
+      "passedTests": 4,
+      "failedTests": 0
+    },
+    {
+      "name": "iterativeSolution",
+      "description": "",
+      "approach": "- Use a loop to calculate the Fibonacci number",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">iterativeSolution</span> = (<span class=\"hljs-params\">n</span>) =&gt; {\n  <span class=\"hljs-keyword\">if</span> (n === <span class=\"hljs-number\">0</span>) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n  }\n  <span class=\"hljs-keyword\">if</span> (n === <span class=\"hljs-number\">1</span>) {\n    <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">1</span>;\n  }\n  <span class=\"hljs-keyword\">let</span> a = <span class=\"hljs-number\">0</span>;\n  <span class=\"hljs-keyword\">let</span> b = <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">2</span>; i &lt;= n; i += <span class=\"hljs-number\">1</span>) {\n    <span class=\"hljs-keyword\">const</span> current = a + b;\n    a = b;\n    b = current;\n  }\n  <span class=\"hljs-keyword\">return</span> b;\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            2
+          ],
+          "expected": 1,
+          "name": "Example 1",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.056665999999950145
+        },
+        {
+          "input": [
+            3
+          ],
+          "expected": 2,
+          "name": "Example 2",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.0017080000000078144
+        },
+        {
+          "input": [
+            4
+          ],
+          "expected": 3,
+          "name": "Example 3",
+          "actual": 3,
+          "passed": true,
+          "duration": 0.0009999999999763531
+        },
+        {
+          "input": [
+            5
+          ],
+          "expected": 5,
+          "name": "Example 4",
+          "actual": 5,
+          "passed": true,
+          "duration": 0.002207999999882304
+        }
+      ],
+      "totalTests": 4,
+      "passedTests": 4,
+      "failedTests": 0
+    },
+    {
+      "name": "matrixExponentiationSolution",
+      "description": "",
+      "approach": "- Use a matrix to calculate the Fibonacci number\n - Return the Fibonacci number",
+      "timeComplexity": "O(log n)",
+      "spaceComplexity": "O(1)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">matrixExponentiationSolution</span> = (<span class=\"hljs-params\">n</span>) =&gt; {\n  <span class=\"hljs-comment\">// Modulus (a prime number) to prevent overflow</span>\n  <span class=\"hljs-keyword\">const</span> <span class=\"hljs-variable constant_\">MOD</span> = <span class=\"hljs-number\">1e9</span> + <span class=\"hljs-number\">7</span>;\n  <span class=\"hljs-comment\">// Helper function to multiply two matrices in place</span>\n  <span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">multiplyMatrixInPlace</span>(<span class=\"hljs-params\">\n    <span class=\"hljs-attr\">matrix1</span>: <span class=\"hljs-built_in\">number</span>[][],\n    <span class=\"hljs-attr\">matrix2</span>: <span class=\"hljs-built_in\">number</span>[][]\n  </span>): <span class=\"hljs-built_in\">number</span>[][] {\n    <span class=\"hljs-keyword\">const</span> new00 = matrix1[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">0</span>] * matrix2[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">0</span>] + matrix1[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">1</span>] * matrix2[<span class=\"hljs-number\">1</span>][<span class=\"hljs-number\">0</span>];\n    <span class=\"hljs-keyword\">const</span> new01 = matrix1[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">0</span>] * matrix2[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">1</span>] + matrix1[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">1</span>] * matrix2[<span class=\"hljs-number\">1</span>][<span class=\"hljs-number\">1</span>];\n    <span class=\"hljs-keyword\">const</span> new10 = matrix1[<span class=\"hljs-number\">1</span>][<span class=\"hljs-number\">0</span>] * matrix2[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">0</span>] + matrix1[<span class=\"hljs-number\">1</span>][<span class=\"hljs-number\">1</span>] * matrix2[<span class=\"hljs-number\">1</span>][<span class=\"hljs-number\">0</span>];\n    <span class=\"hljs-keyword\">const</span> new11 = matrix1[<span class=\"hljs-number\">1</span>][<span class=\"hljs-number\">0</span>] * matrix2[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">1</span>] + matrix1[<span class=\"hljs-number\">1</span>][<span class=\"hljs-number\">1</span>] * matrix2[<span class=\"hljs-number\">1</span>][<span class=\"hljs-number\">1</span>];\n    matrix1[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">0</span>] = new00 % <span class=\"hljs-variable constant_\">MOD</span>;\n    matrix1[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">1</span>] = new01 % <span class=\"hljs-variable constant_\">MOD</span>;\n    matrix1[<span class=\"hljs-number\">1</span>][<span class=\"hljs-number\">0</span>] = new10 % <span class=\"hljs-variable constant_\">MOD</span>;\n    matrix1[<span class=\"hljs-number\">1</span>][<span class=\"hljs-number\">1</span>] = new11 % <span class=\"hljs-variable constant_\">MOD</span>;\n    <span class=\"hljs-keyword\">return</span> matrix1;\n  }\n  <span class=\"hljs-comment\">// Helper function to calculate the power of a matrix in place</span>\n  <span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">matrixPowerInPlace</span>(<span class=\"hljs-params\"><span class=\"hljs-attr\">matrix</span>: <span class=\"hljs-built_in\">number</span>[][], <span class=\"hljs-attr\">power</span>: <span class=\"hljs-built_in\">number</span></span>): <span class=\"hljs-built_in\">number</span>[][] {\n    <span class=\"hljs-keyword\">if</span> (power === <span class=\"hljs-number\">0</span> || power === <span class=\"hljs-number\">1</span>) {\n      <span class=\"hljs-keyword\">return</span> matrix;\n    }\n    <span class=\"hljs-comment\">// Initialize the answer matrix as the identity matrix</span>\n    <span class=\"hljs-keyword\">const</span> answer = [\n      [<span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">0</span>],\n      [<span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">1</span>],\n    ];\n    <span class=\"hljs-comment\">// Fast exponentiation</span>\n    <span class=\"hljs-keyword\">while</span> (power &gt; <span class=\"hljs-number\">0</span>) {\n      <span class=\"hljs-keyword\">if</span> (power &amp; <span class=\"hljs-number\">1</span>) {\n        <span class=\"hljs-comment\">// Multiply the answer matrix by the matrix if the power is odd</span>\n        <span class=\"hljs-title function_\">multiplyMatrixInPlace</span>(answer, matrix);\n      }\n      <span class=\"hljs-comment\">// Square the matrix</span>\n      <span class=\"hljs-title function_\">multiplyMatrixInPlace</span>(matrix, matrix);\n      <span class=\"hljs-comment\">// Divide the power by 2</span>\n      power &gt;&gt;= <span class=\"hljs-number\">1</span>;\n    }\n    <span class=\"hljs-keyword\">return</span> answer;\n  }\n  <span class=\"hljs-comment\">// Function to find the Fibonacci number</span>\n  <span class=\"hljs-keyword\">function</span> <span class=\"hljs-title function_\">nthFibonacci</span>(<span class=\"hljs-params\"><span class=\"hljs-attr\">n</span>: <span class=\"hljs-built_in\">number</span></span>): <span class=\"hljs-built_in\">number</span> {\n    <span class=\"hljs-keyword\">if</span> (n === <span class=\"hljs-number\">0</span>) {\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">0</span>;\n    }\n    <span class=\"hljs-keyword\">if</span> (n === <span class=\"hljs-number\">1</span>) {\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-number\">1</span>;\n    }\n\n    <span class=\"hljs-keyword\">const</span> result = <span class=\"hljs-title function_\">matrixPowerInPlace</span>(\n      [\n        [<span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">1</span>],\n        [<span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">0</span>],\n      ],\n      n - <span class=\"hljs-number\">1</span>\n    );\n    <span class=\"hljs-title function_\">multiplyMatrixInPlace</span>(result, [\n      [<span class=\"hljs-number\">1</span>, <span class=\"hljs-number\">0</span>],\n      [<span class=\"hljs-number\">0</span>, <span class=\"hljs-number\">0</span>],\n    ]);\n    <span class=\"hljs-keyword\">return</span> result[<span class=\"hljs-number\">0</span>][<span class=\"hljs-number\">0</span>] % <span class=\"hljs-variable constant_\">MOD</span>;\n  }\n  <span class=\"hljs-keyword\">return</span> <span class=\"hljs-title function_\">nthFibonacci</span>(n);\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            2
+          ],
+          "expected": 1,
+          "name": "Example 1",
+          "actual": 1,
+          "passed": true,
+          "duration": 0.1412920000000213
+        },
+        {
+          "input": [
+            3
+          ],
+          "expected": 2,
+          "name": "Example 2",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.010042000000112239
+        },
+        {
+          "input": [
+            4
+          ],
+          "expected": 3,
+          "name": "Example 3",
+          "actual": 3,
+          "passed": true,
+          "duration": 0.04683300000010604
+        },
+        {
+          "input": [
+            5
+          ],
+          "expected": 5,
+          "name": "Example 4",
+          "actual": 5,
+          "passed": true,
+          "duration": 0.00687500000003638
+        }
+      ],
+      "totalTests": 4,
+      "passedTests": 4,
+      "failedTests": 0
+    }
+  ],
+  "notes": "<ul>\n<li><ol start=\"509\">\n<li>Fibonacci Number</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: math, dynamic-programming, recursion, memoization</li>\n<li></li>\n<li>Description:</li>\n<li>The <strong>Fibonacci numbers</strong>, commonly denoted <code>F(n)</code> form a sequence, called the <strong>Fibonacci sequence</strong>, such that each number is the sum of the two preceding ones, starting from <code>0</code> and <code>1</code>. That is,</li>\n<li></li>\n<li>F(0) = 0, F(1) = 1</li>\n<li>F(n) = F(n - 1) + F(n - 2), for n &gt; 1.</li>\n<li></li>\n<li>Given <code>n</code>, calculate <code>F(n)</code>.</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: n = 2</li>\n</ol>\n</li>\n<li>Output: 1</li>\n<li>Explanation: F(2) = F(1) + F(0) = 1 + 0 = 1.</li>\n<li><ol start=\"2\">\n<li>Input: n = 3</li>\n</ol>\n</li>\n<li>Output: 2</li>\n<li>Explanation: F(3) = F(2) + F(1) = 1 + 1 = 2.</li>\n<li><ol start=\"3\">\n<li>Input: n = 4</li>\n</ol>\n</li>\n<li>Output: 3</li>\n<li>Explanation: F(4) = F(3) + F(2) = 2 + 1 = 3.</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>0 &lt;= n &lt;= 30</code></li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 16,
+  "passedTests": 16,
+  "failedTests": 0
+}

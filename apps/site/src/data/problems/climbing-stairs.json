@@ -1,0 +1,111 @@
+{
+  "id": 70,
+  "slug": "climbing-stairs",
+  "title": "Climbing Stairs",
+  "tags": [
+    "math",
+    "dynamic-programming",
+    "memoization"
+  ],
+  "difficulty": "easy",
+  "solutions": [
+    {
+      "name": "memoizationIterativeSolution",
+      "description": "",
+      "approach": "- This is like fibonacci number\n - I.e. if there are 5 steps, the last step can be reached by either taking 1 step from the 4th step or 2 steps from the 3rd step\n - So, the number of ways to reach the last step is the sum of the number of ways to reach the 4th step and the number of ways to reach the 3rd step\n - F(5) = F(4) + F(3)",
+      "timeComplexity": "O(n)",
+      "spaceComplexity": "O(n)",
+      "code": "<pre><code class=\"language-typescript\"><span class=\"hljs-keyword\">const</span> <span class=\"hljs-title function_\">memoizationIterativeSolution</span> = (<span class=\"hljs-params\">n</span>) =&gt; {\n  <span class=\"hljs-keyword\">const</span> result = <span class=\"hljs-keyword\">new</span> <span class=\"hljs-title class_\">Array</span>(n);\n  result[<span class=\"hljs-number\">0</span>] = <span class=\"hljs-number\">0</span>;\n  result[<span class=\"hljs-number\">1</span>] = <span class=\"hljs-number\">1</span>;\n  <span class=\"hljs-keyword\">for</span> (<span class=\"hljs-keyword\">let</span> i = <span class=\"hljs-number\">2</span>; i &lt;= n + <span class=\"hljs-number\">1</span>; i += <span class=\"hljs-number\">1</span>) {\n    result[i] = result[i - <span class=\"hljs-number\">1</span>] + result[i - <span class=\"hljs-number\">2</span>];\n  }\n  <span class=\"hljs-keyword\">return</span> result[n + <span class=\"hljs-number\">1</span>];\n};\n</code></pre>",
+      "utilities": [],
+      "testResults": [
+        {
+          "input": [
+            2
+          ],
+          "expected": 2,
+          "name": "Example 1",
+          "actual": 2,
+          "passed": true,
+          "duration": 0.054500000000189175
+        },
+        {
+          "input": [
+            3
+          ],
+          "expected": 3,
+          "name": "Example 2",
+          "actual": 3,
+          "passed": true,
+          "duration": 0.002250000000003638
+        },
+        {
+          "input": [
+            4
+          ],
+          "expected": 5,
+          "name": "Example 3",
+          "actual": 5,
+          "passed": true,
+          "duration": 0.0014579999999568827
+        },
+        {
+          "input": [
+            5
+          ],
+          "expected": 8,
+          "name": "Example 4",
+          "actual": 8,
+          "passed": true,
+          "duration": 0.005957999999964159
+        },
+        {
+          "input": [
+            6
+          ],
+          "expected": 13,
+          "name": "Example 5",
+          "actual": 13,
+          "passed": true,
+          "duration": 0.0027079999999841675
+        },
+        {
+          "input": [
+            7
+          ],
+          "expected": 21,
+          "name": "Example 6",
+          "actual": 21,
+          "passed": true,
+          "duration": 0.001374999999825377
+        },
+        {
+          "input": [
+            8
+          ],
+          "expected": 34,
+          "name": "Example 7",
+          "actual": 34,
+          "passed": true,
+          "duration": 0.001207999999905951
+        },
+        {
+          "input": [
+            9
+          ],
+          "expected": 55,
+          "name": "Example 8",
+          "actual": 55,
+          "passed": true,
+          "duration": 0.001207999999905951
+        }
+      ],
+      "totalTests": 8,
+      "passedTests": 8,
+      "failedTests": 0
+    }
+  ],
+  "notes": "<ul>\n<li><ol start=\"70\">\n<li>Climbing Stairs</li>\n</ol>\n</li>\n<li></li>\n<li>Difficulty: easy</li>\n<li>Tags: math, dynamic-programming, memoization</li>\n<li></li>\n<li>Description:</li>\n<li>You are climbing a staircase. It takes <code>n</code> steps to reach the top.</li>\n<li></li>\n<li>Each time you can either climb <code>1</code> or <code>2</code> steps. In how many distinct ways can you climb to the top?</li>\n<li></li>\n<li>Examples:</li>\n<li><ol>\n<li>Input: n = 2</li>\n</ol>\n</li>\n<li>Output: 2</li>\n<li>Explanation: There are two ways to climb to the top. 1. 1 step + 1 step 2. 2 steps</li>\n<li><ol start=\"2\">\n<li>Input: n = 3</li>\n</ol>\n</li>\n<li>Output: 3</li>\n<li>Explanation: There are three ways to climb to the top. 1. 1 step + 1 step + 1 step 2. 1 step + 2 steps 3. 2 steps + 1 step</li>\n<li></li>\n<li>Constraints:</li>\n<li><ul>\n<li><code>1 &lt;= n &lt;= 45</code></li>\n</ul>\n</li>\n<li></li>\n</ul>\n",
+  "totalTests": 8,
+  "passedTests": 8,
+  "failedTests": 0
+}

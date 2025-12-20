@@ -177,6 +177,22 @@ function getTestCasesForSolution(
   return testCases;
 }
 
+/**
+ * Check if expected is a validation function
+ */
+function isValidationFunction<T extends (...args: any[]) => any>(
+  expected: ReturnType<T> | ((solution: T, input: Parameters<T>) => boolean)
+): expected is (solution: T, input: Parameters<T>) => boolean {
+  return typeof expected === 'function';
+}
+
+/**
+ * Resolve input values - if they're functions, call them to get fresh values
+ */
+function resolveInput<T>(value: T | (() => T)): T {
+  return typeof value === 'function' ? (value as () => T)() : value;
+}
+
 async function runSolutionTests(
   solveFunction: (...args: any[]) => any,
   cases: any[]
@@ -188,19 +204,34 @@ async function runSolutionTests(
     let actual: any;
     let error: string | undefined;
     let passed = false;
+    let expected: any;
+
+    // Resolve input (call function if provided)
+    const resolvedInput = resolveInput(testCase.input);
 
     // For Zod function schemas, testCase.input should be an array where
     // each element corresponds to a function parameter
     // e.g., [[1,2,3,4,5]] means pass [1,2,3,4,5] as the first argument
     // When we spread it with ..., it becomes func([1,2,3,4,5])
-    const args = Array.isArray(testCase.input)
-      ? testCase.input
-      : [testCase.input];
+    const args = Array.isArray(resolvedInput) ? resolvedInput : [resolvedInput];
 
     try {
       // Execute the function - this will throw if Zod validation fails
       actual = solveFunction(...args);
-      passed = JSON.stringify(actual) === JSON.stringify(testCase.expected);
+
+      // Check if expected is a validation function
+      if (isValidationFunction(testCase.expected)) {
+        // Call the validation function with solution and input
+        passed = testCase.expected(
+          solveFunction,
+          resolvedInput as Parameters<typeof solveFunction>
+        );
+        expected = '[Validation Function]';
+      } else {
+        // Use value comparison
+        expected = testCase.expected;
+        passed = JSON.stringify(actual) === JSON.stringify(expected);
+      }
     } catch (err) {
       // Check if it's a Zod validation error
       if (err && typeof err === 'object' && 'issues' in err) {
@@ -209,12 +240,17 @@ async function runSolutionTests(
         error = err instanceof Error ? err.message : String(err);
       }
       actual = undefined;
+      expected = isValidationFunction(testCase.expected)
+        ? '[Validation Function]'
+        : testCase.expected;
     }
 
     const duration = performance.now() - start;
 
     results.push({
       ...testCase,
+      input: resolvedInput,
+      expected,
       actual,
       passed,
       duration,

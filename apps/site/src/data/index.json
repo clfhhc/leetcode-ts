@@ -74,12 +74,33 @@
       "difficulty": "medium"
     },
     {
+      "id": 50,
+      "slug": "pow-x-n",
+      "title": "Pow(x, n)",
+      "tags": [
+        "math",
+        "recursion"
+      ],
+      "difficulty": "medium"
+    },
+    {
       "id": 69,
       "slug": "sqrt-x",
       "title": "Sqrt(x)",
       "tags": [
         "math",
         "binary-search"
+      ],
+      "difficulty": "easy"
+    },
+    {
+      "id": 70,
+      "slug": "climbing-stairs",
+      "title": "Climbing Stairs",
+      "tags": [
+        "math",
+        "dynamic-programming",
+        "memoization"
       ],
       "difficulty": "easy"
     },
@@ -156,6 +177,18 @@
       "difficulty": "easy"
     },
     {
+      "id": 509,
+      "slug": "fibonacci-number",
+      "title": "Fibonacci Number",
+      "tags": [
+        "math",
+        "dynamic-programming",
+        "recursion",
+        "memoization"
+      ],
+      "difficulty": "easy"
+    },
+    {
       "id": 700,
       "slug": "search-in-a-binary-search-tree",
       "title": "Search in a Binary Search Tree",
@@ -177,6 +210,17 @@
       "difficulty": "easy"
     },
     {
+      "id": 1137,
+      "slug": "n-th-tribonacci-number",
+      "title": "N-th Tribonacci Number",
+      "tags": [
+        "math",
+        "dynamic-programming",
+        "memoization"
+      ],
+      "difficulty": "easy"
+    },
+    {
       "id": 9999,
       "slug": "typescript-practice-problems",
       "title": "TypeScript Practice Problems",
@@ -189,28 +233,29 @@
       "difficulty": "easy"
     }
   ],
-  "totalProblems": 18,
+  "totalProblems": 22,
   "difficultyCounts": {
-    "easy": 12,
-    "medium": 5,
+    "easy": 15,
+    "medium": 6,
     "hard": 1
   },
   "tagCounts": {
     "array": 6,
     "hash-table": 2,
     "linked-list": 3,
-    "math": 2,
-    "recursion": 3,
+    "math": 6,
+    "recursion": 5,
     "string": 3,
     "sliding-window": 1,
     "binary-search": 7,
     "divide-and-conquer": 1,
     "stack": 1,
+    "dynamic-programming": 4,
+    "memoization": 3,
     "tree": 2,
     "depth-first-search": 1,
     "breadth-first-search": 1,
     "binary-tree": 2,
-    "dynamic-programming": 1,
     "interactive": 2,
     "two-pointers": 1,
     "binary-search-tree": 1,

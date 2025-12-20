@@ -26,7 +26,7 @@
           "name": "Example 1",
           "actual": 6,
           "passed": true,
-          "duration": 0.06700000000000728
+          "duration": 0.07899999999995089
         },
         {
           "input": [
@@ -37,7 +37,7 @@
           "name": "Example 2",
           "actual": 1,
           "passed": true,
-          "duration": 0.00437499999998181
+          "duration": 0.004541000000017448
         },
         {
           "input": [
@@ -48,7 +48,7 @@
           "name": "Example 3",
           "actual": 1,
           "passed": true,
-          "duration": 0.002416999999923064
+          "duration": 0.0026250000000800355
         }
       ],
       "totalTests": 3,

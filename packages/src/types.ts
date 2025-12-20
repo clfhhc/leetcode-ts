@@ -17,7 +17,7 @@ export interface TestCase<
 > {
   name?: string;
   input: Parameters<T> | ((...args: any[]) => Parameters<T>);
-  expected: ReturnType<T> | ((...args: any[]) => ReturnType<T>);
+  expected: ReturnType<T> | ((solution: T, input: Parameters<T>) => boolean);
   only?: boolean;
   skip?: boolean;
 }
